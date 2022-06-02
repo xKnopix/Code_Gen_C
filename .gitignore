@@ -3,6 +3,7 @@
 Code_Gen_C.code-workspace
 .idea/
 .vscode/
+/build
 cmake-build-debug/
 CMakeLists.txt
 
