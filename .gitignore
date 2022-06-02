@@ -1,6 +1,6 @@
 # Prerequisites
 *.d
-
+Code_Gen_C.code-workspace
 .idea/
 .vscode/
 cmake-build-debug/
