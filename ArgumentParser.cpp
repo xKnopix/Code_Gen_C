@@ -1,5 +1,6 @@
 #include <string>
 #include <iostream>
+#include <Vector>
 
 using namespace std;
 
@@ -29,7 +30,7 @@ void ParseXML()
 
 int main(int argc, char* argv[])
 {                                                               
-    int exclusion[4] = {0,0,0,0};                                                       //Speichern, welche Ref-Nummern gesetzt sind, um die Exclusions abfragen zu können                                                        
+    vector<int> exclusions = {0,0,0,0};                                                       //Speichern, welche Ref-Nummern gesetzt sind, um die Exclusions abfragen zu können
     int exit = 0;                                                                       //Wenn exit während der Überprüfung auf 1 gesetzt wird, wird das Programm nach der Überprüfung beendet
     int noRef = -1;                                                                     //-1: nicht gesetzt, 0: Die Optionen Ref 1-3 (gesamt) dürfen vorkommen, 1: Die Optionen Ref 1-3(gesamt) dürfen nicht vorkommen
 
@@ -58,6 +59,34 @@ int main(int argc, char* argv[])
                 connectTointernalMethod = printHelp
                 Description = "Diese Hilfe ausgeben und beenden"
                 */
+                ////////////////////////////////////////////////////////////////////////////////////////////////////////
+                vector<string> localExclusions = {"1", "2"};
+
+                for(int i = 0; i < exclusions.size(); i++)
+                {
+                    for(int j = 0; j < localExclusions.size(); j++)
+                    {
+                        if(to_string(exclusions[i]) == localExclusions[j])
+                        {
+                            cout << "Es wurde eine ungültige Kombination von Argumenten angegeben!" << endl;
+                            exit = 1;
+                        }
+                    }
+                }
+
+                if(noRef == 0)                                                      //Schauen, ob eine der Optionen gesetzt ist, die Ref 1-3 ausschließt
+                {
+                    cout << "Es wurde ein Argument übergeben, dass Ref 1-3 nicht zulässt, --help ist somit verboten!"<< endl;
+                    exit = 1;
+                }
+
+                if(exit != 1)
+                {
+                    exclusions.push_back(1);
+                    noRef = 1;
+                }
+                ////////////////////////////////////////////////////////////////////////////////////////////////////////
+                /*
                 if(exclusion[2]!=0)                                                      //Exclusion 2 überprüfen -> verboten
                 {
                     cout << "--help ist nicht erlaubt mit Ref 2!" << endl;
@@ -71,12 +100,9 @@ int main(int argc, char* argv[])
                 else
                 {    
                     exclusion[1] = 1;                                                   //Exclusion-Array setzen, für spätere überprüfungen bei anderen Argumenten
-                    if(noRef == 0)                                                      //Schauen, ob eine der Optionen gesetzt ist, die Ref 1-3 ausschließt
-                    {
-                        cout << "Es wurde ein Argument übergeben, dass Ref 1-3 nicht zulässt, --help ist somit verboten!"<< endl;
-                        exit = 1;
-                    }
+
                 }
+                 */
             }
 
             if(string(argv[i]) == "--v" || string(argv[i]) == "--Version")              //Wenn Parameter --Version oder --v gesetzt ist
