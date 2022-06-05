@@ -115,25 +115,33 @@ int main(int argc, char* argv[])
                 connectTointernalMethod = printVersion
                 Description = "Gibt die Version des Programms aus und beendet"
                 */
-                if(exclusion[1]!=0)                                                     //Exclusion 1 überprüfen -> verboten
+                ////////////////////////////////////////////////////////////////////////////////////////////////////////
+                vector<string> localExclusions = {"1", "2"};
+
+                for(int i = 0; i < exclusions.size(); i++)
                 {
-                    cout << "--Version ist nicht erlaubt mit Ref 1!" << endl;
-                    exit = 1;
-                }
-                else if(exclusion[3]!=0)                                                //Exclusion 3 überprüfen -> verboten
-                {
-                    cout << "--Version ist nicht erlaubt mit Ref 3!" << endl;
-                    exit = 1;
-                }
-                else
-                {
-                    exclusion[2] = 1;                                                   //Exclusion-Array setzen, für spätere überprüfungen bei anderen Argumenten
-                    if(noRef == 0)                                                      //Schauen, ob eine der Optionen gesetzt ist, die Ref 1-3 ausschließt
+                    for(int j = 0; j < localExclusions.size(); j++)
                     {
-                        cout << "Es wurde ein Argument übergeben, dass Ref 1-3 nicht zulässt, --version ist somit verboten!"<< endl;
-                        exit = 1;
+                        if(to_string(exclusions[i]) == localExclusions[j])
+                        {
+                            cout << "Es wurde eine ungültige Kombination von Argumenten angegeben!" << endl;
+                            exit = 1;
+                        }
                     }
                 }
+
+                if(noRef == 0)                                                      //Schauen, ob eine der Optionen gesetzt ist, die Ref 1-3 ausschließt
+                {
+                    cout << "Es wurde ein Argument übergeben, dass Ref 1-3 nicht zulässt, --help ist somit verboten!"<< endl;
+                    exit = 1;
+                }
+
+                if(exit != 1)
+                {
+                    exclusions.push_back(1);
+                    noRef = 1;
+                }
+                ////////////////////////////////////////////////////////////////////////////////////////////////////////
             }
 
             if(string(argv[i]) == "--out-path")                                           //Wenn Parameter Out-Path gesetzt ist
@@ -145,26 +153,33 @@ int main(int argc, char* argv[])
                 interface = OutputPath
                 Description = "Der Pfad wo das Ergebnis hingenriert werden soll (sonst ins aktuelle Verzeichnis)"
                 */
-               if(exclusion[1]!=0)                                                  //Exclusion 1 überprüfen -> verboten
+                ////////////////////////////////////////////////////////////////////////////////////////////////////////
+                vector<string> localExclusions = {"1", "2"};
+
+                for(int i = 0; i < exclusions.size(); i++)
                 {
-                    cout << "--Out-Path ist nicht erlaubt mit Ref 1!" << endl;
+                    for(int j = 0; j < localExclusions.size(); j++)
+                    {
+                        if(to_string(exclusions[i]) == localExclusions[j])
+                        {
+                            cout << "Es wurde eine ungültige Kombination von Argumenten angegeben!" << endl;
+                            exit = 1;
+                        }
+                    }
+                }
+
+                if(noRef == 0)                                                      //Schauen, ob eine der Optionen gesetzt ist, die Ref 1-3 ausschließt
+                {
+                    cout << "Es wurde ein Argument übergeben, dass Ref 1-3 nicht zulässt, --help ist somit verboten!"<< endl;
                     exit = 1;
                 }
-                else if(exclusion[2]!=0)                                            //Exclusion 2 überprüfen -> verboten
+
+                if(exit != 1)
                 {
-                    cout << "--Out-Path ist nicht erlaubt mit Ref 2!" << endl;
-                    exit = 1;
+                    exclusions.push_back(1);
+                    noRef = 1;
                 }
-                else if(exclusion[3]!=0)                                           //Exclusion 3 überprüfen -> verboten
-                {
-                    cout << "--Out-Path ist nicht erlaubt mit Ref 3!" << endl;
-                    exit = 1;
-                }
-                else
-                {
-                    outPath = argv[i+1];                                            //Das "nächste" Argument, das im cmd übergeben wurde, wird als Pfad eingespeichert, da es, sofern die Eingabe korrekt ist, den Pfad beinhaltet                                   
-                    noRef = 1;                                                      //Wenn --out-path gesetzt ist, sind Ref 1-3 excludiert
-                } 
+                ////////////////////////////////////////////////////////////////////////////////////////////////////////
             }
 
             if(string(argv[i]) == "--astyle-path")                                              //Wenn Parameter astyle-path gesetzt ist
@@ -176,26 +191,33 @@ int main(int argc, char* argv[])
                 exclusion = 1, 2, 3
                 Description = "Der Pfad wo die Astyle executable gefunden werden kann"
                 */
-               if(exclusion[1]!=0)                                                  //Exclusion 1 überprüfen -> verboten
+                ////////////////////////////////////////////////////////////////////////////////////////////////////////
+                vector<string> localExclusions = {"1", "2"};
+
+                for(int i = 0; i < exclusions.size(); i++)
                 {
-                    cout << "--astyle-Path ist nicht erlaubt mit Ref 1!" << endl;
+                    for(int j = 0; j < localExclusions.size(); j++)
+                    {
+                        if(to_string(exclusions[i]) == localExclusions[j])
+                        {
+                            cout << "Es wurde eine ungültige Kombination von Argumenten angegeben!" << endl;
+                            exit = 1;
+                        }
+                    }
+                }
+
+                if(noRef == 0)                                                      //Schauen, ob eine der Optionen gesetzt ist, die Ref 1-3 ausschließt
+                {
+                    cout << "Es wurde ein Argument übergeben, dass Ref 1-3 nicht zulässt, --help ist somit verboten!"<< endl;
                     exit = 1;
                 }
-                else if(exclusion[2]!=0)                                            //Exclusion 2 überprüfen -> verboten
+
+                if(exit != 1)
                 {
-                    cout << "--astyle-Path ist nicht erlaubt mit Ref 2!" << endl;
-                    exit = 1;
+                    exclusions.push_back(1);
+                    noRef = 1;
                 }
-                else if(exclusion[3]!=0)                                           //Exclusion 3 überprüfen -> verboten
-                {
-                    cout << "--astyle-Path ist nicht erlaubt mit Ref 3!" << endl;
-                    exit = 1;
-                }
-                else
-                {
-                    astylePath = argv[i+1];                                         //Das "nächste" Argument, das im cmd übergeben wurde, wird als Pfad eingespeichert, da es, sofern die Eingabe korrekt ist, den entsprechenden Pfad beinhaltet
-                    noRef = 1;                                                      //Wenn --astyle-path gesetzt ist, sind Ref 1-3 excludiert
-                }
+                ////////////////////////////////////////////////////////////////////////////////////////////////////////
             }
 
             if(string(argv[i]) == "--sign-per-line")
@@ -209,26 +231,33 @@ int main(int argc, char* argv[])
                 defaultValue = 79
                 Description = "Die Anzahl der Zeichen pro Linie für den Helptext. Ohne Argument wird der Standartwert genommen."
                 */
-                if(exclusion[1]!=0)                                                  //Exclusion 1 überprüfen -> verboten
+                ////////////////////////////////////////////////////////////////////////////////////////////////////////
+                vector<string> localExclusions = {"1", "2"};
+
+                for(int i = 0; i < exclusions.size(); i++)
                 {
-                    cout << "--sign-per-line ist nicht erlaubt mit Ref 1!" << endl;
+                    for(int j = 0; j < localExclusions.size(); j++)
+                    {
+                        if(to_string(exclusions[i]) == localExclusions[j])
+                        {
+                            cout << "Es wurde eine ungültige Kombination von Argumenten angegeben!" << endl;
+                            exit = 1;
+                        }
+                    }
+                }
+
+                if(noRef == 0)                                                      //Schauen, ob eine der Optionen gesetzt ist, die Ref 1-3 ausschließt
+                {
+                    cout << "Es wurde ein Argument übergeben, dass Ref 1-3 nicht zulässt, --help ist somit verboten!"<< endl;
                     exit = 1;
                 }
-                else if(exclusion[2]!=0)                                            //Exclusion 2 überprüfen -> verboten
+
+                if(exit != 1)
                 {
-                    cout << "--sign-per-line ist nicht erlaubt mit Ref 2!" << endl;
-                    exit = 1;
+                    exclusions.push_back(1);
+                    noRef = 1;
                 }
-                else if(exclusion[3]!=0)                                            //Exclusion 3 überprüfen -> verboten
-                {
-                    cout << "--sign-per-line ist nicht erlaubt mit Ref 3!" << endl;
-                    exit = 1;
-                }
-                else
-                {
-                    signPerLine = argv[i+1];                                        //Das "nächste" Argument, das im cmd übergeben wurde, wird als Pfad eingespeichert, da es, sofern die Eingabe korrekt ist, den entsprechenden Zahlenwert beinhaltet
-                    noRef = 1;                                                      //Wenn --sign-per-line gesetzt ist, sind Ref 1-3 excludiert
-                }
+                ////////////////////////////////////////////////////////////////////////////////////////////////////////
             }
         
             if(string(argv[i]) == "--n" || string(argv[i]) == "--only-if-newer")
@@ -240,25 +269,33 @@ int main(int argc, char* argv[])
                 exclusion = 1, 2, 3
                 Description = "Generiert nur wenn die Eingangsdatei neuer ist wie die bereits generierte"
                 */
-                if(exclusion[1]!=0)                                                  //Exclusion 1 überprüfen -> verboten 
+                ////////////////////////////////////////////////////////////////////////////////////////////////////////
+                vector<string> localExclusions = {"1", "2"};
+
+                for(int i = 0; i < exclusions.size(); i++)
                 {
-                    cout << "--only-if-newer ist nicht erlaubt mit Ref 1!" << endl;
+                    for(int j = 0; j < localExclusions.size(); j++)
+                    {
+                        if(to_string(exclusions[i]) == localExclusions[j])
+                        {
+                            cout << "Es wurde eine ungültige Kombination von Argumenten angegeben!" << endl;
+                            exit = 1;
+                        }
+                    }
+                }
+
+                if(noRef == 0)                                                      //Schauen, ob eine der Optionen gesetzt ist, die Ref 1-3 ausschließt
+                {
+                    cout << "Es wurde ein Argument übergeben, dass Ref 1-3 nicht zulässt, --help ist somit verboten!"<< endl;
                     exit = 1;
                 }
-                else if(exclusion[2]!=0)                                            //Exclusion 2 überprüfen -> verboten
+
+                if(exit != 1)
                 {
-                    cout << "--only-if-newer ist nicht erlaubt mit Ref 2!" << endl;
-                    exit = 1;
+                    exclusions.push_back(1);
+                    noRef = 1;
                 }
-                else if(exclusion[3]!=0)                                            //Exclusion 3 überprüfen -> verboten
-                {
-                    cout << "--only-if-newer ist nicht erlaubt mit Ref 3!" << endl;
-                    exit = 1;
-                }
-                else
-                {
-                    noRef = 1;                                                      //Wenn --only-if-newer gesetzt ist, sind Ref 1-3 excludiert
-                }
+                ////////////////////////////////////////////////////////////////////////////////////////////////////////
             } 
         
             if(string(argv[i]) == "--no-format")
@@ -270,25 +307,33 @@ int main(int argc, char* argv[])
                 Description = "Erzeugte Datei wird nicht formatiert
                 */
 
-                if(exclusion[1]!=0)                                                  //Exclusion 1 überprüfen -> verboten
+                ////////////////////////////////////////////////////////////////////////////////////////////////////////
+                vector<string> localExclusions = {"1", "2"};
+
+                for(int i = 0; i < exclusions.size(); i++)
                 {
-                    cout << "--no-format ist nicht erlaubt mit Ref 1!" << endl;
+                    for(int j = 0; j < localExclusions.size(); j++)
+                    {
+                        if(to_string(exclusions[i]) == localExclusions[j])
+                        {
+                            cout << "Es wurde eine ungültige Kombination von Argumenten angegeben!" << endl;
+                            exit = 1;
+                        }
+                    }
+                }
+
+                if(noRef == 0)                                                      //Schauen, ob eine der Optionen gesetzt ist, die Ref 1-3 ausschließt
+                {
+                    cout << "Es wurde ein Argument übergeben, dass Ref 1-3 nicht zulässt, --help ist somit verboten!"<< endl;
                     exit = 1;
                 }
-                else if(exclusion[2]!=0)                                             //Exclusion 2 überprüfen -> verboten
+
+                if(exit != 1)
                 {
-                    cout << "--no-format ist nicht erlaubt mit Ref 2!" << endl;
-                    exit = 1;
+                    exclusions.push_back(1);
+                    noRef = 1;
                 }
-                else if(exclusion[3]!=0)                                             //Exclusion 3 überprüfen -> verboten
-                {
-                    cout << "--no-format ist nicht erlaubt mit Ref 3!" << endl;
-                    exit = 1;
-                }
-                else
-                {
-                    noRef = 1;                                                      //Wenn --no-format gesetzt ist, sind Ref 1-3 excludiert
-                }
+                ////////////////////////////////////////////////////////////////////////////////////////////////////////
             }
         
             if(string(argv[i]) == "--parse-only")
@@ -301,25 +346,33 @@ int main(int argc, char* argv[])
                 exclusion = 1, 2
                 Description = "Parst die Datei einmal und beendet das Programm
                 */
-                if(exclusion[1]!=0)                                                  //Exclusion 1 überprüfen -> verboten
+                ////////////////////////////////////////////////////////////////////////////////////////////////////////
+                vector<string> localExclusions = {"1", "2"};
+
+                for(int i = 0; i < exclusions.size(); i++)
                 {
-                    cout << "--parse-only ist nicht erlaubt mit Ref 1!" << endl;
-                    exit = 1;
-                }
-                else if(exclusion[2]!=0)                                            //Exclusion 2 überprüfen -> verboten
-                {
-                    cout << "--parse-only ist nicht erlaubt mit Ref 2!" << endl;
-                    exit = 1;
-                }
-                else
-                {
-                    exclusion[3] = 1;                                               //Exclusion-Array setzen, für spätere überprüfungen bei anderen Argumenten
-                    if(noRef == 1)                                                  //Schauen, ob eine der Optionen gesetzt ist, die Ref 1-3 ausschließt
+                    for(int j = 0; j < localExclusions.size(); j++)
                     {
-                        cout << "Es wurde ein Argument übergeben, dass Ref 1-3 nicht zulässt, --parse-only ist somit verboten!"<< endl;
-                        exit = 1;
-                    } 
+                        if(to_string(exclusions[i]) == localExclusions[j])
+                        {
+                            cout << "Es wurde eine ungültige Kombination von Argumenten angegeben!" << endl;
+                            exit = 1;
+                        }
+                    }
                 }
+
+                if(noRef == 0)                                                      //Schauen, ob eine der Optionen gesetzt ist, die Ref 1-3 ausschließt
+                {
+                    cout << "Es wurde ein Argument übergeben, dass Ref 1-3 nicht zulässt, --help ist somit verboten!"<< endl;
+                    exit = 1;
+                }
+
+                if(exit != 1)
+                {
+                    exclusions.push_back(1);
+                    noRef = 1;
+                }
+                ////////////////////////////////////////////////////////////////////////////////////////////////////////
             }
         }
 
