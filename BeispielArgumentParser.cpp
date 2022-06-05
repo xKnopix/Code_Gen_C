@@ -30,8 +30,8 @@ void ParseXML()
 
 int main(int argc, char* argv[])
 {                                                               
-    vector<int> exclusions = {0,0,0,0};                                                       //Speichern, welche Ref-Nummern gesetzt sind, um die Exclusions abfragen zu können
-    int exit = 0;                                                                       //Wenn exit während der Überprüfung auf 1 gesetzt wird, wird das Programm nach der Überprüfung beendet
+    vector<int> exclusions;                                                      //Speichern, welche Ref-Nummern gesetzt sind, um die Exclusions abfragen zu können
+    int exitArg = 0;                                                                       //Wenn exit während der Überprüfung auf 1 gesetzt wird, wird das Programm nach der Überprüfung beendet
     int noRef = -1;                                                                     //-1: nicht gesetzt, 0: Die Optionen Ref 1-3 (gesamt) dürfen vorkommen, 1: Die Optionen Ref 1-3(gesamt) dürfen nicht vorkommen
 
     string outPath;                                                                     //String für das Argument für den Ausgabe Pfad
@@ -49,6 +49,7 @@ int main(int argc, char* argv[])
         {
             //cout << argv[i] << endl;                                                    
 
+            ////////////////
             if(string(argv[i]) == "--h" || string(argv[i]) == "--help")                 //Wenn Parameter --help oder --h gesetzt ist
             {
                 /*
@@ -60,7 +61,7 @@ int main(int argc, char* argv[])
                 Description = "Diese Hilfe ausgeben und beenden"
                 */
                 ////////////////////////////////////////////////////////////////////////////////////////////////////////
-                vector<string> localExclusions = {"1", "2"};
+                vector<string> localExclusions = {"1", "2"}; //DONE//
 
                 for(int i = 0; i < exclusions.size(); i++)
                 {
@@ -69,18 +70,18 @@ int main(int argc, char* argv[])
                         if(to_string(exclusions[i]) == localExclusions[j])
                         {
                             cout << "Es wurde eine ungültige Kombination von Argumenten angegeben!" << endl;
-                            exit = 1;
+                            exitArg = 1;
                         }
                     }
-                }
+                }                                                                                                   //DONE//
 
                 if(noRef == 0)                                                      //Schauen, ob eine der Optionen gesetzt ist, die Ref 1-3 ausschließt
                 {
                     cout << "Es wurde ein Argument übergeben, dass Ref 1-3 nicht zulässt, --help ist somit verboten!"<< endl;
-                    exit = 1;
+                    exitArg = 1;
                 }
 
-                if(exit != 1)
+                if(exitArg != 1)
                 {
                     exclusions.push_back(1);
                     noRef = 1;
@@ -90,12 +91,12 @@ int main(int argc, char* argv[])
                 if(exclusion[2]!=0)                                                      //Exclusion 2 überprüfen -> verboten
                 {
                     cout << "--help ist nicht erlaubt mit Ref 2!" << endl;
-                    exit = 1;
+                    exitArg = 1;
                 }
                 else if(exclusion[3]!=0)                                                 //Exclusion 3 überprüfen -> verboten
                 {
                     cout << "--help ist nicht erlaubt mit Ref 3!" << endl;
-                    exit = 1;
+                    exitArg = 1;
                 }
                 else
                 {    
@@ -125,7 +126,7 @@ int main(int argc, char* argv[])
                         if(to_string(exclusions[i]) == localExclusions[j])
                         {
                             cout << "Es wurde eine ungültige Kombination von Argumenten angegeben!" << endl;
-                            exit = 1;
+                            exitArg = 1;
                         }
                     }
                 }
@@ -133,10 +134,10 @@ int main(int argc, char* argv[])
                 if(noRef == 0)                                                      //Schauen, ob eine der Optionen gesetzt ist, die Ref 1-3 ausschließt
                 {
                     cout << "Es wurde ein Argument übergeben, dass Ref 1-3 nicht zulässt, --help ist somit verboten!"<< endl;
-                    exit = 1;
+                    exitArg = 1;
                 }
 
-                if(exit != 1)
+                if(exitArg != 1)
                 {
                     exclusions.push_back(1);
                     noRef = 1;
@@ -163,7 +164,7 @@ int main(int argc, char* argv[])
                         if(to_string(exclusions[i]) == localExclusions[j])
                         {
                             cout << "Es wurde eine ungültige Kombination von Argumenten angegeben!" << endl;
-                            exit = 1;
+                            exitArg = 1;
                         }
                     }
                 }
@@ -171,10 +172,10 @@ int main(int argc, char* argv[])
                 if(noRef == 0)                                                      //Schauen, ob eine der Optionen gesetzt ist, die Ref 1-3 ausschließt
                 {
                     cout << "Es wurde ein Argument übergeben, dass Ref 1-3 nicht zulässt, --help ist somit verboten!"<< endl;
-                    exit = 1;
+                    exitArg = 1;
                 }
 
-                if(exit != 1)
+                if(exitArg != 1)
                 {
                     exclusions.push_back(1);
                     noRef = 1;
@@ -201,7 +202,7 @@ int main(int argc, char* argv[])
                         if(to_string(exclusions[i]) == localExclusions[j])
                         {
                             cout << "Es wurde eine ungültige Kombination von Argumenten angegeben!" << endl;
-                            exit = 1;
+                            exitArg = 1;
                         }
                     }
                 }
@@ -209,10 +210,10 @@ int main(int argc, char* argv[])
                 if(noRef == 0)                                                      //Schauen, ob eine der Optionen gesetzt ist, die Ref 1-3 ausschließt
                 {
                     cout << "Es wurde ein Argument übergeben, dass Ref 1-3 nicht zulässt, --help ist somit verboten!"<< endl;
-                    exit = 1;
+                    exitArg = 1;
                 }
 
-                if(exit != 1)
+                if(exitArg != 1)
                 {
                     exclusions.push_back(1);
                     noRef = 1;
@@ -241,7 +242,7 @@ int main(int argc, char* argv[])
                         if(to_string(exclusions[i]) == localExclusions[j])
                         {
                             cout << "Es wurde eine ungültige Kombination von Argumenten angegeben!" << endl;
-                            exit = 1;
+                            exitArg = 1;
                         }
                     }
                 }
@@ -249,14 +250,19 @@ int main(int argc, char* argv[])
                 if(noRef == 0)                                                      //Schauen, ob eine der Optionen gesetzt ist, die Ref 1-3 ausschließt
                 {
                     cout << "Es wurde ein Argument übergeben, dass Ref 1-3 nicht zulässt, --help ist somit verboten!"<< endl;
-                    exit = 1;
+                    exitArg = 1;
                 }
 
-                if(exit != 1)
+                if(exitArg != 1)
                 {
                     exclusions.push_back(1);
                     noRef = 1;
                 }
+                if(i+1 != argc)
+                {
+                    signPerLine = argv[i+1];
+                }
+
                 ////////////////////////////////////////////////////////////////////////////////////////////////////////
             }
         
@@ -279,7 +285,7 @@ int main(int argc, char* argv[])
                         if(to_string(exclusions[i]) == localExclusions[j])
                         {
                             cout << "Es wurde eine ungültige Kombination von Argumenten angegeben!" << endl;
-                            exit = 1;
+                            exitArg = 1;
                         }
                     }
                 }
@@ -287,10 +293,10 @@ int main(int argc, char* argv[])
                 if(noRef == 0)                                                      //Schauen, ob eine der Optionen gesetzt ist, die Ref 1-3 ausschließt
                 {
                     cout << "Es wurde ein Argument übergeben, dass Ref 1-3 nicht zulässt, --help ist somit verboten!"<< endl;
-                    exit = 1;
+                    exitArg = 1;
                 }
 
-                if(exit != 1)
+                if(exitArg != 1)
                 {
                     exclusions.push_back(1);
                     noRef = 1;
@@ -317,7 +323,7 @@ int main(int argc, char* argv[])
                         if(to_string(exclusions[i]) == localExclusions[j])
                         {
                             cout << "Es wurde eine ungültige Kombination von Argumenten angegeben!" << endl;
-                            exit = 1;
+                            exitArg = 1;
                         }
                     }
                 }
@@ -325,10 +331,10 @@ int main(int argc, char* argv[])
                 if(noRef == 0)                                                      //Schauen, ob eine der Optionen gesetzt ist, die Ref 1-3 ausschließt
                 {
                     cout << "Es wurde ein Argument übergeben, dass Ref 1-3 nicht zulässt, --help ist somit verboten!"<< endl;
-                    exit = 1;
+                    exitArg = 1;
                 }
 
-                if(exit != 1)
+                if(exitArg != 1)
                 {
                     exclusions.push_back(1);
                     noRef = 1;
@@ -356,7 +362,7 @@ int main(int argc, char* argv[])
                         if(to_string(exclusions[i]) == localExclusions[j])
                         {
                             cout << "Es wurde eine ungültige Kombination von Argumenten angegeben!" << endl;
-                            exit = 1;
+                            exitArg = 1;
                         }
                     }
                 }
@@ -364,10 +370,10 @@ int main(int argc, char* argv[])
                 if(noRef == 0)                                                      //Schauen, ob eine der Optionen gesetzt ist, die Ref 1-3 ausschließt
                 {
                     cout << "Es wurde ein Argument übergeben, dass Ref 1-3 nicht zulässt, --help ist somit verboten!"<< endl;
-                    exit = 1;
+                    exitArg = 1;
                 }
 
-                if(exit != 1)
+                if(exitArg != 1)
                 {
                     exclusions.push_back(1);
                     noRef = 1;
@@ -382,7 +388,7 @@ int main(int argc, char* argv[])
             if(outPath.at(0) == '-' && outPath.at(1) == '-')
             {
             cout << "--out-path benötigt den Ausgabepfad als Argument!" << endl;
-            exit = 1;
+                exitArg = 1;
             }
         }
 
@@ -391,7 +397,7 @@ int main(int argc, char* argv[])
            if(astylePath.at(0) == '-' && astylePath.at(1) == '-')
             {
                 cout << "--astyle-path benötigt den Pfad zu astyle als Argument!" << endl;
-                exit = 1;
+                exitArg = 1;
             } 
         }
         
@@ -401,20 +407,22 @@ int main(int argc, char* argv[])
         {
         int signPerLineInt = std::stol(signPerLine);
         //std::cout << i << std::endl;
+        cout <<"sPLInt: " << signPerLineInt << endl;
         }
         catch (std::invalid_argument const &e)
         {
             std::cout << "Bad input: std::invalid_argument thrown for sign-per-line" << std::endl;
-            exit = 1;
+            exitArg = 1;
         }
         catch (std::out_of_range const &e)
         {
             std::cout << "Integer overflow: std::out_of_range thrown for sign-per-line" << std::endl;
-            exit = 1;
+            exitArg = 1;
         }
+        cout << "Code after Catch" << endl;
 
         //schauen, ob exit auf 1 gesetzt wurde, Fehlermeldung sollte jeweils, bevor exit auf 1 gesetzt wird ausgegeben worden sein
-        if(exit > 0)
+        if(exitArg > 0)
         {
             cout << "EXIT" << endl;
             return 0;
