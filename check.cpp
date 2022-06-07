@@ -7,12 +7,10 @@ int check::check_data(xml_parser::GetOptSetup data){
     status = check_sourcefile(data.sourceFileName);
     status = check_namespace(data.nameSpace);
     status = check_classname(data.className);
-    check_overall_description(data.overAllDescription);
-    /*
-    check_sample_usage(data.sampleUsage);
-    check_options(data.options);
-    */
-   return status;
+    status = check_overall_description(data.overAllDescription);
+    status = check_sample_usage(data.sampleUsage);
+    status = check_options(data.options);
+    return status;
 }
 
 int check::check_author(xml_parser::Author author){
@@ -76,12 +74,33 @@ int check::check_classname(xml_parser::ClassName cname){
     return status;
 }
 int check::check_overall_description(xml_parser::OverAllDescription ovdes){
-    cout << ovdes.block.size() << endl;
+    if (ovdes.block.size() == 0 || ovdes.block[0].content.empty()){
+        cout << "Es wurde keine Beschreibung angegeben (optional) Bsp:<OverAllDescription><Block>\"\"</Block></OverAllDescription>" << endl;
+    }
+    for (int i = 0; i < ovdes.block.size(); i++){
+        check_block(ovdes.block[i]);
+    }
+    return 1;
 }
-/*
-int check::check_block(xml_parser::Block){}
-int check::check_sample_usage(xml_parser::SampleUsage){}
-int check::check_sample(xml_parser::SampleUsage){}
+int check::check_block(xml_parser::Block bl){
+    if(bl.content.empty()){
+        cout << "Es wurde ein leerer <Block></Block> angegeben dieser sollte befuellt werden(optional)" << endl;
+    }
+}
+int check::check_sample_usage(xml_parser::SampleUsage sample){
+    if (sample.sample.size() == 0 || sample.sample[0].content.empty()){
+        cout << "Es wurde kein Beispiel angegeben (optional) Bsp:<SampleUsage><Sample>\"\"</Sample></SampleUsage>" << endl;
+    }
+    for (int i = 0; i < sample.sample.size(); i++){
+        check_sample(sample.sample[i]);
+    }
+    return 1;
+}
+int check::check_sample(xml_parser::Sample sp){
+    if(sp.content.empty()){
+        cout << "Es wurde ein leerer <Sample></Sample> Tag angegeben dieser sollte befuellt werden(optional)" << endl;
+    }  
+    return 1;  
+}
 int check::check_options(xml_parser::Options){}
 int check::check_option(xml_parser::Option){}
-*/
