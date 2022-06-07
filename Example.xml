@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <GetOptSetup SignPerLine="79">
-	<Author Name="Thomas Staudacher, Andreas Maus" Phone="07541-77-961003" Mail="thomas.staudacher@zf.com, andreas.maus@zf.com" />
+	<Author Name= "Michael" Phone="1" Mail="M@gmail.com" />
 	<HeaderFileName>options.h</HeaderFileName>
 	<SourceFileName>options.cpp</SourceFileName>
 	<NameSpace>DHBW</NameSpace>
-	<ClassName>COptionParser</ClassName>
+	<ClassName>Test</ClassName>
 	<OverAllDescription>
 		<Block>Erstellt einen Rumpf zum einlesen von Argumente aus der Kommandozeile.</Block>
 		<Block>Es kann sowohl mit innenliegenden Container wie externer Klassenanbindung eine Datenhaltung erfolgen.</Block>

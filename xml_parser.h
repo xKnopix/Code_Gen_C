@@ -83,7 +83,9 @@ public:
         SampleUsage sampleUsage;
         Options options;
     };
+
     GetOptSetup GetDataStrctFromXML(std::string filename);
+private:
     DOMDocument* GetDomDocument(std::string xmlName);
     GetOptSetup ParseDOMToDataStrct(DOMDocument* doc);
     Author GetAuthor(DOMDocument* doc);
