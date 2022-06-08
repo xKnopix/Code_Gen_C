@@ -18,7 +18,7 @@ private:
     int check_sample_usage(xml_parser::SampleUsage);
     int check_sample(xml_parser::Sample);
     int check_options(xml_parser::Options);
-    int check_option(xml_parser::Option);
+    int check_option(xml_parser::Option, int i);
 };
 
 #endif

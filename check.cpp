@@ -102,5 +102,25 @@ int check::check_sample(xml_parser::Sample sp){
     }  
     return 1;  
 }
-int check::check_options(xml_parser::Options){}
-int check::check_option(xml_parser::Option){}
+int check::check_options(xml_parser::Options opti){
+    int status = 1;
+    if(opti.option.size() == 0){
+        cout << "Es wurde keine Option zum Parsen hinterlegt!" << endl;
+        return -1;
+    }
+    for (int i = 0; i < opti.option.size(); i++){
+        int s = check_option(opti.option[i], i);
+        if(!s){
+            status = -1;
+        }
+    }
+    return status;
+    
+}
+int check::check_option(xml_parser::Option opt, int i){
+    if(opt.shortOpt.empty() && opt.longOpt.empty()){
+        cout << "In Option " << i+1 << " muss das Argument \"ShortOpt=\" oder \"LongOpt=\" gesetzt sein" << endl;
+        return -1;
+    }
+    return 1;
+}
