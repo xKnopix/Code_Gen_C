@@ -4,7 +4,15 @@
 using namespace std;
 void printHelp()
 {
-    cout << "Diese Hilfe ausgeben und beenden" << endl;
+    cout << "[--help]: Diese Hilfe ausgeben und beenden" << endl;
+    cout << "[--version]: Gibt die Version des Programms aus und beendet" << endl;
+    cout << "[--out-path]: Der Pfad wo das Ergebnis hingenriert werden soll (sonst ins aktuelle Verzeichnis)" << endl;
+    cout << "[--astyle-path]: Der Pfad wo die Astyle executable gefunden werden kann" << endl;
+    cout << "[--sign-per-line]: Die Anzahl der Zeichen pro Linie f├╝r den Helptext. Ohne Argument wird der Standartwert geno
+    mmen." << endl;
+    cout << "[--only-if-newer]: Generiert nur wenn die Eingangsdatei neuer ist wie die bereits generierte" << endl;
+    cout << "[--no-format]: Erzeugte Datei wird nicht formatiert" << endl;
+    cout << "[--parse-only]: Parst die Datei einmal und beendet das Programm" << endl;
 }
 void printVersion()
 {
@@ -92,7 +100,6 @@ int main(int argc, char* argv[])
             }
             if(exitArg != 1)
             {
-                exclusions.push_back();
                 noRef = 1;
             }
             if(i+1 != argc)
@@ -120,7 +127,6 @@ int main(int argc, char* argv[])
             }
             if(exitArg != 1)
             {
-                exclusions.push_back();
                 noRef = 1;
             }
             if(i+1 != argc)
@@ -148,7 +154,6 @@ int main(int argc, char* argv[])
             }
             if(exitArg != 1)
             {
-                exclusions.push_back();
                 noRef = 1;
             }
             if(i+1 != argc)
@@ -176,7 +181,6 @@ int main(int argc, char* argv[])
             }
             if(exitArg != 1)
             {
-                exclusions.push_back();
                 noRef = 1;
             }
         }
@@ -200,7 +204,6 @@ int main(int argc, char* argv[])
             }
             if(exitArg != 1)
             {
-                exclusions.push_back();
                 noRef = 1;
             }
         }
