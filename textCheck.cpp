@@ -2,18 +2,6 @@
 #include <iostream>
 #include <Vector>
 using namespace std;
-void printHelp()
-{
-    cout << "[--help]: Diese Hilfe ausgeben und beenden" << endl;
-    cout << "[--version]: Gibt die Version des Programms aus und beendet" << endl;
-    cout << "[--out-path]: Der Pfad wo das Ergebnis hingenriert werden soll (sonst ins aktuelle Verzeichnis)" << endl;
-    cout << "[--astyle-path]: Der Pfad wo die Astyle executable gefunden werden kann" << endl;
-    cout << "[--sign-per-line]: Die Anzahl der Zeichen pro Linie f├╝r den Helptext. Ohne Argument wird der Standartwert geno
-    mmen." << endl;
-    cout << "[--only-if-newer]: Generiert nur wenn die Eingangsdatei neuer ist wie die bereits generierte" << endl;
-    cout << "[--no-format]: Erzeugte Datei wird nicht formatiert" << endl;
-    cout << "[--parse-only]: Parst die Datei einmal und beendet das Programm" << endl;
-}
 void printVersion()
 {
     cout << "Gibt die Version des Programms aus und beendet" << endl;
@@ -281,7 +269,7 @@ int main(int argc, char* argv[])
     {
         if(string(argv[i]) == "--h" || string(argv[i]) == "--help")
         {
-            printHelp();
+            cout << "Es wurde der Parameter --help erfolgreich ├╝bergeben!" << endl;
         }
         if(string(argv[i]) == "--v" || string(argv[i]) == "--version")
         {
