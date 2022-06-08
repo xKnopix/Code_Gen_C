@@ -75,8 +75,6 @@ xml_parser::Options xml_parser::GetOptions(DOMDocument* doc)
                 }
             }
             o.addOption(option);
-        }else{
-            cout << "Es wurden keine Informationen zu Optionen hinterlegt!" << endl;
         }
     }
     return o;
