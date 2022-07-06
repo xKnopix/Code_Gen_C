@@ -1,3 +1,4 @@
+#include "CodeGenerator.h"
 #include <iostream>
 #include <vector>
 #include <fstream>
@@ -6,10 +7,6 @@
 
 using namespace std;
 
-
-
-class Code
-{
     /*
      * Diese Klasse soll dazu dienen, einfacher und überischtlicher
      * ein Programm zu schreiben, welches als output c++ Code hat
@@ -21,106 +18,17 @@ class Code
      *
      */
 
-    struct internalMethod                                                                                               ////internalMethod////
-    {                                                                                                                   //In diesem Struct werden Informationen zu einer internen Methode gespeichert
-        string methodName = "";                                                                                             ////Methodname////
-                                                                                                                            //der Name der Methode, welcher auch beim Aufruf genutzt wird, OHNE KLAMMERN
-        string methodCode = "";                                                                                             ////methodCode////
-                                                                                                                            //der Code, welcher von der Methode ausgeführt werden soll
-        string methodEnd = "}\n";                                                                                           ////methodEnd////
-                                                                                                                            //String für die Lesbarkeit, beinhaltet lediglich "}" um die Methode abzuschließen
-        string returnType = "void";
-
-        string expectedVars = "";
-    };
-
     //Deklaration aller Strings, die benötigt werden, um den c++ Code zu generieren
-    string  headerFileName = "newFile.hpp",                                                                                  ////headerFileName////
-                                                                                                                        //der Name des zu generierenden H-Datei
-
-            sourceFileName = "noSourceFileName",
-
-            nameSpace = "noNameSpace",
-
-            className = "noClassname",
-
-            signPerLine = "79",
-
-            helpMethod = "",
-
-            sampleUsage = "",
-
-            author = "anonymous",
-
-            boolIsSetName = "",
-            additionalParamVarName = "",
-
-
-
-
-
-            printHelpMethodCode,                                                                                        ////printHelpMethodCode////
-                                                                                                                        //Code, der in die printHelp Methode eingesetzt wird
-
-            includesString =        "#include <string>\n"                                                               ////includesString////
-                                    "#include <iostream>\n"                                                             //Alle includes, die eventuell benötigt werden,
-                                    "#include <Vector>\n"                                                               //im generierten Argument-Parser
-                                    ""
-                                    "using namespace std;\n",
-
-            globalVariables =       "",
-            variableDefinitions =   "vector<int> exclusions;\n"                                                         /////variableDefinitions////
-                                    "int exitArg = 0;\n"                                                                //Hier wird der String mit allen Variablen Deklarationen gespeichert
-                                    "int noRef = -1;\n"
-                                    "string refValues[63];\n",
-
-            returnIfWrongArgs =     "if(exitArg > 0)\n"                                                                 ////returnIfWrongArgs*////
-                                    "{\n"                                                                               //If-Else Code, um das den Argument-Parser zu beenden,
-                                    "cout << \"EXIT\" << endl;\n"                                                       //falls beim parsen der Argumente ein Fehler aufgetreten
-                                    "return;\n"                                                                         //ist
-                                    "}\n",
-
-            exclusionCheck,                                                                                             ////exclusionCheck////
-                                                                                                                        //String, in welchem eine For-Schleife gespeichert wird,
-                                                                                                                        //in welcher Alle übergebenen Argumente durchgegangen werden
-                                                                                                                        //und auf ungültige kombinationen geprüft werden
-
-            pathRequiredCheck,                                                                                          ////pathRequiredCheck///
-                                                                                                                        //Wenn bei einem Argument hasArguments auf 'required' gesetzt ist
-                                                                                                                        //wird in diesem String Code gespeichert, der überprüft, ob das nächste
-                                                                                                                        //Argument mit '--' anfängt, wenn ja, wird das Programm abgebrochen und
-                                                                                                                        //es gibt einen fehler aus, da nur die 'Haupt-Argumente' mit '--' anfangen sollen
-
-            convertToInt,                                                                                               ////convertToInt////
-                                                                                                                        //Hier wird der Code gespeichert, in welchem in einem Try-Catch-Block
-                                                                                                                        //probiert wird, den übergebenen String in einen Integer umzuwandeln
-
-            code,                                                                                                       ////code////
-                                                                                                                        //String, in dem der zu generierende Code bei einer Instanziierung von Code()
-                                                                                                                        //gespeichert wird
-
-            forLoopAllArgsStart = "for(int i = 1; i<argc; i++)\n{\n",                                                   ////forLoopAllArgs[Start/Close]////
-            forLoopAllArgsClose = "}\n",                                                                                //Für bessere Lesbarkeit generierte Strings, welche den Anfang und das Ende
-                                                                                                                        //einer For-Schleife enthalten, welche einemal alle, beim Programmaufruf
-                                                                                                                        //übergebenen Argumente durch-iteriert
-
-            handleArgs = forLoopAllArgsStart;                                                                           ////handleArgs////
+                                                                               ////handleArgs////
                                                                                                                         //In handleArgs wird eine 2. For-Schliefe gespeichert, welche nach dem
                                                                                                                         //die Argumente auf ihre Korrektheit überprüft wurden nochmals alle Argumente
                                                                                                                         //durch-iteriert und nun auf die übergebenen Argumente reagiert.
 
-    //Deklaration aller Vektoren
-    vector<internalMethod>  internalMethods;                                                                            ////internalMethods////
-                                                                                                                        //In diesem Vector werden alle Instanzen des Structs internalMethod gespeichert
-    internalMethod iM = internalMethod();
-
-
-public:
-    Code()
+    Code::Code()
     {
 
     }
-    Code(string sourceFileName, string headerFileName, string nameSpace, string className,  string signPerLine, string sampleUsage, string author)
+    Code::Code(string sourceFileName, string headerFileName, string nameSpace, string className,  string signPerLine, string sampleUsage, string author)
     {
         Code::headerFileName = headerFileName;
         Code::nameSpace = nameSpace;
@@ -130,7 +38,7 @@ public:
         Code::author = author;
     }
     //Alle Methoden mit dem Rückgabewert 'void'
-    void createInt(const string& varName, int value = 0)
+    void Code::createInt(const string& varName, int value)
     {
         /*
          * Es wird Code erstellt, welcher einen neuen Integer mit dem übergebenen namen und Wert erstellt
@@ -142,7 +50,7 @@ public:
         code += newLine;
     }
 
-    void setInt(const string& varName, int newValue)
+    void Code::setInt(const string& varName, int newValue)
     {
         /*
          * Es wird Code generiert, welcher einem bereits bestehenden Integer einen neuen Wert zuweist
@@ -153,7 +61,7 @@ public:
         code += varName + " = " + to_string(newValue) + " ;\n";
     }
 
-    void addToInt(const string& varName, int addValue = 0)
+    void Code::addToInt(const string& varName, int addValue)
     {
         /*
          * Es wird Code generiert, welcher einem bereits bestehenden Integer einen neuen Wert zuweist
@@ -164,7 +72,7 @@ public:
         code += varName + " += " + to_string(addValue) + " ;\n";
     }
 
-    void createString(const string& varName, string value = "")
+    void Code::createString(const string& varName, string value)
     {
         /*
          * Es wird Code erstellt, welcher einen neuen String mit dem übergebenen namen und Wert erstellt
@@ -176,7 +84,7 @@ public:
         code += newLine;
     }
 
-    void setString(const string& varName, string newValue)
+    void Code::setString(const string& varName, string newValue)
     {
         /*
          * Es wird Code generiert, welcher einem bereits bestehenden String einen neuen Wert zuweist
@@ -187,7 +95,7 @@ public:
         code += varName + " = \"" + newValue + "\" ;\n";
     }
 
-    void addToString(const string& varName, string addValue = "")
+    void Code::addToString(const string& varName, string addValue)
     {
         /*
          * Es wird Code generiert, welcher einem bereits bestehenden Integer einen neuen Wert zuweist
@@ -198,7 +106,7 @@ public:
         code += varName + " += " + addValue + " ;\n";
     }
 
-    void COUT(const string& message)
+    void Code::COUT(const string& message)
     {
         /*
          * Es wird Code generiert, welcher den übergebenen String auf der Konsole ausgibt
@@ -208,7 +116,7 @@ public:
        code += "cout << \"" + message + "\" << endl;\n";
     }
 
-    void addText(string s)
+    void Code::addText(string s)
     {
         /*
          * Der übergebene String wird an den gesamt Code angehängt, benutzung auf eigene Gefahr :)
@@ -218,7 +126,7 @@ public:
         code += s;
     }
 
-    void addSingleComment(string comment)
+    void Code::addSingleComment(string comment)
     {
         /*
          * Es wird Code generiert, welcher den übergebenen String als Kommentar an den gesamt Code anhängt
@@ -228,7 +136,7 @@ public:
         code += "//" + comment;
     }
 
-    void addMultiLineComment(string comment)
+    void Code::addMultiLineComment(string comment)
     {
         /*
          * Es wird Code generiert, welcher den übergebenen String als Mehrzeilenkommentar an den gesamt Code anhängt
@@ -238,7 +146,7 @@ public:
         code += "/*\n" + comment + "\n*/\n";
     }
 
-    string getCode()
+    string Code::getCode()
     {
         /*
          *Der generierte Code-String wird zurückgegeben
@@ -247,7 +155,7 @@ public:
         return code;
     }
 
-    void startForLoop(string s)
+    void Code::startForLoop(string s)
     {
         /*
          * Es wird Code generiert, um eine for-Schleife im gesamt Code zu starten
@@ -257,7 +165,7 @@ public:
         code += "for(" + s + ")\n{\n";
     }
 
-    void endForLoop(){
+    void Code::endForLoop(){
         /*
          * NUR FÜR LESBARKEIT!
          * Es wird eine geschweifte Klammer angehängt, um eine begonnene for-Schleife zu schließen
@@ -265,7 +173,7 @@ public:
         code += "}\n";
     }
 
-    void startIf(string s)
+    void Code::startIf(string s)
     {
         /*
          * Es wird Code generiert, um eine if-Verzweigung im gesamt Code zu starten
@@ -274,7 +182,7 @@ public:
         code += "if(" + s + ")\n{\n";
     }
 
-    void endIf()
+    void Code::endIf()
     {
         /*
          * NUR FÜR LESBARKEIT!
@@ -283,7 +191,7 @@ public:
         code += "}\n";
     }
 
-    string finalCode()
+    string Code::finalCode()
     {
         /*
          * Der Finale Code wird erstellt und zurückgegeben
@@ -315,7 +223,7 @@ public:
                     "}\n";
     }
 
-    string createInternalMethods()
+    string Code::createInternalMethods()
     {
         /*
          * Der Vektor mit allen Instanzen des Structs internalMethod wird durch-iteriert
@@ -389,7 +297,7 @@ public:
         return methods.code;
     }
 
-    vector<string> split (string str, char seperator)
+    vector<string> Code::split (string str, char seperator)
     {
         /*
          * Custom Split - Methode, um einen String bei einem bestimmten Char zu trennen
@@ -418,17 +326,17 @@ public:
         return subStrings;
     }
 
-    void addArgument(string ref = "",
-                     string shortOpt = "",
-                     string longOpt = "",
-                     string exclusion = "",                     //DONE
-                     string connectToInternalMethod = "",
-                     string description = "",
-                     string interface = "",
-                     string hasArguments = "",                  //DONE
-                     string convertTo = "",
-                     string defaultValue = "",                   //DONE
-                     string connectToExternalMethod = ""
+    void Code::addArgument(string ref,
+                     string shortOpt,
+                     string longOpt,
+                     string exclusion,                     //DONE
+                     string connectToInternalMethod,
+                     string description,
+                     string interface,
+                     string hasArguments,                  //DONE
+                     string convertTo,
+                     string defaultValue,                   //DONE
+                     string connectToExternalMethod
                                 )                                                                          //Funktion, die alle Argumente aus der xml annimmt
     {
         /*
@@ -916,9 +824,11 @@ public:
         handleArgs += actOnArgs.code;
     }
 
-};
 
-int main() {
+
+/*
+
+    int main() {
     /*
     std::cout << "Hello, World!" << std::endl;
 
@@ -930,7 +840,7 @@ int main() {
     code.setString("testStr", "Welt");
      */
 
-    Code code = Code("FileName", "HeaderFileName", "parse", "getOptsParse", "79", "SampleUsage Here", "DER AUTOR");
+/*    Code code = Code("FileName", "HeaderFileName", "parse", "getOptsParse", "79", "SampleUsage Here", "DER AUTOR");
 
     code.startForLoop("int i = 1; i<argc; i++");                                                                     //Durch jedes Argument einmal durch
 
@@ -959,4 +869,7 @@ int main() {
 
 
     return 0;
-}
+    }
+
+
+*/
