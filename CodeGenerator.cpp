@@ -2,6 +2,7 @@
 #include <vector>
 #include <fstream>
 #include <string>
+#include <algorithm>
 
 using namespace std;
 
@@ -28,11 +29,35 @@ class Code
                                                                                                                             //der Code, welcher von der Methode ausgeführt werden soll
         string methodEnd = "}\n";                                                                                           ////methodEnd////
                                                                                                                             //String für die Lesbarkeit, beinhaltet lediglich "}" um die Methode abzuschließen
+        string returnType = "void";
+
+        string expectedVars = "";
     };
 
     //Deklaration aller Strings, die benötigt werden, um den c++ Code zu generieren
-    string  hFileName = "newFile.hpp",                                                                                  ////hFileName////
+    string  headerFileName = "newFile.hpp",                                                                                  ////headerFileName////
                                                                                                                         //der Name des zu generierenden H-Datei
+
+            sourceFileName = "noSourceFileName",
+
+            nameSpace = "noNameSpace",
+
+            className = "noClassname",
+
+            signPerLine = "79",
+
+            helpMethod = "",
+
+            sampleUsage = "",
+
+            author = "anonymous",
+
+            boolIsSetName = "",
+            additionalParamVarName = "",
+
+
+
+
 
             printHelpMethodCode,                                                                                        ////printHelpMethodCode////
                                                                                                                         //Code, der in die printHelp Methode eingesetzt wird
@@ -43,14 +68,16 @@ class Code
                                     ""
                                     "using namespace std;\n",
 
+            globalVariables =       "",
             variableDefinitions =   "vector<int> exclusions;\n"                                                         /////variableDefinitions////
                                     "int exitArg = 0;\n"                                                                //Hier wird der String mit allen Variablen Deklarationen gespeichert
-                                    "int noRef = -1;\n",
+                                    "int noRef = -1;\n"
+                                    "string refValues[63];\n",
 
             returnIfWrongArgs =     "if(exitArg > 0)\n"                                                                 ////returnIfWrongArgs*////
                                     "{\n"                                                                               //If-Else Code, um das den Argument-Parser zu beenden,
                                     "cout << \"EXIT\" << endl;\n"                                                       //falls beim parsen der Argumente ein Fehler aufgetreten
-                                    "return 0;\n"                                                                       //ist
+                                    "return;\n"                                                                         //ist
                                     "}\n",
 
             exclusionCheck,                                                                                             ////exclusionCheck////
@@ -85,10 +112,25 @@ class Code
     //Deklaration aller Vektoren
     vector<internalMethod>  internalMethods;                                                                            ////internalMethods////
                                                                                                                         //In diesem Vector werden alle Instanzen des Structs internalMethod gespeichert
+    internalMethod iM = internalMethod();
+
 
 public:
+    Code()
+    {
+
+    }
+    Code(string sourceFileName, string headerFileName, string nameSpace, string className,  string signPerLine, string sampleUsage, string author)
+    {
+        Code::headerFileName = headerFileName;
+        Code::nameSpace = nameSpace;
+        Code::className = className;
+        Code::signPerLine = signPerLine;
+        Code::sampleUsage = sampleUsage;
+        Code::author = author;
+    }
     //Alle Methoden mit dem Rückgabewert 'void'
-    void createInt(string varName, int value = 0)
+    void createInt(const string& varName, int value = 0)
     {
         /*
          * Es wird Code erstellt, welcher einen neuen Integer mit dem übergebenen namen und Wert erstellt
@@ -100,7 +142,7 @@ public:
         code += newLine;
     }
 
-    void setInt(string varName, int newValue)
+    void setInt(const string& varName, int newValue)
     {
         /*
          * Es wird Code generiert, welcher einem bereits bestehenden Integer einen neuen Wert zuweist
@@ -111,7 +153,7 @@ public:
         code += varName + " = " + to_string(newValue) + " ;\n";
     }
 
-    void addToInt(string varName, int addValue = 0)
+    void addToInt(const string& varName, int addValue = 0)
     {
         /*
          * Es wird Code generiert, welcher einem bereits bestehenden Integer einen neuen Wert zuweist
@@ -122,7 +164,7 @@ public:
         code += varName + " += " + to_string(addValue) + " ;\n";
     }
 
-    void createString(string varName, string value = "")
+    void createString(const string& varName, string value = "")
     {
         /*
          * Es wird Code erstellt, welcher einen neuen String mit dem übergebenen namen und Wert erstellt
@@ -134,7 +176,7 @@ public:
         code += newLine;
     }
 
-    void setString(string varName, string newValue)
+    void setString(const string& varName, string newValue)
     {
         /*
          * Es wird Code generiert, welcher einem bereits bestehenden String einen neuen Wert zuweist
@@ -145,7 +187,7 @@ public:
         code += varName + " = \"" + newValue + "\" ;\n";
     }
 
-    void addToString(string varName, string addValue = "")
+    void addToString(const string& varName, string addValue = "")
     {
         /*
          * Es wird Code generiert, welcher einem bereits bestehenden Integer einen neuen Wert zuweist
@@ -156,7 +198,7 @@ public:
         code += varName + " += " + addValue + " ;\n";
     }
 
-    void COUT(string message)
+    void COUT(const string& message)
     {
         /*
          * Es wird Code generiert, welcher den übergebenen String auf der Konsole ausgibt
@@ -245,22 +287,32 @@ public:
     {
         /*
          * Der Finale Code wird erstellt und zurückgegeben
-         * Es werden hierfür alle entstandenen zwischen Strings zusmmangefügt und zurückgegeben
+         * Es werden hierfür alle entstandenen zwischen Strings zusammengefügt und zurückgegeben
          */
         ///:return: den gesamt Code {string}
 
         return includesString +
-               createInternalMethods() +
-               "int main(int argc, char* argv[])\n{\n" +
-               variableDefinitions +
-               forLoopAllArgsStart +
-               exclusionCheck +
-               forLoopAllArgsClose +
-               pathRequiredCheck +
-               convertToInt +
-               returnIfWrongArgs +
-               handleArgs +
-               "}\nreturn 0;\n}\n";;
+               "namespace " + nameSpace + "\n" +
+               "{\n" +
+                    "class " + className + "\n" +
+                    "{\n" +
+                        globalVariables +
+                        createInternalMethods() +
+                        "void parse(int argc, char* argv[])\n"
+                        "{\n" +
+                            variableDefinitions +
+
+                            forLoopAllArgsStart +
+                                exclusionCheck +
+                            forLoopAllArgsClose +
+
+                            pathRequiredCheck +
+                            convertToInt +
+                            returnIfWrongArgs +
+                            handleArgs +"}\n"
+                        "}\n"
+                    "};\n"
+                    "}\n";
     }
 
     string createInternalMethods()
@@ -277,23 +329,52 @@ public:
 
         string methodNames;
 
+        ///////////////////////myPrint für signPerLine erstellen
+
+        internalMethod myPrint = internalMethod();
+        myPrint.methodName = "myPrint";
+        myPrint.methodCode =
+                "int lineLength = newLineChecker;\n"
+                "for (auto i = 0; i != myString.size(); ++i)\n"
+                "{\n"
+                "if (i == newLineChecker)\n"
+                "{\n"
+                "newLineChecker += lineLength;\n"
+                "cout << endl;\n"
+                "}\n"
+
+                "cout << myString[i];\n"
+                "}\n";
+
+        methods.addText("void " + myPrint.methodName + "(string myString, int newLineChecker)\n{\n");
+        methods.addText(myPrint.methodCode);
+        methods.addText(myPrint.methodEnd);
+
         for(int i = 0; i < internalMethods.size(); i++)
         {
             internalMethod iM = internalMethods[i];
 
             if(iM.methodName == "printHelp")                                                                            ////HelpMethode wird erstellt
             {
-                iM.methodCode = printHelpMethodCode;
+                printHelpMethodCode += "myPrint(\"Author: " + author + "\", " + signPerLine + ");\n";
+                iM.methodCode = "cout<<\"" + sampleUsage + "\"<< endl;\n" + printHelpMethodCode;
+
+                methods.addText("protected: virtual void " + iM.methodName + "(int signPerLine)\n{\n");
+                methods.addText(iM.methodCode);
+                methods.addText(iM.methodEnd);
+
+                methodNames += iM.methodName + "();\n";
+
             }
-
-
-            methods.addText("void " + iM.methodName + "()\n{\n");
+            else
+            {
+            methods.addText(iM.returnType + " " + iM.methodName + "(" + iM.expectedVars + ")\n{\n");
             methods.addText(iM.methodCode);
             methods.addText(iM.methodEnd);
 
             methodNames += iM.methodName + "();\n";                                                                     /////////////////////////////////////////////////////////////////////////
-                                                                                                                        ////H Datei
-            ofstream MyFile(hFileName);
+            }                                                                                                           ////H Datei
+            ofstream MyFile(headerFileName);
 
             // Write to the file
             MyFile << "Some hFile Text...";
@@ -346,8 +427,9 @@ public:
                      string interface = "",
                      string hasArguments = "",                  //DONE
                      string convertTo = "",
-                     string defaultValue = ""                   //DONE
-                                )                                                                                       //Funktion, die alle Argumente aus der xml annimmt
+                     string defaultValue = "",                   //DONE
+                     string connectToExternalMethod = ""
+                                )                                                                          //Funktion, die alle Argumente aus der xml annimmt
     {
         /*
          * Es wird zunächst ein String generiert, welcher in eine if-Abfrage eingefügt werden kann, um zu überprüfen,
@@ -358,15 +440,39 @@ public:
          * Anschließend wird Code generiert, welcher das Argument selbst "registriert" für zukünftige
          * exclusion - checks.
          */
+        string reference;
+        size_t found = longOpt.find('-');
+        if(found != string::npos)
+        {
+            reference = longOpt;
+            reference.erase(remove(reference.begin(), reference.end(), '-'), reference.end()); //remove A from string
+            cout << "lOpt: "<< longOpt <<", reference: " << reference << endl;
+            cout << "found '-' in " << longOpt << endl;
+        }
+        else if(interface != ""){
+            reference = interface;
+        }
+        else if(longOpt != "")
+        {
+            reference = longOpt;
+        }
+        else if(shortOpt != "")
+        {
+            reference = shortOpt;
+        }
+        if(reference == "")
+        {
+            cerr << "Fehler beim Parsen der xml-Datei, etwas scheint mit shortOpt, longOpt und interface nicht in Ordnung zu sein! bei: " << longOpt << endl;
+        }
 
         string codeArgParse;
         string ifStateStart;
         string nameCheckBool;
 
-                                                                                                                        ////Generierung des bool-Strings
+        boolIsSetName = "bool" + interface;                                                                                                                ////Generierung des bool-Strings
         if(longOpt != "" && shortOpt != "")                                                                             //wenn longOpt und shortOpt gesetzt sind
         {
-            nameCheckBool = "string(argv[i]) == \"--" + shortOpt + "\" || string(argv[i]) == \"--" + longOpt + "\"";
+            nameCheckBool = "string(argv[i]) == \"-" + shortOpt + "\" || string(argv[i]) == \"--" + longOpt + "\"";
         }
         else if(longOpt != "")                                                                                          //Wenn nur longOpt gesetzt ist
         {
@@ -374,11 +480,11 @@ public:
         }
         else if(shortOpt != "")                                                                                         //wenn nur shortOpt gesetzt ist
         {
-            nameCheckBool = "string(argv[i]) == \"--" + shortOpt + "\"";
+            nameCheckBool = "string(argv[i]) == \"-" + shortOpt + "\"";
         }
                                                                                                                         ///////////////////////////////////////////////////
 
-        ifStateStart = "if(" + nameCheckBool +")\n{";                                                                   //if-Statement String build
+        ifStateStart = "if(" + nameCheckBool +")\n{\n";                                                                   //if-Statement String build
 
         if(exclusion != "")                                                                                             ////exclusions////
         {
@@ -388,7 +494,7 @@ public:
                                                                                                                             //dieser String wird jeweils an einem Komma getrennt und die einzelnen Elemente
                                                                                                                             //in dem Vector exclusions als Integer gespeichert
 
-            vector<string> exclusionStrings = split(exclusion, ',');                                                    //Der String wird aufgetrennt
+            vector<string> exclusionStrings = split(exclusion, ',');                                        //Der String wird aufgetrennt
 
             Code exclCode = Code();                                                                                     //Es wird eine instanz der Klasse Code erzeugt, um den zu generierenden Code
                                                                                                                         //lesbarer, bzw. übersichtlicher erstellen zu können
@@ -410,26 +516,51 @@ public:
 
             tempCode += "};\n";
                                                                                                                         //Code zur Vektor-Generierung ist erstellt
-            exclCode.addText(tempCode);                                                                                 //Code wird in in den Code zur Exclusion-Überprüfung eingefügt
+            exclCode.addText(tempCode);                                                                              //Code wird in in den Code zur Exclusion-Überprüfung eingefügt
 
-            exclCode.startForLoop("int i = 0; i < exclusions.size(); i++");                                             //Code wird mit Einrückungen lesbar eingefügt
+            exclCode.startForLoop("int i = 0; i < exclusions.size(); i++");                                          //Code wird mit Einrückungen lesbar eingefügt
                 exclCode.startForLoop("int j = 0; j < localExclusions.size(); j++");
                     exclCode.startIf("to_string(exclusions[i]) == localExclusions[j]");
-                        exclCode.addText("cout << \"Es wurde eine ungültige Kombination von Argumenten angegeben!\" << endl;\n");
+                        //exclCode.addText("cout << \"Es wurde eine ungültige Kombination von Argumenten angegeben!\" << endl;\n");
+
+            if(interface != "")
+            {
+                exclCode.addText("cerr << \"" + interface + " und \"<< refValues[exclusions[i]]<<\" sind nicht zusammen erlaubt!\" << endl;\n");
+            }///// IF Abfrage ob Interface, longOpt oder shortOpt -> Ausgabe: x nicht erlauibt mit refValues[ref]
+            else if (longOpt != "")
+            {
+                exclCode.addText("cerr << \"" + longOpt + " und \"<< refValues[exclusions[i]]<<\" sind nicht zusammen erlaubt!\" << endl;\n");
+            }
+            else
+            {
+                exclCode.addText("cerr <<  \"" + shortOpt + " und \"<< refValues[exclusions[i]]<<\" sind nicht zusammen erlaubt!\" << endl;\n");
+            }
+
                         exclCode.addText("exitArg = 1;\n");
                     exclCode.endIf();
                 exclCode.endForLoop();
             exclCode.endForLoop();
 
-            exclCode.startIf("noRef == 0");
-                exclCode.addText("cout << \"Es wurde ein Argument übergeben, dass Ref 1-3 nicht zulässt, --help ist somit verboten!\"<< endl;\n");
+            exclCode.startIf("noRef == 1");
+                //exclCode.addText("cerr << \"Es wurde ein Argument übergeben, dass Ref 1-3 nicht zulässt, --help ist somit verboten!\"<< endl;\n");
                 exclCode.addText("exitArg = 1;\n");
             exclCode.endIf();
 
             exclCode.startIf("exitArg != 1");
-            if(ref != "")
+            if(!ref.empty())
             {
                 exclCode.addText("exclusions.push_back(" + ref + ");\n");                                               //Das eigene Argument wird "registriert"
+                if(interface != "")
+                {
+                    exclCode.addText("refValues[" + ref + "] = \"" + interface + "\";");
+                } else if (longOpt != "")
+                {
+                    exclCode.addText("refValues[" + ref + "] = \"" + longOpt + "\";");
+                } else
+                {
+                    exclCode.addText("refValues[" + ref + "] = \"" + shortOpt + "\";");
+                }
+
             }
                 exclCode.addText("noRef = 1;\n");
             exclCode.endIf();
@@ -439,7 +570,7 @@ public:
 
             if(hasArguments == "Required" || hasArguments == "optional")
             {
-                exclusionCheck +="if(i+1 != argc)\n{\n" + interface + "Str = argv[i+1];\n}\n";                          //Code Generierung um zusätzliche Argumente einzulesen, falls diese Möglich sein sollen
+                exclusionCheck +="if(i+1 != argc)\n{\n" + reference + "Str = argv[i+1];\n}\n";                          //Code Generierung um zusätzliche Argumente einzulesen, falls diese Möglich sein sollen
             }
         exclusionCheck += "}\n";
 
@@ -453,16 +584,16 @@ public:
             Code pathCheckCode = Code();                                                                                ////pathCheckCode////
                                                                                                                         //Neue Instanz con Code() um zu generierenden Code zwischenzuspeichern
 
-            variableDefinitions += "string " + interface + "Str;\n";
+            variableDefinitions += "string " + reference + "Str;\n";
 
-            pathCheckCode.startIf("!" + interface + "Str.empty() && " + interface + "Str.length() > 1");
-                pathCheckCode.startIf("(" + interface + "Str.at(0) == '-' && " + interface + "Str.at(1) == '-') || " + interface + "Str.length() <= 1");
+            pathCheckCode.startIf("!" + reference + "Str.empty() && " + reference + "Str.length() > 1");
+                pathCheckCode.startIf("(" + reference + "Str.at(0) == '-' && " + reference + "Str.at(1) == '-') || " + reference + "Str.length() <= 1");
                     pathCheckCode.addText("cout << \"--" + longOpt + " benötigt einen Pfad als Argument!\" << endl;\n");
                     pathCheckCode.addText("exitArg = 1;\n");
                 pathCheckCode.endIf();
             pathCheckCode.endIf();
 
-            pathCheckCode.startIf(interface +"Str.length() == 1");
+            pathCheckCode.startIf(reference +"Str.length() == 1");
                 pathCheckCode.addText("cout << \"" +longOpt +" benötigt einen Pfad als Argument!\" << endl;\n");
                 pathCheckCode.addText("exitArg = 1;\n");
             pathCheckCode.endIf();
@@ -470,15 +601,27 @@ public:
             pathRequiredCheck += pathCheckCode.getCode();
         }
                                                                                                                         /////////////////////////////////////////////////////////////////
-        if(defaultValue != "")                                                                                          //Code Generierung, falls es default Parameter gibt
+        if(!defaultValue.empty())                                                                                          //Code Generierung, falls es default Parameter gibt
         {
-            variableDefinitions += "string " + interface + "Str = \"" + defaultValue + "\";\n";
+            variableDefinitions += "string " + reference + "Str = \"" + defaultValue + "\";\n";
         }
                                                                                                                         //////////////////////////////////////////////////////////////////
                                                                                                                         //Code Generierung für convertToInt mit try-catch
         if(convertTo == "Integer")
         {
-            string convertInt = "try\n{\nint " + interface + "Int = stol(" + interface + "Str);\n}\n";
+            //variableDefinitions += "int " + interface + "Int = 0;\n";
+            if(defaultValue != "")
+            {
+                globalVariables += "int " + reference + "Int = " + defaultValue + ";\n";
+                additionalParamVarName = interface + "Int";
+            } else
+            {
+                globalVariables += "int " + reference + "Int = 0;\n";
+                additionalParamVarName = interface + "Int";
+            }
+
+            string convertInt = "try\n{\n" + reference + "Int = stol(" + reference + "Param);\n}\n";
+            additionalParamVarName = reference + "Int";
 
             convertInt += "catch (invalid_argument const &e)\n{\n";
             convertInt += "cout << \"Bad input: invalid_argument thrown for " + longOpt + ", using default Value if given\" << endl;\n";
@@ -491,33 +634,286 @@ public:
             convertToInt += convertInt;
         }                                                                                                               ////////////////////////////////////////////////////////////////////////
 
+
+        if(convertTo == "bool")
+        {
+            if(defaultValue != "")
+            {
+                globalVariables += "bool " + reference + "Bool = " + defaultValue + ";\n";
+                additionalParamVarName = interface + "Bool";
+            } else
+            {
+                globalVariables += "int " + reference + "Int = 0;\n";
+                additionalParamVarName = interface + "Bool";
+            }
+
+            string convertBool = "try\n{\n" + reference + "Bool = " + reference + "Param;\n}\n";
+            additionalParamVarName = reference + "Bool";
+
+            convertBool += "catch (exception &e)\n{\n";
+            convertBool += "cout << \"Parameter bool von " + longOpt + "konnte nicht konvertiert werden, using default Value if given\" << endl;\n";
+            convertBool += "exitArg = 1;\n}\n";
+        }
+
+                                                                                       //zum gesamt Code hinzufügen
+
+            if(!shortOpt.empty() && !longOpt.empty())
+            {
+                printHelpMethodCode += "myPrint(\"-" + shortOpt + ", --" + longOpt + "\\n\", signPerLine);\n";
+                printHelpMethodCode += "myPrint(\"" + description + "\\n\\n\", " + signPerLine + ");\n";
+            }                                                                                                           //Die Description wird an einen globalen string hinzugefügt für die printHelp Methode
+
+            if(shortOpt.empty() && !longOpt.empty())
+            {
+                printHelpMethodCode += "myPrint(\"--" + longOpt + "\\n\", signPerLine);\n";
+                printHelpMethodCode += "myPrint(\"\t" + description + "\\n\\n\", signPerLine);\n";
+            }
+
+            if(!shortOpt.empty() && longOpt.empty())
+            {
+                printHelpMethodCode += "myPrint(\"--" + shortOpt + "\\n\", " + signPerLine + ");\n";
+                printHelpMethodCode += "myPrint(\"\\t\" + description + \\n\\n\", " + signPerLine + ");\n";
+            }
+
+            if(!interface.empty())
+            {
+                globalVariables += "bool bool"+ interface +";\n";
+                internalMethod iM;
+                if(longOpt != "")
+                {
+                    iM.methodName = "isSet" + longOpt;
+                }
+                else
+                {
+                    iM.methodName = "isSet" + shortOpt;
+                }
+                if(longOpt == "out-path" || longOpt == "only-if-newer" || longOpt == "astyle-path" || longOpt == "sign-per-line" || longOpt == "no-format")
+                {
+                    if(shortOpt != "")
+                    {
+                        iM.methodName = "isSet" + shortOpt; //Da durch das - im Namen Probleme auftreten
+                    } else
+                    {
+                        iM.methodName = "isSet" + interface; //Da durch das - im Namen Probleme auftreten
+                    }
+
+                }
+
+                iM.methodCode = "return bool" + interface + ";\n";
+                iM.returnType = "bool";
+
+                internalMethods.push_back(iM);
+
+
+
+                if(hasArguments != "")
+                {
+                    if(hasArguments == "Required")
+                    {
+                        globalVariables += "string " + reference + "Param;\n";
+                        additionalParamVarName = interface + "Param";
+                    }
+
+                    if(hasArguments == "optional")
+                    {
+                        globalVariables += "string " + reference + "Param = \"" + defaultValue +"\";\n";
+                        additionalParamVarName = interface + "Param";
+                    }
+                    if(convertTo == "Integer")
+                    {
+                        additionalParamVarName = reference + "Int";
+                        internalMethod iM;
+                        iM.returnType = "int";
+                        iM.methodCode = "return " + reference + "Int;\n";
+
+                        if(longOpt != "")
+                        {
+                            iM.methodName = "getValueOf" + longOpt;
+                        }
+                        else
+                        {
+                            iM.methodName = "getValueOf" + shortOpt;
+                        }
+                        if(longOpt == "out-path" || longOpt == "only-if-newer" || longOpt == "astyle-path" || longOpt == "sign-per-line" || longOpt == "no-format")
+                        {
+                            if(shortOpt != "")
+                            {
+                                iM.methodName = "getValueOf" + shortOpt; //Da durch das - im Namen Probleme auftreten
+                            } else
+                            {
+                                iM.methodName = "getValueOf" + interface; //Da durch das - im Namen Probleme auftreten
+                            }
+
+                        }
+                        internalMethods.push_back(iM);
+                    }
+
+                    else if(convertTo == "Bool")
+
+                    {
+                        additionalParamVarName = interface + "Bool";
+                        internalMethod iM;
+                        iM.returnType = "int";
+                        iM.methodCode = "return bool" + interface + ";";
+
+                        if(longOpt != "")
+                        {
+                            iM.methodName = "getValueOf" + longOpt;
+                        }
+                        else
+                        {
+                            iM.methodName = "getValueOf" + shortOpt;
+                        }
+                        if(longOpt == "out-path" || longOpt == "only-if-newer" || longOpt == "astyle-path" || longOpt == "sign-per-line" || longOpt == "no-format")
+                        {
+                            if(shortOpt != "")
+                            {
+                                iM.methodName = "getValueOf" + shortOpt; //Da durch das - im Namen Probleme auftreten
+                            } else
+                            {
+                                iM.methodName = "getValueOf" + interface; //Da durch das - im Namen Probleme auftreten
+                            }
+
+                        }
+                        internalMethods.push_back(iM);
+                    }
+                    else
+                    {
+                        additionalParamVarName = interface + "Str";
+                        internalMethod iM;
+                        iM.returnType = "string";
+                        iM.methodCode = "return " + reference + "Param;\n";
+                        additionalParamVarName = reference + "Param";
+                        if(longOpt == "out-path" || longOpt == "only-if-newer" || longOpt == "astyle-path" || longOpt == "sign-per-line" || longOpt == "no-format")
+                        {
+                            if(shortOpt != "")
+                            {
+                                iM.methodName = "getValueOf" + shortOpt; //Da durch das - im Namen Probleme auftreten
+                            }
+                            else if(interface != "")
+                            {
+                                iM.methodName = "getValueOf" + interface; //Da durch das - im Namen Probleme auftreten
+                            }
+
+                        }
+                        else if(longOpt != "")
+                        {
+                            iM.methodName = "getValueOf" + longOpt;
+                            variableDefinitions += "bool boolIsSet" + longOpt + ";\n";
+
+                        }
+                        else
+                        {
+                            iM.methodName = "getValueOf" + shortOpt;
+                            variableDefinitions += "bool boolIsSet" + shortOpt;
+                        }
+
+                        internalMethods.push_back(iM);
+                    }
+
+                }
+
+            }
+
+            if(interface == "" && connectToInternalMethod == "" && connectToExternalMethod == "")
+            {
+                internalMethod iM;
+                iM.returnType = "bool";
+
+                if(longOpt != "")
+                {
+                    iM.methodName = "getValueOf" + longOpt;
+                    boolIsSetName = "boolIsSet" + longOpt;
+                }
+                else
+                {
+                    iM.methodName = "getValueOf" + shortOpt;
+                    boolIsSetName = "boolIsSet" + shortOpt;
+                }
+                if(longOpt == "out-path" || longOpt == "only-if-newer" || longOpt == "astyle-path" || longOpt == "sign-per-line" || longOpt == "no-format")
+                {
+                    if(shortOpt != "")
+                    {
+                        iM.methodName = "getValueOf" + shortOpt; //Da durch das - im Namen Probleme auftreten
+                        boolIsSetName = "boolIsSet" + shortOpt;
+                    }
+                    else
+                    {
+                        iM.methodName = "getValueOf" + interface; //Da durch das - im Namen Probleme auftreten
+                        boolIsSetName = "boolIsSet" + interface;
+                    }
+                    iM.methodCode = "return " + boolIsSetName + ";";
+                }
+                internalMethods.push_back(iM);
+
+            }
+
         Code actOnArgs = Code();
 
         actOnArgs.startIf(nameCheckBool);
-            if(connectToInternalMethod != "")                                                                           /////////////////////////////////////////////////////////////////////////
-            {                                                                                                           //Code Generierung für connectToInternalMethod
-                internalMethod iM = internalMethod();
+        if(!connectToInternalMethod.empty())                                                                           /////////////////////////////////////////////////////////////////////////
+        {                                                                                                           //Code Generierung für connectToInternalMethod
+            internalMethod iM = internalMethod();
 
-                iM.methodName = connectToInternalMethod;
-                iM.methodCode = "cout << \"" + description + "\" << endl;\n";
-                //cout << "METHOD NAME IN I_M: " << iM.methodName << endl;
+            iM.methodName = connectToInternalMethod;
+            iM.methodCode = "cout << \"" + description + "\" << endl;\n";
+            //cout << "METHOD NAME IN I_M: " << iM.methodName << endl;
 
-                internalMethods.push_back(iM);
-                actOnArgs.addText(connectToInternalMethod + "();\n");
-            }
-            else
+
+
+            if(connectToInternalMethod == "printHelp")
             {
-                actOnArgs.addText("cout << \"Es wurde der Parameter --" + longOpt + " erfolgreich übergeben!\" << endl;\n");//Feedback print, wenn ein Argument angegeben wurde
-                if(hasArguments != "")
+                internalMethods.push_back(iM);
+                actOnArgs.addText(connectToInternalMethod + "(signperlineInt);\n"); ///############################HARD CODED nicht gut
+                if(!interface.empty())
                 {
-                    actOnArgs.addText("cout << \"Zusätzliche Argumente:\" << " + interface + "Str << endl;\n");         //Zusätzliche Argumente zur Überprüfung mit ausgeben
+                    actOnArgs.addText("bool" + interface + " = true;\n");
                 }
             }
-            actOnArgs.endIf();
+            else if (hasArguments != "")
+            {
+                if(additionalParamVarName.at(additionalParamVarName.back()) == 't')
+                {
+                    iM.expectedVars = "int " + additionalParamVarName;
+                }
+                if(additionalParamVarName.at(additionalParamVarName.back()) == 'l')
+                {
+                    iM.expectedVars = "bool " + additionalParamVarName;
+                }
+                if(additionalParamVarName.at(additionalParamVarName.back()) == 'r')
+                {
+                    iM.expectedVars = "string " + additionalParamVarName;
+                }
+                if(additionalParamVarName.at(additionalParamVarName.back()) == 'm')
+                {
+                    iM.expectedVars = "string " + additionalParamVarName;
+                }
+                internalMethods.push_back(iM);
+                actOnArgs.addText(connectToInternalMethod + "(" + additionalParamVarName  + ");\n");
+                if(!interface.empty())
+                {
+                    actOnArgs.addText("bool" + interface + " = true;\n");
+                }
+            }
 
-            handleArgs += actOnArgs.code;                                                                               //zum gesamt Code hinzufügen
+        }
+        else
+        {
+            actOnArgs.addText("cout << \"Es wurde der Parameter --" + longOpt + " erfolgreich übergeben!\" << endl;\n");//Feedback print, wenn ein Argument angegeben wurde
+            if(interface != "")
+            {
+                actOnArgs.addText("bool" + interface + " = true;\n");
+            }
+            if(!hasArguments.empty())
+            {
+                actOnArgs.addText("cout << \"Zusätzliche Argumente:\" << " + reference + "Str << endl;\n");      //Zusätzliche Argumente zur Überprüfung mit ausgeben
+                actOnArgs.addText(reference + "Param = " + reference + "Str;\n");
+                actOnArgs.addText((boolIsSetName + " = true;"));
+            }
+        }
+        actOnArgs.endIf();
 
-        printHelpMethodCode += "cout << \"[--" + longOpt + "]: " + description + "\" << endl;\n";                       //Die Description wird an einen globalen string hinzugefügt für die printHelp Methode
+        handleArgs += actOnArgs.code;
     }
 
 };
@@ -534,18 +930,18 @@ int main() {
     code.setString("testStr", "Welt");
      */
 
-    Code code = Code();
+    Code code = Code("FileName", "HeaderFileName", "parse", "getOptsParse", "79", "SampleUsage Here", "DER AUTOR");
 
-    code.startForLoop("int i = 1; i<argc; i++");                                                                        //Durch jedes Argument einmal durch
+    code.startForLoop("int i = 1; i<argc; i++");                                                                     //Durch jedes Argument einmal durch
 
-        code.addArgument("1", "h", "help", "2,3", "", "Diese Hilfe ausgeben und beenden", "", "", "", "");
-        code.addArgument("2", "v", "version", "1,3", "printVersion", "Gibt die Version des Programms aus und beendet", "Version", "", "", "");
-        code.addArgument("", "", "out-path", "1,2,3", "", "Der Pfad wo das Ergebnis hingenriert werden soll (sonst ins aktuelle Verzeichnis)", "OutputPath", "Required", "", "");
-        code.addArgument("", "", "astyle-path", "1,2,3", "", "Der Pfad wo die Astyle executable gefunden werden kann", "AstylePath", "Required", "", "");
-        code.addArgument("", "", "sign-per-line", "1,2,3", "", "Die Anzahl der Zeichen pro Linie für den Helptext. Ohne Argument wird der Standartwert genommen.", "SignPerLine", "optional", "Integer", "79");
-        code.addArgument("", "n", "only-if-newer", "1,2,3", "", "Generiert nur wenn die Eingangsdatei neuer ist wie die bereits generierte", "OnlyIfNewer", "", "", "");
-        code.addArgument("", "", "no-format", "1,2,3", "", "Erzeugte Datei wird nicht formatiert", "NoFormat", "", "", "");
-        code.addArgument("3", "", "parse-only", "1,2", "ParseXML", "Parst die Datei einmal und beendet das Programm", "", "", "", "");
+        code.addArgument("1", "h", "help",         "2,3",   "printHelp", "Diese Hilfe ausgeben und beenden", "", "", "", "");
+        code.addArgument("2", "v", "version",      "1,3",   "printVersion", "Gibt die Version des Programms aus und beendet", "Version", "", "", "");
+        code.addArgument("",  "",  "out-path",     "1,2,3", "",         "Der Pfad wo das Ergebnis hingeneriert werden soll (sonst ins aktuelle Verzeichnis)", "OutputPath", "Required", "", "");
+        code.addArgument("",  "",  "astyle-path",  "1,2,3", "",         "Der Pfad wo die Astyle executable gefunden werden kann", "AstylePath", "Required", "", "");
+        code.addArgument("",  "",  "sign-per-line","1,2,3", "",         "Die Anzahl der Zeichen pro Linie für den Helptext. Ohne Argument wird der Standartwert genommen.", "SignPerLine", "optional", "Integer", "79");
+        code.addArgument("",  "n", "only-if-newer","1,2,3", "",         "Generiert nur wenn die Eingangsdatei neuer ist wie die bereits generierte", "OnlyIfNewer", "", "", "");
+        code.addArgument("",  "",  "no-format",    "1,2,3", "",         "Erzeugte Datei wird nicht formatiert", "NoFormat", "", "", "");
+        code.addArgument("3", "",  "parse-only",   "1,2",   "ParseXML", "Parst die Datei einmal und beendet das Programm", "", "", "", "");
     code.endForLoop();                                                                                                  //For Schleife fertig, der  rest kommt in finalCode()
 
     cout << "CODE: " << endl << code.finalCode();                                                                       //Code ausgeben
