@@ -14,8 +14,5 @@ int main() {
     check c;
     c.check_data(data);
 
-
-    Code code;
-
-    code.parse("newFile");
+    return 0;
 }
