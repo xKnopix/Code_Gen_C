@@ -37,7 +37,7 @@ class Code
     };
 
     //Deklaration aller Strings, die benötigt werden, um den c++ Code zu generieren
-            string  headerFileName = "newFile.hpp",                                                                                  ////headerFileName////
+            string headerFileName = "newFile.h",                                                                                  ////headerFileName////
                                                                                                                         //der Name des zu generierenden H-Datei
 
             sourceFileName = "noSourceFileName",
@@ -69,9 +69,9 @@ class Code
 
             includesString =        "#include <string>\n"                                                               ////includesString////
                                     "#include <iostream>\n"                                                             //Alle includes, die eventuell benötigt werden,
-                                    "#include <Vector>\n"                                                               //im generierten Argument-Parser
-                                    ""
-                                    "using namespace std;\n",
+                                    "#include <Vector>\n",                                                               //im generierten Argument-Parser
+
+            namespaceString =       "using namespace std;\n",
 
             globalVariables =       "",
             variableDefinitions =   "vector<int> exclusions;\n"                                                         /////variableDefinitions////

@@ -1,10 +1,10 @@
 #include <string>
 #include <iostream>
 #include <Vector>
-#include <newFile.h>
+#include "newFile.h"
 
 using namespace std;
-namespace noNameSpace {
+
     void noClassname::myPrint(string myString, int newLineChecker) {
         int lineLength = newLineChecker;
         for (auto i = 0; i != myString.size(); ++i) {
@@ -91,12 +91,12 @@ namespace noNameSpace {
         return boolNoFormat;
     }
 
-    virtual void unknownOption(const string &unknown_option) {
+    virtual void noClassname::unknownOption(const string &unknown_option) {
         cout << "Unbekannter Parameter!" << endl;
         exit(EXIT_SUCCESS);
     }
 
-    void parse(int argc, char *argv[]) {
+    void noClassname::parse(int argc, char *argv[]) {
         vector<int> exclusions;
         int exitArg = 0;
         int noRef = -1;
@@ -279,11 +279,9 @@ namespace noNameSpace {
         }
         if (!signperlineStr.empty() && signperlineStr.length() > 1) {
             if ((signperlineStr.at(0) == '-' && signperlineStr.at(1) == '-') || signperlineStr.length() <= 1) {
-                cout << "zu --sign-per-line wurde kein zusätzliches Argument übergeben, default-Wert: "
-                79
-                wird
-                übernommen
-                ! << endl;
+                cout
+                        << "zu --sign-per-line wurde kein zusätzliches Argument übergeben, default-Wert: 79 wird übernommen!"
+                        << endl;
             }
         }
         try {
@@ -348,5 +346,4 @@ namespace noNameSpace {
             }
             unknownOption(argv[i]);
         }
-    };
-}
+    }

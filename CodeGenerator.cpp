@@ -8,7 +8,7 @@
 using namespace std;
 
 /*
- * Diese Klasse soll dazu dienen, einfacher und überischtlicher
+ * Diese Klasse soll dazu dienen, einfacher und übersichtlicher
  * ein Programm zu schreiben, welches als output c++ Code hat
  *
  *
@@ -206,7 +206,14 @@ string Code::finalHeaderCode()
 {
     string defString = Code::capitalizeString(headerFileName);
 
-    string methodNames = "";
+    for(int i = 0; i < 2; i++)
+    {
+        defString.pop_back();
+    }
+
+    defString += "_H";
+
+    string methodNames = "void myPrint(string myString, int newLineChecker);\n";
 
     for (int i = 0; i < internalMethods.size(); i++)
     {
@@ -214,9 +221,10 @@ string Code::finalHeaderCode()
         methodNames += iM.returnType + " " + iM.methodName + "(" + iM.expectedVars + ");\n";
     }
 
-    return "#ifndef" + defString + "_H\n"
-           "#define" + defString + "_H\n"
+    return "#ifndef " + defString +"\n"
+           "#define " + defString + "\n"
            + includesString +
+           namespaceString +
            "namespace " + nameSpace + "\n" +
            "{\n" +
            "class " + className + "\n" +
@@ -227,7 +235,7 @@ string Code::finalHeaderCode()
            "void parse(int argc, char* argv[]);\n" +
            "};\n"
            "}\n"
-           "#endif;";
+           "#endif";
 }
 
 string Code::finalCode()
@@ -239,14 +247,16 @@ string Code::finalCode()
     ///:return: den gesamt Code {string}
 
     return includesString +
+           "#include \"" + headerFileName + "\"\n" +
+           namespaceString +
            "namespace " + nameSpace + "\n" +
            "{\n" +
            /*globalVariables + */
            createInternalMethods() +
-           "virtual void unknownOption(const string& unknown_option)"
+           "virtual void " + className +"::unknownOption(const string& unknown_option)"
            "\n{\n\tcout << \"Unbekannter Parameter!\" << endl;\nexit(EXIT_SUCCESS);\n}\n" +
 
-           "void parse(int argc, char* argv[])\n"
+           "void " + className + "::parse(int argc, char* argv[])\n"
            "{\n" +
            variableDefinitions +
 
@@ -260,7 +270,6 @@ string Code::finalCode()
            handleArgs +
            unknownOptionMethodCall +
            "}\n"
-           "};\n"
            "}\n";
 }
 
@@ -619,8 +628,8 @@ void Code::addArgument(string ref,
                 "(" + reference + "Str.at(0) == '-' && " + reference + "Str.at(1) == '-') || " + reference +
                 "Str.length() <= 1");
         pathCheckCode.addText(
-                "cout << \"zu --" + longOpt + " wurde kein zusätzliches Argument übergeben, default-Wert: \"" +
-                defaultValue + " wird übernommen!<< endl;\n");
+                "cout << \"zu --" + longOpt + " wurde kein zusätzliches Argument übergeben, default-Wert: " +
+                defaultValue + " wird übernommen!\"<< endl;\n");
         pathCheckCode.endIf();
         pathCheckCode.endIf();
 
