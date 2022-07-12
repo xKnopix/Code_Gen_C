@@ -55,7 +55,10 @@ class Code
             author = "anonymous",
 
             boolIsSetName = "",
+
             additionalParamVarName = "",
+
+            unknownOptionMethodCall = "unknownOption(argv[i]);",
 
 
 
@@ -153,11 +156,17 @@ public:
 
     void endIf();
 
+    string capitalizeString(string s);
+
+    string finalHeaderCode();
+
     string finalCode();
 
     string createInternalMethods();
 
     vector<string> split (string str, char seperator);
+
+    void parse(string filename);
 
     void addArgument(string ref = "",
                      string shortOpt = "",
