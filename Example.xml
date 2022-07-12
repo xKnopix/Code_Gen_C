@@ -17,7 +17,7 @@
 	</SampleUsage>
 	<Options>
 		<!-- Option help greift auf die interne Klasseninterne Methode printHelp zu. Ein gleichzeitiger Aufruf mit version und parse-only ist nicht erlaubt.  -->
-		<Option Ref = "4"/> 
+		<Option Ref = "4" LongOpt="test"/> 
 		<!-- Option version greift auf die interne Klassenexterne (abstrakte) Methode printVersion zu. Ein gleichzeitiger Aufruf mit helpund parse-only  ist nicht erlaubt. -->
 		<Option Ref="2" ShortOpt="v" Interface="Version" Exclusion="1,3" ConnectToInternalMethod="printVersion" Description="Gibt die Version des Programms aus und beendet" /> 
 		<!-- Option out-path braucht ein zusätzliches Argument und schreibt auf einen Klassenintern generierten String das Argument. Die Option help, version und parse-only  darf nicht angegeben sein -->
