@@ -1,7 +1,7 @@
 #include <string>
 #include <iostream>
 #include <Vector>
-#include "NewFile.h"
+#include "TestsNewFile.h"
 using namespace std;
 namespace noNameSpace
 {
@@ -37,32 +37,31 @@ myPrint("--no-format\n", signPerLine);
 myPrint("	Erzeugte Datei wird nicht formatiert\n\n", signPerLine);
 myPrint("--parse-only\n", signPerLine);
 myPrint("	Parst die Datei einmal und beendet das Programm\n\n", signPerLine);
-myPrint("Author: anonymous", 79);
-myPrint("Author: anonymous", 79);
+myPrint("Author: anonymous\n", 79);
 }
-bool noClassname::isSetversion()
+bool noClassname::isSetVersion()
 {
-return boolVersion;
+return VersionBool;
 }
-bool noClassname::isSetOutputPath()
+bool noClassname::isSetoutpath()
 {
-return boolOutputPath;
+return outpathBool;
 }
-string noClassname::getValueOfOutputPath()
+string noClassname::getValueOfoutpath()
 {
 return outpathParam;
 }
-bool noClassname::isSetAstylePath()
+bool noClassname::isSetastylepath()
 {
-return boolAstylePath;
+return astylepathBool;
 }
-string noClassname::getValueOfAstylePath()
+string noClassname::getValueOfastylepath()
 {
 return astylepathParam;
 }
-bool noClassname::isSetSignPerLine()
+bool noClassname::isSetsignperline()
 {
-return boolSignPerLine;
+return signperlineBool;
 }
 int noClassname::getValueOfsignperline()
 {
@@ -76,17 +75,21 @@ try {
                 cerr << "Integer overflow: out_of_range thrown for signperline, using default Value if given" << endl;
             }return signperlineInt;
 }
-bool noClassname::isSetn()
+bool noClassname::isSetonlyifnewer()
 {
-return boolOnlyIfNewer;
+return onlyifnewerBool;
 }
-bool noClassname::isSetNoFormat()
+bool noClassname::isSetnoformat()
 {
-return boolNoFormat;
+return noformatBool;
+}
+void noClassname::ParseXML(bool parseonlyBool)
+{
+cout << "Parst die Datei einmal und beendet das Programm" << endl;
 }
 void noClassname::unknownOption(const string& unknown_option)
 {
-	cout << "Unbekannter Parameter!" << endl;
+	cout << "Unbekannter Parameter '" + unknown_option + "'!" << endl;
 exit(EXIT_SUCCESS);
 }
 void noClassname::parse(int argc, char* argv[])
@@ -96,8 +99,11 @@ int exitArg = 0;
 int noRef = -1;
 string refValues[63];
 string outpathStr;
+bool boolIsSetoutpath;
 string astylepathStr;
+bool boolIsSetastylepath;
 string signperlineStr = "79";
+string parseonlyStr;
 for(int i = 1; i<argc; i++)
 {
 if(string(argv[i]) == "-h" || string(argv[i]) == "--help")
@@ -298,6 +304,10 @@ if(exitArg != 1)
 exclusions.push_back(3);
 refValues[3] = "parse-only";noRef = 1;
 }
+if(i+1 != argc)
+{
+parseonlyStr = argv[i+1];
+}
 }
 }
 if(!outpathStr.empty() && outpathStr.length() > 1)
@@ -321,6 +331,14 @@ if(!signperlineStr.empty() && signperlineStr.length() > 1)
 if((signperlineStr.at(0) == '-' && signperlineStr.at(1) == '-') || signperlineStr.length() <= 1)
 {
 cout << "zu --sign-per-line wurde kein zusätzliches Argument übergeben, default-Wert: 79 wird übernommen!"<< endl;
+}
+}
+if(!parseonlyStr.empty() && parseonlyStr.length() > 1)
+{
+if((parseonlyStr.at(0) == '-' && parseonlyStr.at(1) == '-') || parseonlyStr.length() <= 1)
+{
+cout << "--parse-only benötigt ein zusätzliches Argument!" << endl;
+exitArg = 1;
 }
 }
 try
@@ -352,39 +370,41 @@ continue;}
 if(string(argv[i]) == "--out-path")
 {
 cout << "Es wurde der Parameter --out-path erfolgreich übergeben!" << endl;
-boolOutputPath = true;
+outpathBool = true;
 cout << "Zusätzliche Argumente:" << outpathStr << endl;
 outpathParam = outpathStr;
-boolOutputPath = true;
+outpathBool = true;
 continue;}
 if(string(argv[i]) == "--astyle-path")
 {
 cout << "Es wurde der Parameter --astyle-path erfolgreich übergeben!" << endl;
-boolAstylePath = true;
+astylepathBool = true;
 cout << "Zusätzliche Argumente:" << astylepathStr << endl;
 astylepathParam = astylepathStr;
-boolAstylePath = true;
+astylepathBool = true;
 continue;}
 if(string(argv[i]) == "--sign-per-line")
 {
 cout << "Es wurde der Parameter --sign-per-line erfolgreich übergeben!" << endl;
-boolSignPerLine = true;
+signperlineBool = true;
 cout << "Zusätzliche Argumente:" << signperlineStr << endl;
 signperlineParam = signperlineStr;
-boolSignPerLine = true;
+signperlineBool = true;
 continue;}
 if(string(argv[i]) == "-n" || string(argv[i]) == "--only-if-newer")
 {
 cout << "Es wurde der Parameter --only-if-newer erfolgreich übergeben!" << endl;
-boolOnlyIfNewer = true;
+onlyifnewerBool = true;
 continue;}
 if(string(argv[i]) == "--no-format")
 {
 cout << "Es wurde der Parameter --no-format erfolgreich übergeben!" << endl;
-boolNoFormat = true;
+noformatBool = true;
 continue;}
 if(string(argv[i]) == "--parse-only")
 {
+ParseXML(parseonlyBool);
+hallo(parseonlyBool);
 continue;}
 unknownOption(argv[i]);}
 }

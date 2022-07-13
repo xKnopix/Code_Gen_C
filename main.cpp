@@ -16,7 +16,7 @@ int main() {
 
     Code code;
 
-    code.parse("newFile");
+    code.parse("TestsNewFile");
 
     return 0;
 }

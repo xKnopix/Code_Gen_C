@@ -30,7 +30,8 @@ namespace noNameSpace
         int getValueOfsignperline();
         bool isSetn();
         bool isSetNoFormat();
-        virtual void unknownOption(const string& unknown_option);void parse(int argc, char* argv[]);
+        virtual void unknownOption(const string& unknown_option);
+        void parse(int argc, char* argv[]);
     };
 }
 #endif
