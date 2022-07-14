@@ -86,6 +86,7 @@ int check::check_block(xml_parser::Block bl){
     if(bl.content.empty()){
         cout << "Es wurde ein leerer <Block></Block> angegeben dieser sollte befuellt werden(optional)" << endl;
     }
+    return 1;
 }
 int check::check_sample_usage(xml_parser::SampleUsage sample){
     if (sample.sample.size() == 0 || sample.sample[0].content.empty()){

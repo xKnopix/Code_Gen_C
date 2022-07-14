@@ -5,8 +5,6 @@ Code_Gen_C.code-workspace
 .vscode/
 /build
 cmake-build-debug/
-CMakeLists.txt
-
 
 # Compiled Object files
 *.slo

@@ -1,0 +1,5 @@
+/home/rsim/Schreibtisch/newFiles/build/CMakeFiles/edit_cache.dir
+/home/rsim/Schreibtisch/newFiles/build/CMakeFiles/rebuild_cache.dir
+/home/rsim/Schreibtisch/newFiles/build/Test/CMakeFiles/Test.dir
+/home/rsim/Schreibtisch/newFiles/build/Test/CMakeFiles/edit_cache.dir
+/home/rsim/Schreibtisch/newFiles/build/Test/CMakeFiles/rebuild_cache.dir
