@@ -18,5 +18,8 @@ int main() {
 
     code.parse("newFile");
 
+    cout << data.options.option[0].longOpt << endl;
+    cout << data.options.option.size() << endl;
+
     return 0;
 }
