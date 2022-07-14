@@ -32,10 +32,10 @@ Code::Code(string sourceFileName, string headerFileName, string nameSpace, strin
            string sampleUsage, string author)
 {
 
-    std::cout << "HFILENAME: " << headerFileName << endl;
-    std::cout << "HFILENAME: " << Code::headerFileName << endl;
+    // std::cout << "HFILENAME: " << headerFileName << endl;
+    // std::cout << "HFILENAME: " << Code::headerFileName << endl;
     Code::headerFileName = headerFileName;
-    std::cout << "HFILENAME: " << Code::headerFileName << endl;
+    // std::cout << "HFILENAME: " << Code::headerFileName << endl;
     Code::nameSpace = nameSpace;
     Code::className = className;
     Code::signPerLine = signPerLine;
@@ -240,7 +240,7 @@ string Code::finalHeaderCode()
         methodNames += eM.returnType + " " + eM.methodName + "(" + eM.expectedVars + ") = 0;\npublic:\n";
     }
 
-    std::cout << methodNames << endl;
+    // std::cout << methodNames << endl;
 
     return "#ifndef " + defString + "\n"
                                     "#define " +
@@ -267,7 +267,7 @@ string Code::finalCode(string hFileName)
      */
     ///:return: den gesamt Code {string}
 
-    std::cout << "Finmal: " << hFileName << endl;
+    // std::cout << "Finmal: " << hFileName << endl;
 
     return includesString +
            "#include \"" + hFileName + "\"\n" +
@@ -337,7 +337,7 @@ string Code::createInternalMethods()
 
         internalMethod iM = internalMethods[i];
 
-        std::cout << "building Method: " << iM.methodName << endl;
+        // std::cout << "building Method: " << iM.methodName << endl;
 
         if (iM.methodName ==
             "printHelp") ////HelpMethode wird erstellt
@@ -506,13 +506,13 @@ void Code::addArgument(string ref,
 
     if (headerFileName.empty())
     {
-        std::cout << "Es muss ein Name für die Header-Datei in der XML-Datei angegeben werden!" << endl;
+        std::cerr << "Es muss ein Name für die Header-Datei in der XML-Datei angegeben werden!" << endl;
         exit(EXIT_SUCCESS);
     }
 
     if (sourceFileName.empty())
     {
-        std::cout << "Es muss ein Name für die Source-Code-Datei in der XML-Datei angegeben werden!" << endl;
+        std::cerr << "Es muss ein Name für die Source-Code-Datei in der XML-Datei angegeben werden!" << endl;
         exit(EXIT_SUCCESS);
     }
 
@@ -522,8 +522,8 @@ void Code::addArgument(string ref,
     {
         reference = longOpt;
         reference.erase(remove(reference.begin(), reference.end(), '-'), reference.end()); // remove A from string
-        std::cout << "lOpt: " << longOpt << ", reference: " << reference << endl;
-        std::cout << "found '-' in " << longOpt << endl;
+        // std::cout << "lOpt: " << longOpt << ", reference: " << reference << endl;
+        // std::cout << "found '-' in " << longOpt << endl;
     }
     else if (interface != "")
     {
@@ -544,7 +544,7 @@ void Code::addArgument(string ref,
             << longOpt << endl;
     }
 
-    std::cout << "REFERENZ = " << reference << endl;
+    // std::cout << "REFERENZ = " << reference << endl;
 
     string codeArgParse;
     string ifStateStart;
@@ -765,13 +765,13 @@ void Code::addArgument(string ref,
 
     if (convertTo == "bool")
     {
-        std::cout << "convertToBool" << endl;
+        // std::cout << "convertToBool" << endl;
         if (defaultValue != "")
         {
             globalVariables += "bool " + reference + "Bool = " + defaultValue + ";\n";
             additionalParamVarName = reference + "Bool";
 
-            std::cout << "addparamVarName: " << additionalParamVarName << endl;
+            // std::cout << "addparamVarName: " << additionalParamVarName << endl;
         }
         else
         {
@@ -822,7 +822,7 @@ void Code::addArgument(string ref,
 
         if (hasArguments != "")
         {
-            std::cout << reference << "                                                                                                                         hasArguments!" << endl;
+            // std::cout << reference << "                                                                                                                         hasArguments!" << endl;
             if (hasArguments == "Required")
             {
                 globalVariables += "string " + reference + "Param;\n";
@@ -907,7 +907,7 @@ void Code::addArgument(string ref,
 
     if ((!connectToInternalMethod.empty() && interface.empty()) || (!connectToExternalMethod.empty() && interface.empty()))
     {
-        cout << "Es fehlt ein Interface bei " << reference << "! Code Generierung wird abgebrochen!\n Interface wird für die Getter Methode benötigt, da zusätzliche Parameter übergeben werden können." << endl;
+        cerr << "Es fehlt ein Interface bei " << reference << "! Code Generierung wird abgebrochen!\n Interface wird für die Getter Methode benötigt, da zusätzliche Parameter übergeben werden können." << endl;
         exit(EXIT_FAILURE);
     }
 
@@ -1000,7 +1000,7 @@ void Code::addArgument(string ref,
             }
             else
             {
-                std::cout << "Da hasArguments und connectToInternalMethod gesetzt wurden, muss auch convertTo gesetzt werden! Bitte XML bei Option: " << reference << "überprüfen!" << endl;
+                std::cerr << "Da hasArguments und connectToInternalMethod gesetzt wurden, muss auch convertTo gesetzt werden! Bitte XML bei Option: " << reference << "überprüfen!" << endl;
                 exit(EXIT_FAILURE);
             }
             internalMethods.push_back(iM);
@@ -1051,7 +1051,7 @@ void Code::addArgument(string ref,
         else
         {
             actOnArgs.addText(reference + "Param);\n"); // Beim Testen schauen, obs funktioniert, sonst Str statt Param anhängen!!!
-            std::cout << "convertTo = String" << convertTo << shortOpt << longOpt << endl;
+            std::cerr << "convertTo = String" << convertTo << shortOpt << longOpt << endl;
         }
     }
     actOnArgs.addText("continue;");
