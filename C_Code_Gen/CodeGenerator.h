@@ -6,6 +6,8 @@
 #include <string>
 #include <algorithm>
 
+#include "xml_parser.h"
+
 using namespace std;
 
 
@@ -36,8 +38,21 @@ class Code
         string expectedVars = "";
     };
 
+    struct externalMethod                                                                                               ////internalMethod////
+    {                                                                                                                   //In diesem Struct werden Informationen zu einer internen Methode gespeichert
+        string methodName = "";                                                                                             ////Methodname////
+        //der Name der Methode, welcher auch beim Aufruf genutzt wird, OHNE KLAMMERN
+        //string methodCode = "";                                                                                             ////methodCode////
+        //der Code, welcher von der Methode ausgeführt werden soll
+        //string methodEnd = "}\n";                                                                                           ////methodEnd////
+        //String für die Lesbarkeit, beinhaltet lediglich "}" um die Methode abzuschließen
+        string returnType = "void";
+
+        string expectedVars = "";
+    };
+
     //Deklaration aller Strings, die benötigt werden, um den c++ Code zu generieren
-            string  headerFileName = "newFile.hpp",                                                                                  ////headerFileName////
+            string headerFileName = "NewFile.h",                                                                                  ////headerFileName////
                                                                                                                         //der Name des zu generierenden H-Datei
 
             sourceFileName = "noSourceFileName",
@@ -69,9 +84,9 @@ class Code
 
             includesString =        "#include <string>\n"                                                               ////includesString////
                                     "#include <iostream>\n"                                                             //Alle includes, die eventuell benötigt werden,
-                                    "#include <Vector>\n"                                                               //im generierten Argument-Parser
-                                    ""
-                                    "using namespace std;\n",
+                                    "#include <Vector>\n",                                                               //im generierten Argument-Parser
+
+            namespaceString =       "using namespace std;\n",
 
             globalVariables =       "",
             variableDefinitions =   "vector<int> exclusions;\n"                                                         /////variableDefinitions////
@@ -117,8 +132,11 @@ class Code
     //Deklaration aller Vektoren
     vector<internalMethod>  internalMethods;                                                                            ////internalMethods////
                                                                                                                         //In diesem Vector werden alle Instanzen des Structs internalMethod gespeichert
+
+    vector<externalMethod> externalMethods;
     internalMethod iM;
 
+    bool authorCodeAdded = false;
 
 public:
     Code();
@@ -166,7 +184,9 @@ public:
 
     vector<string> split (string str, char seperator);
 
-    void parse(string filename);
+    void parse(xml_parser::GetOptSetup data);
+
+    string filename = "newFile"; //optional damit kiene fehler kommen
 
     void addArgument(string ref = "",
                      string shortOpt = "",

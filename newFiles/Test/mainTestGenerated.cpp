@@ -1,5 +1,6 @@
-#include "TestsNewFile.h"
+#include "newFile.h"
 
+using namespace noNameSpace;
 
 class MyOptionParser : public noClassname{
 

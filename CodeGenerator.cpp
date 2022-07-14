@@ -8,7 +8,7 @@
 using namespace std;
 
 /*
- * Diese Klasse soll dazu dienen, einfacher und übersichtlicher
+ * Diese Klasse soll dazu dienen, einfacher und überischtlicher
  * ein Programm zu schreiben, welches als output c++ Code hat
  *
  *
@@ -24,12 +24,14 @@ using namespace std;
 //die Argumente auf ihre Korrektheit überprüft wurden nochmals alle Argumente
 //durch-iteriert und nun auf die übergebenen Argumente reagiert.
 
-Code::Code() {
+Code::Code()
+{
 
 }
 
 Code::Code(string sourceFileName, string headerFileName, string nameSpace, string className, string signPerLine,
-           string sampleUsage, string author) {
+           string sampleUsage, string author)
+{
     Code::headerFileName = headerFileName;
     Code::nameSpace = nameSpace;
     Code::className = className;
@@ -39,7 +41,8 @@ Code::Code(string sourceFileName, string headerFileName, string nameSpace, strin
 }
 
 //Alle Methoden mit dem Rückgabewert 'void'
-void Code::createInt(const string &varName, int value) {
+void Code::createInt(const string &varName, int value)
+{
     /*
      * Es wird Code erstellt, welcher einen neuen Integer mit dem übergebenen namen und Wert erstellt
      */
@@ -50,7 +53,8 @@ void Code::createInt(const string &varName, int value) {
     code += newLine;
 }
 
-void Code::setInt(const string &varName, int newValue) {
+void Code::setInt(const string &varName, int newValue)
+{
     /*
      * Es wird Code generiert, welcher einem bereits bestehenden Integer einen neuen Wert zuweist
      */
@@ -60,7 +64,8 @@ void Code::setInt(const string &varName, int newValue) {
     code += varName + " = " + to_string(newValue) + " ;\n";
 }
 
-void Code::addToInt(const string &varName, int addValue) {
+void Code::addToInt(const string &varName, int addValue)
+{
     /*
      * Es wird Code generiert, welcher einem bereits bestehenden Integer einen neuen Wert zuweist
      */
@@ -70,7 +75,8 @@ void Code::addToInt(const string &varName, int addValue) {
     code += varName + " += " + to_string(addValue) + " ;\n";
 }
 
-void Code::createString(const string &varName, string value) {
+void Code::createString(const string &varName, string value)
+{
     /*
      * Es wird Code erstellt, welcher einen neuen String mit dem übergebenen namen und Wert erstellt
      */
@@ -81,7 +87,8 @@ void Code::createString(const string &varName, string value) {
     code += newLine;
 }
 
-void Code::setString(const string &varName, string newValue) {
+void Code::setString(const string &varName, string newValue)
+{
     /*
      * Es wird Code generiert, welcher einem bereits bestehenden String einen neuen Wert zuweist
      */
@@ -91,7 +98,8 @@ void Code::setString(const string &varName, string newValue) {
     code += varName + " = \"" + newValue + "\" ;\n";
 }
 
-void Code::addToString(const string &varName, string addValue) {
+void Code::addToString(const string &varName, string addValue)
+{
     /*
      * Es wird Code generiert, welcher einem bereits bestehenden Integer einen neuen Wert zuweist
      */
@@ -101,7 +109,8 @@ void Code::addToString(const string &varName, string addValue) {
     code += varName + " += " + addValue + " ;\n";
 }
 
-void Code::COUT(const string &message) {
+void Code::COUT(const string &message)
+{
     /*
      * Es wird Code generiert, welcher den übergebenen String auf der Konsole ausgibt
      */
@@ -110,7 +119,8 @@ void Code::COUT(const string &message) {
     code += "cout << \"" + message + "\" << endl;\n";
 }
 
-void Code::addText(string s) {
+void Code::addText(string s)
+{
     /*
      * Der übergebene String wird an den gesamt Code angehängt, benutzung auf eigene Gefahr :)
      */
@@ -119,7 +129,8 @@ void Code::addText(string s) {
     code += s;
 }
 
-void Code::addSingleComment(string comment) {
+void Code::addSingleComment(string comment)
+{
     /*
      * Es wird Code generiert, welcher den übergebenen String als Kommentar an den gesamt Code anhängt
      */
@@ -128,7 +139,8 @@ void Code::addSingleComment(string comment) {
     code += "//" + comment;
 }
 
-void Code::addMultiLineComment(string comment) {
+void Code::addMultiLineComment(string comment)
+{
     /*
      * Es wird Code generiert, welcher den übergebenen String als Mehrzeilenkommentar an den gesamt Code anhängt
      */
@@ -137,7 +149,8 @@ void Code::addMultiLineComment(string comment) {
     code += "/*\n" + comment + "\n*/\n";
 }
 
-string Code::getCode() {
+string Code::getCode()
+{
     /*
      *Der generierte Code-String wird zurückgegeben
      */
@@ -145,7 +158,8 @@ string Code::getCode() {
     return code;
 }
 
-void Code::startForLoop(string s) {
+void Code::startForLoop(string s)
+{
     /*
      * Es wird Code generiert, um eine for-Schleife im gesamt Code zu starten
      */
@@ -154,7 +168,8 @@ void Code::startForLoop(string s) {
     code += "for(" + s + ")\n{\n";
 }
 
-void Code::endForLoop() {
+void Code::endForLoop()
+{
     /*
      * NUR FÜR LESBARKEIT!
      * Es wird eine geschweifte Klammer angehängt, um eine begonnene for-Schleife zu schließen
@@ -162,7 +177,8 @@ void Code::endForLoop() {
     code += "}\n";
 }
 
-void Code::startIf(string s) {
+void Code::startIf(string s)
+{
     /*
      * Es wird Code generiert, um eine if-Verzweigung im gesamt Code zu starten
      */
@@ -170,7 +186,8 @@ void Code::startIf(string s) {
     code += "if(" + s + ")\n{\n";
 }
 
-void Code::endIf() {
+void Code::endIf()
+{
     /*
      * NUR FÜR LESBARKEIT!
      * Es wird eine geschweifte Klammer angehängt, um eine begonnene Verzweigung zu schließen
@@ -178,49 +195,28 @@ void Code::endIf() {
     code += "}\n";
 }
 
-string Code::capitalizeString(string s) {
+string Code::capitalizeString(string s)
+{
     transform(s.begin(), s.end(), s.begin(),
-              [](unsigned char c) { return toupper(c); });
+              [](unsigned char c){ return toupper(c); });
     return s;
 }
 
-string Code::finalHeaderCode() {
+string Code::finalHeaderCode()
+{
     string defString = Code::capitalizeString(headerFileName);
 
-    for (int i = 0; i < 2; i++) {
-        defString.pop_back();
-    }
+    string methodNames = "";
 
-    defString += "_H";
-
-    string methodNames = "void myPrint(string myString, int newLineChecker);\n";
-
-    for (int i = 0; i < internalMethods.size(); i++) {
-
-        internalMethod iM = internalMethods[i];
-
-        if(iM.methodName == "printHelp")
-        {
-            iM.expectedVars = "int signPerLine";
-            iM.returnType = "protected:\nvirtual void ";
-        }
-
-        methodNames += iM.returnType + " " + iM.methodName + "(" + iM.expectedVars + ");\npublic:\n";
-    }
-
-    for (int i = 0; i < externalMethods.size(); i++)
+    for (int i = 0; i < internalMethods.size(); i++)
     {
-        externalMethod eM = externalMethods[i];
-
-        methodNames += eM.returnType + " " + eM.methodName + "(" + eM.expectedVars + ") = 0;\npublic:\n";
+        internalMethod iM = internalMethods[i];
+        methodNames += iM.returnType + " " + iM.methodName + "(" + iM.expectedVars + ");\n";
     }
 
-    cout << methodNames << endl;
-
-    return "#ifndef " + defString + "\n"
-                                    "#define " + defString + "\n"
+    return "#ifndef" + defString + "_H\n"
+           "#define" + defString + "_H\n"
            + includesString +
-           namespaceString +
            "namespace " + nameSpace + "\n" +
            "{\n" +
            "class " + className + "\n" +
@@ -231,10 +227,11 @@ string Code::finalHeaderCode() {
            "void parse(int argc, char* argv[]);\n" +
            "};\n"
            "}\n"
-           "#endif";
+           "#endif;";
 }
 
-string Code::finalCode() {
+string Code::finalCode()
+{
     /*
      * Der Finale Code wird erstellt und zurückgegeben
      * Es werden hierfür alle entstandenen zwischen Strings zusammengefügt und zurückgegeben
@@ -242,17 +239,15 @@ string Code::finalCode() {
     ///:return: den gesamt Code {string}
 
     return includesString +
-           "#include \"" + headerFileName + "\"\n" +
-           namespaceString +
            "namespace " + nameSpace + "\n" +
            "{\n" +
            /*globalVariables + */
            createInternalMethods() +
-           "void " + className + "::unknownOption(const string& unknown_option)"
-                                         "\n{\n\tcout << \"Unbekannter Parameter '\" + unknown_option + \"'!\" << endl;\nexit(EXIT_SUCCESS);\n}\n" +
+           "virtual void unknownOption(const string& unknown_option)"
+           "\n{\n\tcout << \"Unbekannter Parameter!\" << endl;\nexit(EXIT_SUCCESS);\n}\n" +
 
-           "void " + className + "::parse(int argc, char* argv[])\n"
-                                 "{\n" +
+           "void parse(int argc, char* argv[])\n"
+           "{\n" +
            variableDefinitions +
 
            forLoopAllArgsStart +
@@ -265,11 +260,12 @@ string Code::finalCode() {
            handleArgs +
            unknownOptionMethodCall +
            "}\n"
-           "}\n"
+           "};\n"
            "}\n";
 }
 
-string Code::createInternalMethods() {
+string Code::createInternalMethods()
+{
     /*
      * Der Vektor mit allen Instanzen des Structs internalMethod wird durch-iteriert
      * und die Implementierung der Methoden erstellt
@@ -309,20 +305,14 @@ string Code::createInternalMethods() {
         if (iM.methodName ==
             "printHelp")                                                                            ////HelpMethode wird erstellt
         {
-            iM.expectedVars = "int signPerLine";
             iM.methodName = className + "::" + iM.methodName;
-            if(!authorCodeAdded)
-            {
-                printHelpMethodCode += "myPrint(\"Author: " + author + "\\n\", " + signPerLine + ");\n";
-                authorCodeAdded = true;
-            }
-
+            printHelpMethodCode += "myPrint(\"Author: " + author + "\", " + signPerLine + ");\n";
             iM.methodCode = "cout<<\"" + sampleUsage + "\"<< endl;\n" + printHelpMethodCode;
 
-            methods.addText("void " + iM.methodName + "(int signPerLine)\n{\n");
+            methods.addText("protected: virtual void " + iM.methodName + "(int signPerLine)\n{\n");
             methods.addText(iM.methodCode);
             methods.addText(iM.methodEnd);
-            //methods.addText("\npublic:\n");
+            methods.addText("\npublic:\n");
 
             methodNames += iM.methodName + "();\n";
 
@@ -375,17 +365,14 @@ vector <string> Code::split(string str, char seperator) {
     return subStrings;
 }
 
-void Code::parse(xml_parser::GetOptSetup data) {
-
-    string filename = "newFile"; // Optional damit keine Fehler auftreten
-
+void Code::parse(string filename) {
     //EXIT TEST: exit(EXIT_SUCCESS);
     Code("FileName", "HeaderFileName", "parse", "getOptsParse", "79", "SampleUsage Here", "DER AUTOR");
 
     startForLoop(
             "int i = 1; i<argc; i++");                                                                     //Durch jedes Argument einmal durch
 
-    addArgument("1"/*ref*/, "h", "help", "2,3", "printHelp", "Diese Hilfe ausgeben und beenden", "", "", "", "", "");
+    addArgument("1", "h", "help", "2,3", "printHelp", "Diese Hilfe ausgeben und beenden", "", "", "", "");
     addArgument("2", "v", "version", "1,3", "printVersion", "Gibt die Version des Programms aus und beendet", "Version",
                 "", "", "");
     addArgument("", "", "out-path", "1,2,3", "",
@@ -399,14 +386,15 @@ void Code::parse(xml_parser::GetOptSetup data) {
     addArgument("", "n", "only-if-newer", "1,2,3", "",
                 "Generiert nur wenn die Eingangsdatei neuer ist wie die bereits generierte", "OnlyIfNewer", "", "", "");
     addArgument("", "", "no-format", "1,2,3", "", "Erzeugte Datei wird nicht formatiert", "NoFormat", "", "", "");
-    addArgument("3", "", "parse-only", "1,2", "ParseXML", "Parst die Datei einmal und beendet das Programm", "", "Required", "bool", "true", "hallo");
+    addArgument("3", "", "parse-only", "1,2", "ParseXML", "Parst die Datei einmal und beendet das Programm", "", "", "",
+                "");
     endForLoop();                                                                                                  //For Schleife fertig, der  rest kommt in finalCode()
 
     cout << "CODE: " << endl
          << finalCode();                                                                       //Code ausgeben
 
     // Create and open a text file
-    ofstream MyFile("generated/" + filename + ".cpp");
+    ofstream MyFile(filename + ".cpp");
 
     // Write to the file
     MyFile
@@ -415,7 +403,7 @@ void Code::parse(xml_parser::GetOptSetup data) {
     // Close the file
     MyFile.close();
 
-    ofstream MyHeaderFile("generated/" + filename + ".h");
+    ofstream MyHeaderFile(filename + ".h");
 
     // Write to the file
     MyHeaderFile
@@ -438,19 +426,6 @@ void Code::addArgument(string ref,
                        string connectToExternalMethod
 )                                                                          //Funktion, die alle Argumente aus der xml annimmt
 {
-    cout << "********************************************" << endl;
-    cout << "ref: " << ref << endl;
-    cout << "shortOpt: " << shortOpt << endl;
-    cout << "longOpt: " << longOpt << endl;
-    cout << "exclusion: " << exclusion << endl;
-    cout << "connectToiM: " << connectToInternalMethod << endl;
-    cout << "connectToeM: " << connectToExternalMethod << endl;
-    cout << "description: " << description << endl;
-    cout << "interface: " << interface << endl;
-    cout << "hasArguments: " << hasArguments << endl;
-    cout << "convertTo: " << convertTo << endl;
-    cout << "defaultValue: " << defaultValue << endl;
-    cout << "********************************************" << endl;
     /*
      * Es wird zunächst ein String generiert, welcher in eine if-Abfrage eingefügt werden kann, um zu überprüfen,
      * ob das aktuelle Argument der Iteration dem gewünschten String entspricht (shortOpt/longOpt)
@@ -491,13 +466,12 @@ void Code::addArgument(string ref,
                 << longOpt << endl;
     }
 
-    cout << "REFERENZ = " << reference << endl;
-
     string codeArgParse;
     string ifStateStart;
     string nameCheckBool;
 
-    boolIsSetName = reference + "Bool";                                                                                                                ////Generierung des bool-Strings
+    boolIsSetName = "bool" +
+                    interface;                                                                                                                ////Generierung des bool-Strings
     if (longOpt != "" && shortOpt !=
                          "")                                                                             //wenn longOpt und shortOpt gesetzt sind
     {
@@ -638,24 +612,15 @@ void Code::addArgument(string ref,
         Code pathCheckCode = Code();                                                                                ////pathCheckCode////
         //Neue Instanz von Code() um zu generierenden Code zwischenzuspeichern
 
-        if(defaultValue == "")
-        {
-            variableDefinitions += "string " + reference + "Str;\n";
-        }
-        /////////////////////////////////////////////////////////////////
-        if (!defaultValue.empty())                                                                                          //Code Generierung, falls es default Parameter gibt
-        {
-            variableDefinitions += "string " + reference + "Str = \"" + defaultValue + "\";\n";
-        }
-        //////////////////////////////////////////////////////////////////
+        variableDefinitions += "string " + reference + "Str;\n";
 
         pathCheckCode.startIf("!" + reference + "Str.empty() && " + reference + "Str.length() > 1");
         pathCheckCode.startIf(
                 "(" + reference + "Str.at(0) == '-' && " + reference + "Str.at(1) == '-') || " + reference +
                 "Str.length() <= 1");
         pathCheckCode.addText(
-                "cout << \"zu --" + longOpt + " wurde kein zusätzliches Argument übergeben, default-Wert: " +
-                defaultValue + " wird übernommen!\"<< endl;\n");
+                "cout << \"zu --" + longOpt + " wurde kein zusätzliches Argument übergeben, default-Wert: \"" +
+                defaultValue + " wird übernommen!<< endl;\n");
         pathCheckCode.endIf();
         pathCheckCode.endIf();
 
@@ -666,7 +631,12 @@ void Code::addArgument(string ref,
 
         pathRequiredCheck += pathCheckCode.getCode();
     }
-
+    /////////////////////////////////////////////////////////////////
+    if (!defaultValue.empty())                                                                                          //Code Generierung, falls es default Parameter gibt
+    {
+        variableDefinitions += "string " + reference + "Str = \"" + defaultValue + "\";\n";
+    }
+    //////////////////////////////////////////////////////////////////
     //Code Generierung für convertToInt mit try-catch
     if (convertTo == "Integer") {
         //variableDefinitions += "int " + interface + "Int = 0;\n";
@@ -684,27 +654,24 @@ void Code::addArgument(string ref,
         convertInt += "catch (invalid_argument const &e)\n{\n";
         convertInt += "cout << \"Bad input: invalid_argument thrown for " + longOpt +
                       ", using default Value if given\" << endl;\n";
-        convertInt += "}\n";
+        convertInt += "exitArg = 1;\n}\n";
 
         convertInt += "catch (out_of_range const &e)\n{\n";
         convertInt += "cout << \"Integer overflow: out_of_range thrown for " + longOpt +
                       ", using default Value if given\" << endl;\n";
-        convertInt += "}\n";
+        convertInt += "exitArg = 1;\n}\n";
 
         convertToInt += convertInt;
     }                                                                                                               ////////////////////////////////////////////////////////////////////////
 
 
     if (convertTo == "bool") {
-        cout << "convertToBool" << endl;
         if (defaultValue != "") {
             globalVariables += "bool " + reference + "Bool = " + defaultValue + ";\n";
-            additionalParamVarName = reference + "Bool";
-
-            cout << "addparamVarName: " << additionalParamVarName << endl;
+            additionalParamVarName = interface + "Bool";
         } else {
-            globalVariables += "bool " + reference + "Bool = 0;\n";
-            additionalParamVarName = reference + "Bool";
+            globalVariables += "int " + reference + "Int = 0;\n";
+            additionalParamVarName = interface + "Bool";
         }
 
         string convertBool = "try\n{\n" + reference + "Bool = " + reference + "Param;\n}\n";
@@ -713,7 +680,7 @@ void Code::addArgument(string ref,
         convertBool += "catch (exception &e)\n{\n";
         convertBool += "cout << \"Parameter bool von " + longOpt +
                        "konnte nicht konvertiert werden, using default Value if given\" << endl;\n";
-        convertBool += "}\n";
+        convertBool += "exitArg = 1;\n}\n";
     }
 
     //zum gesamt Code hinzufügen
@@ -734,12 +701,24 @@ void Code::addArgument(string ref,
     }
 
     if (!interface.empty()) {
-        globalVariables += "bool " + reference + "Bool;\n";
+        globalVariables += "bool bool" + interface + ";\n";
         internalMethod iM;
+        if (longOpt != "") {
+            iM.methodName = "isSet" + longOpt;
+        } else {
+            iM.methodName = "isSet" + shortOpt;
+        }
+        if (longOpt == "out-path" || longOpt == "only-if-newer" || longOpt == "astyle-path" ||
+            longOpt == "sign-per-line" || longOpt == "no-format") {
+            if (shortOpt != "") {
+                iM.methodName = "isSet" + shortOpt; //Da durch das - im Namen Probleme auftreten
+            } else {
+                iM.methodName = "isSet" + interface; //Da durch das - im Namen Probleme auftreten
+            }
 
-        iM.methodName = "isSet" + reference;
+        }
 
-        iM.methodCode = "return " + reference + "Bool;\n";
+        iM.methodCode = "return bool" + interface + ";\n";
         iM.returnType = "bool";
 
         internalMethods.push_back(iM);
@@ -748,12 +727,12 @@ void Code::addArgument(string ref,
         if (hasArguments != "") {
             if (hasArguments == "Required") {
                 globalVariables += "string " + reference + "Param;\n";
-                additionalParamVarName = reference + "Param";
+                additionalParamVarName = interface + "Param";
             }
 
             if (hasArguments == "optional") {
                 globalVariables += "string " + reference + "Param = \"" + defaultValue + "\";\n";
-                additionalParamVarName = reference + "Param";
+                additionalParamVarName = interface + "Param";
             }
             if (convertTo == "Integer") {
                 additionalParamVarName = reference + "Int";
@@ -767,33 +746,32 @@ void Code::addArgument(string ref,
                                                                                              "            catch (invalid_argument const &e) {\n"
                                                                                              "                cerr << \"Bad input: invalid_argument thrown for " +
                                 reference + ", using default Value if given\" << endl;\n"
-
+                                            "                exitArg = 1;\n"
                                             "            }\n"
                                             "            catch (out_of_range const &e) {\n"
                                             "                cerr << \"Integer overflow: out_of_range thrown for " +
                                 reference + ", using default Value if given\" << endl;\n"
+                                            "                exitArg = 1;\n"
                                             "            }"
                                             "return " + reference + "Int;\n";
 
                 iM.methodName = "getValueOf" + reference;
 
                 internalMethods.push_back(iM);
-            }
-            else if (convertTo == "Bool")
-            {
-                additionalParamVarName = reference + "Bool";
+            } else if (convertTo == "Bool") {
+                additionalParamVarName = interface + "Bool";
                 internalMethod iM;
                 iM.returnType = "int";
                 //iM.methodCode = "return bool" + interface + ";";
 
                 iM.methodCode = "if(" + reference + "Param == \"true\" || == \"1\")\n"
-                                                    "{\n" +
-                                                    reference + "Bool = true;\n"
+                                                    "{\n"
+                                                    "   bool" + reference + " = true;\n"
                                                                             "}\n"
                                                                             "else if(" + reference +
                                 "Param == \"false\" || == \"0\")\n"
                                 "{\n"
-                                "   " + reference + "Bool = false;\n"
+                                "   bool" + reference + " = false;\n"
                                                         "}\n"
                                                         "else\n"
                                                         "{\n"
@@ -803,17 +781,28 @@ void Code::addArgument(string ref,
 
                 iM.methodName = "getValueOf" + reference;
                 internalMethods.push_back(iM);
-            }
-            else
-            {
-                additionalParamVarName = reference + "Str";
+            } else {
+                additionalParamVarName = interface + "Str";
                 internalMethod iM;
                 iM.returnType = "string";
                 iM.methodCode = "return " + reference + "Param;\n";
                 additionalParamVarName = reference + "Param";
+                if (longOpt == "out-path" || longOpt == "only-if-newer" || longOpt == "astyle-path" ||
+                    longOpt == "sign-per-line" || longOpt == "no-format") {
+                    if (shortOpt != "") {
+                        iM.methodName = "getValueOf" + shortOpt; //Da durch das - im Namen Probleme auftreten
+                    } else if (interface != "") {
+                        iM.methodName = "getValueOf" + interface; //Da durch das - im Namen Probleme auftreten
+                    }
 
-                iM.methodName = "getValueOf" + reference;
-                variableDefinitions += "bool boolIsSet" + reference + ";\n";
+                } else if (longOpt != "") {
+                    iM.methodName = "getValueOf" + longOpt;
+                    variableDefinitions += "bool boolIsSet" + longOpt + ";\n";
+
+                } else {
+                    iM.methodName = "getValueOf" + shortOpt;
+                    variableDefinitions += "bool boolIsSet" + shortOpt;
+                }
 
                 internalMethods.push_back(iM);
             }
@@ -848,34 +837,11 @@ void Code::addArgument(string ref,
 
     }
 
-    if(connectToExternalMethod != "")
-    {
-        externalMethod eM;
-
-        eM.methodName = connectToExternalMethod;
-        eM.returnType = "virtual void";
-
-        if(convertTo == "Integer")
-        {
-            eM.expectedVars = "int a";
-        }
-        else if(convertTo == "bool")
-        {
-            eM.expectedVars = "bool b";
-        }
-        else
-        {
-            eM.expectedVars = "string s";
-        }
-
-        externalMethods.push_back(eM);
-    }
-
     Code actOnArgs = Code();
 
     actOnArgs.startIf(nameCheckBool);
     if (!connectToInternalMethod.empty())                                                                           /////////////////////////////////////////////////////////////////////////
-    {                                                                                                               //Code Generierung für connectToInternalMethod
+    {                                                                                                           //Code Generierung für connectToInternalMethod
         internalMethod iM = internalMethod();
 
         iM.methodName = connectToInternalMethod;
@@ -889,13 +855,11 @@ void Code::addArgument(string ref,
             actOnArgs.addText(connectToInternalMethod +
                               "(signperlineInt);\n"); ///############################HARD CODED nicht gut
             if (!interface.empty()) {
-                actOnArgs.addText(reference + "Bool = true;\n");
+                actOnArgs.addText("bool" + interface + " = true;\n");
             }
 
-        }
-        else if (hasArguments != "") {
-            cout << "size: " << additionalParamVarName.back() << endl;
-            /*if (additionalParamVarName.at(additionalParamVarName.back()) == 't') {
+        } else if (hasArguments != "") {
+            if (additionalParamVarName.at(additionalParamVarName.back()) == 't') {
                 iM.expectedVars = "int " + additionalParamVarName;
             }
             if (additionalParamVarName.at(additionalParamVarName.back()) == 'l') {
@@ -906,20 +870,11 @@ void Code::addArgument(string ref,
             }
             if (additionalParamVarName.at(additionalParamVarName.back()) == 'm') {
                 iM.expectedVars = "string " + additionalParamVarName;
-            }*/
-            if (convertTo == "Integer" || convertTo == "integer") {
-                iM.expectedVars = "int " + additionalParamVarName;
-            }
-            if (convertTo == "Bool" || convertTo == "bool") {
-                iM.expectedVars = "bool " + additionalParamVarName;
-            }
-            if (convertTo == "String" || convertTo == "string") {
-                iM.expectedVars = "string " + additionalParamVarName;
             }
             internalMethods.push_back(iM);
             actOnArgs.addText(connectToInternalMethod + "(" + additionalParamVarName + ");\n");
             if (!interface.empty()) {
-                actOnArgs.addText(reference + "Bool = true;\n");
+                actOnArgs.addText("bool" + interface + " = true;\n");
             }
 
         }
@@ -928,7 +883,7 @@ void Code::addArgument(string ref,
         actOnArgs.addText("cout << \"Es wurde der Parameter --" + longOpt +
                           " erfolgreich übergeben!\" << endl;\n");//Feedback print, wenn ein Argument angegeben wurde
         if (interface != "") {
-            actOnArgs.addText(reference + "Bool = true;\n");
+            actOnArgs.addText("bool" + interface + " = true;\n");
         }
         if (!hasArguments.empty()) {
             actOnArgs.addText("cout << \"Zusätzliche Argumente:\" << " + reference +
@@ -938,41 +893,10 @@ void Code::addArgument(string ref,
 
         }
     }
-
-    if(connectToExternalMethod != "")
-    {
-        actOnArgs.addText(connectToExternalMethod + "(");
-
-        if(convertTo == "")
-        {
-            cout << "convertTo" << endl;
-            actOnArgs.addText(");\n");
-        }
-
-            else if(convertTo == "Integer" || convertTo == "integer")
-            {
-                actOnArgs.addText(reference + "Int);\n");
-                cout << "convertTo = Int" << shortOpt << longOpt << endl;
-            }
-            else if(convertTo == "Bool" || convertTo == "bool")
-            {
-                actOnArgs.addText(reference + "Bool);\n");
-                cout << "convertTo = Bool" << shortOpt << longOpt << endl;
-            }
-            else
-            {
-                actOnArgs.addText(reference + "Param);\n");  //Beim Testen schauen, obs funktioniert, sonst Str statt Param anhängen!!!
-                cout << "convertTo = String" << convertTo << shortOpt << longOpt << endl;
-            }
-        
-    }
     actOnArgs.addText("continue;");
     actOnArgs.endIf();
 
     handleArgs += actOnArgs.code;
-
-
-
 }
 
 
