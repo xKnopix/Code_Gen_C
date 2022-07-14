@@ -377,13 +377,31 @@ vector <string> Code::split(string str, char seperator) {
 
 void Code::parse(xml_parser::GetOptSetup data) {
 
+    Code(data.sourceFileName, data.headerFileName, "parse", "getOptsParse", "79", "SampleUsage Here", "DER AUTOR");
+
+    startForLoop("int i = 1; i<argc; i++");  
+
+    for (int i = 0; i < data.options.option.size(); i++)
+    {
+        addArgument(data.options.option[i].ref,
+                    data.options.option[i].shortOpt,
+                    data.options.option[i].longOpt,
+                    data.options.option[i].exclusion,
+                    data.options.option[i].connectToInternalMethod,
+                    data.options.option[i].description,
+                    data.options.option[i].interface,
+                    data.options.option[i].hasArguments,
+                    data.options.option[i].convertTo,
+                    data.options.option[i].defaultValue,
+                    data.options.option[i].connectToExternalMethod)
+    }
+
     string filename = "newFile"; // Optional damit keine Fehler auftreten
 
     //EXIT TEST: exit(EXIT_SUCCESS);
-    Code("FileName", "HeaderFileName", "parse", "getOptsParse", "79", "SampleUsage Here", "DER AUTOR");
+    
 
-    startForLoop(
-            "int i = 1; i<argc; i++");                                                                     //Durch jedes Argument einmal durch
+                                                                       //Durch jedes Argument einmal durch
 
     addArgument("1"/*ref*/, "h", "help", "2,3", "printHelp", "Diese Hilfe ausgeben und beenden", "", "", "", "", "");
     addArgument("2", "v", "version", "1,3", "printVersion", "Gibt die Version des Programms aus und beendet", "Version",
@@ -406,7 +424,7 @@ void Code::parse(xml_parser::GetOptSetup data) {
          << finalCode();                                                                       //Code ausgeben
 
     // Create and open a text file
-    ofstream MyFile("generated/" + filename + ".cpp");
+    ofstream MyFile(filename + ".cpp");
 
     // Write to the file
     MyFile
@@ -415,7 +433,7 @@ void Code::parse(xml_parser::GetOptSetup data) {
     // Close the file
     MyFile.close();
 
-    ofstream MyHeaderFile("generated/" + filename + ".h");
+    ofstream MyHeaderFile(filename + ".h");
 
     // Write to the file
     MyHeaderFile
