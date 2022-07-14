@@ -9,6 +9,7 @@ add_executable (C_Code_Gen "main.cpp" "pugixml-1.12/src/pugixml.cpp" "xml_parser
 
 if (WIN32)
 	configure_file("Example.xml" "Debug/Example.xml")
+  configure_file("Example.xml" "Example.xml")
 endif (WIN32)
 
 if (UNIX)
