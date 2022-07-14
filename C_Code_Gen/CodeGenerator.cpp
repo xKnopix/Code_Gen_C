@@ -403,7 +403,7 @@ void Code::parse(string filename) {
          << finalCode();                                                                       //Code ausgeben
 
     // Create and open a text file
-    ofstream MyFile(filename + ".cpp");
+    ofstream MyFile("generated/" + filename + ".cpp");
 
     // Write to the file
     MyFile
@@ -412,7 +412,7 @@ void Code::parse(string filename) {
     // Close the file
     MyFile.close();
 
-    ofstream MyHeaderFile(filename + ".h");
+    ofstream MyHeaderFile("generated/" + filename + ".h");
 
     // Write to the file
     MyHeaderFile
