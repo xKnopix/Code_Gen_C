@@ -13,14 +13,15 @@ int main() {
 
     check c;
     c.check_data(data);
+    data = c.sortData(data);
 
     Code code;
 
     code.parse(data);
 
-    cout << data.options.option[0].longOpt << endl;
-    cout << data.options.option.size() << endl;
-    cout << data.options.option[0].shortOpt.empty() << endl;
+    //cout << data.options.option[4].longOpt << endl;
+    //cout << data.options.option.size() << endl;
+    //cout << data.options.option[0].shortOpt.empty() << endl;
 
     return 0;
 }

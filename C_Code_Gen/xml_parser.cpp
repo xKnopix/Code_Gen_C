@@ -63,10 +63,6 @@ xml_parser::GetOptSetup xml_parser::GetDataStrctFromXML(std::string filename){
         o.defaultValue = Optionss[i].attribute("DefaultValue").value();
         data.options.addOption(o);
     }  
-
-
-    
-    cout<< data.options.option[1].shortOpt  << endl;
     return data;
 }
 
