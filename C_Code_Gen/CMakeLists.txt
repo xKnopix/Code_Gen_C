@@ -5,7 +5,7 @@ cmake_minimum_required (VERSION 3.8)
 
 # Fügen Sie der ausführbaren Datei dieses Projekts eine Quelle hinzu.
 
-add_executable (C_Code_Gen "main.cpp" "pugixml-1.12/src/pugixml.cpp" "xml_parser.cpp" "xml_parser.h" "filename.h" "filename.cpp" "CodeGenerator.cpp" "CodeGenerator.h" "check.cpp" "check.h")
+add_executable (C_Code_Gen "main.cpp" "pugixml-1.12/src/pugixml.cpp" "xml_parser.cpp" "xml_parser.h" "CodeGenerator.cpp" "CodeGenerator.h" "check.cpp" "check.h")
 
 if (WIN32)
 	configure_file("Example.xml" "Debug/Example.xml")
