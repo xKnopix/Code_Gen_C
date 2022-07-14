@@ -1,0 +1,3 @@
+D:/Studium/Code_Gen_C/newFiles/Test/build/CMakeFiles/rebuild_cache.dir
+D:/Studium/Code_Gen_C/newFiles/Test/build/CMakeFiles/Test.dir
+D:/Studium/Code_Gen_C/newFiles/Test/build/CMakeFiles/edit_cache.dir

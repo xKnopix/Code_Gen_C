@@ -4,6 +4,7 @@ Code_Gen_C.code-workspace
 .idea/
 .vscode/
 /build
+/newFiles/Test/build
 cmake-build-debug/
 
 # Compiled Object files
