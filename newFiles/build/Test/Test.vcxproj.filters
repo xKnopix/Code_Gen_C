@@ -4,12 +4,12 @@
     <ClCompile Include="C:\Users\hochb\Documents\GitHub\Code_Gen_C\newFiles\Test\mainTestGenerated.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\hochb\Documents\GitHub\Code_Gen_C\newFiles\Test\newFile.cpp">
+    <ClCompile Include="C:\Users\hochb\Documents\GitHub\Code_Gen_C\newFiles\Test\options.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="C:\Users\hochb\Documents\GitHub\Code_Gen_C\newFiles\Test\newFile.h">
+    <ClInclude Include="C:\Users\hochb\Documents\GitHub\Code_Gen_C\newFiles\Test\options.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

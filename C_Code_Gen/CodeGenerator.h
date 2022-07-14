@@ -84,7 +84,7 @@ class Code
 
             includesString =        "#include <string>\n"                                                               ////includesString////
                                     "#include <iostream>\n"                                                             //Alle includes, die eventuell benötigt werden,
-                                    "#include <Vector>\n",                                                               //im generierten Argument-Parser
+                                    "#include <vector>\n",                                                               //im generierten Argument-Parser
 
             namespaceString =       "using namespace std;\n",
 
@@ -178,7 +178,7 @@ public:
 
     string finalHeaderCode();
 
-    string finalCode();
+    string finalCode(string hFileName);
 
     string createInternalMethods();
 

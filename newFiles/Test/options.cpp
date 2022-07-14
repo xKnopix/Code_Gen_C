@@ -1,7 +1,7 @@
 #include <string>
 #include <iostream>
 #include <vector>
-#include "newFile.h"
+#include "options.h"
 using namespace std;
 namespace noNameSpace
 {
@@ -18,27 +18,9 @@ cout << endl;
 cout << myString[i];
 }
 }
-void noClassname::printHelp(int signPerLine)
+bool noClassname::isSettest()
 {
-cout<<""<< endl;
-myPrint("-h, --help\n", signPerLine);
-myPrint("Diese Hilfe ausgeben und beenden\n\n", 79);
-myPrint("-v, --version\n", signPerLine);
-myPrint("Gibt die Version des Programms aus und beendet\n\n", 79);
-myPrint("--out-path\n", signPerLine);
-myPrint("	Der Pfad wo das Ergebnis hingeneriert werden soll (sonst ins aktuelle Verzeichnis)\n\n", signPerLine);
-myPrint("--astyle-path\n", signPerLine);
-myPrint("	Der Pfad wo die Astyle executable gefunden werden kann\n\n", signPerLine);
-myPrint("--sign-per-line\n", signPerLine);
-myPrint("	Die Anzahl der Zeichen pro Linie fÃ¼r den Helptext. Ohne Argument wird der Standartwert genommen.\n\n", signPerLine);
-myPrint("-n, --only-if-newer\n", signPerLine);
-myPrint("Generiert nur wenn die Eingangsdatei neuer ist wie die bereits generierte\n\n", 79);
-myPrint("--no-format\n", signPerLine);
-myPrint("	Erzeugte Datei wird nicht formatiert\n\n", signPerLine);
-myPrint("--parse-only\n", signPerLine);
-myPrint("	Parst die Datei einmal und beendet das Programm\n\n", signPerLine);
-myPrint("Author: anonymous\n", 79);
-}
+return boolIsSettest;}
 bool noClassname::isSetVersion()
 {
 return VersionBool;
@@ -83,7 +65,23 @@ bool noClassname::isSetnoformat()
 {
 return noformatBool;
 }
-void noClassname::ParseXML(bool parseonlyBool)
+bool noClassname::isSetparseonly()
+{
+return parseonlyBool;
+}
+int noClassname::getValueOfparseonly()
+{
+try {
+                parseonlyInt = stol(parseonlyParam);
+            }
+            catch (invalid_argument const &e) {
+                cerr << "Bad input: invalid_argument thrown for parseonly, using default Value if given" << endl;
+            }
+            catch (out_of_range const &e) {
+                cerr << "Integer overflow: out_of_range thrown for parseonly, using default Value if given" << endl;
+            }return parseonlyInt;
+}
+void noClassname::ParseXML(int parseonlyInt)
 {
 cout << "Parst die Datei einmal und beendet das Programm" << endl;
 }
@@ -106,31 +104,7 @@ string signperlineStr = "79";
 string parseonlyStr;
 for(int i = 1; i<argc; i++)
 {
-if(string(argv[i]) == "-h" || string(argv[i]) == "--help")
-{
-vector<string> localExclusions = {"2", "3"};
-for(int i = 0; i < exclusions.size(); i++)
-{
-for(int j = 0; j < localExclusions.size(); j++)
-{
-if(to_string(exclusions[i]) == localExclusions[j])
-{
-cerr << "help und "<< refValues[exclusions[i]]<<" sind nicht zusammen erlaubt!" << endl;
-exitArg = 1;
-}
-}
-}
-if(noRef == 1)
-{
-exitArg = 1;
-}
-if(exitArg != 1)
-{
-exclusions.push_back(1);
-refValues[1] = "help";noRef = 1;
-}
-}
-if(string(argv[i]) == "-v" || string(argv[i]) == "--version")
+if(string(argv[i]) == "-v")
 {
 vector<string> localExclusions = {"1", "3"};
 for(int i = 0; i < exclusions.size(); i++)
@@ -290,7 +264,7 @@ for(int j = 0; j < localExclusions.size(); j++)
 {
 if(to_string(exclusions[i]) == localExclusions[j])
 {
-cerr << "parse-only und "<< refValues[exclusions[i]]<<" sind nicht zusammen erlaubt!" << endl;
+cerr << "parseOnly und "<< refValues[exclusions[i]]<<" sind nicht zusammen erlaubt!" << endl;
 exitArg = 1;
 }
 }
@@ -302,7 +276,7 @@ exitArg = 1;
 if(exitArg != 1)
 {
 exclusions.push_back(3);
-refValues[3] = "parse-only";noRef = 1;
+refValues[3] = "parseOnly";noRef = 1;
 }
 if(i+1 != argc)
 {
@@ -360,11 +334,11 @@ return;
 }
 for(int i = 1; i<argc; i++)
 {
-if(string(argv[i]) == "-h" || string(argv[i]) == "--help")
+if(string(argv[i]) == "--test")
 {
-printHelp(signperlineInt);
+cout << "Es wurde der Parameter --test erfolgreich übergeben!" << endl;
 continue;}
-if(string(argv[i]) == "-v" || string(argv[i]) == "--version")
+if(string(argv[i]) == "-v")
 {
 continue;}
 if(string(argv[i]) == "--out-path")
@@ -403,8 +377,8 @@ noformatBool = true;
 continue;}
 if(string(argv[i]) == "--parse-only")
 {
-ParseXML(parseonlyBool);
-hallo(parseonlyBool);
+ParseXML(parseonlyInt);
+parseonlyBool = true;
 continue;}
 unknownOption(argv[i]);}
 }

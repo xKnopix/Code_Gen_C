@@ -5,7 +5,7 @@ cmake_minimum_required (VERSION 3.8)
 
 # Fügen Sie der ausführbaren Datei dieses Projekts eine Quelle hinzu.
 
-add_executable(Test "mainTestGenerated.cpp" "newFile.cpp" "newFile.h")
+add_executable(Test "mainTestGenerated.cpp" "options.cpp" "options.h")
 
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)

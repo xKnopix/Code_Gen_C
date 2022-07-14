@@ -8,6 +8,7 @@ namespace noNameSpace
 {
 class noClassname
 {
+bool boolIsSettest;
 bool VersionBool;
 bool outpathBool;
 string outpathParam;
@@ -18,10 +19,11 @@ bool signperlineBool;
 string signperlineParam = "79";
 bool onlyifnewerBool;
 bool noformatBool;
-bool parseonlyBool = true;
+int parseonlyInt = 0;
+bool parseonlyBool;
+string parseonlyParam;
 void myPrint(string myString, int newLineChecker);
-protected:
-virtual void  printHelp(int signPerLine);
+bool isSettest();
 public:
 bool isSetVersion();
 public:
@@ -41,9 +43,11 @@ bool isSetonlyifnewer();
 public:
 bool isSetnoformat();
 public:
-void ParseXML(bool parseonlyBool);
+bool isSetparseonly();
 public:
-virtual void hallo(bool b) = 0;
+int getValueOfparseonly();
+public:
+void ParseXML(int parseonlyInt);
 public:
 virtual void unknownOption(const string& unknown_option);void parse(int argc, char* argv[]);
 };
