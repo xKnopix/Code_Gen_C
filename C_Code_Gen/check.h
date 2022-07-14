@@ -7,6 +7,7 @@ class check
 {
 public:
     int check_data(xml_parser::GetOptSetup data);
+    xml_parser::GetOptSetup sortData(xml_parser::GetOptSetup data);
 private:
     int check_author(xml_parser::Author);
     int check_headerfile(xml_parser::HeaderFileName);
@@ -19,6 +20,8 @@ private:
     int check_sample(xml_parser::Sample);
     int check_options(xml_parser::Options);
     int check_option(xml_parser::Option, int i);
+    int compStringS1SmalerS2(string s1, string s2);
+    
 };
 
 #endif
