@@ -375,7 +375,10 @@ vector <string> Code::split(string str, char seperator) {
     return subStrings;
 }
 
-void Code::parse(string filename) {
+void Code::parse(xml_parser::GetOptSetup data) {
+
+    string filename = "newFile"; // Optional damit keine Fehler auftreten
+
     //EXIT TEST: exit(EXIT_SUCCESS);
     Code("FileName", "HeaderFileName", "parse", "getOptsParse", "79", "SampleUsage Here", "DER AUTOR");
 

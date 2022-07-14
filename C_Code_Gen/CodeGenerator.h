@@ -6,6 +6,8 @@
 #include <string>
 #include <algorithm>
 
+#include "xml_parser.h"
+
 using namespace std;
 
 
@@ -182,7 +184,9 @@ public:
 
     vector<string> split (string str, char seperator);
 
-    void parse(string filename);
+    void parse(xml_parser::GetOptSetup data);
+
+    string filename = "newFile"; //optional damit kiene fehler kommen
 
     void addArgument(string ref = "",
                      string shortOpt = "",

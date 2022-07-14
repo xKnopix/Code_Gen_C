@@ -16,10 +16,11 @@ int main() {
 
     Code code;
 
-    code.parse("newFile");
+    code.parse(data);
 
     cout << data.options.option[0].longOpt << endl;
     cout << data.options.option.size() << endl;
+    cout << data.options.option[0].shortOpt.empty() << endl;
 
     return 0;
 }
