@@ -1,4 +1,4 @@
-#include "TestsNewFile.h"
+#include "newFile.h"
 
 
 class MyOptionParser : public noClassname{

@@ -1,0 +1,10 @@
+^C:\USERS\HOCHB\DOCUMENTS\GITHUB\CODE_GEN_C\NEWFILES\TEST\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/hochb/Documents/GitHub/Code_Gen_C/newFiles -BC:/Users/hochb/Documents/GitHub/Code_Gen_C/newFiles/build --check-stamp-file C:/Users/hochb/Documents/GitHub/Code_Gen_C/newFiles/build/Test/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
