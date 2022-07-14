@@ -1,3 +1,0 @@
-C:/Users/hochb/Documents/GitHub/Code_Gen_C/newFiles/build/CMakeFiles/ALL_BUILD.dir
-C:/Users/hochb/Documents/GitHub/Code_Gen_C/newFiles/build/CMakeFiles/ZERO_CHECK.dir
-C:/Users/hochb/Documents/GitHub/Code_Gen_C/newFiles/build/Test/CMakeFiles/Test.dir
