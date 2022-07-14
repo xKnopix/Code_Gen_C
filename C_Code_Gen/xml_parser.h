@@ -3,17 +3,10 @@
 
 #include <iostream>
 #include <vector>
-
-#include <xercesc/parsers/XercesDOMParser.hpp>
-#include <xercesc/dom/DOM.hpp>
-#include <xercesc/sax/HandlerBase.hpp>
-#include <xercesc/util/XMLString.hpp>
-#include <xercesc/util/PlatformUtils.hpp>
-
-#include "xmlCh.h"
+#include "pugixml-1.12/src/pugixml.hpp"
 
 using namespace std;
-using namespace xercesc;
+using namespace pugi;
 
 class xml_parser{
 public:
@@ -66,6 +59,9 @@ public:
         std::string description;
         std::string interface;
         std::string hasArguments;
+        std::string convertTo;
+        std::string defaultValue;
+        std::string connectToExternalMethod;
     };
 
     struct Options{
@@ -86,11 +82,6 @@ public:
 
     GetOptSetup GetDataStrctFromXML(std::string filename);
 private:
-    DOMDocument* GetDomDocument(std::string xmlName);
-    GetOptSetup ParseDOMToDataStrct(DOMDocument* doc);
-    Author GetAuthor(DOMDocument* doc);
-    OverAllDescription GetOverAllDescription(DOMDocument* doc);
-    SampleUsage GetSampleUsage(DOMDocument* doc);
-    Options GetOptions(DOMDocument* doc);
+    vector<xml_node> getChildNodes(xml_node parentNode, pugi::char_t* child_Name);
 };
 #endif
