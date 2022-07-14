@@ -20,7 +20,7 @@ Die Fertige exe kann dann unter build/C_Code_Gen/Debug gefunden werden
 
 
 
-Linux/Unix
+Linux/Unix:
 
 In Haupverzeichnis wechseln (dort wo der Ordner C_Code_Gen und CMakeLists.txt und Readme.md liegt)
 
@@ -35,3 +35,17 @@ terminal in build ordner öffnen
 "make" in terminal eingeben
 
 Das fertige Programm kann dann unter /build/C_Code_Gen gefunden werden
+
+
+
+Visual Studio Code und Cmake:
+
+Plugins, Cmake suchen und installieren (von Microsoft)
+
+Plugins, C++ suchen und installieren 
+
+VSCode neustarten
+
+Den Haupt Ordner in VisualStudioCode öffnen
+
+Jetzt sollten von cmake unten links Buttons zum builden, Debugen und runnen sicht bar sein:
