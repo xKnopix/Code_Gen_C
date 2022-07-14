@@ -10,19 +10,13 @@ int main()
 {
     xml_parser x;
     xml_parser::GetOptSetup data = x.GetDataStrctFromXML("Example.xml");
-    cout << data.options.option[1].description << endl;
 
     check c;
     c.check_data(data);
     data = c.sortData(data);
 
     Code code;
-
     code.parse(data);
-
-    // cout << data.options.option[4].longOpt << endl;
-    // cout << data.options.option.size() << endl;
-    // cout << data.options.option[0].shortOpt.empty() << endl;
 
     return 0;
 }
