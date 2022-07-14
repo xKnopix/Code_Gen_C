@@ -1,0 +1,12 @@
+[
+{
+  "directory": "/home/rsim/Schreibtisch/newFiles/build",
+  "command": "/usr/bin/g++ -g -std=gnu++20 -o Test/CMakeFiles/Test.dir/mainTestGenerated.cpp.o -c /home/rsim/Schreibtisch/newFiles/Test/mainTestGenerated.cpp",
+  "file": "/home/rsim/Schreibtisch/newFiles/Test/mainTestGenerated.cpp"
+},
+{
+  "directory": "/home/rsim/Schreibtisch/newFiles/build",
+  "command": "/usr/bin/g++ -g -std=gnu++20 -o Test/CMakeFiles/Test.dir/TestsNewFile.cpp.o -c /home/rsim/Schreibtisch/newFiles/Test/TestsNewFile.cpp",
+  "file": "/home/rsim/Schreibtisch/newFiles/Test/TestsNewFile.cpp"
+}
+]
