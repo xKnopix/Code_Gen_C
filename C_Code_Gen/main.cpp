@@ -2,6 +2,7 @@
 #include "xml_parser.h"
 #include "CodeGenerator.h"
 #include "check.h"
+#include "mainGenerator.h"
 // Wichtig! Unter File Preferences Settings Extensions "Run Code configuration" "Executor Map" "Edit in settings.json"
 // nach g++ $file weg machen und dafür main.cpp xml_parser.cpp einfügen, sonst geht der code runner Button nicht mehr
 // hat den grund dass beim Compelieren alle Source Dateien mit angegeben werden müssen und nicht nur die main.cpp
@@ -17,6 +18,9 @@ int main()
 
     Code code;
     code.parse(data);
+
+    mainGenerator m = mainGenerator(data);
+
 
     return 0;
 }
