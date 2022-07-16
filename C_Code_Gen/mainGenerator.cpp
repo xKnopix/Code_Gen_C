@@ -25,7 +25,6 @@ void mainGenerator::genMain(){
     this->output.append("\tKlasse k;\n");
     this->output.append("\tk.parse(argc, argv);\n");
     this->output.append("}");
-    cout << this->output;
 }
 
 void mainGenerator::genInheriteClass(xml_parser::Options options, xml_parser::ClassName classN){
@@ -60,7 +59,7 @@ void mainGenerator::genInheriteClass(xml_parser::Options options, xml_parser::Cl
                     this->output.append("string s");
                 }
             }
-            this->output.append("){\n\tcout << \"Example implementation of external Methode\" << endl;\n}\n\n");
+            this->output.append("){\n\tcout << \"Example implementation of external Method\" << endl;\n}\n\n");
         }
         this->output.append("};\n\n");
     }
