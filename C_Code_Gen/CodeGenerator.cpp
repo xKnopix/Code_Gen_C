@@ -32,10 +32,7 @@ Code::Code(string sourceFileName, string headerFileName, string nameSpace, strin
            string sampleUsage, string author)
 {
 
-    // std::cout << "HFILENAME: " << headerFileName << endl;
-    // std::cout << "HFILENAME: " << Code::headerFileName << endl;
     Code::headerFileName = headerFileName;
-    // std::cout << "HFILENAME: " << Code::headerFileName << endl;
     Code::nameSpace = nameSpace;
     Code::className = className;
     Code::signPerLine = signPerLine;
@@ -43,113 +40,10 @@ Code::Code(string sourceFileName, string headerFileName, string nameSpace, strin
     Code::author = author;
 }
 
-// Alle Methoden mit dem Rückgabewert 'void'
-void Code::createInt(const string &varName, int value)
-{
-    /*
-     * Es wird Code erstellt, welcher einen neuen Integer mit dem übergebenen namen und Wert erstellt
-     */
-    ///:param varName:   der Name der Integer Variablen, welche dem Code hinzugefügt werden soll
-    ///:param value:     der Wert, welcher dem Integer bei der Initialisierung zugewiesen werden soll, default = 0
-
-    string newLine = "int " + varName + " = " + to_string(value) + ";\n";
-    code += newLine;
-}
-
-void Code::setInt(const string &varName, int newValue)
-{
-    /*
-     * Es wird Code generiert, welcher einem bereits bestehenden Integer einen neuen Wert zuweist
-     */
-    ///:param varName:   der Name der Integer Variablen, welche verändert werden soll
-    ///:param newValue:  der Wert, welcher dem Integer zugewiesen werden soll
-
-    code += varName + " = " + to_string(newValue) + " ;\n";
-}
-
-void Code::addToInt(const string &varName, int addValue)
-{
-    /*
-     * Es wird Code generiert, welcher einem bereits bestehenden Integer einen neuen Wert zuweist
-     */
-    ///:param varName:   der Name der Integer Variablen, welche verändert werden soll
-    ///:param addValue:  der Wert, welcher zu dem Integer hinzu addiert werden soll, default = 0
-
-    code += varName + " += " + to_string(addValue) + " ;\n";
-}
-
-void Code::createString(const string &varName, string value)
-{
-    /*
-     * Es wird Code erstellt, welcher einen neuen String mit dem übergebenen namen und Wert erstellt
-     */
-    ///:param varName:   der Name der String Variablen, welche dem Code hinzugefügt werden soll
-    ///:param value:     der Wert, welcher dem Integer bei der Initialisierung zugewiesen werden soll, default = ""
-
-    string newLine = "string " + varName + " = \"" + value + "\";\n";
-    code += newLine;
-}
-
-void Code::setString(const string &varName, string newValue)
-{
-    /*
-     * Es wird Code generiert, welcher einem bereits bestehenden String einen neuen Wert zuweist
-     */
-    ///:param varName:   der Name der String Variablen, welche verändert werden soll
-    ///:param newValue:  die Zeichen, welche dem String zugewiesen werden sollen
-
-    code += varName + " = \"" + newValue + "\" ;\n";
-}
-
-void Code::addToString(const string &varName, string addValue)
-{
-    /*
-     * Es wird Code generiert, welcher einem bereits bestehenden Integer einen neuen Wert zuweist
-     */
-    ///:param varName:   der Name der String Variablen, welche verändert werden soll
-    ///:param addValue:  der Wert, welcher zu dem String angehängt werden soll, default = ""
-
-    code += varName + " += " + addValue + " ;\n";
-}
-
-void Code::COUT(const string &message)
-{
-    /*
-     * Es wird Code generiert, welcher den übergebenen String auf der Konsole ausgibt
-     */
-    ///:param message: Der String, welcher später ausgegben werden soll
-
-    code += "cout << \"" + message + "\" << endl;\n";
-}
-
 void Code::addText(string s)
 {
-    /*
-     * Der übergebene String wird an den gesamt Code angehängt, benutzung auf eigene Gefahr :)
-     */
-    ///:param s: Der Code, welcher angehängt werden soll
 
     code += s;
-}
-
-void Code::addSingleComment(string comment)
-{
-    /*
-     * Es wird Code generiert, welcher den übergebenen String als Kommentar an den gesamt Code anhängt
-     */
-    ///:param comment: Der Kommentar, welcher angehängt werden soll
-
-    code += "//" + comment;
-}
-
-void Code::addMultiLineComment(string comment)
-{
-    /*
-     * Es wird Code generiert, welcher den übergebenen String als Mehrzeilenkommentar an den gesamt Code anhängt
-     */
-    ///:param comment: Der Kommentar, welcher eingefügt werden soll
-
-    code += "/*\n" + comment + "\n*/\n";
 }
 
 string Code::getCode()
@@ -163,10 +57,6 @@ string Code::getCode()
 
 void Code::startForLoop(string s)
 {
-    /*
-     * Es wird Code generiert, um eine for-Schleife im gesamt Code zu starten
-     */
-    ///:param s: Der Text der for-Schleife in den runden Klammern (!Muss Stimmen!)
 
     code += "for(" + s + ")\n{\n";
 }

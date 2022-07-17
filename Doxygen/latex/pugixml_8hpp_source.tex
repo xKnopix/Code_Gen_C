@@ -1,0 +1,1471 @@
+\hypertarget{pugixml_8hpp_source}{}\doxysection{pugixml.\+hpp}
+\label{pugixml_8hpp_source}\index{C\_Code\_Gen/pugixml-\/1.12/src/pugixml.hpp@{C\_Code\_Gen/pugixml-\/1.12/src/pugixml.hpp}}
+\mbox{\hyperlink{pugixml_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 }
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#ifndef PUGIXML\_VERSION}}
+\DoxyCodeLine{15 \textcolor{comment}{// Define version macro; evaluates to major * 1000 + minor * 10 + patch so that it's safe to use in less-\/than comparisons}}
+\DoxyCodeLine{16 \textcolor{comment}{// Note: pugixml used major * 100 + minor * 10 + patch format up until 1.9 (which had version identifier 190); starting from pugixml 1.10, the minor version number is two digits}}
+\DoxyCodeLine{17 \textcolor{preprocessor}{\#   define PUGIXML\_VERSION 1110}}
+\DoxyCodeLine{18 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{20 \textcolor{comment}{// Include user configuration file (this can define various configuration macros)}}
+\DoxyCodeLine{21 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{pugiconfig_8hpp}{pugiconfig.hpp}}"{}}}
+\DoxyCodeLine{22 }
+\DoxyCodeLine{23 \textcolor{preprocessor}{\#ifndef HEADER\_PUGIXML\_HPP}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{\#define HEADER\_PUGIXML\_HPP}}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26 \textcolor{comment}{// Include stddef.h for size\_t and ptrdiff\_t}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#include <stddef.h>}}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29 \textcolor{comment}{// Include exception header for XPath}}
+\DoxyCodeLine{30 \textcolor{preprocessor}{\#if !defined(PUGIXML\_NO\_XPATH) \&\& !defined(PUGIXML\_NO\_EXCEPTIONS)}}
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#   include <exception>}}
+\DoxyCodeLine{32 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34 \textcolor{comment}{// Include STL headers}}
+\DoxyCodeLine{35 \textcolor{preprocessor}{\#ifndef PUGIXML\_NO\_STL}}
+\DoxyCodeLine{36 \textcolor{preprocessor}{\#   include <iterator>}}
+\DoxyCodeLine{37 \textcolor{preprocessor}{\#   include <iosfwd>}}
+\DoxyCodeLine{38 \textcolor{preprocessor}{\#   include <string>}}
+\DoxyCodeLine{39 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{40 }
+\DoxyCodeLine{41 \textcolor{comment}{// Macro for deprecated features}}
+\DoxyCodeLine{42 \textcolor{preprocessor}{\#ifndef PUGIXML\_DEPRECATED}}
+\DoxyCodeLine{43 \textcolor{preprocessor}{\#   if defined(\_\_GNUC\_\_)}}
+\DoxyCodeLine{44 \textcolor{preprocessor}{\#       define PUGIXML\_DEPRECATED \_\_attribute\_\_((deprecated))}}
+\DoxyCodeLine{45 \textcolor{preprocessor}{\#   elif defined(\_MSC\_VER) \&\& \_MSC\_VER >= 1300}}
+\DoxyCodeLine{46 \textcolor{preprocessor}{\#       define PUGIXML\_DEPRECATED \_\_declspec(deprecated)}}
+\DoxyCodeLine{47 \textcolor{preprocessor}{\#   else}}
+\DoxyCodeLine{48 \textcolor{preprocessor}{\#       define PUGIXML\_DEPRECATED}}
+\DoxyCodeLine{49 \textcolor{preprocessor}{\#   endif}}
+\DoxyCodeLine{50 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{51 }
+\DoxyCodeLine{52 \textcolor{comment}{// If no API is defined, assume default}}
+\DoxyCodeLine{53 \textcolor{preprocessor}{\#ifndef PUGIXML\_API}}
+\DoxyCodeLine{54 \textcolor{preprocessor}{\#   define PUGIXML\_API}}
+\DoxyCodeLine{55 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{57 \textcolor{comment}{// If no API for classes is defined, assume default}}
+\DoxyCodeLine{58 \textcolor{preprocessor}{\#ifndef PUGIXML\_CLASS}}
+\DoxyCodeLine{59 \textcolor{preprocessor}{\#   define PUGIXML\_CLASS PUGIXML\_API}}
+\DoxyCodeLine{60 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{61 }
+\DoxyCodeLine{62 \textcolor{comment}{// If no API for functions is defined, assume default}}
+\DoxyCodeLine{63 \textcolor{preprocessor}{\#ifndef PUGIXML\_FUNCTION}}
+\DoxyCodeLine{64 \textcolor{preprocessor}{\#   define PUGIXML\_FUNCTION PUGIXML\_API}}
+\DoxyCodeLine{65 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{66 }
+\DoxyCodeLine{67 \textcolor{comment}{// If the platform is known to have long long support, enable long long functions}}
+\DoxyCodeLine{68 \textcolor{preprocessor}{\#ifndef PUGIXML\_HAS\_LONG\_LONG}}
+\DoxyCodeLine{69 \textcolor{preprocessor}{\#   if \_\_cplusplus >= 201103}}
+\DoxyCodeLine{70 \textcolor{preprocessor}{\#       define PUGIXML\_HAS\_LONG\_LONG}}
+\DoxyCodeLine{71 \textcolor{preprocessor}{\#   elif defined(\_MSC\_VER) \&\& \_MSC\_VER >= 1400}}
+\DoxyCodeLine{72 \textcolor{preprocessor}{\#       define PUGIXML\_HAS\_LONG\_LONG}}
+\DoxyCodeLine{73 \textcolor{preprocessor}{\#   endif}}
+\DoxyCodeLine{74 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{75 }
+\DoxyCodeLine{76 \textcolor{comment}{// If the platform is known to have move semantics support, compile move ctor/operator implementation}}
+\DoxyCodeLine{77 \textcolor{preprocessor}{\#ifndef PUGIXML\_HAS\_MOVE}}
+\DoxyCodeLine{78 \textcolor{preprocessor}{\#   if \_\_cplusplus >= 201103}}
+\DoxyCodeLine{79 \textcolor{preprocessor}{\#       define PUGIXML\_HAS\_MOVE}}
+\DoxyCodeLine{80 \textcolor{preprocessor}{\#   elif defined(\_MSC\_VER) \&\& \_MSC\_VER >= 1600}}
+\DoxyCodeLine{81 \textcolor{preprocessor}{\#       define PUGIXML\_HAS\_MOVE}}
+\DoxyCodeLine{82 \textcolor{preprocessor}{\#   endif}}
+\DoxyCodeLine{83 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{84 }
+\DoxyCodeLine{85 \textcolor{comment}{// If C++ is 2011 or higher, add 'noexcept' specifiers}}
+\DoxyCodeLine{86 \textcolor{preprocessor}{\#ifndef PUGIXML\_NOEXCEPT}}
+\DoxyCodeLine{87 \textcolor{preprocessor}{\#   if \_\_cplusplus >= 201103}}
+\DoxyCodeLine{88 \textcolor{preprocessor}{\#       define PUGIXML\_NOEXCEPT noexcept}}
+\DoxyCodeLine{89 \textcolor{preprocessor}{\#   elif defined(\_MSC\_VER) \&\& \_MSC\_VER >= 1900}}
+\DoxyCodeLine{90 \textcolor{preprocessor}{\#       define PUGIXML\_NOEXCEPT noexcept}}
+\DoxyCodeLine{91 \textcolor{preprocessor}{\#   else}}
+\DoxyCodeLine{92 \textcolor{preprocessor}{\#       define PUGIXML\_NOEXCEPT}}
+\DoxyCodeLine{93 \textcolor{preprocessor}{\#   endif}}
+\DoxyCodeLine{94 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{95 }
+\DoxyCodeLine{96 \textcolor{comment}{// Some functions can not be noexcept in compact mode}}
+\DoxyCodeLine{97 \textcolor{preprocessor}{\#ifdef PUGIXML\_COMPACT}}
+\DoxyCodeLine{98 \textcolor{preprocessor}{\#   define PUGIXML\_NOEXCEPT\_IF\_NOT\_COMPACT}}
+\DoxyCodeLine{99 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{100 \textcolor{preprocessor}{\#   define PUGIXML\_NOEXCEPT\_IF\_NOT\_COMPACT PUGIXML\_NOEXCEPT}}
+\DoxyCodeLine{101 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{102 }
+\DoxyCodeLine{103 \textcolor{comment}{// If C++ is 2011 or higher, add 'override' qualifiers}}
+\DoxyCodeLine{104 \textcolor{preprocessor}{\#ifndef PUGIXML\_OVERRIDE}}
+\DoxyCodeLine{105 \textcolor{preprocessor}{\#   if \_\_cplusplus >= 201103}}
+\DoxyCodeLine{106 \textcolor{preprocessor}{\#       define PUGIXML\_OVERRIDE override}}
+\DoxyCodeLine{107 \textcolor{preprocessor}{\#   elif defined(\_MSC\_VER) \&\& \_MSC\_VER >= 1700}}
+\DoxyCodeLine{108 \textcolor{preprocessor}{\#       define PUGIXML\_OVERRIDE override}}
+\DoxyCodeLine{109 \textcolor{preprocessor}{\#   else}}
+\DoxyCodeLine{110 \textcolor{preprocessor}{\#       define PUGIXML\_OVERRIDE}}
+\DoxyCodeLine{111 \textcolor{preprocessor}{\#   endif}}
+\DoxyCodeLine{112 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{113 }
+\DoxyCodeLine{114 \textcolor{comment}{// If C++ is 2011 or higher, use 'nullptr'}}
+\DoxyCodeLine{115 \textcolor{preprocessor}{\#ifndef PUGIXML\_NULL}}
+\DoxyCodeLine{116 \textcolor{preprocessor}{\#   if \_\_cplusplus >= 201103}}
+\DoxyCodeLine{117 \textcolor{preprocessor}{\#       define PUGIXML\_NULL nullptr}}
+\DoxyCodeLine{118 \textcolor{preprocessor}{\#   else}}
+\DoxyCodeLine{119 \textcolor{preprocessor}{\#       define PUGIXML\_NULL 0}}
+\DoxyCodeLine{120 \textcolor{preprocessor}{\#   endif}}
+\DoxyCodeLine{121 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{122 }
+\DoxyCodeLine{123 \textcolor{comment}{// Character interface macros}}
+\DoxyCodeLine{124 \textcolor{preprocessor}{\#ifdef PUGIXML\_WCHAR\_MODE}}
+\DoxyCodeLine{125 \textcolor{preprocessor}{\#   define PUGIXML\_TEXT(t) L \#\# t}}
+\DoxyCodeLine{126 \textcolor{preprocessor}{\#   define PUGIXML\_CHAR wchar\_t}}
+\DoxyCodeLine{127 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{128 \textcolor{preprocessor}{\#   define PUGIXML\_TEXT(t) t}}
+\DoxyCodeLine{129 \textcolor{preprocessor}{\#   define PUGIXML\_CHAR char}}
+\DoxyCodeLine{130 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{131 }
+\DoxyCodeLine{132 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespacepugi}{pugi}}}
+\DoxyCodeLine{133 \{}
+\DoxyCodeLine{134     \textcolor{comment}{// Character type used for all internal storage and operations; depends on PUGIXML\_WCHAR\_MODE}}
+\DoxyCodeLine{135     \textcolor{keyword}{typedef} \mbox{\hyperlink{pugixml_8hpp_af467437c41f223eaed56106370aa82ff}{PUGIXML\_CHAR}} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}};}
+\DoxyCodeLine{136 }
+\DoxyCodeLine{137 \textcolor{preprocessor}{\#ifndef PUGIXML\_NO\_STL}}
+\DoxyCodeLine{138     \textcolor{comment}{// String type used for operations that work with STL string; depends on PUGIXML\_WCHAR\_MODE}}
+\DoxyCodeLine{139     \textcolor{keyword}{typedef} std::basic\_string<PUGIXML\_CHAR, std::char\_traits<PUGIXML\_CHAR>, std::allocator<PUGIXML\_CHAR> > \mbox{\hyperlink{namespacepugi_a053b39a84c8bb031ff3973d1954a876c}{string\_t}};}
+\DoxyCodeLine{140 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{141 \}}
+\DoxyCodeLine{142 }
+\DoxyCodeLine{143 \textcolor{comment}{// The PugiXML namespace}}
+\DoxyCodeLine{144 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespacepugi}{pugi}}}
+\DoxyCodeLine{145 \{}
+\DoxyCodeLine{146     \textcolor{comment}{// Tree node types}}
+\DoxyCodeLine{147     \textcolor{keyword}{enum} \mbox{\hyperlink{namespacepugi_a137e94a038e4ab0ada6477cf7f6153a9}{xml\_node\_type}}}
+\DoxyCodeLine{148     \{}
+\DoxyCodeLine{149         \mbox{\hyperlink{namespacepugi_a137e94a038e4ab0ada6477cf7f6153a9ad58c55e810076e076318cc2268191b1f}{node\_null}},         \textcolor{comment}{// Empty (null) node handle}}
+\DoxyCodeLine{150         \mbox{\hyperlink{namespacepugi_a137e94a038e4ab0ada6477cf7f6153a9aab42ba83cf941f7297325eade205bf80}{node\_document}},     \textcolor{comment}{// A document tree's absolute root}}
+\DoxyCodeLine{151         \mbox{\hyperlink{namespacepugi_a137e94a038e4ab0ada6477cf7f6153a9a6d223e3a0d8ce8e4ee6f4a2697b8bcd1}{node\_element}},       \textcolor{comment}{// Element tag, i.e. '<node/>'}}
+\DoxyCodeLine{152         \mbox{\hyperlink{namespacepugi_a137e94a038e4ab0ada6477cf7f6153a9a5c0042693a8b8b6b54c191b4403fca21}{node\_pcdata}},     \textcolor{comment}{// Plain character data, i.e. 'text'}}
+\DoxyCodeLine{153         \mbox{\hyperlink{namespacepugi_a137e94a038e4ab0ada6477cf7f6153a9adf13d60a4dfd047be0700e1711aeb1ea}{node\_cdata}},           \textcolor{comment}{// Character data, i.e. '<![CDATA[text]]>'}}
+\DoxyCodeLine{154         \mbox{\hyperlink{namespacepugi_a137e94a038e4ab0ada6477cf7f6153a9a445fef674a66777dfd28dbd6bab14fed}{node\_comment}},       \textcolor{comment}{// Comment tag, i.e. '<!-\/-\/ text -\/-\/>'}}
+\DoxyCodeLine{155         \mbox{\hyperlink{namespacepugi_a137e94a038e4ab0ada6477cf7f6153a9acd772b12b3d5442b9771151f45134440}{node\_pi}},         \textcolor{comment}{// Processing instruction, i.e. '<?name?>'}}
+\DoxyCodeLine{156         \mbox{\hyperlink{namespacepugi_a137e94a038e4ab0ada6477cf7f6153a9aad8024cc4a4afbc68c871f3826a00616}{node\_declaration}},   \textcolor{comment}{// Document declaration, i.e. '<?xml version="{}1.0"{}?>'}}
+\DoxyCodeLine{157         \mbox{\hyperlink{namespacepugi_a137e94a038e4ab0ada6477cf7f6153a9a9504586a29b181817607cc7ec231c9d4}{node\_doctype}}        \textcolor{comment}{// Document type declaration, i.e. '<!DOCTYPE doc>'}}
+\DoxyCodeLine{158     \};}
+\DoxyCodeLine{159 }
+\DoxyCodeLine{160     \textcolor{comment}{// Parsing options}}
+\DoxyCodeLine{161 }
+\DoxyCodeLine{162     \textcolor{comment}{// Minimal parsing mode (equivalent to turning all other flags off).}}
+\DoxyCodeLine{163     \textcolor{comment}{// Only elements and PCDATA sections are added to the DOM tree, no text conversions are performed.}}
+\DoxyCodeLine{164     \textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} \mbox{\hyperlink{namespacepugi_ae5058761cfd25d6cdb7e092659dae1fd}{parse\_minimal}} = 0x0000;}
+\DoxyCodeLine{165 }
+\DoxyCodeLine{166     \textcolor{comment}{// This flag determines if processing instructions (node\_pi) are added to the DOM tree. This flag is off by default.}}
+\DoxyCodeLine{167     \textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} \mbox{\hyperlink{namespacepugi_a8fb7ea408d60b4f2ca79dd30b651f545}{parse\_pi}} = 0x0001;}
+\DoxyCodeLine{168 }
+\DoxyCodeLine{169     \textcolor{comment}{// This flag determines if comments (node\_comment) are added to the DOM tree. This flag is off by default.}}
+\DoxyCodeLine{170     \textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} \mbox{\hyperlink{namespacepugi_adcab316176bfaf69158339962fb4ad38}{parse\_comments}} = 0x0002;}
+\DoxyCodeLine{171 }
+\DoxyCodeLine{172     \textcolor{comment}{// This flag determines if CDATA sections (node\_cdata) are added to the DOM tree. This flag is on by default.}}
+\DoxyCodeLine{173     \textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} \mbox{\hyperlink{namespacepugi_a47b679897f8bc15e4e152978fc88c208}{parse\_cdata}} = 0x0004;}
+\DoxyCodeLine{174 }
+\DoxyCodeLine{175     \textcolor{comment}{// This flag determines if plain character data (node\_pcdata) that consist only of whitespace are added to the DOM tree.}}
+\DoxyCodeLine{176     \textcolor{comment}{// This flag is off by default; turning it on usually results in slower parsing and more memory consumption.}}
+\DoxyCodeLine{177     \textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} \mbox{\hyperlink{namespacepugi_ae492a24302294f1ce3fbd56f2edbf131}{parse\_ws\_pcdata}} = 0x0008;}
+\DoxyCodeLine{178 }
+\DoxyCodeLine{179     \textcolor{comment}{// This flag determines if character and entity references are expanded during parsing. This flag is on by default.}}
+\DoxyCodeLine{180     \textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} \mbox{\hyperlink{namespacepugi_ab5ef8454110599611900ff48012c8ad6}{parse\_escapes}} = 0x0010;}
+\DoxyCodeLine{181 }
+\DoxyCodeLine{182     \textcolor{comment}{// This flag determines if EOL characters are normalized (converted to \#xA) during parsing. This flag is on by default.}}
+\DoxyCodeLine{183     \textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} \mbox{\hyperlink{namespacepugi_ad4e017365d2ff3ee04e226c35129b475}{parse\_eol}} = 0x0020;}
+\DoxyCodeLine{184 }
+\DoxyCodeLine{185     \textcolor{comment}{// This flag determines if attribute values are normalized using CDATA normalization rules during parsing. This flag is on by default.}}
+\DoxyCodeLine{186     \textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} \mbox{\hyperlink{namespacepugi_a1e943812f2de36fc3ee14f7756afdbd7}{parse\_wconv\_attribute}} = 0x0040;}
+\DoxyCodeLine{187 }
+\DoxyCodeLine{188     \textcolor{comment}{// This flag determines if attribute values are normalized using NMTOKENS normalization rules during parsing. This flag is off by default.}}
+\DoxyCodeLine{189     \textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} \mbox{\hyperlink{namespacepugi_a8617ea5ba78c676aff8b7af960cb2f4b}{parse\_wnorm\_attribute}} = 0x0080;}
+\DoxyCodeLine{190 }
+\DoxyCodeLine{191     \textcolor{comment}{// This flag determines if document declaration (node\_declaration) is added to the DOM tree. This flag is off by default.}}
+\DoxyCodeLine{192     \textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} \mbox{\hyperlink{namespacepugi_adb5db03ce720dcd90e900b9bb7e70427}{parse\_declaration}} = 0x0100;}
+\DoxyCodeLine{193 }
+\DoxyCodeLine{194     \textcolor{comment}{// This flag determines if document type declaration (node\_doctype) is added to the DOM tree. This flag is off by default.}}
+\DoxyCodeLine{195     \textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} \mbox{\hyperlink{namespacepugi_afa993ffcd3e228d21f48071e7c097f32}{parse\_doctype}} = 0x0200;}
+\DoxyCodeLine{196 }
+\DoxyCodeLine{197     \textcolor{comment}{// This flag determines if plain character data (node\_pcdata) that is the only child of the parent node and that consists only}}
+\DoxyCodeLine{198     \textcolor{comment}{// of whitespace is added to the DOM tree.}}
+\DoxyCodeLine{199     \textcolor{comment}{// This flag is off by default; turning it on may result in slower parsing and more memory consumption.}}
+\DoxyCodeLine{200     \textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} \mbox{\hyperlink{namespacepugi_ae7c892ad8288b363daca0c3e1a8e38ee}{parse\_ws\_pcdata\_single}} = 0x0400;}
+\DoxyCodeLine{201 }
+\DoxyCodeLine{202     \textcolor{comment}{// This flag determines if leading and trailing whitespace is to be removed from plain character data. This flag is off by default.}}
+\DoxyCodeLine{203     \textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} \mbox{\hyperlink{namespacepugi_a1bc8f34cf3cf5fb2dd350293c0ecc5e3}{parse\_trim\_pcdata}} = 0x0800;}
+\DoxyCodeLine{204 }
+\DoxyCodeLine{205     \textcolor{comment}{// This flag determines if plain character data that does not have a parent node is added to the DOM tree, and if an empty document}}
+\DoxyCodeLine{206     \textcolor{comment}{// is a valid document. This flag is off by default.}}
+\DoxyCodeLine{207     \textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} \mbox{\hyperlink{namespacepugi_a79d7a2d2a9899d79abe6e06fdaa2134f}{parse\_fragment}} = 0x1000;}
+\DoxyCodeLine{208 }
+\DoxyCodeLine{209     \textcolor{comment}{// This flag determines if plain character data is be stored in the parent element's value. This significantly changes the structure of}}
+\DoxyCodeLine{210     \textcolor{comment}{// the document; this flag is only recommended for parsing documents with many PCDATA nodes in memory-\/constrained environments.}}
+\DoxyCodeLine{211     \textcolor{comment}{// This flag is off by default.}}
+\DoxyCodeLine{212     \textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} \mbox{\hyperlink{namespacepugi_a80a72fa1dbed77775ec0498b23246d8d}{parse\_embed\_pcdata}} = 0x2000;}
+\DoxyCodeLine{213 }
+\DoxyCodeLine{214     \textcolor{comment}{// The default parsing mode.}}
+\DoxyCodeLine{215     \textcolor{comment}{// Elements, PCDATA and CDATA sections are added to the DOM tree, character/reference entities are expanded,}}
+\DoxyCodeLine{216     \textcolor{comment}{// End-\/of-\/Line characters are normalized, attribute values are normalized using CDATA normalization rules.}}
+\DoxyCodeLine{217     \textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} \mbox{\hyperlink{namespacepugi_ad7c927d1c1752330637c3318b0d7b366}{parse\_default}} = \mbox{\hyperlink{namespacepugi_a47b679897f8bc15e4e152978fc88c208}{parse\_cdata}} | \mbox{\hyperlink{namespacepugi_ab5ef8454110599611900ff48012c8ad6}{parse\_escapes}} | \mbox{\hyperlink{namespacepugi_a1e943812f2de36fc3ee14f7756afdbd7}{parse\_wconv\_attribute}} | \mbox{\hyperlink{namespacepugi_ad4e017365d2ff3ee04e226c35129b475}{parse\_eol}};}
+\DoxyCodeLine{218 }
+\DoxyCodeLine{219     \textcolor{comment}{// The full parsing mode.}}
+\DoxyCodeLine{220     \textcolor{comment}{// Nodes of all types are added to the DOM tree, character/reference entities are expanded,}}
+\DoxyCodeLine{221     \textcolor{comment}{// End-\/of-\/Line characters are normalized, attribute values are normalized using CDATA normalization rules.}}
+\DoxyCodeLine{222     \textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} \mbox{\hyperlink{namespacepugi_a7d773377222d4cb6951297d61605c6a7}{parse\_full}} = \mbox{\hyperlink{namespacepugi_ad7c927d1c1752330637c3318b0d7b366}{parse\_default}} | \mbox{\hyperlink{namespacepugi_a8fb7ea408d60b4f2ca79dd30b651f545}{parse\_pi}} | \mbox{\hyperlink{namespacepugi_adcab316176bfaf69158339962fb4ad38}{parse\_comments}} | \mbox{\hyperlink{namespacepugi_adb5db03ce720dcd90e900b9bb7e70427}{parse\_declaration}} | \mbox{\hyperlink{namespacepugi_afa993ffcd3e228d21f48071e7c097f32}{parse\_doctype}};}
+\DoxyCodeLine{223 }
+\DoxyCodeLine{224     \textcolor{comment}{// These flags determine the encoding of input data for XML document}}
+\DoxyCodeLine{225     \textcolor{keyword}{enum} \mbox{\hyperlink{namespacepugi_a03f708f86abeff5fce6842ffd6a0951e}{xml\_encoding}}}
+\DoxyCodeLine{226     \{}
+\DoxyCodeLine{227         \mbox{\hyperlink{namespacepugi_a03f708f86abeff5fce6842ffd6a0951eae11b2ef666f03e77b7e764e38d22dc17}{encoding\_auto}},     \textcolor{comment}{// Auto-\/detect input encoding using BOM or < / <? detection; use UTF8 if BOM is not found}}
+\DoxyCodeLine{228         \mbox{\hyperlink{namespacepugi_a03f708f86abeff5fce6842ffd6a0951ea96c73bf345f635f0fbee5f6646fb095e}{encoding\_utf8}},     \textcolor{comment}{// UTF8 encoding}}
+\DoxyCodeLine{229         \mbox{\hyperlink{namespacepugi_a03f708f86abeff5fce6842ffd6a0951ea47be6a1d4828e9b284d40894afc27e54}{encoding\_utf16\_le}}, \textcolor{comment}{// Little-\/endian UTF16}}
+\DoxyCodeLine{230         \mbox{\hyperlink{namespacepugi_a03f708f86abeff5fce6842ffd6a0951ea8689b47b8387fc3524334e8d106fda16}{encoding\_utf16\_be}}, \textcolor{comment}{// Big-\/endian UTF16}}
+\DoxyCodeLine{231         \mbox{\hyperlink{namespacepugi_a03f708f86abeff5fce6842ffd6a0951eac1fbf60f9cb5db0e9e38fbfdba7afb6a}{encoding\_utf16}},       \textcolor{comment}{// UTF16 with native endianness}}
+\DoxyCodeLine{232         \mbox{\hyperlink{namespacepugi_a03f708f86abeff5fce6842ffd6a0951eac54c474159301358c31d931855987dc6}{encoding\_utf32\_le}}, \textcolor{comment}{// Little-\/endian UTF32}}
+\DoxyCodeLine{233         \mbox{\hyperlink{namespacepugi_a03f708f86abeff5fce6842ffd6a0951ea55b0b036621ebcfcd5e0e43b8f69f4dc}{encoding\_utf32\_be}}, \textcolor{comment}{// Big-\/endian UTF32}}
+\DoxyCodeLine{234         \mbox{\hyperlink{namespacepugi_a03f708f86abeff5fce6842ffd6a0951ea46a8f0d9f4c03350f7a831a370d2b032}{encoding\_utf32}},       \textcolor{comment}{// UTF32 with native endianness}}
+\DoxyCodeLine{235         \mbox{\hyperlink{namespacepugi_a03f708f86abeff5fce6842ffd6a0951eae670d39438f31fe41f1a596739e5c00e}{encoding\_wchar}},       \textcolor{comment}{// The same encoding wchar\_t has (either UTF16 or UTF32)}}
+\DoxyCodeLine{236         \mbox{\hyperlink{namespacepugi_a03f708f86abeff5fce6842ffd6a0951ea9f1a8dbbf996bcd297ce0922b7eec40d}{encoding\_latin1}}}
+\DoxyCodeLine{237     \};}
+\DoxyCodeLine{238 }
+\DoxyCodeLine{239     \textcolor{comment}{// Formatting flags}}
+\DoxyCodeLine{240 }
+\DoxyCodeLine{241     \textcolor{comment}{// Indent the nodes that are written to output stream with as many indentation strings as deep the node is in DOM tree. This flag is on by default.}}
+\DoxyCodeLine{242     \textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} \mbox{\hyperlink{namespacepugi_ace12e8dee65c5bae8ee42a64be7421d3}{format\_indent}} = 0x01;}
+\DoxyCodeLine{243 }
+\DoxyCodeLine{244     \textcolor{comment}{// Write encoding-\/specific BOM to the output stream. This flag is off by default.}}
+\DoxyCodeLine{245     \textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} \mbox{\hyperlink{namespacepugi_ab863bcafd203aeaa98953df3a998243f}{format\_write\_bom}} = 0x02;}
+\DoxyCodeLine{246 }
+\DoxyCodeLine{247     \textcolor{comment}{// Use raw output mode (no indentation and no line breaks are written). This flag is off by default.}}
+\DoxyCodeLine{248     \textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} \mbox{\hyperlink{namespacepugi_a2dd811716b1c0a6a2431ceca43bc649e}{format\_raw}} = 0x04;}
+\DoxyCodeLine{249 }
+\DoxyCodeLine{250     \textcolor{comment}{// Omit default XML declaration even if there is no declaration in the document. This flag is off by default.}}
+\DoxyCodeLine{251     \textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} \mbox{\hyperlink{namespacepugi_a0ec33e4db09260718f7003ed091f5a1b}{format\_no\_declaration}} = 0x08;}
+\DoxyCodeLine{252 }
+\DoxyCodeLine{253     \textcolor{comment}{// Don't escape attribute values and PCDATA contents. This flag is off by default.}}
+\DoxyCodeLine{254     \textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} \mbox{\hyperlink{namespacepugi_ae8d833b4cabc60ba64536d57669454fd}{format\_no\_escapes}} = 0x10;}
+\DoxyCodeLine{255 }
+\DoxyCodeLine{256     \textcolor{comment}{// Open file using text mode in xml\_document::save\_file. This enables special character (i.e. new-\/line) conversions on some systems. This flag is off by default.}}
+\DoxyCodeLine{257     \textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} \mbox{\hyperlink{namespacepugi_ab0aae01dc0b870a2673c32ca6623ae09}{format\_save\_file\_text}} = 0x20;}
+\DoxyCodeLine{258 }
+\DoxyCodeLine{259     \textcolor{comment}{// Write every attribute on a new line with appropriate indentation. This flag is off by default.}}
+\DoxyCodeLine{260     \textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} \mbox{\hyperlink{namespacepugi_a8aafe40e9dd0c345786d01e875b65dd4}{format\_indent\_attributes}} = 0x40;}
+\DoxyCodeLine{261 }
+\DoxyCodeLine{262     \textcolor{comment}{// Don't output empty element tags, instead writing an explicit start and end tag even if there are no children. This flag is off by default.}}
+\DoxyCodeLine{263     \textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} \mbox{\hyperlink{namespacepugi_a0318259e65577c13b172d3a9995aab6c}{format\_no\_empty\_element\_tags}} = 0x80;}
+\DoxyCodeLine{264 }
+\DoxyCodeLine{265     \textcolor{comment}{// Skip characters belonging to range [0; 32) instead of "{}\&\#xNN;"{} encoding. This flag is off by default.}}
+\DoxyCodeLine{266     \textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} \mbox{\hyperlink{namespacepugi_a28bc6fc1b2dd2b745dfc3d7fc90c5ee6}{format\_skip\_control\_chars}} = 0x100;}
+\DoxyCodeLine{267 }
+\DoxyCodeLine{268     \textcolor{comment}{// Use single quotes ' instead of double quotes "{} for enclosing attribute values. This flag is off by default.}}
+\DoxyCodeLine{269     \textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} \mbox{\hyperlink{namespacepugi_ac73695d0ae673c031c4ba1e04324f51c}{format\_attribute\_single\_quote}} = 0x200;}
+\DoxyCodeLine{270 }
+\DoxyCodeLine{271     \textcolor{comment}{// The default set of formatting flags.}}
+\DoxyCodeLine{272     \textcolor{comment}{// Nodes are indented depending on their depth in DOM tree, a default declaration is output if document has none.}}
+\DoxyCodeLine{273     \textcolor{keyword}{const} \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} \mbox{\hyperlink{namespacepugi_a325f48a35abbaeacdfd8b7fc9ed1713c}{format\_default}} = \mbox{\hyperlink{namespacepugi_ace12e8dee65c5bae8ee42a64be7421d3}{format\_indent}};}
+\DoxyCodeLine{274 }
+\DoxyCodeLine{275     \textcolor{keyword}{const} \textcolor{keywordtype}{int} \mbox{\hyperlink{namespacepugi_a4043f7449e31b8327431911674db77fe}{default\_double\_precision}} = 17;}
+\DoxyCodeLine{276     \textcolor{keyword}{const} \textcolor{keywordtype}{int} \mbox{\hyperlink{namespacepugi_af0761a33d0ef29be1033eaea8c7bf7e6}{default\_float\_precision}} = 9;}
+\DoxyCodeLine{277 }
+\DoxyCodeLine{278     \textcolor{comment}{// Forward declarations}}
+\DoxyCodeLine{279     \textcolor{keyword}{struct }\mbox{\hyperlink{structpugi_1_1xml__attribute__struct}{xml\_attribute\_struct}};}
+\DoxyCodeLine{280     \textcolor{keyword}{struct }\mbox{\hyperlink{structpugi_1_1xml__node__struct}{xml\_node\_struct}};}
+\DoxyCodeLine{281 }
+\DoxyCodeLine{282     \textcolor{keyword}{class }\mbox{\hyperlink{classpugi_1_1xml__node__iterator}{xml\_node\_iterator}};}
+\DoxyCodeLine{283     \textcolor{keyword}{class }\mbox{\hyperlink{classpugi_1_1xml__attribute__iterator}{xml\_attribute\_iterator}};}
+\DoxyCodeLine{284     \textcolor{keyword}{class }\mbox{\hyperlink{classpugi_1_1xml__named__node__iterator}{xml\_named\_node\_iterator}};}
+\DoxyCodeLine{285 }
+\DoxyCodeLine{286     \textcolor{keyword}{class }\mbox{\hyperlink{classpugi_1_1xml__tree__walker}{xml\_tree\_walker}};}
+\DoxyCodeLine{287 }
+\DoxyCodeLine{288     \textcolor{keyword}{struct }\mbox{\hyperlink{structpugi_1_1xml__parse__result}{xml\_parse\_result}};}
+\DoxyCodeLine{289 }
+\DoxyCodeLine{290     \textcolor{keyword}{class }\mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}};}
+\DoxyCodeLine{291 }
+\DoxyCodeLine{292     \textcolor{keyword}{class }\mbox{\hyperlink{classpugi_1_1xml__text}{xml\_text}};}
+\DoxyCodeLine{293 }
+\DoxyCodeLine{294 \textcolor{preprocessor}{    \#ifndef PUGIXML\_NO\_XPATH}}
+\DoxyCodeLine{295     \textcolor{keyword}{class }\mbox{\hyperlink{classpugi_1_1xpath__node}{xpath\_node}};}
+\DoxyCodeLine{296     \textcolor{keyword}{class }\mbox{\hyperlink{classpugi_1_1xpath__node__set}{xpath\_node\_set}};}
+\DoxyCodeLine{297     \textcolor{keyword}{class }\mbox{\hyperlink{classpugi_1_1xpath__query}{xpath\_query}};}
+\DoxyCodeLine{298     \textcolor{keyword}{class }\mbox{\hyperlink{classpugi_1_1xpath__variable__set}{xpath\_variable\_set}};}
+\DoxyCodeLine{299 \textcolor{preprocessor}{    \#endif}}
+\DoxyCodeLine{300 }
+\DoxyCodeLine{301     \textcolor{comment}{// Range-\/based for loop support}}
+\DoxyCodeLine{302     \textcolor{keyword}{template} <\textcolor{keyword}{typename} It> \textcolor{keyword}{class }\mbox{\hyperlink{classpugi_1_1xml__object__range}{xml\_object\_range}}}
+\DoxyCodeLine{303     \{}
+\DoxyCodeLine{304     \textcolor{keyword}{public}:}
+\DoxyCodeLine{305         \textcolor{keyword}{typedef} It \mbox{\hyperlink{classpugi_1_1xml__object__range_ace38fcf448c7134e13612f7ce439246c}{const\_iterator}};}
+\DoxyCodeLine{306         \textcolor{keyword}{typedef} It \mbox{\hyperlink{classpugi_1_1xml__object__range_a024ce5292d3b9f2164c1230855fdb501}{iterator}};}
+\DoxyCodeLine{307 }
+\DoxyCodeLine{308         \mbox{\hyperlink{classpugi_1_1xml__object__range_abf214db65eac081e4478169cb03bce67}{xml\_object\_range}}(It b, It e): \_begin(b), \_end(e)}
+\DoxyCodeLine{309         \{}
+\DoxyCodeLine{310         \}}
+\DoxyCodeLine{311 }
+\DoxyCodeLine{312         It \mbox{\hyperlink{classpugi_1_1xml__object__range_a10f4f757413e31861f8dec21bb4f8dec}{begin}}()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} \_begin; \}}
+\DoxyCodeLine{313         It \mbox{\hyperlink{classpugi_1_1xml__object__range_ac719fcaad171adb58b90b7f8973cbd9a}{end}}()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} \_end; \}}
+\DoxyCodeLine{314 }
+\DoxyCodeLine{315         \textcolor{keywordtype}{bool} \mbox{\hyperlink{classpugi_1_1xml__object__range_a20315bea60ace6b9e31edfb8d377dbe7}{empty}}()\textcolor{keyword}{ const }\{ \textcolor{keywordflow}{return} \_begin == \_end; \}}
+\DoxyCodeLine{316 }
+\DoxyCodeLine{317     \textcolor{keyword}{private}:}
+\DoxyCodeLine{318         It \_begin, \_end;}
+\DoxyCodeLine{319     \};}
+\DoxyCodeLine{320 }
+\DoxyCodeLine{321     \textcolor{comment}{// Writer interface for node printing (see xml\_node::print)}}
+\DoxyCodeLine{322     \textcolor{keyword}{class }\mbox{\hyperlink{pugixml_8hpp_ad47efa7f45dfd6d1fe9da1d5cf9c5301}{PUGIXML\_CLASS}} \mbox{\hyperlink{classpugi_1_1xml__writer}{xml\_writer}}}
+\DoxyCodeLine{323     \{}
+\DoxyCodeLine{324     \textcolor{keyword}{public}:}
+\DoxyCodeLine{325         \textcolor{keyword}{virtual} \mbox{\hyperlink{classpugi_1_1xml__writer_a5c9b1bd029ed10862ffa4c61d24c351f}{\string~xml\_writer}}() \{\}}
+\DoxyCodeLine{326 }
+\DoxyCodeLine{327         \textcolor{comment}{// Write memory chunk into stream/file/whatever}}
+\DoxyCodeLine{328         \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classpugi_1_1xml__writer_ab7d3b6a8499ceef7799158370e1c2617}{write}}(\textcolor{keyword}{const} \textcolor{keywordtype}{void}* data, \textcolor{keywordtype}{size\_t} size) = 0;}
+\DoxyCodeLine{329     \};}
+\DoxyCodeLine{330 }
+\DoxyCodeLine{331     \textcolor{comment}{// xml\_writer implementation for FILE*}}
+\DoxyCodeLine{332     \textcolor{keyword}{class }\mbox{\hyperlink{pugixml_8hpp_ad47efa7f45dfd6d1fe9da1d5cf9c5301}{PUGIXML\_CLASS}} \mbox{\hyperlink{classpugi_1_1xml__writer__file}{xml\_writer\_file}}: \textcolor{keyword}{public} \mbox{\hyperlink{classpugi_1_1xml__writer}{xml\_writer}}}
+\DoxyCodeLine{333     \{}
+\DoxyCodeLine{334     \textcolor{keyword}{public}:}
+\DoxyCodeLine{335         \textcolor{comment}{// Construct writer from a FILE* object; void* is used to avoid header dependencies on stdio}}
+\DoxyCodeLine{336         \mbox{\hyperlink{classpugi_1_1xml__writer__file}{xml\_writer\_file}}(\textcolor{keywordtype}{void}* file);}
+\DoxyCodeLine{337 }
+\DoxyCodeLine{338         \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} write(\textcolor{keyword}{const} \textcolor{keywordtype}{void}* data, \textcolor{keywordtype}{size\_t} size) \mbox{\hyperlink{pugixml_8hpp_ac6a0f97f3bdadbd76bab1c0098880a00}{PUGIXML\_OVERRIDE}};}
+\DoxyCodeLine{339 }
+\DoxyCodeLine{340     \textcolor{keyword}{private}:}
+\DoxyCodeLine{341         \textcolor{keywordtype}{void}* file;}
+\DoxyCodeLine{342     \};}
+\DoxyCodeLine{343 }
+\DoxyCodeLine{344 \textcolor{preprocessor}{    \#ifndef PUGIXML\_NO\_STL}}
+\DoxyCodeLine{345     \textcolor{comment}{// xml\_writer implementation for streams}}
+\DoxyCodeLine{346     \textcolor{keyword}{class }\mbox{\hyperlink{pugixml_8hpp_ad47efa7f45dfd6d1fe9da1d5cf9c5301}{PUGIXML\_CLASS}} \mbox{\hyperlink{classpugi_1_1xml__writer__stream}{xml\_writer\_stream}}: \textcolor{keyword}{public} \mbox{\hyperlink{classpugi_1_1xml__writer}{xml\_writer}}}
+\DoxyCodeLine{347     \{}
+\DoxyCodeLine{348     \textcolor{keyword}{public}:}
+\DoxyCodeLine{349         \textcolor{comment}{// Construct writer from an output stream object}}
+\DoxyCodeLine{350         \mbox{\hyperlink{classpugi_1_1xml__writer__stream}{xml\_writer\_stream}}(std::basic\_ostream<\textcolor{keywordtype}{char}, std::char\_traits<char> >\& stream);}
+\DoxyCodeLine{351         \mbox{\hyperlink{classpugi_1_1xml__writer__stream}{xml\_writer\_stream}}(std::basic\_ostream<\textcolor{keywordtype}{wchar\_t}, std::char\_traits<wchar\_t> >\& stream);}
+\DoxyCodeLine{352 }
+\DoxyCodeLine{353         \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} write(\textcolor{keyword}{const} \textcolor{keywordtype}{void}* data, \textcolor{keywordtype}{size\_t} size) \mbox{\hyperlink{pugixml_8hpp_ac6a0f97f3bdadbd76bab1c0098880a00}{PUGIXML\_OVERRIDE}};}
+\DoxyCodeLine{354 }
+\DoxyCodeLine{355     \textcolor{keyword}{private}:}
+\DoxyCodeLine{356         std::basic\_ostream<char, std::char\_traits<char> >* narrow\_stream;}
+\DoxyCodeLine{357         std::basic\_ostream<wchar\_t, std::char\_traits<wchar\_t> >* wide\_stream;}
+\DoxyCodeLine{358     \};}
+\DoxyCodeLine{359 \textcolor{preprocessor}{    \#endif}}
+\DoxyCodeLine{360 }
+\DoxyCodeLine{361     \textcolor{comment}{// A light-\/weight handle for manipulating attributes in DOM tree}}
+\DoxyCodeLine{362     \textcolor{keyword}{class }\mbox{\hyperlink{pugixml_8hpp_ad47efa7f45dfd6d1fe9da1d5cf9c5301}{PUGIXML\_CLASS}} \mbox{\hyperlink{classpugi_1_1xml__attribute}{xml\_attribute}}}
+\DoxyCodeLine{363     \{}
+\DoxyCodeLine{364         \textcolor{keyword}{friend} \textcolor{keyword}{class }\mbox{\hyperlink{classpugi_1_1xml__attribute__iterator}{xml\_attribute\_iterator}};}
+\DoxyCodeLine{365         \textcolor{keyword}{friend} \textcolor{keyword}{class }\mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}};}
+\DoxyCodeLine{366 }
+\DoxyCodeLine{367     \textcolor{keyword}{private}:}
+\DoxyCodeLine{368         \mbox{\hyperlink{structpugi_1_1xml__attribute__struct}{xml\_attribute\_struct}}* \_attr;}
+\DoxyCodeLine{369 }
+\DoxyCodeLine{370         \textcolor{keyword}{typedef} void (*unspecified\_bool\_type)(\mbox{\hyperlink{classpugi_1_1xml__attribute}{xml\_attribute}}***);}
+\DoxyCodeLine{371 }
+\DoxyCodeLine{372     \textcolor{keyword}{public}:}
+\DoxyCodeLine{373         \textcolor{comment}{// Default constructor. Constructs an empty attribute.}}
+\DoxyCodeLine{374         \mbox{\hyperlink{classpugi_1_1xml__attribute}{xml\_attribute}}();}
+\DoxyCodeLine{375 }
+\DoxyCodeLine{376         \textcolor{comment}{// Constructs attribute from internal pointer}}
+\DoxyCodeLine{377         \textcolor{keyword}{explicit} \mbox{\hyperlink{classpugi_1_1xml__attribute}{xml\_attribute}}(\mbox{\hyperlink{structpugi_1_1xml__attribute__struct}{xml\_attribute\_struct}}* attr);}
+\DoxyCodeLine{378 }
+\DoxyCodeLine{379         \textcolor{comment}{// Safe bool conversion operator}}
+\DoxyCodeLine{380         \textcolor{keyword}{operator} unspecified\_bool\_type() \textcolor{keyword}{const};}
+\DoxyCodeLine{381 }
+\DoxyCodeLine{382         \textcolor{comment}{// Borland C++ workaround}}
+\DoxyCodeLine{383         \textcolor{keywordtype}{bool} operator!() \textcolor{keyword}{const};}
+\DoxyCodeLine{384 }
+\DoxyCodeLine{385         \textcolor{comment}{// Comparison operators (compares wrapped attribute pointers)}}
+\DoxyCodeLine{386         \textcolor{keywordtype}{bool} operator==(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xml__attribute}{xml\_attribute}}\& r) \textcolor{keyword}{const};}
+\DoxyCodeLine{387         \textcolor{keywordtype}{bool} operator!=(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xml__attribute}{xml\_attribute}}\& r) \textcolor{keyword}{const};}
+\DoxyCodeLine{388         \textcolor{keywordtype}{bool} operator<(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xml__attribute}{xml\_attribute}}\& r) \textcolor{keyword}{const};}
+\DoxyCodeLine{389         \textcolor{keywordtype}{bool} operator>(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xml__attribute}{xml\_attribute}}\& r) \textcolor{keyword}{const};}
+\DoxyCodeLine{390         \textcolor{keywordtype}{bool} operator<=(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xml__attribute}{xml\_attribute}}\& r) \textcolor{keyword}{const};}
+\DoxyCodeLine{391         \textcolor{keywordtype}{bool} operator>=(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xml__attribute}{xml\_attribute}}\& r) \textcolor{keyword}{const};}
+\DoxyCodeLine{392 }
+\DoxyCodeLine{393         \textcolor{comment}{// Check if attribute is empty}}
+\DoxyCodeLine{394         \textcolor{keywordtype}{bool} empty() \textcolor{keyword}{const};}
+\DoxyCodeLine{395 }
+\DoxyCodeLine{396         \textcolor{comment}{// Get attribute name/value, or "{}"{} if attribute is empty}}
+\DoxyCodeLine{397         \textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* name() \textcolor{keyword}{const};}
+\DoxyCodeLine{398         \textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* value() \textcolor{keyword}{const};}
+\DoxyCodeLine{399 }
+\DoxyCodeLine{400         \textcolor{comment}{// Get attribute value, or the default value if attribute is empty}}
+\DoxyCodeLine{401         \textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* as\_string(\textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* def = \mbox{\hyperlink{pugixml_8hpp_ad5475bca2e336810ae5906349e644d0b}{PUGIXML\_TEXT}}(\textcolor{stringliteral}{"{}"{}})) \textcolor{keyword}{const};}
+\DoxyCodeLine{402 }
+\DoxyCodeLine{403         \textcolor{comment}{// Get attribute value as a number, or the default value if conversion did not succeed or attribute is empty}}
+\DoxyCodeLine{404         \textcolor{keywordtype}{int} as\_int(\textcolor{keywordtype}{int} def = 0) \textcolor{keyword}{const};}
+\DoxyCodeLine{405         \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} as\_uint(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} def = 0) \textcolor{keyword}{const};}
+\DoxyCodeLine{406         \textcolor{keywordtype}{double} as\_double(\textcolor{keywordtype}{double} def = 0) \textcolor{keyword}{const};}
+\DoxyCodeLine{407         \textcolor{keywordtype}{float} as\_float(\textcolor{keywordtype}{float} def = 0) \textcolor{keyword}{const};}
+\DoxyCodeLine{408 }
+\DoxyCodeLine{409 \textcolor{preprocessor}{    \#ifdef PUGIXML\_HAS\_LONG\_LONG}}
+\DoxyCodeLine{410         \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} as\_llong(\textcolor{keywordtype}{long} \textcolor{keywordtype}{long} def = 0) \textcolor{keyword}{const};}
+\DoxyCodeLine{411         \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} as\_ullong(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} def = 0) \textcolor{keyword}{const};}
+\DoxyCodeLine{412 \textcolor{preprocessor}{    \#endif}}
+\DoxyCodeLine{413 }
+\DoxyCodeLine{414         \textcolor{comment}{// Get attribute value as bool (returns true if first character is in '1tTyY' set), or the default value if attribute is empty}}
+\DoxyCodeLine{415         \textcolor{keywordtype}{bool} as\_bool(\textcolor{keywordtype}{bool} def = \textcolor{keyword}{false}) \textcolor{keyword}{const};}
+\DoxyCodeLine{416 }
+\DoxyCodeLine{417         \textcolor{comment}{// Set attribute name/value (returns false if attribute is empty or there is not enough memory)}}
+\DoxyCodeLine{418         \textcolor{keywordtype}{bool} set\_name(\textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* rhs);}
+\DoxyCodeLine{419         \textcolor{keywordtype}{bool} set\_value(\textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* rhs);}
+\DoxyCodeLine{420 }
+\DoxyCodeLine{421         \textcolor{comment}{// Set attribute value with type conversion (numbers are converted to strings, boolean is converted to "{}true"{}/"{}false"{})}}
+\DoxyCodeLine{422         \textcolor{keywordtype}{bool} set\_value(\textcolor{keywordtype}{int} rhs);}
+\DoxyCodeLine{423         \textcolor{keywordtype}{bool} set\_value(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} rhs);}
+\DoxyCodeLine{424         \textcolor{keywordtype}{bool} set\_value(\textcolor{keywordtype}{long} rhs);}
+\DoxyCodeLine{425         \textcolor{keywordtype}{bool} set\_value(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} rhs);}
+\DoxyCodeLine{426         \textcolor{keywordtype}{bool} set\_value(\textcolor{keywordtype}{double} rhs);}
+\DoxyCodeLine{427         \textcolor{keywordtype}{bool} set\_value(\textcolor{keywordtype}{double} rhs, \textcolor{keywordtype}{int} precision);}
+\DoxyCodeLine{428         \textcolor{keywordtype}{bool} set\_value(\textcolor{keywordtype}{float} rhs);}
+\DoxyCodeLine{429         \textcolor{keywordtype}{bool} set\_value(\textcolor{keywordtype}{float} rhs, \textcolor{keywordtype}{int} precision);}
+\DoxyCodeLine{430         \textcolor{keywordtype}{bool} set\_value(\textcolor{keywordtype}{bool} rhs);}
+\DoxyCodeLine{431 }
+\DoxyCodeLine{432 \textcolor{preprocessor}{    \#ifdef PUGIXML\_HAS\_LONG\_LONG}}
+\DoxyCodeLine{433         \textcolor{keywordtype}{bool} set\_value(\textcolor{keywordtype}{long} \textcolor{keywordtype}{long} rhs);}
+\DoxyCodeLine{434         \textcolor{keywordtype}{bool} set\_value(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} rhs);}
+\DoxyCodeLine{435 \textcolor{preprocessor}{    \#endif}}
+\DoxyCodeLine{436 }
+\DoxyCodeLine{437         \textcolor{comment}{// Set attribute value (equivalent to set\_value without error checking)}}
+\DoxyCodeLine{438         \mbox{\hyperlink{classpugi_1_1xml__attribute}{xml\_attribute}}\& operator=(\textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* rhs);}
+\DoxyCodeLine{439         \mbox{\hyperlink{classpugi_1_1xml__attribute}{xml\_attribute}}\& operator=(\textcolor{keywordtype}{int} rhs);}
+\DoxyCodeLine{440         \mbox{\hyperlink{classpugi_1_1xml__attribute}{xml\_attribute}}\& operator=(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} rhs);}
+\DoxyCodeLine{441         \mbox{\hyperlink{classpugi_1_1xml__attribute}{xml\_attribute}}\& operator=(\textcolor{keywordtype}{long} rhs);}
+\DoxyCodeLine{442         \mbox{\hyperlink{classpugi_1_1xml__attribute}{xml\_attribute}}\& operator=(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} rhs);}
+\DoxyCodeLine{443         \mbox{\hyperlink{classpugi_1_1xml__attribute}{xml\_attribute}}\& operator=(\textcolor{keywordtype}{double} rhs);}
+\DoxyCodeLine{444         \mbox{\hyperlink{classpugi_1_1xml__attribute}{xml\_attribute}}\& operator=(\textcolor{keywordtype}{float} rhs);}
+\DoxyCodeLine{445         \mbox{\hyperlink{classpugi_1_1xml__attribute}{xml\_attribute}}\& operator=(\textcolor{keywordtype}{bool} rhs);}
+\DoxyCodeLine{446 }
+\DoxyCodeLine{447 \textcolor{preprocessor}{    \#ifdef PUGIXML\_HAS\_LONG\_LONG}}
+\DoxyCodeLine{448         \mbox{\hyperlink{classpugi_1_1xml__attribute}{xml\_attribute}}\& operator=(\textcolor{keywordtype}{long} \textcolor{keywordtype}{long} rhs);}
+\DoxyCodeLine{449         \mbox{\hyperlink{classpugi_1_1xml__attribute}{xml\_attribute}}\& operator=(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} rhs);}
+\DoxyCodeLine{450 \textcolor{preprocessor}{    \#endif}}
+\DoxyCodeLine{451 }
+\DoxyCodeLine{452         \textcolor{comment}{// Get next/previous attribute in the attribute list of the parent node}}
+\DoxyCodeLine{453         \mbox{\hyperlink{classpugi_1_1xml__attribute}{xml\_attribute}} next\_attribute() \textcolor{keyword}{const};}
+\DoxyCodeLine{454         \mbox{\hyperlink{classpugi_1_1xml__attribute}{xml\_attribute}} previous\_attribute() \textcolor{keyword}{const};}
+\DoxyCodeLine{455 }
+\DoxyCodeLine{456         \textcolor{comment}{// Get hash value (unique for handles to the same object)}}
+\DoxyCodeLine{457         \textcolor{keywordtype}{size\_t} hash\_value() \textcolor{keyword}{const};}
+\DoxyCodeLine{458 }
+\DoxyCodeLine{459         \textcolor{comment}{// Get internal pointer}}
+\DoxyCodeLine{460         \mbox{\hyperlink{structpugi_1_1xml__attribute__struct}{xml\_attribute\_struct}}* internal\_object() \textcolor{keyword}{const};}
+\DoxyCodeLine{461     \};}
+\DoxyCodeLine{462 }
+\DoxyCodeLine{463 \textcolor{preprocessor}{\#ifdef \_\_BORLANDC\_\_}}
+\DoxyCodeLine{464     \textcolor{comment}{// Borland C++ workaround}}
+\DoxyCodeLine{465     \textcolor{keywordtype}{bool} \mbox{\hyperlink{pugixml_8hpp_a3d91f8ab11645e6dac8783d86d152b31}{PUGIXML\_FUNCTION}} operator\&\&(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xml__attribute}{xml\_attribute}}\& lhs, \textcolor{keywordtype}{bool} rhs);}
+\DoxyCodeLine{466     \textcolor{keywordtype}{bool} \mbox{\hyperlink{pugixml_8hpp_a3d91f8ab11645e6dac8783d86d152b31}{PUGIXML\_FUNCTION}} operator||(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xml__attribute}{xml\_attribute}}\& lhs, \textcolor{keywordtype}{bool} rhs);}
+\DoxyCodeLine{467 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{468 }
+\DoxyCodeLine{469     \textcolor{comment}{// A light-\/weight handle for manipulating nodes in DOM tree}}
+\DoxyCodeLine{470     \textcolor{keyword}{class }\mbox{\hyperlink{pugixml_8hpp_ad47efa7f45dfd6d1fe9da1d5cf9c5301}{PUGIXML\_CLASS}} \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}}}
+\DoxyCodeLine{471     \{}
+\DoxyCodeLine{472         \textcolor{keyword}{friend} \textcolor{keyword}{class }\mbox{\hyperlink{classpugi_1_1xml__attribute__iterator}{xml\_attribute\_iterator}};}
+\DoxyCodeLine{473         \textcolor{keyword}{friend} \textcolor{keyword}{class }\mbox{\hyperlink{classpugi_1_1xml__node__iterator}{xml\_node\_iterator}};}
+\DoxyCodeLine{474         \textcolor{keyword}{friend} \textcolor{keyword}{class }\mbox{\hyperlink{classpugi_1_1xml__named__node__iterator}{xml\_named\_node\_iterator}};}
+\DoxyCodeLine{475 }
+\DoxyCodeLine{476     \textcolor{keyword}{protected}:}
+\DoxyCodeLine{477         \mbox{\hyperlink{structpugi_1_1xml__node__struct}{xml\_node\_struct}}* \mbox{\hyperlink{classpugi_1_1xml__node_a45a5b342de1e37a60565f7693f03cc08}{\_root}};}
+\DoxyCodeLine{478 }
+\DoxyCodeLine{479         \textcolor{keyword}{typedef} void (*unspecified\_bool\_type)(\mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}}***);}
+\DoxyCodeLine{480 }
+\DoxyCodeLine{481     \textcolor{keyword}{public}:}
+\DoxyCodeLine{482         \textcolor{comment}{// Default constructor. Constructs an empty node.}}
+\DoxyCodeLine{483         \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}}();}
+\DoxyCodeLine{484 }
+\DoxyCodeLine{485         \textcolor{comment}{// Constructs node from internal pointer}}
+\DoxyCodeLine{486         \textcolor{keyword}{explicit} \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}}(\mbox{\hyperlink{structpugi_1_1xml__node__struct}{xml\_node\_struct}}* p);}
+\DoxyCodeLine{487 }
+\DoxyCodeLine{488         \textcolor{comment}{// Safe bool conversion operator}}
+\DoxyCodeLine{489         \textcolor{keyword}{operator} unspecified\_bool\_type() \textcolor{keyword}{const};}
+\DoxyCodeLine{490 }
+\DoxyCodeLine{491         \textcolor{comment}{// Borland C++ workaround}}
+\DoxyCodeLine{492         \textcolor{keywordtype}{bool} operator!() \textcolor{keyword}{const};}
+\DoxyCodeLine{493 }
+\DoxyCodeLine{494         \textcolor{comment}{// Comparison operators (compares wrapped node pointers)}}
+\DoxyCodeLine{495         \textcolor{keywordtype}{bool} operator==(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}}\& r) \textcolor{keyword}{const};}
+\DoxyCodeLine{496         \textcolor{keywordtype}{bool} operator!=(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}}\& r) \textcolor{keyword}{const};}
+\DoxyCodeLine{497         \textcolor{keywordtype}{bool} operator<(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}}\& r) \textcolor{keyword}{const};}
+\DoxyCodeLine{498         \textcolor{keywordtype}{bool} operator>(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}}\& r) \textcolor{keyword}{const};}
+\DoxyCodeLine{499         \textcolor{keywordtype}{bool} operator<=(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}}\& r) \textcolor{keyword}{const};}
+\DoxyCodeLine{500         \textcolor{keywordtype}{bool} operator>=(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}}\& r) \textcolor{keyword}{const};}
+\DoxyCodeLine{501 }
+\DoxyCodeLine{502         \textcolor{comment}{// Check if node is empty.}}
+\DoxyCodeLine{503         \textcolor{keywordtype}{bool} empty() \textcolor{keyword}{const};}
+\DoxyCodeLine{504 }
+\DoxyCodeLine{505         \textcolor{comment}{// Get node type}}
+\DoxyCodeLine{506         \mbox{\hyperlink{namespacepugi_a137e94a038e4ab0ada6477cf7f6153a9}{xml\_node\_type}} type() \textcolor{keyword}{const};}
+\DoxyCodeLine{507 }
+\DoxyCodeLine{508         \textcolor{comment}{// Get node name, or "{}"{} if node is empty or it has no name}}
+\DoxyCodeLine{509         \textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* name() \textcolor{keyword}{const};}
+\DoxyCodeLine{510 }
+\DoxyCodeLine{511         \textcolor{comment}{// Get node value, or "{}"{} if node is empty or it has no value}}
+\DoxyCodeLine{512         \textcolor{comment}{// Note: For <node>text</node> node.value() does not return "{}text"{}! Use child\_value() or text() methods to access text inside nodes.}}
+\DoxyCodeLine{513         \textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* value() \textcolor{keyword}{const};}
+\DoxyCodeLine{514 }
+\DoxyCodeLine{515         \textcolor{comment}{// Get attribute list}}
+\DoxyCodeLine{516         \mbox{\hyperlink{classpugi_1_1xml__attribute}{xml\_attribute}} first\_attribute() \textcolor{keyword}{const};}
+\DoxyCodeLine{517         \mbox{\hyperlink{classpugi_1_1xml__attribute}{xml\_attribute}} last\_attribute() \textcolor{keyword}{const};}
+\DoxyCodeLine{518 }
+\DoxyCodeLine{519         \textcolor{comment}{// Get children list}}
+\DoxyCodeLine{520         \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}} first\_child() \textcolor{keyword}{const};}
+\DoxyCodeLine{521         \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}} last\_child() \textcolor{keyword}{const};}
+\DoxyCodeLine{522 }
+\DoxyCodeLine{523         \textcolor{comment}{// Get next/previous sibling in the children list of the parent node}}
+\DoxyCodeLine{524         \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}} next\_sibling() \textcolor{keyword}{const};}
+\DoxyCodeLine{525         \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}} previous\_sibling() \textcolor{keyword}{const};}
+\DoxyCodeLine{526 }
+\DoxyCodeLine{527         \textcolor{comment}{// Get parent node}}
+\DoxyCodeLine{528         \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}} parent() \textcolor{keyword}{const};}
+\DoxyCodeLine{529 }
+\DoxyCodeLine{530         \textcolor{comment}{// Get root of DOM tree this node belongs to}}
+\DoxyCodeLine{531         \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}} root() \textcolor{keyword}{const};}
+\DoxyCodeLine{532 }
+\DoxyCodeLine{533         \textcolor{comment}{// Get text object for the current node}}
+\DoxyCodeLine{534         \mbox{\hyperlink{classpugi_1_1xml__text}{xml\_text}} text() \textcolor{keyword}{const};}
+\DoxyCodeLine{535 }
+\DoxyCodeLine{536         \textcolor{comment}{// Get child, attribute or next/previous sibling with the specified name}}
+\DoxyCodeLine{537         \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}} child(\textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* name) \textcolor{keyword}{const};}
+\DoxyCodeLine{538         \mbox{\hyperlink{classpugi_1_1xml__attribute}{xml\_attribute}} attribute(\textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* name) \textcolor{keyword}{const};}
+\DoxyCodeLine{539         \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}} next\_sibling(\textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* name) \textcolor{keyword}{const};}
+\DoxyCodeLine{540         \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}} previous\_sibling(\textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* name) \textcolor{keyword}{const};}
+\DoxyCodeLine{541 }
+\DoxyCodeLine{542         \textcolor{comment}{// Get attribute, starting the search from a hint (and updating hint so that searching for a sequence of attributes is fast)}}
+\DoxyCodeLine{543         \mbox{\hyperlink{classpugi_1_1xml__attribute}{xml\_attribute}} attribute(\textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* name, \mbox{\hyperlink{classpugi_1_1xml__attribute}{xml\_attribute}}\& hint) \textcolor{keyword}{const};}
+\DoxyCodeLine{544 }
+\DoxyCodeLine{545         \textcolor{comment}{// Get child value of current node; that is, value of the first child node of type PCDATA/CDATA}}
+\DoxyCodeLine{546         \textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* child\_value() \textcolor{keyword}{const};}
+\DoxyCodeLine{547 }
+\DoxyCodeLine{548         \textcolor{comment}{// Get child value of child with specified name. Equivalent to child(name).child\_value().}}
+\DoxyCodeLine{549         \textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* child\_value(\textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* name) \textcolor{keyword}{const};}
+\DoxyCodeLine{550 }
+\DoxyCodeLine{551         \textcolor{comment}{// Set node name/value (returns false if node is empty, there is not enough memory, or node can not have name/value)}}
+\DoxyCodeLine{552         \textcolor{keywordtype}{bool} set\_name(\textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* rhs);}
+\DoxyCodeLine{553         \textcolor{keywordtype}{bool} set\_value(\textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* rhs);}
+\DoxyCodeLine{554 }
+\DoxyCodeLine{555         \textcolor{comment}{// Add attribute with specified name. Returns added attribute, or empty attribute on errors.}}
+\DoxyCodeLine{556         \mbox{\hyperlink{classpugi_1_1xml__attribute}{xml\_attribute}} \mbox{\hyperlink{pugixml_8cpp_ad64fdacadf33c8b534a9cd220f1aa966}{append\_attribute}}(\textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* name);}
+\DoxyCodeLine{557         \mbox{\hyperlink{classpugi_1_1xml__attribute}{xml\_attribute}} \mbox{\hyperlink{pugixml_8cpp_ad78a768dbebd1d2f0c558eaa111d4a78}{prepend\_attribute}}(\textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* name);}
+\DoxyCodeLine{558         \mbox{\hyperlink{classpugi_1_1xml__attribute}{xml\_attribute}} \mbox{\hyperlink{pugixml_8cpp_afffb89bdddc806ba33716c99d1090456}{insert\_attribute\_after}}(\textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* name, \textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xml__attribute}{xml\_attribute}}\& attr);}
+\DoxyCodeLine{559         \mbox{\hyperlink{classpugi_1_1xml__attribute}{xml\_attribute}} \mbox{\hyperlink{pugixml_8cpp_abb3e2cc961612c4098e74ddd3c7d2b72}{insert\_attribute\_before}}(\textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* name, \textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xml__attribute}{xml\_attribute}}\& attr);}
+\DoxyCodeLine{560 }
+\DoxyCodeLine{561         \textcolor{comment}{// Add a copy of the specified attribute. Returns added attribute, or empty attribute on errors.}}
+\DoxyCodeLine{562         \mbox{\hyperlink{classpugi_1_1xml__attribute}{xml\_attribute}} append\_copy(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xml__attribute}{xml\_attribute}}\& proto);}
+\DoxyCodeLine{563         \mbox{\hyperlink{classpugi_1_1xml__attribute}{xml\_attribute}} prepend\_copy(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xml__attribute}{xml\_attribute}}\& proto);}
+\DoxyCodeLine{564         \mbox{\hyperlink{classpugi_1_1xml__attribute}{xml\_attribute}} insert\_copy\_after(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xml__attribute}{xml\_attribute}}\& proto, \textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xml__attribute}{xml\_attribute}}\& attr);}
+\DoxyCodeLine{565         \mbox{\hyperlink{classpugi_1_1xml__attribute}{xml\_attribute}} insert\_copy\_before(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xml__attribute}{xml\_attribute}}\& proto, \textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xml__attribute}{xml\_attribute}}\& attr);}
+\DoxyCodeLine{566 }
+\DoxyCodeLine{567         \textcolor{comment}{// Add child node with specified type. Returns added node, or empty node on errors.}}
+\DoxyCodeLine{568         \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}} append\_child(\mbox{\hyperlink{namespacepugi_a137e94a038e4ab0ada6477cf7f6153a9}{xml\_node\_type}} type = \mbox{\hyperlink{namespacepugi_a137e94a038e4ab0ada6477cf7f6153a9a6d223e3a0d8ce8e4ee6f4a2697b8bcd1}{node\_element}});}
+\DoxyCodeLine{569         \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}} prepend\_child(\mbox{\hyperlink{namespacepugi_a137e94a038e4ab0ada6477cf7f6153a9}{xml\_node\_type}} type = \mbox{\hyperlink{namespacepugi_a137e94a038e4ab0ada6477cf7f6153a9a6d223e3a0d8ce8e4ee6f4a2697b8bcd1}{node\_element}});}
+\DoxyCodeLine{570         \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}} insert\_child\_after(\mbox{\hyperlink{namespacepugi_a137e94a038e4ab0ada6477cf7f6153a9}{xml\_node\_type}} type, \textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}}\& node);}
+\DoxyCodeLine{571         \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}} insert\_child\_before(\mbox{\hyperlink{namespacepugi_a137e94a038e4ab0ada6477cf7f6153a9}{xml\_node\_type}} type, \textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}}\& node);}
+\DoxyCodeLine{572 }
+\DoxyCodeLine{573         \textcolor{comment}{// Add child element with specified name. Returns added node, or empty node on errors.}}
+\DoxyCodeLine{574         \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}} append\_child(\textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* name);}
+\DoxyCodeLine{575         \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}} prepend\_child(\textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* name);}
+\DoxyCodeLine{576         \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}} insert\_child\_after(\textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* name, \textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}}\& node);}
+\DoxyCodeLine{577         \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}} insert\_child\_before(\textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* name, \textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}}\& node);}
+\DoxyCodeLine{578 }
+\DoxyCodeLine{579         \textcolor{comment}{// Add a copy of the specified node as a child. Returns added node, or empty node on errors.}}
+\DoxyCodeLine{580         \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}} append\_copy(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}}\& proto);}
+\DoxyCodeLine{581         \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}} prepend\_copy(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}}\& proto);}
+\DoxyCodeLine{582         \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}} insert\_copy\_after(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}}\& proto, \textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}}\& node);}
+\DoxyCodeLine{583         \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}} insert\_copy\_before(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}}\& proto, \textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}}\& node);}
+\DoxyCodeLine{584 }
+\DoxyCodeLine{585         \textcolor{comment}{// Move the specified node to become a child of this node. Returns moved node, or empty node on errors.}}
+\DoxyCodeLine{586         \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}} append\_move(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}}\& moved);}
+\DoxyCodeLine{587         \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}} prepend\_move(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}}\& moved);}
+\DoxyCodeLine{588         \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}} insert\_move\_after(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}}\& moved, \textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}}\& node);}
+\DoxyCodeLine{589         \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}} insert\_move\_before(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}}\& moved, \textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}}\& node);}
+\DoxyCodeLine{590 }
+\DoxyCodeLine{591         \textcolor{comment}{// Remove specified attribute}}
+\DoxyCodeLine{592         \textcolor{keywordtype}{bool} \mbox{\hyperlink{pugixml_8cpp_a4d566745255de4bfe243b477b1882458}{remove\_attribute}}(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xml__attribute}{xml\_attribute}}\& a);}
+\DoxyCodeLine{593         \textcolor{keywordtype}{bool} \mbox{\hyperlink{pugixml_8cpp_a4d566745255de4bfe243b477b1882458}{remove\_attribute}}(\textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* name);}
+\DoxyCodeLine{594 }
+\DoxyCodeLine{595         \textcolor{comment}{// Remove all attributes}}
+\DoxyCodeLine{596         \textcolor{keywordtype}{bool} remove\_attributes();}
+\DoxyCodeLine{597 }
+\DoxyCodeLine{598         \textcolor{comment}{// Remove specified child}}
+\DoxyCodeLine{599         \textcolor{keywordtype}{bool} remove\_child(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}}\& n);}
+\DoxyCodeLine{600         \textcolor{keywordtype}{bool} remove\_child(\textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* name);}
+\DoxyCodeLine{601 }
+\DoxyCodeLine{602         \textcolor{comment}{// Remove all children}}
+\DoxyCodeLine{603         \textcolor{keywordtype}{bool} remove\_children();}
+\DoxyCodeLine{604 }
+\DoxyCodeLine{605         \textcolor{comment}{// Parses buffer as an XML document fragment and appends all nodes as children of the current node.}}
+\DoxyCodeLine{606         \textcolor{comment}{// Copies/converts the buffer, so it may be deleted or changed after the function returns.}}
+\DoxyCodeLine{607         \textcolor{comment}{// Note: append\_buffer allocates memory that has the lifetime of the owning document; removing the appended nodes does not immediately reclaim that memory.}}
+\DoxyCodeLine{608         \mbox{\hyperlink{structpugi_1_1xml__parse__result}{xml\_parse\_result}} append\_buffer(\textcolor{keyword}{const} \textcolor{keywordtype}{void}* contents, \textcolor{keywordtype}{size\_t} size, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} options = \mbox{\hyperlink{namespacepugi_ad7c927d1c1752330637c3318b0d7b366}{parse\_default}}, \mbox{\hyperlink{namespacepugi_a03f708f86abeff5fce6842ffd6a0951e}{xml\_encoding}} encoding = \mbox{\hyperlink{namespacepugi_a03f708f86abeff5fce6842ffd6a0951eae11b2ef666f03e77b7e764e38d22dc17}{encoding\_auto}});}
+\DoxyCodeLine{609 }
+\DoxyCodeLine{610         \textcolor{comment}{// Find attribute using predicate. Returns first attribute for which predicate returned true.}}
+\DoxyCodeLine{611         \textcolor{keyword}{template} <\textcolor{keyword}{typename} Predicate> \mbox{\hyperlink{classpugi_1_1xml__attribute}{xml\_attribute}} \mbox{\hyperlink{classpugi_1_1xml__node_a4494f8397e3bdf586b1dec6da19f5649}{find\_attribute}}(Predicate pred)\textcolor{keyword}{ const}}
+\DoxyCodeLine{612 \textcolor{keyword}{        }\{}
+\DoxyCodeLine{613             \textcolor{keywordflow}{if} (!\_root) \textcolor{keywordflow}{return} \mbox{\hyperlink{classpugi_1_1xml__attribute}{xml\_attribute}}();}
+\DoxyCodeLine{614 }
+\DoxyCodeLine{615             \textcolor{keywordflow}{for} (\mbox{\hyperlink{classpugi_1_1xml__attribute}{xml\_attribute}} attrib = first\_attribute(); attrib; attrib = attrib.\mbox{\hyperlink{classpugi_1_1xml__attribute_ab419958526a4fdcb1e325c337af0fa9d}{next\_attribute}}())}
+\DoxyCodeLine{616                 \textcolor{keywordflow}{if} (pred(attrib))}
+\DoxyCodeLine{617                     \textcolor{keywordflow}{return} attrib;}
+\DoxyCodeLine{618 }
+\DoxyCodeLine{619             \textcolor{keywordflow}{return} \mbox{\hyperlink{classpugi_1_1xml__attribute}{xml\_attribute}}();}
+\DoxyCodeLine{620         \}}
+\DoxyCodeLine{621 }
+\DoxyCodeLine{622         \textcolor{comment}{// Find child node using predicate. Returns first child for which predicate returned true.}}
+\DoxyCodeLine{623         \textcolor{keyword}{template} <\textcolor{keyword}{typename} Predicate> \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}} \mbox{\hyperlink{classpugi_1_1xml__node_ad00b88f63f6015ee34d4e38dc8ed4e80}{find\_child}}(Predicate pred)\textcolor{keyword}{ const}}
+\DoxyCodeLine{624 \textcolor{keyword}{        }\{}
+\DoxyCodeLine{625             \textcolor{keywordflow}{if} (!\_root) \textcolor{keywordflow}{return} \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}}();}
+\DoxyCodeLine{626 }
+\DoxyCodeLine{627             \textcolor{keywordflow}{for} (\mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}} node = first\_child(); node; node = node.\mbox{\hyperlink{classpugi_1_1xml__node_a41ea1bf7356f01d9fa8fe6b168f638ca}{next\_sibling}}())}
+\DoxyCodeLine{628                 \textcolor{keywordflow}{if} (pred(node))}
+\DoxyCodeLine{629                     \textcolor{keywordflow}{return} node;}
+\DoxyCodeLine{630 }
+\DoxyCodeLine{631             \textcolor{keywordflow}{return} \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}}();}
+\DoxyCodeLine{632         \}}
+\DoxyCodeLine{633 }
+\DoxyCodeLine{634         \textcolor{comment}{// Find node from subtree using predicate. Returns first node from subtree (depth-\/first), for which predicate returned true.}}
+\DoxyCodeLine{635         \textcolor{keyword}{template} <\textcolor{keyword}{typename} Predicate> \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}} \mbox{\hyperlink{classpugi_1_1xml__node_a8c360e4966b4015c50b927009c3d1ee3}{find\_node}}(Predicate pred)\textcolor{keyword}{ const}}
+\DoxyCodeLine{636 \textcolor{keyword}{        }\{}
+\DoxyCodeLine{637             \textcolor{keywordflow}{if} (!\_root) \textcolor{keywordflow}{return} \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}}();}
+\DoxyCodeLine{638 }
+\DoxyCodeLine{639             \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}} cur = first\_child();}
+\DoxyCodeLine{640 }
+\DoxyCodeLine{641             \textcolor{keywordflow}{while} (cur.\mbox{\hyperlink{classpugi_1_1xml__node_a45a5b342de1e37a60565f7693f03cc08}{\_root}} \&\& cur.\mbox{\hyperlink{classpugi_1_1xml__node_a45a5b342de1e37a60565f7693f03cc08}{\_root}} != \_root)}
+\DoxyCodeLine{642             \{}
+\DoxyCodeLine{643                 \textcolor{keywordflow}{if} (pred(cur)) \textcolor{keywordflow}{return} cur;}
+\DoxyCodeLine{644 }
+\DoxyCodeLine{645                 \textcolor{keywordflow}{if} (cur.\mbox{\hyperlink{classpugi_1_1xml__node_a2ef913095d09fb9828465a796fc93b04}{first\_child}}()) cur = cur.\mbox{\hyperlink{classpugi_1_1xml__node_a2ef913095d09fb9828465a796fc93b04}{first\_child}}();}
+\DoxyCodeLine{646                 \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (cur.\mbox{\hyperlink{classpugi_1_1xml__node_a41ea1bf7356f01d9fa8fe6b168f638ca}{next\_sibling}}()) cur = cur.\mbox{\hyperlink{classpugi_1_1xml__node_a41ea1bf7356f01d9fa8fe6b168f638ca}{next\_sibling}}();}
+\DoxyCodeLine{647                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{648                 \{}
+\DoxyCodeLine{649                     \textcolor{keywordflow}{while} (!cur.\mbox{\hyperlink{classpugi_1_1xml__node_a41ea1bf7356f01d9fa8fe6b168f638ca}{next\_sibling}}() \&\& cur.\mbox{\hyperlink{classpugi_1_1xml__node_a45a5b342de1e37a60565f7693f03cc08}{\_root}} != \_root) cur = cur.\mbox{\hyperlink{classpugi_1_1xml__node_a4b1b05e5951b5a60b3e0a7ea8652b086}{parent}}();}
+\DoxyCodeLine{650 }
+\DoxyCodeLine{651                     \textcolor{keywordflow}{if} (cur.\mbox{\hyperlink{classpugi_1_1xml__node_a45a5b342de1e37a60565f7693f03cc08}{\_root}} != \_root) cur = cur.\mbox{\hyperlink{classpugi_1_1xml__node_a41ea1bf7356f01d9fa8fe6b168f638ca}{next\_sibling}}();}
+\DoxyCodeLine{652                 \}}
+\DoxyCodeLine{653             \}}
+\DoxyCodeLine{654 }
+\DoxyCodeLine{655             \textcolor{keywordflow}{return} \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}}();}
+\DoxyCodeLine{656         \}}
+\DoxyCodeLine{657 }
+\DoxyCodeLine{658         \textcolor{comment}{// Find child node by attribute name/value}}
+\DoxyCodeLine{659         \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}} find\_child\_by\_attribute(\textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* name, \textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* attr\_name, \textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* attr\_value) \textcolor{keyword}{const};}
+\DoxyCodeLine{660         \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}} find\_child\_by\_attribute(\textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* attr\_name, \textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* attr\_value) \textcolor{keyword}{const};}
+\DoxyCodeLine{661 }
+\DoxyCodeLine{662 \textcolor{preprocessor}{    \#ifndef PUGIXML\_NO\_STL}}
+\DoxyCodeLine{663         \textcolor{comment}{// Get the absolute node path from root as a text string.}}
+\DoxyCodeLine{664         \mbox{\hyperlink{namespacepugi_a053b39a84c8bb031ff3973d1954a876c}{string\_t}} path(\mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}} delimiter = \textcolor{charliteral}{'/'}) \textcolor{keyword}{const};}
+\DoxyCodeLine{665 \textcolor{preprocessor}{    \#endif}}
+\DoxyCodeLine{666 }
+\DoxyCodeLine{667         \textcolor{comment}{// Search for a node by path consisting of node names and . or .. elements.}}
+\DoxyCodeLine{668         \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}} first\_element\_by\_path(\textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* path, \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}} delimiter = \textcolor{charliteral}{'/'}) \textcolor{keyword}{const};}
+\DoxyCodeLine{669 }
+\DoxyCodeLine{670         \textcolor{comment}{// Recursively traverse subtree with xml\_tree\_walker}}
+\DoxyCodeLine{671         \textcolor{keywordtype}{bool} traverse(\mbox{\hyperlink{classpugi_1_1xml__tree__walker}{xml\_tree\_walker}}\& walker);}
+\DoxyCodeLine{672 }
+\DoxyCodeLine{673 \textcolor{preprocessor}{    \#ifndef PUGIXML\_NO\_XPATH}}
+\DoxyCodeLine{674         \textcolor{comment}{// Select single node by evaluating XPath query. Returns first node from the resulting node set.}}
+\DoxyCodeLine{675         \mbox{\hyperlink{classpugi_1_1xpath__node}{xpath\_node}} select\_node(\textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* query, \mbox{\hyperlink{classpugi_1_1xpath__variable__set}{xpath\_variable\_set}}* variables = \mbox{\hyperlink{pugixml_8hpp_a0daaf3d8b4c7b5ffb7d6a0fa3cdeaadc}{PUGIXML\_NULL}}) \textcolor{keyword}{const};}
+\DoxyCodeLine{676         \mbox{\hyperlink{classpugi_1_1xpath__node}{xpath\_node}} select\_node(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xpath__query}{xpath\_query}}\& query) \textcolor{keyword}{const};}
+\DoxyCodeLine{677 }
+\DoxyCodeLine{678         \textcolor{comment}{// Select node set by evaluating XPath query}}
+\DoxyCodeLine{679         \mbox{\hyperlink{classpugi_1_1xpath__node__set}{xpath\_node\_set}} select\_nodes(\textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* query, \mbox{\hyperlink{classpugi_1_1xpath__variable__set}{xpath\_variable\_set}}* variables = \mbox{\hyperlink{pugixml_8hpp_a0daaf3d8b4c7b5ffb7d6a0fa3cdeaadc}{PUGIXML\_NULL}}) \textcolor{keyword}{const};}
+\DoxyCodeLine{680         \mbox{\hyperlink{classpugi_1_1xpath__node__set}{xpath\_node\_set}} select\_nodes(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xpath__query}{xpath\_query}}\& query) \textcolor{keyword}{const};}
+\DoxyCodeLine{681 }
+\DoxyCodeLine{682         \textcolor{comment}{// (deprecated: use select\_node instead) Select single node by evaluating XPath query.}}
+\DoxyCodeLine{683         \mbox{\hyperlink{pugixml_8hpp_a2bf4c1773811a4e7fd7a7ec3c989b588}{PUGIXML\_DEPRECATED}} \mbox{\hyperlink{classpugi_1_1xpath__node}{xpath\_node}} select\_single\_node(\textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* query, \mbox{\hyperlink{classpugi_1_1xpath__variable__set}{xpath\_variable\_set}}* variables = \mbox{\hyperlink{pugixml_8hpp_a0daaf3d8b4c7b5ffb7d6a0fa3cdeaadc}{PUGIXML\_NULL}}) \textcolor{keyword}{const};}
+\DoxyCodeLine{684         \mbox{\hyperlink{pugixml_8hpp_a2bf4c1773811a4e7fd7a7ec3c989b588}{PUGIXML\_DEPRECATED}} \mbox{\hyperlink{classpugi_1_1xpath__node}{xpath\_node}} select\_single\_node(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xpath__query}{xpath\_query}}\& query) \textcolor{keyword}{const};}
+\DoxyCodeLine{685 }
+\DoxyCodeLine{686 \textcolor{preprocessor}{    \#endif}}
+\DoxyCodeLine{687 }
+\DoxyCodeLine{688         \textcolor{comment}{// Print subtree using a writer object}}
+\DoxyCodeLine{689         \textcolor{keywordtype}{void} print(\mbox{\hyperlink{classpugi_1_1xml__writer}{xml\_writer}}\& writer, \textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* indent = \mbox{\hyperlink{pugixml_8hpp_ad5475bca2e336810ae5906349e644d0b}{PUGIXML\_TEXT}}(\textcolor{stringliteral}{"{}\(\backslash\)t"{}}), \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} flags = \mbox{\hyperlink{namespacepugi_a325f48a35abbaeacdfd8b7fc9ed1713c}{format\_default}}, \mbox{\hyperlink{namespacepugi_a03f708f86abeff5fce6842ffd6a0951e}{xml\_encoding}} encoding = \mbox{\hyperlink{namespacepugi_a03f708f86abeff5fce6842ffd6a0951eae11b2ef666f03e77b7e764e38d22dc17}{encoding\_auto}}, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} depth = 0) \textcolor{keyword}{const};}
+\DoxyCodeLine{690 }
+\DoxyCodeLine{691 \textcolor{preprocessor}{    \#ifndef PUGIXML\_NO\_STL}}
+\DoxyCodeLine{692         \textcolor{comment}{// Print subtree to stream}}
+\DoxyCodeLine{693         \textcolor{keywordtype}{void} print(std::basic\_ostream<\textcolor{keywordtype}{char}, std::char\_traits<char> >\& os, \textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* indent = \mbox{\hyperlink{pugixml_8hpp_ad5475bca2e336810ae5906349e644d0b}{PUGIXML\_TEXT}}(\textcolor{stringliteral}{"{}\(\backslash\)t"{}}), \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} flags = \mbox{\hyperlink{namespacepugi_a325f48a35abbaeacdfd8b7fc9ed1713c}{format\_default}}, \mbox{\hyperlink{namespacepugi_a03f708f86abeff5fce6842ffd6a0951e}{xml\_encoding}} encoding = \mbox{\hyperlink{namespacepugi_a03f708f86abeff5fce6842ffd6a0951eae11b2ef666f03e77b7e764e38d22dc17}{encoding\_auto}}, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} depth = 0) \textcolor{keyword}{const};}
+\DoxyCodeLine{694         \textcolor{keywordtype}{void} print(std::basic\_ostream<\textcolor{keywordtype}{wchar\_t}, std::char\_traits<wchar\_t> >\& os, \textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* indent = \mbox{\hyperlink{pugixml_8hpp_ad5475bca2e336810ae5906349e644d0b}{PUGIXML\_TEXT}}(\textcolor{stringliteral}{"{}\(\backslash\)t"{}}), \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} flags = \mbox{\hyperlink{namespacepugi_a325f48a35abbaeacdfd8b7fc9ed1713c}{format\_default}}, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} depth = 0) \textcolor{keyword}{const};}
+\DoxyCodeLine{695 \textcolor{preprocessor}{    \#endif}}
+\DoxyCodeLine{696 }
+\DoxyCodeLine{697         \textcolor{comment}{// Child nodes iterators}}
+\DoxyCodeLine{698         \textcolor{keyword}{typedef} \mbox{\hyperlink{classpugi_1_1xml__node__iterator}{xml\_node\_iterator}} \mbox{\hyperlink{classpugi_1_1xml__node_ae053ea39add5a64de584f7a81212e388}{iterator}};}
+\DoxyCodeLine{699 }
+\DoxyCodeLine{700         \mbox{\hyperlink{classpugi_1_1xml__node__iterator}{iterator}} begin() \textcolor{keyword}{const};}
+\DoxyCodeLine{701         \mbox{\hyperlink{classpugi_1_1xml__node__iterator}{iterator}} end() \textcolor{keyword}{const};}
+\DoxyCodeLine{702 }
+\DoxyCodeLine{703         \textcolor{comment}{// Attribute iterators}}
+\DoxyCodeLine{704         \textcolor{keyword}{typedef} \mbox{\hyperlink{classpugi_1_1xml__attribute__iterator}{xml\_attribute\_iterator}} \mbox{\hyperlink{classpugi_1_1xml__node_a9084f97350ffc64af1eaf7c17c57f4ba}{attribute\_iterator}};}
+\DoxyCodeLine{705 }
+\DoxyCodeLine{706         \mbox{\hyperlink{classpugi_1_1xml__attribute__iterator}{attribute\_iterator}} attributes\_begin() \textcolor{keyword}{const};}
+\DoxyCodeLine{707         \mbox{\hyperlink{classpugi_1_1xml__attribute__iterator}{attribute\_iterator}} attributes\_end() \textcolor{keyword}{const};}
+\DoxyCodeLine{708 }
+\DoxyCodeLine{709         \textcolor{comment}{// Range-\/based for support}}
+\DoxyCodeLine{710         \mbox{\hyperlink{classpugi_1_1xml__object__range}{xml\_object\_range<xml\_node\_iterator>}} children() \textcolor{keyword}{const};}
+\DoxyCodeLine{711         \mbox{\hyperlink{classpugi_1_1xml__object__range}{xml\_object\_range<xml\_named\_node\_iterator>}} children(\textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* name) \textcolor{keyword}{const};}
+\DoxyCodeLine{712         \mbox{\hyperlink{classpugi_1_1xml__object__range}{xml\_object\_range<xml\_attribute\_iterator>}} attributes() \textcolor{keyword}{const};}
+\DoxyCodeLine{713 }
+\DoxyCodeLine{714         \textcolor{comment}{// Get node offset in parsed file/string (in char\_t units) for debugging purposes}}
+\DoxyCodeLine{715         ptrdiff\_t offset\_debug() \textcolor{keyword}{const};}
+\DoxyCodeLine{716 }
+\DoxyCodeLine{717         \textcolor{comment}{// Get hash value (unique for handles to the same object)}}
+\DoxyCodeLine{718         \textcolor{keywordtype}{size\_t} hash\_value() \textcolor{keyword}{const};}
+\DoxyCodeLine{719 }
+\DoxyCodeLine{720         \textcolor{comment}{// Get internal pointer}}
+\DoxyCodeLine{721         \mbox{\hyperlink{structpugi_1_1xml__node__struct}{xml\_node\_struct}}* internal\_object() \textcolor{keyword}{const};}
+\DoxyCodeLine{722     \};}
+\DoxyCodeLine{723 }
+\DoxyCodeLine{724 \textcolor{preprocessor}{\#ifdef \_\_BORLANDC\_\_}}
+\DoxyCodeLine{725     \textcolor{comment}{// Borland C++ workaround}}
+\DoxyCodeLine{726     \textcolor{keywordtype}{bool} \mbox{\hyperlink{pugixml_8hpp_a3d91f8ab11645e6dac8783d86d152b31}{PUGIXML\_FUNCTION}} operator\&\&(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}}\& lhs, \textcolor{keywordtype}{bool} rhs);}
+\DoxyCodeLine{727     \textcolor{keywordtype}{bool} \mbox{\hyperlink{pugixml_8hpp_a3d91f8ab11645e6dac8783d86d152b31}{PUGIXML\_FUNCTION}} operator||(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}}\& lhs, \textcolor{keywordtype}{bool} rhs);}
+\DoxyCodeLine{728 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{729 }
+\DoxyCodeLine{730     \textcolor{comment}{// A helper for working with text inside PCDATA nodes}}
+\DoxyCodeLine{731     \textcolor{keyword}{class }\mbox{\hyperlink{pugixml_8hpp_ad47efa7f45dfd6d1fe9da1d5cf9c5301}{PUGIXML\_CLASS}} \mbox{\hyperlink{classpugi_1_1xml__text}{xml\_text}}}
+\DoxyCodeLine{732     \{}
+\DoxyCodeLine{733         \textcolor{keyword}{friend} \textcolor{keyword}{class }\mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}};}
+\DoxyCodeLine{734 }
+\DoxyCodeLine{735         \mbox{\hyperlink{structpugi_1_1xml__node__struct}{xml\_node\_struct}}* \_root;}
+\DoxyCodeLine{736 }
+\DoxyCodeLine{737         \textcolor{keyword}{typedef} void (*unspecified\_bool\_type)(\mbox{\hyperlink{classpugi_1_1xml__text}{xml\_text}}***);}
+\DoxyCodeLine{738 }
+\DoxyCodeLine{739         \textcolor{keyword}{explicit} \mbox{\hyperlink{classpugi_1_1xml__text}{xml\_text}}(\mbox{\hyperlink{structpugi_1_1xml__node__struct}{xml\_node\_struct}}* root);}
+\DoxyCodeLine{740 }
+\DoxyCodeLine{741         \mbox{\hyperlink{structpugi_1_1xml__node__struct}{xml\_node\_struct}}* \_data\_new();}
+\DoxyCodeLine{742         \mbox{\hyperlink{structpugi_1_1xml__node__struct}{xml\_node\_struct}}* \_data() \textcolor{keyword}{const};}
+\DoxyCodeLine{743 }
+\DoxyCodeLine{744     \textcolor{keyword}{public}:}
+\DoxyCodeLine{745         \textcolor{comment}{// Default constructor. Constructs an empty object.}}
+\DoxyCodeLine{746         \mbox{\hyperlink{classpugi_1_1xml__text}{xml\_text}}();}
+\DoxyCodeLine{747 }
+\DoxyCodeLine{748         \textcolor{comment}{// Safe bool conversion operator}}
+\DoxyCodeLine{749         \textcolor{keyword}{operator} unspecified\_bool\_type() \textcolor{keyword}{const};}
+\DoxyCodeLine{750 }
+\DoxyCodeLine{751         \textcolor{comment}{// Borland C++ workaround}}
+\DoxyCodeLine{752         \textcolor{keywordtype}{bool} operator!() \textcolor{keyword}{const};}
+\DoxyCodeLine{753 }
+\DoxyCodeLine{754         \textcolor{comment}{// Check if text object is empty}}
+\DoxyCodeLine{755         \textcolor{keywordtype}{bool} empty() \textcolor{keyword}{const};}
+\DoxyCodeLine{756 }
+\DoxyCodeLine{757         \textcolor{comment}{// Get text, or "{}"{} if object is empty}}
+\DoxyCodeLine{758         \textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* get() \textcolor{keyword}{const};}
+\DoxyCodeLine{759 }
+\DoxyCodeLine{760         \textcolor{comment}{// Get text, or the default value if object is empty}}
+\DoxyCodeLine{761         \textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* as\_string(\textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* def = \mbox{\hyperlink{pugixml_8hpp_ad5475bca2e336810ae5906349e644d0b}{PUGIXML\_TEXT}}(\textcolor{stringliteral}{"{}"{}})) \textcolor{keyword}{const};}
+\DoxyCodeLine{762 }
+\DoxyCodeLine{763         \textcolor{comment}{// Get text as a number, or the default value if conversion did not succeed or object is empty}}
+\DoxyCodeLine{764         \textcolor{keywordtype}{int} as\_int(\textcolor{keywordtype}{int} def = 0) \textcolor{keyword}{const};}
+\DoxyCodeLine{765         \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} as\_uint(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} def = 0) \textcolor{keyword}{const};}
+\DoxyCodeLine{766         \textcolor{keywordtype}{double} as\_double(\textcolor{keywordtype}{double} def = 0) \textcolor{keyword}{const};}
+\DoxyCodeLine{767         \textcolor{keywordtype}{float} as\_float(\textcolor{keywordtype}{float} def = 0) \textcolor{keyword}{const};}
+\DoxyCodeLine{768 }
+\DoxyCodeLine{769 \textcolor{preprocessor}{    \#ifdef PUGIXML\_HAS\_LONG\_LONG}}
+\DoxyCodeLine{770         \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} as\_llong(\textcolor{keywordtype}{long} \textcolor{keywordtype}{long} def = 0) \textcolor{keyword}{const};}
+\DoxyCodeLine{771         \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} as\_ullong(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} def = 0) \textcolor{keyword}{const};}
+\DoxyCodeLine{772 \textcolor{preprocessor}{    \#endif}}
+\DoxyCodeLine{773 }
+\DoxyCodeLine{774         \textcolor{comment}{// Get text as bool (returns true if first character is in '1tTyY' set), or the default value if object is empty}}
+\DoxyCodeLine{775         \textcolor{keywordtype}{bool} as\_bool(\textcolor{keywordtype}{bool} def = \textcolor{keyword}{false}) \textcolor{keyword}{const};}
+\DoxyCodeLine{776 }
+\DoxyCodeLine{777         \textcolor{comment}{// Set text (returns false if object is empty or there is not enough memory)}}
+\DoxyCodeLine{778         \textcolor{keywordtype}{bool} set(\textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* rhs);}
+\DoxyCodeLine{779 }
+\DoxyCodeLine{780         \textcolor{comment}{// Set text with type conversion (numbers are converted to strings, boolean is converted to "{}true"{}/"{}false"{})}}
+\DoxyCodeLine{781         \textcolor{keywordtype}{bool} set(\textcolor{keywordtype}{int} rhs);}
+\DoxyCodeLine{782         \textcolor{keywordtype}{bool} set(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} rhs);}
+\DoxyCodeLine{783         \textcolor{keywordtype}{bool} set(\textcolor{keywordtype}{long} rhs);}
+\DoxyCodeLine{784         \textcolor{keywordtype}{bool} set(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} rhs);}
+\DoxyCodeLine{785         \textcolor{keywordtype}{bool} set(\textcolor{keywordtype}{double} rhs);}
+\DoxyCodeLine{786         \textcolor{keywordtype}{bool} set(\textcolor{keywordtype}{double} rhs, \textcolor{keywordtype}{int} precision);}
+\DoxyCodeLine{787         \textcolor{keywordtype}{bool} set(\textcolor{keywordtype}{float} rhs);}
+\DoxyCodeLine{788         \textcolor{keywordtype}{bool} set(\textcolor{keywordtype}{float} rhs, \textcolor{keywordtype}{int} precision);}
+\DoxyCodeLine{789         \textcolor{keywordtype}{bool} set(\textcolor{keywordtype}{bool} rhs);}
+\DoxyCodeLine{790 }
+\DoxyCodeLine{791 \textcolor{preprocessor}{    \#ifdef PUGIXML\_HAS\_LONG\_LONG}}
+\DoxyCodeLine{792         \textcolor{keywordtype}{bool} set(\textcolor{keywordtype}{long} \textcolor{keywordtype}{long} rhs);}
+\DoxyCodeLine{793         \textcolor{keywordtype}{bool} set(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} rhs);}
+\DoxyCodeLine{794 \textcolor{preprocessor}{    \#endif}}
+\DoxyCodeLine{795 }
+\DoxyCodeLine{796         \textcolor{comment}{// Set text (equivalent to set without error checking)}}
+\DoxyCodeLine{797         \mbox{\hyperlink{classpugi_1_1xml__text}{xml\_text}}\& operator=(\textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* rhs);}
+\DoxyCodeLine{798         \mbox{\hyperlink{classpugi_1_1xml__text}{xml\_text}}\& operator=(\textcolor{keywordtype}{int} rhs);}
+\DoxyCodeLine{799         \mbox{\hyperlink{classpugi_1_1xml__text}{xml\_text}}\& operator=(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} rhs);}
+\DoxyCodeLine{800         \mbox{\hyperlink{classpugi_1_1xml__text}{xml\_text}}\& operator=(\textcolor{keywordtype}{long} rhs);}
+\DoxyCodeLine{801         \mbox{\hyperlink{classpugi_1_1xml__text}{xml\_text}}\& operator=(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} rhs);}
+\DoxyCodeLine{802         \mbox{\hyperlink{classpugi_1_1xml__text}{xml\_text}}\& operator=(\textcolor{keywordtype}{double} rhs);}
+\DoxyCodeLine{803         \mbox{\hyperlink{classpugi_1_1xml__text}{xml\_text}}\& operator=(\textcolor{keywordtype}{float} rhs);}
+\DoxyCodeLine{804         \mbox{\hyperlink{classpugi_1_1xml__text}{xml\_text}}\& operator=(\textcolor{keywordtype}{bool} rhs);}
+\DoxyCodeLine{805 }
+\DoxyCodeLine{806 \textcolor{preprocessor}{    \#ifdef PUGIXML\_HAS\_LONG\_LONG}}
+\DoxyCodeLine{807         \mbox{\hyperlink{classpugi_1_1xml__text}{xml\_text}}\& operator=(\textcolor{keywordtype}{long} \textcolor{keywordtype}{long} rhs);}
+\DoxyCodeLine{808         \mbox{\hyperlink{classpugi_1_1xml__text}{xml\_text}}\& operator=(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} rhs);}
+\DoxyCodeLine{809 \textcolor{preprocessor}{    \#endif}}
+\DoxyCodeLine{810 }
+\DoxyCodeLine{811         \textcolor{comment}{// Get the data node (node\_pcdata or node\_cdata) for this object}}
+\DoxyCodeLine{812         \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}} data() \textcolor{keyword}{const};}
+\DoxyCodeLine{813     \};}
+\DoxyCodeLine{814 }
+\DoxyCodeLine{815 \textcolor{preprocessor}{\#ifdef \_\_BORLANDC\_\_}}
+\DoxyCodeLine{816     \textcolor{comment}{// Borland C++ workaround}}
+\DoxyCodeLine{817     \textcolor{keywordtype}{bool} \mbox{\hyperlink{pugixml_8hpp_a3d91f8ab11645e6dac8783d86d152b31}{PUGIXML\_FUNCTION}} operator\&\&(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xml__text}{xml\_text}}\& lhs, \textcolor{keywordtype}{bool} rhs);}
+\DoxyCodeLine{818     \textcolor{keywordtype}{bool} \mbox{\hyperlink{pugixml_8hpp_a3d91f8ab11645e6dac8783d86d152b31}{PUGIXML\_FUNCTION}} operator||(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xml__text}{xml\_text}}\& lhs, \textcolor{keywordtype}{bool} rhs);}
+\DoxyCodeLine{819 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{820 }
+\DoxyCodeLine{821     \textcolor{comment}{// Child node iterator (a bidirectional iterator over a collection of xml\_node)}}
+\DoxyCodeLine{822     \textcolor{keyword}{class }\mbox{\hyperlink{pugixml_8hpp_ad47efa7f45dfd6d1fe9da1d5cf9c5301}{PUGIXML\_CLASS}} \mbox{\hyperlink{classpugi_1_1xml__node__iterator}{xml\_node\_iterator}}}
+\DoxyCodeLine{823     \{}
+\DoxyCodeLine{824         \textcolor{keyword}{friend} \textcolor{keyword}{class }\mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}};}
+\DoxyCodeLine{825 }
+\DoxyCodeLine{826     \textcolor{keyword}{private}:}
+\DoxyCodeLine{827         \textcolor{keyword}{mutable} \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}} \_wrap;}
+\DoxyCodeLine{828         \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}} \_parent;}
+\DoxyCodeLine{829 }
+\DoxyCodeLine{830         \mbox{\hyperlink{classpugi_1_1xml__node__iterator}{xml\_node\_iterator}}(\mbox{\hyperlink{structpugi_1_1xml__node__struct}{xml\_node\_struct}}* ref, \mbox{\hyperlink{structpugi_1_1xml__node__struct}{xml\_node\_struct}}* parent);}
+\DoxyCodeLine{831 }
+\DoxyCodeLine{832     \textcolor{keyword}{public}:}
+\DoxyCodeLine{833         \textcolor{comment}{// Iterator traits}}
+\DoxyCodeLine{834         \textcolor{keyword}{typedef} ptrdiff\_t \mbox{\hyperlink{classpugi_1_1xml__node__iterator_af493930602ec2f56d27c84d148d692ef}{difference\_type}};}
+\DoxyCodeLine{835         \textcolor{keyword}{typedef} \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}} \mbox{\hyperlink{classpugi_1_1xml__node__iterator_a2b0d0c1dd1238c23ef07feeb6069393f}{value\_type}};}
+\DoxyCodeLine{836         \textcolor{keyword}{typedef} \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}}* \mbox{\hyperlink{classpugi_1_1xml__node__iterator_a8e5476d1f854eb64f92f42dac648acf1}{pointer}};}
+\DoxyCodeLine{837         \textcolor{keyword}{typedef} \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}}\& \mbox{\hyperlink{classpugi_1_1xml__node__iterator_ae2efdeb44673427f99b7cc1e726bfa13}{reference}};}
+\DoxyCodeLine{838 }
+\DoxyCodeLine{839 \textcolor{preprocessor}{    \#ifndef PUGIXML\_NO\_STL}}
+\DoxyCodeLine{840         \textcolor{keyword}{typedef} std::bidirectional\_iterator\_tag \mbox{\hyperlink{classpugi_1_1xml__node__iterator_ac65c62a919aa8818f0f1204ef0ab24c1}{iterator\_category}};}
+\DoxyCodeLine{841 \textcolor{preprocessor}{    \#endif}}
+\DoxyCodeLine{842 }
+\DoxyCodeLine{843         \textcolor{comment}{// Default constructor}}
+\DoxyCodeLine{844         \mbox{\hyperlink{classpugi_1_1xml__node__iterator}{xml\_node\_iterator}}();}
+\DoxyCodeLine{845 }
+\DoxyCodeLine{846         \textcolor{comment}{// Construct an iterator which points to the specified node}}
+\DoxyCodeLine{847         \mbox{\hyperlink{classpugi_1_1xml__node__iterator}{xml\_node\_iterator}}(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}}\& node);}
+\DoxyCodeLine{848 }
+\DoxyCodeLine{849         \textcolor{comment}{// Iterator operators}}
+\DoxyCodeLine{850         \textcolor{keywordtype}{bool} operator==(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xml__node__iterator}{xml\_node\_iterator}}\& rhs) \textcolor{keyword}{const};}
+\DoxyCodeLine{851         \textcolor{keywordtype}{bool} operator!=(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xml__node__iterator}{xml\_node\_iterator}}\& rhs) \textcolor{keyword}{const};}
+\DoxyCodeLine{852 }
+\DoxyCodeLine{853         \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}}\& operator*() \textcolor{keyword}{const};}
+\DoxyCodeLine{854         \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}}* operator-\/>() \textcolor{keyword}{const};}
+\DoxyCodeLine{855 }
+\DoxyCodeLine{856         \mbox{\hyperlink{classpugi_1_1xml__node__iterator}{xml\_node\_iterator}}\& operator++();}
+\DoxyCodeLine{857         \mbox{\hyperlink{classpugi_1_1xml__node__iterator}{xml\_node\_iterator}} operator++(\textcolor{keywordtype}{int});}
+\DoxyCodeLine{858 }
+\DoxyCodeLine{859         \mbox{\hyperlink{classpugi_1_1xml__node__iterator}{xml\_node\_iterator}}\& operator-\/-\/();}
+\DoxyCodeLine{860         \mbox{\hyperlink{classpugi_1_1xml__node__iterator}{xml\_node\_iterator}} operator-\/-\/(\textcolor{keywordtype}{int});}
+\DoxyCodeLine{861     \};}
+\DoxyCodeLine{862 }
+\DoxyCodeLine{863     \textcolor{comment}{// Attribute iterator (a bidirectional iterator over a collection of xml\_attribute)}}
+\DoxyCodeLine{864     \textcolor{keyword}{class }\mbox{\hyperlink{pugixml_8hpp_ad47efa7f45dfd6d1fe9da1d5cf9c5301}{PUGIXML\_CLASS}} \mbox{\hyperlink{classpugi_1_1xml__attribute__iterator}{xml\_attribute\_iterator}}}
+\DoxyCodeLine{865     \{}
+\DoxyCodeLine{866         \textcolor{keyword}{friend} \textcolor{keyword}{class }\mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}};}
+\DoxyCodeLine{867 }
+\DoxyCodeLine{868     \textcolor{keyword}{private}:}
+\DoxyCodeLine{869         \textcolor{keyword}{mutable} \mbox{\hyperlink{classpugi_1_1xml__attribute}{xml\_attribute}} \_wrap;}
+\DoxyCodeLine{870         \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}} \_parent;}
+\DoxyCodeLine{871 }
+\DoxyCodeLine{872         \mbox{\hyperlink{classpugi_1_1xml__attribute__iterator}{xml\_attribute\_iterator}}(\mbox{\hyperlink{structpugi_1_1xml__attribute__struct}{xml\_attribute\_struct}}* ref, \mbox{\hyperlink{structpugi_1_1xml__node__struct}{xml\_node\_struct}}* parent);}
+\DoxyCodeLine{873 }
+\DoxyCodeLine{874     \textcolor{keyword}{public}:}
+\DoxyCodeLine{875         \textcolor{comment}{// Iterator traits}}
+\DoxyCodeLine{876         \textcolor{keyword}{typedef} ptrdiff\_t \mbox{\hyperlink{classpugi_1_1xml__attribute__iterator_a00b3eecf2aba886a673ad2319be88618}{difference\_type}};}
+\DoxyCodeLine{877         \textcolor{keyword}{typedef} \mbox{\hyperlink{classpugi_1_1xml__attribute}{xml\_attribute}} \mbox{\hyperlink{classpugi_1_1xml__attribute__iterator_a2b0e779f12de813d7a806056ebed8907}{value\_type}};}
+\DoxyCodeLine{878         \textcolor{keyword}{typedef} \mbox{\hyperlink{classpugi_1_1xml__attribute}{xml\_attribute}}* \mbox{\hyperlink{classpugi_1_1xml__attribute__iterator_a6ed6fb3197abb02ffa848ad6b9b7a1be}{pointer}};}
+\DoxyCodeLine{879         \textcolor{keyword}{typedef} \mbox{\hyperlink{classpugi_1_1xml__attribute}{xml\_attribute}}\& \mbox{\hyperlink{classpugi_1_1xml__attribute__iterator_ade97045a1217d0a7897e5f5873297117}{reference}};}
+\DoxyCodeLine{880 }
+\DoxyCodeLine{881 \textcolor{preprocessor}{    \#ifndef PUGIXML\_NO\_STL}}
+\DoxyCodeLine{882         \textcolor{keyword}{typedef} std::bidirectional\_iterator\_tag \mbox{\hyperlink{classpugi_1_1xml__attribute__iterator_aad988273a3e4cdc5fa3eb879dbdc8d35}{iterator\_category}};}
+\DoxyCodeLine{883 \textcolor{preprocessor}{    \#endif}}
+\DoxyCodeLine{884 }
+\DoxyCodeLine{885         \textcolor{comment}{// Default constructor}}
+\DoxyCodeLine{886         \mbox{\hyperlink{classpugi_1_1xml__attribute__iterator}{xml\_attribute\_iterator}}();}
+\DoxyCodeLine{887 }
+\DoxyCodeLine{888         \textcolor{comment}{// Construct an iterator which points to the specified attribute}}
+\DoxyCodeLine{889         \mbox{\hyperlink{classpugi_1_1xml__attribute__iterator}{xml\_attribute\_iterator}}(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xml__attribute}{xml\_attribute}}\& attr, \textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}}\& parent);}
+\DoxyCodeLine{890 }
+\DoxyCodeLine{891         \textcolor{comment}{// Iterator operators}}
+\DoxyCodeLine{892         \textcolor{keywordtype}{bool} operator==(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xml__attribute__iterator}{xml\_attribute\_iterator}}\& rhs) \textcolor{keyword}{const};}
+\DoxyCodeLine{893         \textcolor{keywordtype}{bool} operator!=(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xml__attribute__iterator}{xml\_attribute\_iterator}}\& rhs) \textcolor{keyword}{const};}
+\DoxyCodeLine{894 }
+\DoxyCodeLine{895         \mbox{\hyperlink{classpugi_1_1xml__attribute}{xml\_attribute}}\& operator*() \textcolor{keyword}{const};}
+\DoxyCodeLine{896         \mbox{\hyperlink{classpugi_1_1xml__attribute}{xml\_attribute}}* operator-\/>() \textcolor{keyword}{const};}
+\DoxyCodeLine{897 }
+\DoxyCodeLine{898         \mbox{\hyperlink{classpugi_1_1xml__attribute__iterator}{xml\_attribute\_iterator}}\& operator++();}
+\DoxyCodeLine{899         \mbox{\hyperlink{classpugi_1_1xml__attribute__iterator}{xml\_attribute\_iterator}} operator++(\textcolor{keywordtype}{int});}
+\DoxyCodeLine{900 }
+\DoxyCodeLine{901         \mbox{\hyperlink{classpugi_1_1xml__attribute__iterator}{xml\_attribute\_iterator}}\& operator-\/-\/();}
+\DoxyCodeLine{902         \mbox{\hyperlink{classpugi_1_1xml__attribute__iterator}{xml\_attribute\_iterator}} operator-\/-\/(\textcolor{keywordtype}{int});}
+\DoxyCodeLine{903     \};}
+\DoxyCodeLine{904 }
+\DoxyCodeLine{905     \textcolor{comment}{// Named node range helper}}
+\DoxyCodeLine{906     \textcolor{keyword}{class }\mbox{\hyperlink{pugixml_8hpp_ad47efa7f45dfd6d1fe9da1d5cf9c5301}{PUGIXML\_CLASS}} \mbox{\hyperlink{classpugi_1_1xml__named__node__iterator}{xml\_named\_node\_iterator}}}
+\DoxyCodeLine{907     \{}
+\DoxyCodeLine{908         \textcolor{keyword}{friend} \textcolor{keyword}{class }\mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}};}
+\DoxyCodeLine{909 }
+\DoxyCodeLine{910     \textcolor{keyword}{public}:}
+\DoxyCodeLine{911         \textcolor{comment}{// Iterator traits}}
+\DoxyCodeLine{912         \textcolor{keyword}{typedef} ptrdiff\_t \mbox{\hyperlink{classpugi_1_1xml__named__node__iterator_a18fa0d610fea4d64271729abc0e28849}{difference\_type}};}
+\DoxyCodeLine{913         \textcolor{keyword}{typedef} \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}} \mbox{\hyperlink{classpugi_1_1xml__named__node__iterator_a8d98d8218ea9740ceb990ef2c1a456e2}{value\_type}};}
+\DoxyCodeLine{914         \textcolor{keyword}{typedef} \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}}* \mbox{\hyperlink{classpugi_1_1xml__named__node__iterator_aebf72c68ded20cf483a10c6b94aa3f57}{pointer}};}
+\DoxyCodeLine{915         \textcolor{keyword}{typedef} \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}}\& \mbox{\hyperlink{classpugi_1_1xml__named__node__iterator_a1c338c7a2aefe04b83f746a963df808b}{reference}};}
+\DoxyCodeLine{916 }
+\DoxyCodeLine{917 \textcolor{preprocessor}{    \#ifndef PUGIXML\_NO\_STL}}
+\DoxyCodeLine{918         \textcolor{keyword}{typedef} std::bidirectional\_iterator\_tag \mbox{\hyperlink{classpugi_1_1xml__named__node__iterator_ab7dad0df34f043a9458b2a6b309a227f}{iterator\_category}};}
+\DoxyCodeLine{919 \textcolor{preprocessor}{    \#endif}}
+\DoxyCodeLine{920 }
+\DoxyCodeLine{921         \textcolor{comment}{// Default constructor}}
+\DoxyCodeLine{922         \mbox{\hyperlink{classpugi_1_1xml__named__node__iterator}{xml\_named\_node\_iterator}}();}
+\DoxyCodeLine{923 }
+\DoxyCodeLine{924         \textcolor{comment}{// Construct an iterator which points to the specified node}}
+\DoxyCodeLine{925         \mbox{\hyperlink{classpugi_1_1xml__named__node__iterator}{xml\_named\_node\_iterator}}(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}}\& node, \textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* name);}
+\DoxyCodeLine{926 }
+\DoxyCodeLine{927         \textcolor{comment}{// Iterator operators}}
+\DoxyCodeLine{928         \textcolor{keywordtype}{bool} operator==(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xml__named__node__iterator}{xml\_named\_node\_iterator}}\& rhs) \textcolor{keyword}{const};}
+\DoxyCodeLine{929         \textcolor{keywordtype}{bool} operator!=(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xml__named__node__iterator}{xml\_named\_node\_iterator}}\& rhs) \textcolor{keyword}{const};}
+\DoxyCodeLine{930 }
+\DoxyCodeLine{931         \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}}\& operator*() \textcolor{keyword}{const};}
+\DoxyCodeLine{932         \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}}* operator-\/>() \textcolor{keyword}{const};}
+\DoxyCodeLine{933 }
+\DoxyCodeLine{934         \mbox{\hyperlink{classpugi_1_1xml__named__node__iterator}{xml\_named\_node\_iterator}}\& operator++();}
+\DoxyCodeLine{935         \mbox{\hyperlink{classpugi_1_1xml__named__node__iterator}{xml\_named\_node\_iterator}} operator++(\textcolor{keywordtype}{int});}
+\DoxyCodeLine{936 }
+\DoxyCodeLine{937         \mbox{\hyperlink{classpugi_1_1xml__named__node__iterator}{xml\_named\_node\_iterator}}\& operator-\/-\/();}
+\DoxyCodeLine{938         \mbox{\hyperlink{classpugi_1_1xml__named__node__iterator}{xml\_named\_node\_iterator}} operator-\/-\/(\textcolor{keywordtype}{int});}
+\DoxyCodeLine{939 }
+\DoxyCodeLine{940     \textcolor{keyword}{private}:}
+\DoxyCodeLine{941         \textcolor{keyword}{mutable} \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}} \_wrap;}
+\DoxyCodeLine{942         \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}} \_parent;}
+\DoxyCodeLine{943         \textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* \_name;}
+\DoxyCodeLine{944 }
+\DoxyCodeLine{945         \mbox{\hyperlink{classpugi_1_1xml__named__node__iterator}{xml\_named\_node\_iterator}}(\mbox{\hyperlink{structpugi_1_1xml__node__struct}{xml\_node\_struct}}* ref, \mbox{\hyperlink{structpugi_1_1xml__node__struct}{xml\_node\_struct}}* parent, \textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* name);}
+\DoxyCodeLine{946     \};}
+\DoxyCodeLine{947 }
+\DoxyCodeLine{948     \textcolor{comment}{// Abstract tree walker class (see xml\_node::traverse)}}
+\DoxyCodeLine{949     \textcolor{keyword}{class }\mbox{\hyperlink{pugixml_8hpp_ad47efa7f45dfd6d1fe9da1d5cf9c5301}{PUGIXML\_CLASS}} \mbox{\hyperlink{classpugi_1_1xml__tree__walker}{xml\_tree\_walker}}}
+\DoxyCodeLine{950     \{}
+\DoxyCodeLine{951         \textcolor{keyword}{friend} \textcolor{keyword}{class }\mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}};}
+\DoxyCodeLine{952 }
+\DoxyCodeLine{953     \textcolor{keyword}{private}:}
+\DoxyCodeLine{954         \textcolor{keywordtype}{int} \_depth;}
+\DoxyCodeLine{955 }
+\DoxyCodeLine{956     \textcolor{keyword}{protected}:}
+\DoxyCodeLine{957         \textcolor{comment}{// Get current traversal depth}}
+\DoxyCodeLine{958         \textcolor{keywordtype}{int} depth() \textcolor{keyword}{const};}
+\DoxyCodeLine{959 }
+\DoxyCodeLine{960     \textcolor{keyword}{public}:}
+\DoxyCodeLine{961         \mbox{\hyperlink{classpugi_1_1xml__tree__walker}{xml\_tree\_walker}}();}
+\DoxyCodeLine{962         \textcolor{keyword}{virtual} \mbox{\hyperlink{classpugi_1_1xml__tree__walker}{\string~xml\_tree\_walker}}();}
+\DoxyCodeLine{963 }
+\DoxyCodeLine{964         \textcolor{comment}{// Callback that is called when traversal begins}}
+\DoxyCodeLine{965         \textcolor{keyword}{virtual} \textcolor{keywordtype}{bool} begin(\mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}}\& node);}
+\DoxyCodeLine{966 }
+\DoxyCodeLine{967         \textcolor{comment}{// Callback that is called for each node traversed}}
+\DoxyCodeLine{968         \textcolor{keyword}{virtual} \textcolor{keywordtype}{bool} \mbox{\hyperlink{classpugi_1_1xml__tree__walker_a309363c9d17ef3fc8cacc6f71fcbea88}{for\_each}}(\mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}}\& node) = 0;}
+\DoxyCodeLine{969 }
+\DoxyCodeLine{970         \textcolor{comment}{// Callback that is called when traversal ends}}
+\DoxyCodeLine{971         \textcolor{keyword}{virtual} \textcolor{keywordtype}{bool} end(\mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}}\& node);}
+\DoxyCodeLine{972     \};}
+\DoxyCodeLine{973 }
+\DoxyCodeLine{974     \textcolor{comment}{// Parsing status, returned as part of xml\_parse\_result object}}
+\DoxyCodeLine{975     \textcolor{keyword}{enum} \mbox{\hyperlink{namespacepugi_a9054ca609e12afb8f3e5892fc6c0b555}{xml\_parse\_status}}}
+\DoxyCodeLine{976     \{}
+\DoxyCodeLine{977         \mbox{\hyperlink{namespacepugi_a9054ca609e12afb8f3e5892fc6c0b555a46ddc2abb6a54fdac07cf9086b45f10f}{status\_ok}} = 0,             \textcolor{comment}{// No error}}
+\DoxyCodeLine{978 }
+\DoxyCodeLine{979         \mbox{\hyperlink{namespacepugi_a9054ca609e12afb8f3e5892fc6c0b555a32e05bc1b1356846e6a5fb0ec097d36b}{status\_file\_not\_found}},     \textcolor{comment}{// File was not found during load\_file()}}
+\DoxyCodeLine{980         \mbox{\hyperlink{namespacepugi_a9054ca609e12afb8f3e5892fc6c0b555a28bb6318a65eec5abcf1ef8174b92246}{status\_io\_error}},         \textcolor{comment}{// Error reading from file/stream}}
+\DoxyCodeLine{981         \mbox{\hyperlink{namespacepugi_a9054ca609e12afb8f3e5892fc6c0b555a59e75d024e9f5c213ca6f4db8102b978}{status\_out\_of\_memory}},       \textcolor{comment}{// Could not allocate memory}}
+\DoxyCodeLine{982         \mbox{\hyperlink{namespacepugi_a9054ca609e12afb8f3e5892fc6c0b555a37a3c224657a16f27c950ec70954c981}{status\_internal\_error}},     \textcolor{comment}{// Internal error occurred}}
+\DoxyCodeLine{983 }
+\DoxyCodeLine{984         \mbox{\hyperlink{namespacepugi_a9054ca609e12afb8f3e5892fc6c0b555a71a555b91e80b6d8f84aeb6a93904d28}{status\_unrecognized\_tag}}, \textcolor{comment}{// Parser could not determine tag type}}
+\DoxyCodeLine{985 }
+\DoxyCodeLine{986         \mbox{\hyperlink{namespacepugi_a9054ca609e12afb8f3e5892fc6c0b555ad7a57e8554aabea52ed8b0d6a0891622}{status\_bad\_pi}},             \textcolor{comment}{// Parsing error occurred while parsing document declaration/processing instruction}}
+\DoxyCodeLine{987         \mbox{\hyperlink{namespacepugi_a9054ca609e12afb8f3e5892fc6c0b555a563327f534e9b3ce55f9f7364aa746b2}{status\_bad\_comment}},           \textcolor{comment}{// Parsing error occurred while parsing comment}}
+\DoxyCodeLine{988         \mbox{\hyperlink{namespacepugi_a9054ca609e12afb8f3e5892fc6c0b555aa2ebdaf5e8bf5414bec3004270e102b8}{status\_bad\_cdata}},           \textcolor{comment}{// Parsing error occurred while parsing CDATA section}}
+\DoxyCodeLine{989         \mbox{\hyperlink{namespacepugi_a9054ca609e12afb8f3e5892fc6c0b555a58d1b0d8787e97fc1b5b31ec5e4fabcf}{status\_bad\_doctype}},           \textcolor{comment}{// Parsing error occurred while parsing document type declaration}}
+\DoxyCodeLine{990         \mbox{\hyperlink{namespacepugi_a9054ca609e12afb8f3e5892fc6c0b555ac5257467a3d1a971134c457066b21ee5}{status\_bad\_pcdata}},         \textcolor{comment}{// Parsing error occurred while parsing PCDATA section}}
+\DoxyCodeLine{991         \mbox{\hyperlink{namespacepugi_a9054ca609e12afb8f3e5892fc6c0b555a3cf4e84a5b433ce50e6f3037df5c1bdd}{status\_bad\_start\_element}},   \textcolor{comment}{// Parsing error occurred while parsing start element tag}}
+\DoxyCodeLine{992         \mbox{\hyperlink{namespacepugi_a9054ca609e12afb8f3e5892fc6c0b555a2b34aa9968d63b28a6d51b30575ff95a}{status\_bad\_attribute}},       \textcolor{comment}{// Parsing error occurred while parsing element attribute}}
+\DoxyCodeLine{993         \mbox{\hyperlink{namespacepugi_a9054ca609e12afb8f3e5892fc6c0b555a261cbf22c7da45388bcc1e6759020790}{status\_bad\_end\_element}},       \textcolor{comment}{// Parsing error occurred while parsing end element tag}}
+\DoxyCodeLine{994         \mbox{\hyperlink{namespacepugi_a9054ca609e12afb8f3e5892fc6c0b555a07a5f6f8392474ccb2d5dc10fe2307a2}{status\_end\_element\_mismatch}},\textcolor{comment}{// There was a mismatch of start-\/end tags (closing tag had incorrect name, some tag was not closed or there was an excessive closing tag)}}
+\DoxyCodeLine{995 }
+\DoxyCodeLine{996         \mbox{\hyperlink{namespacepugi_a9054ca609e12afb8f3e5892fc6c0b555a0710d81960b31559ae0e7f6c928b4b81}{status\_append\_invalid\_root}},   \textcolor{comment}{// Unable to append nodes since root type is not node\_element or node\_document (exclusive to xml\_node::append\_buffer)}}
+\DoxyCodeLine{997 }
+\DoxyCodeLine{998         \mbox{\hyperlink{namespacepugi_a9054ca609e12afb8f3e5892fc6c0b555ae31807596a283adf602d437e08d0f472}{status\_no\_document\_element}}    \textcolor{comment}{// Parsing resulted in a document without element nodes}}
+\DoxyCodeLine{999     \};}
+\DoxyCodeLine{1000 }
+\DoxyCodeLine{1001     \textcolor{comment}{// Parsing result}}
+\DoxyCodeLine{1002     \textcolor{keyword}{struct }\mbox{\hyperlink{pugixml_8hpp_ad47efa7f45dfd6d1fe9da1d5cf9c5301}{PUGIXML\_CLASS}} \mbox{\hyperlink{structpugi_1_1xml__parse__result}{xml\_parse\_result}}}
+\DoxyCodeLine{1003     \{}
+\DoxyCodeLine{1004         \textcolor{comment}{// Parsing status (see xml\_parse\_status)}}
+\DoxyCodeLine{1005         \mbox{\hyperlink{namespacepugi_a9054ca609e12afb8f3e5892fc6c0b555}{xml\_parse\_status}} \mbox{\hyperlink{structpugi_1_1xml__parse__result_af8b3e6badea671931017695c8a9dd1af}{status}};}
+\DoxyCodeLine{1006 }
+\DoxyCodeLine{1007         \textcolor{comment}{// Last parsed offset (in char\_t units from start of input data)}}
+\DoxyCodeLine{1008         ptrdiff\_t \mbox{\hyperlink{structpugi_1_1xml__parse__result_adb61df40459ba6fb1083d22467983086}{offset}};}
+\DoxyCodeLine{1009 }
+\DoxyCodeLine{1010         \textcolor{comment}{// Source document encoding}}
+\DoxyCodeLine{1011         \mbox{\hyperlink{namespacepugi_a03f708f86abeff5fce6842ffd6a0951e}{xml\_encoding}} \mbox{\hyperlink{structpugi_1_1xml__parse__result_ad11f279dfce644dfe297e24dc5f72c01}{encoding}};}
+\DoxyCodeLine{1012 }
+\DoxyCodeLine{1013         \textcolor{comment}{// Default constructor, initializes object to failed state}}
+\DoxyCodeLine{1014         \mbox{\hyperlink{structpugi_1_1xml__parse__result}{xml\_parse\_result}}();}
+\DoxyCodeLine{1015 }
+\DoxyCodeLine{1016         \textcolor{comment}{// Cast to bool operator}}
+\DoxyCodeLine{1017         \textcolor{keyword}{operator} bool() \textcolor{keyword}{const};}
+\DoxyCodeLine{1018 }
+\DoxyCodeLine{1019         \textcolor{comment}{// Get error description}}
+\DoxyCodeLine{1020         \textcolor{keyword}{const} \textcolor{keywordtype}{char}* description() \textcolor{keyword}{const};}
+\DoxyCodeLine{1021     \};}
+\DoxyCodeLine{1022 }
+\DoxyCodeLine{1023     \textcolor{comment}{// Document class (DOM tree root)}}
+\DoxyCodeLine{1024     \textcolor{keyword}{class }\mbox{\hyperlink{pugixml_8hpp_ad47efa7f45dfd6d1fe9da1d5cf9c5301}{PUGIXML\_CLASS}} \mbox{\hyperlink{classpugi_1_1xml__document}{xml\_document}}: \textcolor{keyword}{public} \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}}}
+\DoxyCodeLine{1025     \{}
+\DoxyCodeLine{1026     \textcolor{keyword}{private}:}
+\DoxyCodeLine{1027         \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* \_buffer;}
+\DoxyCodeLine{1028 }
+\DoxyCodeLine{1029         \textcolor{keywordtype}{char} \_memory[192];}
+\DoxyCodeLine{1030 }
+\DoxyCodeLine{1031         \textcolor{comment}{// Non-\/copyable semantics}}
+\DoxyCodeLine{1032         \mbox{\hyperlink{classpugi_1_1xml__document}{xml\_document}}(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xml__document}{xml\_document}}\&);}
+\DoxyCodeLine{1033         \mbox{\hyperlink{classpugi_1_1xml__document}{xml\_document}}\& operator=(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xml__document}{xml\_document}}\&);}
+\DoxyCodeLine{1034 }
+\DoxyCodeLine{1035         \textcolor{keywordtype}{void} \_create();}
+\DoxyCodeLine{1036         \textcolor{keywordtype}{void} \_destroy();}
+\DoxyCodeLine{1037         \textcolor{keywordtype}{void} \_move(\mbox{\hyperlink{classpugi_1_1xml__document}{xml\_document}}\& rhs) \mbox{\hyperlink{pugixml_8hpp_a377cabdf77b82e5741e19ab75657d452}{PUGIXML\_NOEXCEPT\_IF\_NOT\_COMPACT}};}
+\DoxyCodeLine{1038 }
+\DoxyCodeLine{1039     \textcolor{keyword}{public}:}
+\DoxyCodeLine{1040         \textcolor{comment}{// Default constructor, makes empty document}}
+\DoxyCodeLine{1041         \mbox{\hyperlink{classpugi_1_1xml__document}{xml\_document}}();}
+\DoxyCodeLine{1042 }
+\DoxyCodeLine{1043         \textcolor{comment}{// Destructor, invalidates all node/attribute handles to this document}}
+\DoxyCodeLine{1044         \mbox{\hyperlink{classpugi_1_1xml__document}{\string~xml\_document}}();}
+\DoxyCodeLine{1045 }
+\DoxyCodeLine{1046 \textcolor{preprocessor}{    \#ifdef PUGIXML\_HAS\_MOVE}}
+\DoxyCodeLine{1047         \textcolor{comment}{// Move semantics support}}
+\DoxyCodeLine{1048         \mbox{\hyperlink{classpugi_1_1xml__document}{xml\_document}}(\mbox{\hyperlink{classpugi_1_1xml__document}{xml\_document}}\&\& rhs) \mbox{\hyperlink{pugixml_8hpp_a377cabdf77b82e5741e19ab75657d452}{PUGIXML\_NOEXCEPT\_IF\_NOT\_COMPACT}};}
+\DoxyCodeLine{1049         \mbox{\hyperlink{classpugi_1_1xml__document}{xml\_document}}\& operator=(\mbox{\hyperlink{classpugi_1_1xml__document}{xml\_document}}\&\& rhs) \mbox{\hyperlink{pugixml_8hpp_a377cabdf77b82e5741e19ab75657d452}{PUGIXML\_NOEXCEPT\_IF\_NOT\_COMPACT}};}
+\DoxyCodeLine{1050 \textcolor{preprocessor}{    \#endif}}
+\DoxyCodeLine{1051 }
+\DoxyCodeLine{1052         \textcolor{comment}{// Removes all nodes, leaving the empty document}}
+\DoxyCodeLine{1053         \textcolor{keywordtype}{void} reset();}
+\DoxyCodeLine{1054 }
+\DoxyCodeLine{1055         \textcolor{comment}{// Removes all nodes, then copies the entire contents of the specified document}}
+\DoxyCodeLine{1056         \textcolor{keywordtype}{void} reset(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xml__document}{xml\_document}}\& proto);}
+\DoxyCodeLine{1057 }
+\DoxyCodeLine{1058 \textcolor{preprocessor}{    \#ifndef PUGIXML\_NO\_STL}}
+\DoxyCodeLine{1059         \textcolor{comment}{// Load document from stream.}}
+\DoxyCodeLine{1060         \mbox{\hyperlink{structpugi_1_1xml__parse__result}{xml\_parse\_result}} load(std::basic\_istream<\textcolor{keywordtype}{char}, std::char\_traits<char> >\& stream, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} options = \mbox{\hyperlink{namespacepugi_ad7c927d1c1752330637c3318b0d7b366}{parse\_default}}, \mbox{\hyperlink{namespacepugi_a03f708f86abeff5fce6842ffd6a0951e}{xml\_encoding}} encoding = \mbox{\hyperlink{namespacepugi_a03f708f86abeff5fce6842ffd6a0951eae11b2ef666f03e77b7e764e38d22dc17}{encoding\_auto}});}
+\DoxyCodeLine{1061         \mbox{\hyperlink{structpugi_1_1xml__parse__result}{xml\_parse\_result}} load(std::basic\_istream<\textcolor{keywordtype}{wchar\_t}, std::char\_traits<wchar\_t> >\& stream, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} options = \mbox{\hyperlink{namespacepugi_ad7c927d1c1752330637c3318b0d7b366}{parse\_default}});}
+\DoxyCodeLine{1062 \textcolor{preprocessor}{    \#endif}}
+\DoxyCodeLine{1063 }
+\DoxyCodeLine{1064         \textcolor{comment}{// (deprecated: use load\_string instead) Load document from zero-\/terminated string. No encoding conversions are applied.}}
+\DoxyCodeLine{1065         \mbox{\hyperlink{pugixml_8hpp_a2bf4c1773811a4e7fd7a7ec3c989b588}{PUGIXML\_DEPRECATED}} \mbox{\hyperlink{structpugi_1_1xml__parse__result}{xml\_parse\_result}} load(\textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* contents, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} options = \mbox{\hyperlink{namespacepugi_ad7c927d1c1752330637c3318b0d7b366}{parse\_default}});}
+\DoxyCodeLine{1066 }
+\DoxyCodeLine{1067         \textcolor{comment}{// Load document from zero-\/terminated string. No encoding conversions are applied.}}
+\DoxyCodeLine{1068         \mbox{\hyperlink{structpugi_1_1xml__parse__result}{xml\_parse\_result}} load\_string(\textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* contents, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} options = \mbox{\hyperlink{namespacepugi_ad7c927d1c1752330637c3318b0d7b366}{parse\_default}});}
+\DoxyCodeLine{1069 }
+\DoxyCodeLine{1070         \textcolor{comment}{// Load document from file}}
+\DoxyCodeLine{1071         \mbox{\hyperlink{structpugi_1_1xml__parse__result}{xml\_parse\_result}} load\_file(\textcolor{keyword}{const} \textcolor{keywordtype}{char}* path, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} options = \mbox{\hyperlink{namespacepugi_ad7c927d1c1752330637c3318b0d7b366}{parse\_default}}, \mbox{\hyperlink{namespacepugi_a03f708f86abeff5fce6842ffd6a0951e}{xml\_encoding}} encoding = \mbox{\hyperlink{namespacepugi_a03f708f86abeff5fce6842ffd6a0951eae11b2ef666f03e77b7e764e38d22dc17}{encoding\_auto}});}
+\DoxyCodeLine{1072         \mbox{\hyperlink{structpugi_1_1xml__parse__result}{xml\_parse\_result}} load\_file(\textcolor{keyword}{const} \textcolor{keywordtype}{wchar\_t}* path, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} options = \mbox{\hyperlink{namespacepugi_ad7c927d1c1752330637c3318b0d7b366}{parse\_default}}, \mbox{\hyperlink{namespacepugi_a03f708f86abeff5fce6842ffd6a0951e}{xml\_encoding}} encoding = \mbox{\hyperlink{namespacepugi_a03f708f86abeff5fce6842ffd6a0951eae11b2ef666f03e77b7e764e38d22dc17}{encoding\_auto}});}
+\DoxyCodeLine{1073 }
+\DoxyCodeLine{1074         \textcolor{comment}{// Load document from buffer. Copies/converts the buffer, so it may be deleted or changed after the function returns.}}
+\DoxyCodeLine{1075         \mbox{\hyperlink{structpugi_1_1xml__parse__result}{xml\_parse\_result}} load\_buffer(\textcolor{keyword}{const} \textcolor{keywordtype}{void}* contents, \textcolor{keywordtype}{size\_t} size, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} options = \mbox{\hyperlink{namespacepugi_ad7c927d1c1752330637c3318b0d7b366}{parse\_default}}, \mbox{\hyperlink{namespacepugi_a03f708f86abeff5fce6842ffd6a0951e}{xml\_encoding}} encoding = \mbox{\hyperlink{namespacepugi_a03f708f86abeff5fce6842ffd6a0951eae11b2ef666f03e77b7e764e38d22dc17}{encoding\_auto}});}
+\DoxyCodeLine{1076 }
+\DoxyCodeLine{1077         \textcolor{comment}{// Load document from buffer, using the buffer for in-\/place parsing (the buffer is modified and used for storage of document data).}}
+\DoxyCodeLine{1078         \textcolor{comment}{// You should ensure that buffer data will persist throughout the document's lifetime, and free the buffer memory manually once document is destroyed.}}
+\DoxyCodeLine{1079         \mbox{\hyperlink{structpugi_1_1xml__parse__result}{xml\_parse\_result}} load\_buffer\_inplace(\textcolor{keywordtype}{void}* contents, \textcolor{keywordtype}{size\_t} size, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} options = \mbox{\hyperlink{namespacepugi_ad7c927d1c1752330637c3318b0d7b366}{parse\_default}}, \mbox{\hyperlink{namespacepugi_a03f708f86abeff5fce6842ffd6a0951e}{xml\_encoding}} encoding = \mbox{\hyperlink{namespacepugi_a03f708f86abeff5fce6842ffd6a0951eae11b2ef666f03e77b7e764e38d22dc17}{encoding\_auto}});}
+\DoxyCodeLine{1080 }
+\DoxyCodeLine{1081         \textcolor{comment}{// Load document from buffer, using the buffer for in-\/place parsing (the buffer is modified and used for storage of document data).}}
+\DoxyCodeLine{1082         \textcolor{comment}{// You should allocate the buffer with pugixml allocation function; document will free the buffer when it is no longer needed (you can't use it anymore).}}
+\DoxyCodeLine{1083         \mbox{\hyperlink{structpugi_1_1xml__parse__result}{xml\_parse\_result}} load\_buffer\_inplace\_own(\textcolor{keywordtype}{void}* contents, \textcolor{keywordtype}{size\_t} size, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} options = \mbox{\hyperlink{namespacepugi_ad7c927d1c1752330637c3318b0d7b366}{parse\_default}}, \mbox{\hyperlink{namespacepugi_a03f708f86abeff5fce6842ffd6a0951e}{xml\_encoding}} encoding = \mbox{\hyperlink{namespacepugi_a03f708f86abeff5fce6842ffd6a0951eae11b2ef666f03e77b7e764e38d22dc17}{encoding\_auto}});}
+\DoxyCodeLine{1084 }
+\DoxyCodeLine{1085         \textcolor{comment}{// Save XML document to writer (semantics is slightly different from xml\_node::print, see documentation for details).}}
+\DoxyCodeLine{1086         \textcolor{keywordtype}{void} save(\mbox{\hyperlink{classpugi_1_1xml__writer}{xml\_writer}}\& writer, \textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* indent = \mbox{\hyperlink{pugixml_8hpp_ad5475bca2e336810ae5906349e644d0b}{PUGIXML\_TEXT}}(\textcolor{stringliteral}{"{}\(\backslash\)t"{}}), \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} flags = \mbox{\hyperlink{namespacepugi_a325f48a35abbaeacdfd8b7fc9ed1713c}{format\_default}}, \mbox{\hyperlink{namespacepugi_a03f708f86abeff5fce6842ffd6a0951e}{xml\_encoding}} encoding = \mbox{\hyperlink{namespacepugi_a03f708f86abeff5fce6842ffd6a0951eae11b2ef666f03e77b7e764e38d22dc17}{encoding\_auto}}) \textcolor{keyword}{const};}
+\DoxyCodeLine{1087 }
+\DoxyCodeLine{1088 \textcolor{preprocessor}{    \#ifndef PUGIXML\_NO\_STL}}
+\DoxyCodeLine{1089         \textcolor{comment}{// Save XML document to stream (semantics is slightly different from xml\_node::print, see documentation for details).}}
+\DoxyCodeLine{1090         \textcolor{keywordtype}{void} save(std::basic\_ostream<\textcolor{keywordtype}{char}, std::char\_traits<char> >\& stream, \textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* indent = \mbox{\hyperlink{pugixml_8hpp_ad5475bca2e336810ae5906349e644d0b}{PUGIXML\_TEXT}}(\textcolor{stringliteral}{"{}\(\backslash\)t"{}}), \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} flags = \mbox{\hyperlink{namespacepugi_a325f48a35abbaeacdfd8b7fc9ed1713c}{format\_default}}, \mbox{\hyperlink{namespacepugi_a03f708f86abeff5fce6842ffd6a0951e}{xml\_encoding}} encoding = \mbox{\hyperlink{namespacepugi_a03f708f86abeff5fce6842ffd6a0951eae11b2ef666f03e77b7e764e38d22dc17}{encoding\_auto}}) \textcolor{keyword}{const};}
+\DoxyCodeLine{1091         \textcolor{keywordtype}{void} save(std::basic\_ostream<\textcolor{keywordtype}{wchar\_t}, std::char\_traits<wchar\_t> >\& stream, \textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* indent = \mbox{\hyperlink{pugixml_8hpp_ad5475bca2e336810ae5906349e644d0b}{PUGIXML\_TEXT}}(\textcolor{stringliteral}{"{}\(\backslash\)t"{}}), \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} flags = \mbox{\hyperlink{namespacepugi_a325f48a35abbaeacdfd8b7fc9ed1713c}{format\_default}}) \textcolor{keyword}{const};}
+\DoxyCodeLine{1092 \textcolor{preprocessor}{    \#endif}}
+\DoxyCodeLine{1093 }
+\DoxyCodeLine{1094         \textcolor{comment}{// Save XML to file}}
+\DoxyCodeLine{1095         \textcolor{keywordtype}{bool} save\_file(\textcolor{keyword}{const} \textcolor{keywordtype}{char}* path, \textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* indent = \mbox{\hyperlink{pugixml_8hpp_ad5475bca2e336810ae5906349e644d0b}{PUGIXML\_TEXT}}(\textcolor{stringliteral}{"{}\(\backslash\)t"{}}), \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} flags = \mbox{\hyperlink{namespacepugi_a325f48a35abbaeacdfd8b7fc9ed1713c}{format\_default}}, \mbox{\hyperlink{namespacepugi_a03f708f86abeff5fce6842ffd6a0951e}{xml\_encoding}} encoding = \mbox{\hyperlink{namespacepugi_a03f708f86abeff5fce6842ffd6a0951eae11b2ef666f03e77b7e764e38d22dc17}{encoding\_auto}}) \textcolor{keyword}{const};}
+\DoxyCodeLine{1096         \textcolor{keywordtype}{bool} save\_file(\textcolor{keyword}{const} \textcolor{keywordtype}{wchar\_t}* path, \textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* indent = \mbox{\hyperlink{pugixml_8hpp_ad5475bca2e336810ae5906349e644d0b}{PUGIXML\_TEXT}}(\textcolor{stringliteral}{"{}\(\backslash\)t"{}}), \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} flags = \mbox{\hyperlink{namespacepugi_a325f48a35abbaeacdfd8b7fc9ed1713c}{format\_default}}, \mbox{\hyperlink{namespacepugi_a03f708f86abeff5fce6842ffd6a0951e}{xml\_encoding}} encoding = \mbox{\hyperlink{namespacepugi_a03f708f86abeff5fce6842ffd6a0951eae11b2ef666f03e77b7e764e38d22dc17}{encoding\_auto}}) \textcolor{keyword}{const};}
+\DoxyCodeLine{1097 }
+\DoxyCodeLine{1098         \textcolor{comment}{// Get document element}}
+\DoxyCodeLine{1099         \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}} document\_element() \textcolor{keyword}{const};}
+\DoxyCodeLine{1100     \};}
+\DoxyCodeLine{1101 }
+\DoxyCodeLine{1102 \textcolor{preprocessor}{\#ifndef PUGIXML\_NO\_XPATH}}
+\DoxyCodeLine{1103     \textcolor{comment}{// XPath query return type}}
+\DoxyCodeLine{1104     \textcolor{keyword}{enum} \mbox{\hyperlink{namespacepugi_ae3820874caf240e9f311bfd2790a84d6}{xpath\_value\_type}}}
+\DoxyCodeLine{1105     \{}
+\DoxyCodeLine{1106         \mbox{\hyperlink{namespacepugi_ae3820874caf240e9f311bfd2790a84d6aaa768b8302ccc893f3cc9ba799360a77}{xpath\_type\_none}},   \textcolor{comment}{// Unknown type (query failed to compile)}}
+\DoxyCodeLine{1107         \mbox{\hyperlink{namespacepugi_ae3820874caf240e9f311bfd2790a84d6af5613748204e2e4861524e7d63a699c9}{xpath\_type\_node\_set}},  \textcolor{comment}{// Node set (xpath\_node\_set)}}
+\DoxyCodeLine{1108         \mbox{\hyperlink{namespacepugi_ae3820874caf240e9f311bfd2790a84d6a02959f74f4fe93d71a1e109a45f23825}{xpath\_type\_number}},   \textcolor{comment}{// Number}}
+\DoxyCodeLine{1109         \mbox{\hyperlink{namespacepugi_ae3820874caf240e9f311bfd2790a84d6ade2b17f4d9fad5bfb1617bf5012cf5ad}{xpath\_type\_string}},   \textcolor{comment}{// String}}
+\DoxyCodeLine{1110         \mbox{\hyperlink{namespacepugi_ae3820874caf240e9f311bfd2790a84d6a049dd1494237a55f8aba3392d12a0164}{xpath\_type\_boolean}}      \textcolor{comment}{// Boolean}}
+\DoxyCodeLine{1111     \};}
+\DoxyCodeLine{1112 }
+\DoxyCodeLine{1113     \textcolor{comment}{// XPath parsing result}}
+\DoxyCodeLine{1114     \textcolor{keyword}{struct }\mbox{\hyperlink{pugixml_8hpp_ad47efa7f45dfd6d1fe9da1d5cf9c5301}{PUGIXML\_CLASS}} \mbox{\hyperlink{structpugi_1_1xpath__parse__result}{xpath\_parse\_result}}}
+\DoxyCodeLine{1115     \{}
+\DoxyCodeLine{1116         \textcolor{comment}{// Error message (0 if no error)}}
+\DoxyCodeLine{1117         \textcolor{keyword}{const} \textcolor{keywordtype}{char}* \mbox{\hyperlink{structpugi_1_1xpath__parse__result_ab2c625be89b995afac829012bc749fe4}{error}};}
+\DoxyCodeLine{1118 }
+\DoxyCodeLine{1119         \textcolor{comment}{// Last parsed offset (in char\_t units from string start)}}
+\DoxyCodeLine{1120         ptrdiff\_t \mbox{\hyperlink{structpugi_1_1xpath__parse__result_add47d886c654b4d8a836573b2c2a7acb}{offset}};}
+\DoxyCodeLine{1121 }
+\DoxyCodeLine{1122         \textcolor{comment}{// Default constructor, initializes object to failed state}}
+\DoxyCodeLine{1123         \mbox{\hyperlink{structpugi_1_1xpath__parse__result}{xpath\_parse\_result}}();}
+\DoxyCodeLine{1124 }
+\DoxyCodeLine{1125         \textcolor{comment}{// Cast to bool operator}}
+\DoxyCodeLine{1126         \textcolor{keyword}{operator} bool() \textcolor{keyword}{const};}
+\DoxyCodeLine{1127 }
+\DoxyCodeLine{1128         \textcolor{comment}{// Get error description}}
+\DoxyCodeLine{1129         \textcolor{keyword}{const} \textcolor{keywordtype}{char}* description() \textcolor{keyword}{const};}
+\DoxyCodeLine{1130     \};}
+\DoxyCodeLine{1131 }
+\DoxyCodeLine{1132     \textcolor{comment}{// A single XPath variable}}
+\DoxyCodeLine{1133     \textcolor{keyword}{class }\mbox{\hyperlink{pugixml_8hpp_ad47efa7f45dfd6d1fe9da1d5cf9c5301}{PUGIXML\_CLASS}} \mbox{\hyperlink{classpugi_1_1xpath__variable}{xpath\_variable}}}
+\DoxyCodeLine{1134     \{}
+\DoxyCodeLine{1135         \textcolor{keyword}{friend} \textcolor{keyword}{class }\mbox{\hyperlink{classpugi_1_1xpath__variable__set}{xpath\_variable\_set}};}
+\DoxyCodeLine{1136 }
+\DoxyCodeLine{1137     \textcolor{keyword}{protected}:}
+\DoxyCodeLine{1138         \mbox{\hyperlink{namespacepugi_ae3820874caf240e9f311bfd2790a84d6}{xpath\_value\_type}} \mbox{\hyperlink{classpugi_1_1xpath__variable_aefb30100ab8bf3cf2ba623dd6ffbbd35}{\_type}};}
+\DoxyCodeLine{1139         \mbox{\hyperlink{classpugi_1_1xpath__variable}{xpath\_variable}}* \mbox{\hyperlink{classpugi_1_1xpath__variable_a0979cb72473e77a1b6d213046abfc46e}{\_next}};}
+\DoxyCodeLine{1140 }
+\DoxyCodeLine{1141         \mbox{\hyperlink{classpugi_1_1xpath__variable}{xpath\_variable}}(\mbox{\hyperlink{namespacepugi_ae3820874caf240e9f311bfd2790a84d6}{xpath\_value\_type}} type);}
+\DoxyCodeLine{1142 }
+\DoxyCodeLine{1143         \textcolor{comment}{// Non-\/copyable semantics}}
+\DoxyCodeLine{1144         \mbox{\hyperlink{classpugi_1_1xpath__variable_a2d805ed204c1fec482f859217d1baa4a}{xpath\_variable}}(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xpath__variable}{xpath\_variable}}\&);}
+\DoxyCodeLine{1145         \mbox{\hyperlink{classpugi_1_1xpath__variable}{xpath\_variable}}\& \mbox{\hyperlink{classpugi_1_1xpath__variable_abdae5ede6814c614bb09768847d06384}{operator=}}(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xpath__variable}{xpath\_variable}}\&);}
+\DoxyCodeLine{1146 }
+\DoxyCodeLine{1147     \textcolor{keyword}{public}:}
+\DoxyCodeLine{1148         \textcolor{comment}{// Get variable name}}
+\DoxyCodeLine{1149         \textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* name() \textcolor{keyword}{const};}
+\DoxyCodeLine{1150 }
+\DoxyCodeLine{1151         \textcolor{comment}{// Get variable type}}
+\DoxyCodeLine{1152         \mbox{\hyperlink{namespacepugi_ae3820874caf240e9f311bfd2790a84d6}{xpath\_value\_type}} type() \textcolor{keyword}{const};}
+\DoxyCodeLine{1153 }
+\DoxyCodeLine{1154         \textcolor{comment}{// Get variable value; no type conversion is performed, default value (false, NaN, empty string, empty node set) is returned on type mismatch error}}
+\DoxyCodeLine{1155         \textcolor{keywordtype}{bool} get\_boolean() \textcolor{keyword}{const};}
+\DoxyCodeLine{1156         \textcolor{keywordtype}{double} get\_number() \textcolor{keyword}{const};}
+\DoxyCodeLine{1157         \textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* get\_string() \textcolor{keyword}{const};}
+\DoxyCodeLine{1158         \textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xpath__node__set}{xpath\_node\_set}}\& get\_node\_set() \textcolor{keyword}{const};}
+\DoxyCodeLine{1159 }
+\DoxyCodeLine{1160         \textcolor{comment}{// Set variable value; no type conversion is performed, false is returned on type mismatch error}}
+\DoxyCodeLine{1161         \textcolor{keywordtype}{bool} set(\textcolor{keywordtype}{bool} value);}
+\DoxyCodeLine{1162         \textcolor{keywordtype}{bool} set(\textcolor{keywordtype}{double} value);}
+\DoxyCodeLine{1163         \textcolor{keywordtype}{bool} set(\textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* value);}
+\DoxyCodeLine{1164         \textcolor{keywordtype}{bool} set(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xpath__node__set}{xpath\_node\_set}}\& value);}
+\DoxyCodeLine{1165     \};}
+\DoxyCodeLine{1166 }
+\DoxyCodeLine{1167     \textcolor{comment}{// A set of XPath variables}}
+\DoxyCodeLine{1168     \textcolor{keyword}{class }\mbox{\hyperlink{pugixml_8hpp_ad47efa7f45dfd6d1fe9da1d5cf9c5301}{PUGIXML\_CLASS}} \mbox{\hyperlink{classpugi_1_1xpath__variable__set}{xpath\_variable\_set}}}
+\DoxyCodeLine{1169     \{}
+\DoxyCodeLine{1170     \textcolor{keyword}{private}:}
+\DoxyCodeLine{1171         \mbox{\hyperlink{classpugi_1_1xpath__variable}{xpath\_variable}}* \_data[64];}
+\DoxyCodeLine{1172 }
+\DoxyCodeLine{1173         \textcolor{keywordtype}{void} \_assign(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xpath__variable__set}{xpath\_variable\_set}}\& rhs);}
+\DoxyCodeLine{1174         \textcolor{keywordtype}{void} \_swap(\mbox{\hyperlink{classpugi_1_1xpath__variable__set}{xpath\_variable\_set}}\& rhs);}
+\DoxyCodeLine{1175 }
+\DoxyCodeLine{1176         \mbox{\hyperlink{classpugi_1_1xpath__variable}{xpath\_variable}}* \_find(\textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* name) \textcolor{keyword}{const};}
+\DoxyCodeLine{1177 }
+\DoxyCodeLine{1178         \textcolor{keyword}{static} \textcolor{keywordtype}{bool} \_clone(\mbox{\hyperlink{classpugi_1_1xpath__variable}{xpath\_variable}}* var, \mbox{\hyperlink{classpugi_1_1xpath__variable}{xpath\_variable}}** out\_result);}
+\DoxyCodeLine{1179         \textcolor{keyword}{static} \textcolor{keywordtype}{void} \_destroy(\mbox{\hyperlink{classpugi_1_1xpath__variable}{xpath\_variable}}* var);}
+\DoxyCodeLine{1180 }
+\DoxyCodeLine{1181     \textcolor{keyword}{public}:}
+\DoxyCodeLine{1182         \textcolor{comment}{// Default constructor/destructor}}
+\DoxyCodeLine{1183         \mbox{\hyperlink{classpugi_1_1xpath__variable__set}{xpath\_variable\_set}}();}
+\DoxyCodeLine{1184         \mbox{\hyperlink{classpugi_1_1xpath__variable__set}{\string~xpath\_variable\_set}}();}
+\DoxyCodeLine{1185 }
+\DoxyCodeLine{1186         \textcolor{comment}{// Copy constructor/assignment operator}}
+\DoxyCodeLine{1187         \mbox{\hyperlink{classpugi_1_1xpath__variable__set}{xpath\_variable\_set}}(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xpath__variable__set}{xpath\_variable\_set}}\& rhs);}
+\DoxyCodeLine{1188         \mbox{\hyperlink{classpugi_1_1xpath__variable__set}{xpath\_variable\_set}}\& operator=(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xpath__variable__set}{xpath\_variable\_set}}\& rhs);}
+\DoxyCodeLine{1189 }
+\DoxyCodeLine{1190 \textcolor{preprocessor}{    \#ifdef PUGIXML\_HAS\_MOVE}}
+\DoxyCodeLine{1191         \textcolor{comment}{// Move semantics support}}
+\DoxyCodeLine{1192         \mbox{\hyperlink{classpugi_1_1xpath__variable__set}{xpath\_variable\_set}}(\mbox{\hyperlink{classpugi_1_1xpath__variable__set}{xpath\_variable\_set}}\&\& rhs) \mbox{\hyperlink{pugixml_8hpp_abec93a3f00f44e42c024245ff2b5980e}{PUGIXML\_NOEXCEPT}};}
+\DoxyCodeLine{1193         \mbox{\hyperlink{classpugi_1_1xpath__variable__set}{xpath\_variable\_set}}\& operator=(\mbox{\hyperlink{classpugi_1_1xpath__variable__set}{xpath\_variable\_set}}\&\& rhs) \mbox{\hyperlink{pugixml_8hpp_abec93a3f00f44e42c024245ff2b5980e}{PUGIXML\_NOEXCEPT}};}
+\DoxyCodeLine{1194 \textcolor{preprocessor}{    \#endif}}
+\DoxyCodeLine{1195 }
+\DoxyCodeLine{1196         \textcolor{comment}{// Add a new variable or get the existing one, if the types match}}
+\DoxyCodeLine{1197         \mbox{\hyperlink{classpugi_1_1xpath__variable}{xpath\_variable}}* add(\textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* name, \mbox{\hyperlink{namespacepugi_ae3820874caf240e9f311bfd2790a84d6}{xpath\_value\_type}} type);}
+\DoxyCodeLine{1198 }
+\DoxyCodeLine{1199         \textcolor{comment}{// Set value of an existing variable; no type conversion is performed, false is returned if there is no such variable or if types mismatch}}
+\DoxyCodeLine{1200         \textcolor{keywordtype}{bool} set(\textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* name, \textcolor{keywordtype}{bool} value);}
+\DoxyCodeLine{1201         \textcolor{keywordtype}{bool} set(\textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* name, \textcolor{keywordtype}{double} value);}
+\DoxyCodeLine{1202         \textcolor{keywordtype}{bool} set(\textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* name, \textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* value);}
+\DoxyCodeLine{1203         \textcolor{keywordtype}{bool} set(\textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* name, \textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xpath__node__set}{xpath\_node\_set}}\& value);}
+\DoxyCodeLine{1204 }
+\DoxyCodeLine{1205         \textcolor{comment}{// Get existing variable by name}}
+\DoxyCodeLine{1206         \mbox{\hyperlink{classpugi_1_1xpath__variable}{xpath\_variable}}* get(\textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* name);}
+\DoxyCodeLine{1207         \textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xpath__variable}{xpath\_variable}}* get(\textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* name) \textcolor{keyword}{const};}
+\DoxyCodeLine{1208     \};}
+\DoxyCodeLine{1209 }
+\DoxyCodeLine{1210     \textcolor{comment}{// A compiled XPath query object}}
+\DoxyCodeLine{1211     \textcolor{keyword}{class }\mbox{\hyperlink{pugixml_8hpp_ad47efa7f45dfd6d1fe9da1d5cf9c5301}{PUGIXML\_CLASS}} \mbox{\hyperlink{classpugi_1_1xpath__query}{xpath\_query}}}
+\DoxyCodeLine{1212     \{}
+\DoxyCodeLine{1213     \textcolor{keyword}{private}:}
+\DoxyCodeLine{1214         \textcolor{keywordtype}{void}* \_impl;}
+\DoxyCodeLine{1215         \mbox{\hyperlink{structpugi_1_1xpath__parse__result}{xpath\_parse\_result}} \_result;}
+\DoxyCodeLine{1216 }
+\DoxyCodeLine{1217         \textcolor{keyword}{typedef} void (*unspecified\_bool\_type)(\mbox{\hyperlink{classpugi_1_1xpath__query}{xpath\_query}}***);}
+\DoxyCodeLine{1218 }
+\DoxyCodeLine{1219         \textcolor{comment}{// Non-\/copyable semantics}}
+\DoxyCodeLine{1220         \mbox{\hyperlink{classpugi_1_1xpath__query}{xpath\_query}}(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xpath__query}{xpath\_query}}\&);}
+\DoxyCodeLine{1221         \mbox{\hyperlink{classpugi_1_1xpath__query}{xpath\_query}}\& operator=(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xpath__query}{xpath\_query}}\&);}
+\DoxyCodeLine{1222 }
+\DoxyCodeLine{1223     \textcolor{keyword}{public}:}
+\DoxyCodeLine{1224         \textcolor{comment}{// Construct a compiled object from XPath expression.}}
+\DoxyCodeLine{1225         \textcolor{comment}{// If PUGIXML\_NO\_EXCEPTIONS is not defined, throws xpath\_exception on compilation errors.}}
+\DoxyCodeLine{1226         \textcolor{keyword}{explicit} \mbox{\hyperlink{classpugi_1_1xpath__query}{xpath\_query}}(\textcolor{keyword}{const} \mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* query, \mbox{\hyperlink{classpugi_1_1xpath__variable__set}{xpath\_variable\_set}}* variables = \mbox{\hyperlink{pugixml_8hpp_a0daaf3d8b4c7b5ffb7d6a0fa3cdeaadc}{PUGIXML\_NULL}});}
+\DoxyCodeLine{1227 }
+\DoxyCodeLine{1228         \textcolor{comment}{// Constructor}}
+\DoxyCodeLine{1229         \mbox{\hyperlink{classpugi_1_1xpath__query}{xpath\_query}}();}
+\DoxyCodeLine{1230 }
+\DoxyCodeLine{1231         \textcolor{comment}{// Destructor}}
+\DoxyCodeLine{1232         \mbox{\hyperlink{classpugi_1_1xpath__query}{\string~xpath\_query}}();}
+\DoxyCodeLine{1233 }
+\DoxyCodeLine{1234 \textcolor{preprocessor}{    \#ifdef PUGIXML\_HAS\_MOVE}}
+\DoxyCodeLine{1235         \textcolor{comment}{// Move semantics support}}
+\DoxyCodeLine{1236         \mbox{\hyperlink{classpugi_1_1xpath__query}{xpath\_query}}(\mbox{\hyperlink{classpugi_1_1xpath__query}{xpath\_query}}\&\& rhs) \mbox{\hyperlink{pugixml_8hpp_abec93a3f00f44e42c024245ff2b5980e}{PUGIXML\_NOEXCEPT}};}
+\DoxyCodeLine{1237         \mbox{\hyperlink{classpugi_1_1xpath__query}{xpath\_query}}\& operator=(\mbox{\hyperlink{classpugi_1_1xpath__query}{xpath\_query}}\&\& rhs) \mbox{\hyperlink{pugixml_8hpp_abec93a3f00f44e42c024245ff2b5980e}{PUGIXML\_NOEXCEPT}};}
+\DoxyCodeLine{1238 \textcolor{preprocessor}{    \#endif}}
+\DoxyCodeLine{1239 }
+\DoxyCodeLine{1240         \textcolor{comment}{// Get query expression return type}}
+\DoxyCodeLine{1241         \mbox{\hyperlink{namespacepugi_ae3820874caf240e9f311bfd2790a84d6}{xpath\_value\_type}} return\_type() \textcolor{keyword}{const};}
+\DoxyCodeLine{1242 }
+\DoxyCodeLine{1243         \textcolor{comment}{// Evaluate expression as boolean value in the specified context; performs type conversion if necessary.}}
+\DoxyCodeLine{1244         \textcolor{comment}{// If PUGIXML\_NO\_EXCEPTIONS is not defined, throws std::bad\_alloc on out of memory errors.}}
+\DoxyCodeLine{1245         \textcolor{keywordtype}{bool} evaluate\_boolean(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xpath__node}{xpath\_node}}\& n) \textcolor{keyword}{const};}
+\DoxyCodeLine{1246 }
+\DoxyCodeLine{1247         \textcolor{comment}{// Evaluate expression as double value in the specified context; performs type conversion if necessary.}}
+\DoxyCodeLine{1248         \textcolor{comment}{// If PUGIXML\_NO\_EXCEPTIONS is not defined, throws std::bad\_alloc on out of memory errors.}}
+\DoxyCodeLine{1249         \textcolor{keywordtype}{double} evaluate\_number(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xpath__node}{xpath\_node}}\& n) \textcolor{keyword}{const};}
+\DoxyCodeLine{1250 }
+\DoxyCodeLine{1251 \textcolor{preprocessor}{    \#ifndef PUGIXML\_NO\_STL}}
+\DoxyCodeLine{1252         \textcolor{comment}{// Evaluate expression as string value in the specified context; performs type conversion if necessary.}}
+\DoxyCodeLine{1253         \textcolor{comment}{// If PUGIXML\_NO\_EXCEPTIONS is not defined, throws std::bad\_alloc on out of memory errors.}}
+\DoxyCodeLine{1254         \mbox{\hyperlink{namespacepugi_a053b39a84c8bb031ff3973d1954a876c}{string\_t}} evaluate\_string(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xpath__node}{xpath\_node}}\& n) \textcolor{keyword}{const};}
+\DoxyCodeLine{1255 \textcolor{preprocessor}{    \#endif}}
+\DoxyCodeLine{1256 }
+\DoxyCodeLine{1257         \textcolor{comment}{// Evaluate expression as string value in the specified context; performs type conversion if necessary.}}
+\DoxyCodeLine{1258         \textcolor{comment}{// At most capacity characters are written to the destination buffer, full result size is returned (includes terminating zero).}}
+\DoxyCodeLine{1259         \textcolor{comment}{// If PUGIXML\_NO\_EXCEPTIONS is not defined, throws std::bad\_alloc on out of memory errors.}}
+\DoxyCodeLine{1260         \textcolor{comment}{// If PUGIXML\_NO\_EXCEPTIONS is defined, returns empty  set instead.}}
+\DoxyCodeLine{1261         \textcolor{keywordtype}{size\_t} evaluate\_string(\mbox{\hyperlink{namespacepugi_aef5a7a62cba0507542220ea15afe39df}{char\_t}}* buffer, \textcolor{keywordtype}{size\_t} capacity, \textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xpath__node}{xpath\_node}}\& n) \textcolor{keyword}{const};}
+\DoxyCodeLine{1262 }
+\DoxyCodeLine{1263         \textcolor{comment}{// Evaluate expression as node set in the specified context.}}
+\DoxyCodeLine{1264         \textcolor{comment}{// If PUGIXML\_NO\_EXCEPTIONS is not defined, throws xpath\_exception on type mismatch and std::bad\_alloc on out of memory errors.}}
+\DoxyCodeLine{1265         \textcolor{comment}{// If PUGIXML\_NO\_EXCEPTIONS is defined, returns empty node set instead.}}
+\DoxyCodeLine{1266         \mbox{\hyperlink{classpugi_1_1xpath__node__set}{xpath\_node\_set}} evaluate\_node\_set(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xpath__node}{xpath\_node}}\& n) \textcolor{keyword}{const};}
+\DoxyCodeLine{1267 }
+\DoxyCodeLine{1268         \textcolor{comment}{// Evaluate expression as node set in the specified context.}}
+\DoxyCodeLine{1269         \textcolor{comment}{// Return first node in document order, or empty node if node set is empty.}}
+\DoxyCodeLine{1270         \textcolor{comment}{// If PUGIXML\_NO\_EXCEPTIONS is not defined, throws xpath\_exception on type mismatch and std::bad\_alloc on out of memory errors.}}
+\DoxyCodeLine{1271         \textcolor{comment}{// If PUGIXML\_NO\_EXCEPTIONS is defined, returns empty node instead.}}
+\DoxyCodeLine{1272         \mbox{\hyperlink{classpugi_1_1xpath__node}{xpath\_node}} evaluate\_node(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xpath__node}{xpath\_node}}\& n) \textcolor{keyword}{const};}
+\DoxyCodeLine{1273 }
+\DoxyCodeLine{1274         \textcolor{comment}{// Get parsing result (used to get compilation errors in PUGIXML\_NO\_EXCEPTIONS mode)}}
+\DoxyCodeLine{1275         \textcolor{keyword}{const} \mbox{\hyperlink{structpugi_1_1xpath__parse__result}{xpath\_parse\_result}}\& result() \textcolor{keyword}{const};}
+\DoxyCodeLine{1276 }
+\DoxyCodeLine{1277         \textcolor{comment}{// Safe bool conversion operator}}
+\DoxyCodeLine{1278         \textcolor{keyword}{operator} unspecified\_bool\_type() \textcolor{keyword}{const};}
+\DoxyCodeLine{1279 }
+\DoxyCodeLine{1280         \textcolor{comment}{// Borland C++ workaround}}
+\DoxyCodeLine{1281         \textcolor{keywordtype}{bool} operator!() \textcolor{keyword}{const};}
+\DoxyCodeLine{1282     \};}
+\DoxyCodeLine{1283 }
+\DoxyCodeLine{1284 \textcolor{preprocessor}{    \#ifndef PUGIXML\_NO\_EXCEPTIONS}}
+\DoxyCodeLine{1285 \textcolor{preprocessor}{        \#if defined(\_MSC\_VER)}}
+\DoxyCodeLine{1286           \textcolor{comment}{// C4275 can be ignored in Visual C++ if you are deriving}}
+\DoxyCodeLine{1287           \textcolor{comment}{// from a type in the Standard C++ Library}}
+\DoxyCodeLine{1288 \textcolor{preprocessor}{          \#pragma warning(push)}}
+\DoxyCodeLine{1289 \textcolor{preprocessor}{          \#pragma warning(disable: 4275)}}
+\DoxyCodeLine{1290 \textcolor{preprocessor}{        \#endif}}
+\DoxyCodeLine{1291     \textcolor{comment}{// XPath exception class}}
+\DoxyCodeLine{1292     \textcolor{keyword}{class }\mbox{\hyperlink{pugixml_8hpp_ad47efa7f45dfd6d1fe9da1d5cf9c5301}{PUGIXML\_CLASS}} \mbox{\hyperlink{classpugi_1_1xpath__exception}{xpath\_exception}}: \textcolor{keyword}{public} std::exception}
+\DoxyCodeLine{1293     \{}
+\DoxyCodeLine{1294     \textcolor{keyword}{private}:}
+\DoxyCodeLine{1295         \mbox{\hyperlink{structpugi_1_1xpath__parse__result}{xpath\_parse\_result}} \_result;}
+\DoxyCodeLine{1296 }
+\DoxyCodeLine{1297     \textcolor{keyword}{public}:}
+\DoxyCodeLine{1298         \textcolor{comment}{// Construct exception from parse result}}
+\DoxyCodeLine{1299         \textcolor{keyword}{explicit} \mbox{\hyperlink{classpugi_1_1xpath__exception}{xpath\_exception}}(\textcolor{keyword}{const} \mbox{\hyperlink{structpugi_1_1xpath__parse__result}{xpath\_parse\_result}}\& result);}
+\DoxyCodeLine{1300 }
+\DoxyCodeLine{1301         \textcolor{comment}{// Get error message}}
+\DoxyCodeLine{1302         \textcolor{keyword}{virtual} \textcolor{keyword}{const} \textcolor{keywordtype}{char}* what() \textcolor{keyword}{const} \textcolor{keywordflow}{throw}() \mbox{\hyperlink{pugixml_8hpp_ac6a0f97f3bdadbd76bab1c0098880a00}{PUGIXML\_OVERRIDE}};}
+\DoxyCodeLine{1303 }
+\DoxyCodeLine{1304         \textcolor{comment}{// Get parse result}}
+\DoxyCodeLine{1305         \textcolor{keyword}{const} \mbox{\hyperlink{structpugi_1_1xpath__parse__result}{xpath\_parse\_result}}\& result() \textcolor{keyword}{const};}
+\DoxyCodeLine{1306     \};}
+\DoxyCodeLine{1307 \textcolor{preprocessor}{        \#if defined(\_MSC\_VER)}}
+\DoxyCodeLine{1308 \textcolor{preprocessor}{          \#pragma warning(pop)}}
+\DoxyCodeLine{1309 \textcolor{preprocessor}{        \#endif}}
+\DoxyCodeLine{1310 \textcolor{preprocessor}{    \#endif}}
+\DoxyCodeLine{1311 }
+\DoxyCodeLine{1312     \textcolor{comment}{// XPath node class (either xml\_node or xml\_attribute)}}
+\DoxyCodeLine{1313     \textcolor{keyword}{class }\mbox{\hyperlink{pugixml_8hpp_ad47efa7f45dfd6d1fe9da1d5cf9c5301}{PUGIXML\_CLASS}} \mbox{\hyperlink{classpugi_1_1xpath__node}{xpath\_node}}}
+\DoxyCodeLine{1314     \{}
+\DoxyCodeLine{1315     \textcolor{keyword}{private}:}
+\DoxyCodeLine{1316         \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}} \_node;}
+\DoxyCodeLine{1317         \mbox{\hyperlink{classpugi_1_1xml__attribute}{xml\_attribute}} \_attribute;}
+\DoxyCodeLine{1318 }
+\DoxyCodeLine{1319         \textcolor{keyword}{typedef} void (*unspecified\_bool\_type)(\mbox{\hyperlink{classpugi_1_1xpath__node}{xpath\_node}}***);}
+\DoxyCodeLine{1320 }
+\DoxyCodeLine{1321     \textcolor{keyword}{public}:}
+\DoxyCodeLine{1322         \textcolor{comment}{// Default constructor; constructs empty XPath node}}
+\DoxyCodeLine{1323         \mbox{\hyperlink{classpugi_1_1xpath__node}{xpath\_node}}();}
+\DoxyCodeLine{1324 }
+\DoxyCodeLine{1325         \textcolor{comment}{// Construct XPath node from XML node/attribute}}
+\DoxyCodeLine{1326         \mbox{\hyperlink{classpugi_1_1xpath__node}{xpath\_node}}(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}}\& node);}
+\DoxyCodeLine{1327         \mbox{\hyperlink{classpugi_1_1xpath__node}{xpath\_node}}(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xml__attribute}{xml\_attribute}}\& attribute, \textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}}\& parent);}
+\DoxyCodeLine{1328 }
+\DoxyCodeLine{1329         \textcolor{comment}{// Get node/attribute, if any}}
+\DoxyCodeLine{1330         \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}} node() \textcolor{keyword}{const};}
+\DoxyCodeLine{1331         \mbox{\hyperlink{classpugi_1_1xml__attribute}{xml\_attribute}} attribute() \textcolor{keyword}{const};}
+\DoxyCodeLine{1332 }
+\DoxyCodeLine{1333         \textcolor{comment}{// Get parent of contained node/attribute}}
+\DoxyCodeLine{1334         \mbox{\hyperlink{classpugi_1_1xml__node}{xml\_node}} parent() \textcolor{keyword}{const};}
+\DoxyCodeLine{1335 }
+\DoxyCodeLine{1336         \textcolor{comment}{// Safe bool conversion operator}}
+\DoxyCodeLine{1337         \textcolor{keyword}{operator} unspecified\_bool\_type() \textcolor{keyword}{const};}
+\DoxyCodeLine{1338 }
+\DoxyCodeLine{1339         \textcolor{comment}{// Borland C++ workaround}}
+\DoxyCodeLine{1340         \textcolor{keywordtype}{bool} operator!() \textcolor{keyword}{const};}
+\DoxyCodeLine{1341 }
+\DoxyCodeLine{1342         \textcolor{comment}{// Comparison operators}}
+\DoxyCodeLine{1343         \textcolor{keywordtype}{bool} operator==(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xpath__node}{xpath\_node}}\& n) \textcolor{keyword}{const};}
+\DoxyCodeLine{1344         \textcolor{keywordtype}{bool} operator!=(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xpath__node}{xpath\_node}}\& n) \textcolor{keyword}{const};}
+\DoxyCodeLine{1345     \};}
+\DoxyCodeLine{1346 }
+\DoxyCodeLine{1347 \textcolor{preprocessor}{\#ifdef \_\_BORLANDC\_\_}}
+\DoxyCodeLine{1348     \textcolor{comment}{// Borland C++ workaround}}
+\DoxyCodeLine{1349     \textcolor{keywordtype}{bool} \mbox{\hyperlink{pugixml_8hpp_a3d91f8ab11645e6dac8783d86d152b31}{PUGIXML\_FUNCTION}} operator\&\&(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xpath__node}{xpath\_node}}\& lhs, \textcolor{keywordtype}{bool} rhs);}
+\DoxyCodeLine{1350     \textcolor{keywordtype}{bool} \mbox{\hyperlink{pugixml_8hpp_a3d91f8ab11645e6dac8783d86d152b31}{PUGIXML\_FUNCTION}} operator||(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xpath__node}{xpath\_node}}\& lhs, \textcolor{keywordtype}{bool} rhs);}
+\DoxyCodeLine{1351 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{1352 }
+\DoxyCodeLine{1353     \textcolor{comment}{// A fixed-\/size collection of XPath nodes}}
+\DoxyCodeLine{1354     \textcolor{keyword}{class }\mbox{\hyperlink{pugixml_8hpp_ad47efa7f45dfd6d1fe9da1d5cf9c5301}{PUGIXML\_CLASS}} \mbox{\hyperlink{classpugi_1_1xpath__node__set}{xpath\_node\_set}}}
+\DoxyCodeLine{1355     \{}
+\DoxyCodeLine{1356     \textcolor{keyword}{public}:}
+\DoxyCodeLine{1357         \textcolor{comment}{// Collection type}}
+\DoxyCodeLine{1358         \textcolor{keyword}{enum} \mbox{\hyperlink{classpugi_1_1xpath__node__set_a6c6899c8ecfbce9e42ec85540907080e}{type\_t}}}
+\DoxyCodeLine{1359         \{}
+\DoxyCodeLine{1360             \mbox{\hyperlink{classpugi_1_1xpath__node__set_a6c6899c8ecfbce9e42ec85540907080ea7636fa164710ab9b069850ea3b3e4924}{type\_unsorted}},         \textcolor{comment}{// Not ordered}}
+\DoxyCodeLine{1361             \mbox{\hyperlink{classpugi_1_1xpath__node__set_a6c6899c8ecfbce9e42ec85540907080ea9d5ce5e6194ac2003da0d86d9af87437}{type\_sorted}},         \textcolor{comment}{// Sorted by document order (ascending)}}
+\DoxyCodeLine{1362             type\_sorted\_reverse     \textcolor{comment}{// Sorted by document order (descending)}}
+\DoxyCodeLine{1363         \};}
+\DoxyCodeLine{1364 }
+\DoxyCodeLine{1365         \textcolor{comment}{// Constant iterator type}}
+\DoxyCodeLine{1366         \textcolor{keyword}{typedef} \textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xpath__node}{xpath\_node}}* \mbox{\hyperlink{classpugi_1_1xpath__node__set_a6987510e88cea4a396d186285c174de6}{const\_iterator}};}
+\DoxyCodeLine{1367 }
+\DoxyCodeLine{1368         \textcolor{comment}{// We define non-\/constant iterator to be the same as constant iterator so that various generic algorithms (i.e. boost foreach) work}}
+\DoxyCodeLine{1369         \textcolor{keyword}{typedef} \textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xpath__node}{xpath\_node}}* \mbox{\hyperlink{classpugi_1_1xpath__node__set_aa3a2497c2ad7d557672fdc92954ba210}{iterator}};}
+\DoxyCodeLine{1370 }
+\DoxyCodeLine{1371         \textcolor{comment}{// Default constructor. Constructs empty set.}}
+\DoxyCodeLine{1372         \mbox{\hyperlink{classpugi_1_1xpath__node__set}{xpath\_node\_set}}();}
+\DoxyCodeLine{1373 }
+\DoxyCodeLine{1374         \textcolor{comment}{// Constructs a set from iterator range; data is not checked for duplicates and is not sorted according to provided type, so be careful}}
+\DoxyCodeLine{1375         \mbox{\hyperlink{classpugi_1_1xpath__node__set}{xpath\_node\_set}}(\mbox{\hyperlink{classpugi_1_1xpath__node}{const\_iterator}} begin, \mbox{\hyperlink{classpugi_1_1xpath__node}{const\_iterator}} end, \mbox{\hyperlink{classpugi_1_1xpath__node__set_a6c6899c8ecfbce9e42ec85540907080e}{type\_t}} type = type\_unsorted);}
+\DoxyCodeLine{1376 }
+\DoxyCodeLine{1377         \textcolor{comment}{// Destructor}}
+\DoxyCodeLine{1378         \mbox{\hyperlink{classpugi_1_1xpath__node__set}{\string~xpath\_node\_set}}();}
+\DoxyCodeLine{1379 }
+\DoxyCodeLine{1380         \textcolor{comment}{// Copy constructor/assignment operator}}
+\DoxyCodeLine{1381         \mbox{\hyperlink{classpugi_1_1xpath__node__set}{xpath\_node\_set}}(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xpath__node__set}{xpath\_node\_set}}\& ns);}
+\DoxyCodeLine{1382         \mbox{\hyperlink{classpugi_1_1xpath__node__set}{xpath\_node\_set}}\& operator=(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xpath__node__set}{xpath\_node\_set}}\& ns);}
+\DoxyCodeLine{1383 }
+\DoxyCodeLine{1384 \textcolor{preprocessor}{    \#ifdef PUGIXML\_HAS\_MOVE}}
+\DoxyCodeLine{1385         \textcolor{comment}{// Move semantics support}}
+\DoxyCodeLine{1386         \mbox{\hyperlink{classpugi_1_1xpath__node__set}{xpath\_node\_set}}(\mbox{\hyperlink{classpugi_1_1xpath__node__set}{xpath\_node\_set}}\&\& rhs) \mbox{\hyperlink{pugixml_8hpp_abec93a3f00f44e42c024245ff2b5980e}{PUGIXML\_NOEXCEPT}};}
+\DoxyCodeLine{1387         \mbox{\hyperlink{classpugi_1_1xpath__node__set}{xpath\_node\_set}}\& operator=(\mbox{\hyperlink{classpugi_1_1xpath__node__set}{xpath\_node\_set}}\&\& rhs) \mbox{\hyperlink{pugixml_8hpp_abec93a3f00f44e42c024245ff2b5980e}{PUGIXML\_NOEXCEPT}};}
+\DoxyCodeLine{1388 \textcolor{preprocessor}{    \#endif}}
+\DoxyCodeLine{1389 }
+\DoxyCodeLine{1390         \textcolor{comment}{// Get collection type}}
+\DoxyCodeLine{1391         \mbox{\hyperlink{classpugi_1_1xpath__node__set_a6c6899c8ecfbce9e42ec85540907080e}{type\_t}} type() \textcolor{keyword}{const};}
+\DoxyCodeLine{1392 }
+\DoxyCodeLine{1393         \textcolor{comment}{// Get collection size}}
+\DoxyCodeLine{1394         \textcolor{keywordtype}{size\_t} size() \textcolor{keyword}{const};}
+\DoxyCodeLine{1395 }
+\DoxyCodeLine{1396         \textcolor{comment}{// Indexing operator}}
+\DoxyCodeLine{1397         \textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xpath__node}{xpath\_node}}\& operator[](\textcolor{keywordtype}{size\_t} index) \textcolor{keyword}{const};}
+\DoxyCodeLine{1398 }
+\DoxyCodeLine{1399         \textcolor{comment}{// Collection iterators}}
+\DoxyCodeLine{1400         \mbox{\hyperlink{classpugi_1_1xpath__node}{const\_iterator}} begin() \textcolor{keyword}{const};}
+\DoxyCodeLine{1401         \mbox{\hyperlink{classpugi_1_1xpath__node}{const\_iterator}} end() \textcolor{keyword}{const};}
+\DoxyCodeLine{1402 }
+\DoxyCodeLine{1403         \textcolor{comment}{// Sort the collection in ascending/descending order by document order}}
+\DoxyCodeLine{1404         \textcolor{keywordtype}{void} \mbox{\hyperlink{pugixml_8cpp_a6fbeda9c786b66efbbd2acb59c1db2cf}{sort}}(\textcolor{keywordtype}{bool} \mbox{\hyperlink{pugixml_8cpp_a18805141588c46513fe5f3fb89dbf556}{reverse}} = \textcolor{keyword}{false});}
+\DoxyCodeLine{1405 }
+\DoxyCodeLine{1406         \textcolor{comment}{// Get first node in the collection by document order}}
+\DoxyCodeLine{1407         \mbox{\hyperlink{classpugi_1_1xpath__node}{xpath\_node}} first() \textcolor{keyword}{const};}
+\DoxyCodeLine{1408 }
+\DoxyCodeLine{1409         \textcolor{comment}{// Check if collection is empty}}
+\DoxyCodeLine{1410         \textcolor{keywordtype}{bool} empty() \textcolor{keyword}{const};}
+\DoxyCodeLine{1411 }
+\DoxyCodeLine{1412     \textcolor{keyword}{private}:}
+\DoxyCodeLine{1413         \mbox{\hyperlink{classpugi_1_1xpath__node__set_a6c6899c8ecfbce9e42ec85540907080e}{type\_t}} \_type;}
+\DoxyCodeLine{1414 }
+\DoxyCodeLine{1415         \mbox{\hyperlink{classpugi_1_1xpath__node}{xpath\_node}} \_storage[1];}
+\DoxyCodeLine{1416 }
+\DoxyCodeLine{1417         \mbox{\hyperlink{classpugi_1_1xpath__node}{xpath\_node}}* \_begin;}
+\DoxyCodeLine{1418         \mbox{\hyperlink{classpugi_1_1xpath__node}{xpath\_node}}* \_end;}
+\DoxyCodeLine{1419 }
+\DoxyCodeLine{1420         \textcolor{keywordtype}{void} \_assign(\mbox{\hyperlink{classpugi_1_1xpath__node}{const\_iterator}} begin, \mbox{\hyperlink{classpugi_1_1xpath__node}{const\_iterator}} end, \mbox{\hyperlink{classpugi_1_1xpath__node__set_a6c6899c8ecfbce9e42ec85540907080e}{type\_t}} type);}
+\DoxyCodeLine{1421         \textcolor{keywordtype}{void} \_move(\mbox{\hyperlink{classpugi_1_1xpath__node__set}{xpath\_node\_set}}\& rhs) \mbox{\hyperlink{pugixml_8hpp_abec93a3f00f44e42c024245ff2b5980e}{PUGIXML\_NOEXCEPT}};}
+\DoxyCodeLine{1422     \};}
+\DoxyCodeLine{1423 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{1424 }
+\DoxyCodeLine{1425 \textcolor{preprocessor}{\#ifndef PUGIXML\_NO\_STL}}
+\DoxyCodeLine{1426     \textcolor{comment}{// Convert wide string to UTF8}}
+\DoxyCodeLine{1427     std::basic\_string<char, std::char\_traits<char>, std::allocator<char> > \mbox{\hyperlink{pugixml_8hpp_a3d91f8ab11645e6dac8783d86d152b31}{PUGIXML\_FUNCTION}} \mbox{\hyperlink{namespacepugi_a69383a1ee3e92185f93bb2322472d3ce}{as\_utf8}}(\textcolor{keyword}{const} \textcolor{keywordtype}{wchar\_t}* str);}
+\DoxyCodeLine{1428     std::basic\_string<char, std::char\_traits<char>, std::allocator<char> > \mbox{\hyperlink{pugixml_8hpp_a3d91f8ab11645e6dac8783d86d152b31}{PUGIXML\_FUNCTION}} \mbox{\hyperlink{namespacepugi_a69383a1ee3e92185f93bb2322472d3ce}{as\_utf8}}(\textcolor{keyword}{const} std::basic\_string<\textcolor{keywordtype}{wchar\_t}, std::char\_traits<wchar\_t>, std::allocator<wchar\_t> >\& str);}
+\DoxyCodeLine{1429 }
+\DoxyCodeLine{1430     \textcolor{comment}{// Convert UTF8 to wide string}}
+\DoxyCodeLine{1431     std::basic\_string<wchar\_t, std::char\_traits<wchar\_t>, std::allocator<wchar\_t> > \mbox{\hyperlink{pugixml_8hpp_a3d91f8ab11645e6dac8783d86d152b31}{PUGIXML\_FUNCTION}} \mbox{\hyperlink{namespacepugi_ae372a27a1d2b6a23e431155820fbf166}{as\_wide}}(\textcolor{keyword}{const} \textcolor{keywordtype}{char}* str);}
+\DoxyCodeLine{1432     std::basic\_string<wchar\_t, std::char\_traits<wchar\_t>, std::allocator<wchar\_t> > \mbox{\hyperlink{pugixml_8hpp_a3d91f8ab11645e6dac8783d86d152b31}{PUGIXML\_FUNCTION}} \mbox{\hyperlink{namespacepugi_ae372a27a1d2b6a23e431155820fbf166}{as\_wide}}(\textcolor{keyword}{const} std::basic\_string<\textcolor{keywordtype}{char}, std::char\_traits<char>, std::allocator<char> >\& str);}
+\DoxyCodeLine{1433 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{1434 }
+\DoxyCodeLine{1435     \textcolor{comment}{// Memory allocation function interface; returns pointer to allocated memory or NULL on failure}}
+\DoxyCodeLine{1436     \textcolor{keyword}{typedef} \textcolor{keywordtype}{void}* (*allocation\_function)(\textcolor{keywordtype}{size\_t} size);}
+\DoxyCodeLine{1437 }
+\DoxyCodeLine{1438     \textcolor{comment}{// Memory deallocation function interface}}
+\DoxyCodeLine{1439     \textcolor{keyword}{typedef} void (*\mbox{\hyperlink{namespacepugi_a3587161b9f8d7ac4ac2d6a45b82462be}{deallocation\_function}})(\textcolor{keywordtype}{void}* ptr);}
+\DoxyCodeLine{1440 }
+\DoxyCodeLine{1441     \textcolor{comment}{// Override default memory management functions. All subsequent allocations/deallocations will be performed via supplied functions.}}
+\DoxyCodeLine{1442     \textcolor{keywordtype}{void} \mbox{\hyperlink{pugixml_8hpp_a3d91f8ab11645e6dac8783d86d152b31}{PUGIXML\_FUNCTION}} \mbox{\hyperlink{namespacepugi_abc67229fed7dbe24a410d83b9233f916}{set\_memory\_management\_functions}}(\mbox{\hyperlink{namespacepugi_a653730d9eecf37ce6a12f4c65ff1f262}{allocation\_function}} allocate, \mbox{\hyperlink{namespacepugi_a3587161b9f8d7ac4ac2d6a45b82462be}{deallocation\_function}} deallocate);}
+\DoxyCodeLine{1443 }
+\DoxyCodeLine{1444     \textcolor{comment}{// Get current memory management functions}}
+\DoxyCodeLine{1445     \mbox{\hyperlink{namespacepugi_a653730d9eecf37ce6a12f4c65ff1f262}{allocation\_function}} \mbox{\hyperlink{pugixml_8hpp_a3d91f8ab11645e6dac8783d86d152b31}{PUGIXML\_FUNCTION}} \mbox{\hyperlink{namespacepugi_a0d3d42320b07fe1865feb5e8e7c01e38}{get\_memory\_allocation\_function}}();}
+\DoxyCodeLine{1446     \mbox{\hyperlink{namespacepugi_a3587161b9f8d7ac4ac2d6a45b82462be}{deallocation\_function}} \mbox{\hyperlink{pugixml_8hpp_a3d91f8ab11645e6dac8783d86d152b31}{PUGIXML\_FUNCTION}} \mbox{\hyperlink{namespacepugi_a0823c1cb767482d9d72d1df055be3b67}{get\_memory\_deallocation\_function}}();}
+\DoxyCodeLine{1447 \}}
+\DoxyCodeLine{1448 }
+\DoxyCodeLine{1449 \textcolor{preprocessor}{\#if !defined(PUGIXML\_NO\_STL) \&\& (defined(\_MSC\_VER) || defined(\_\_ICC))}}
+\DoxyCodeLine{1450 \textcolor{keyword}{namespace }std}
+\DoxyCodeLine{1451 \{}
+\DoxyCodeLine{1452     \textcolor{comment}{// Workarounds for (non-\/standard) iterator category detection for older versions (MSVC7/IC8 and earlier)}}
+\DoxyCodeLine{1453     std::bidirectional\_iterator\_tag \mbox{\hyperlink{pugixml_8hpp_a3d91f8ab11645e6dac8783d86d152b31}{PUGIXML\_FUNCTION}} \_Iter\_cat(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xml__node__iterator}{pugi::xml\_node\_iterator}}\&);}
+\DoxyCodeLine{1454     std::bidirectional\_iterator\_tag \mbox{\hyperlink{pugixml_8hpp_a3d91f8ab11645e6dac8783d86d152b31}{PUGIXML\_FUNCTION}} \_Iter\_cat(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xml__attribute__iterator}{pugi::xml\_attribute\_iterator}}\&);}
+\DoxyCodeLine{1455     std::bidirectional\_iterator\_tag \mbox{\hyperlink{pugixml_8hpp_a3d91f8ab11645e6dac8783d86d152b31}{PUGIXML\_FUNCTION}} \_Iter\_cat(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xml__named__node__iterator}{pugi::xml\_named\_node\_iterator}}\&);}
+\DoxyCodeLine{1456 \}}
+\DoxyCodeLine{1457 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{1458 }
+\DoxyCodeLine{1459 \textcolor{preprocessor}{\#if !defined(PUGIXML\_NO\_STL) \&\& defined(\_\_SUNPRO\_CC)}}
+\DoxyCodeLine{1460 \textcolor{keyword}{namespace }std}
+\DoxyCodeLine{1461 \{}
+\DoxyCodeLine{1462     \textcolor{comment}{// Workarounds for (non-\/standard) iterator category detection}}
+\DoxyCodeLine{1463     std::bidirectional\_iterator\_tag \mbox{\hyperlink{pugixml_8hpp_a3d91f8ab11645e6dac8783d86d152b31}{PUGIXML\_FUNCTION}} \_\_iterator\_category(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xml__node__iterator}{pugi::xml\_node\_iterator}}\&);}
+\DoxyCodeLine{1464     std::bidirectional\_iterator\_tag \mbox{\hyperlink{pugixml_8hpp_a3d91f8ab11645e6dac8783d86d152b31}{PUGIXML\_FUNCTION}} \_\_iterator\_category(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xml__attribute__iterator}{pugi::xml\_attribute\_iterator}}\&);}
+\DoxyCodeLine{1465     std::bidirectional\_iterator\_tag \mbox{\hyperlink{pugixml_8hpp_a3d91f8ab11645e6dac8783d86d152b31}{PUGIXML\_FUNCTION}} \_\_iterator\_category(\textcolor{keyword}{const} \mbox{\hyperlink{classpugi_1_1xml__named__node__iterator}{pugi::xml\_named\_node\_iterator}}\&);}
+\DoxyCodeLine{1466 \}}
+\DoxyCodeLine{1467 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{1468 }
+\DoxyCodeLine{1469 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{1470 }
+\DoxyCodeLine{1471 \textcolor{comment}{// Make sure implementation is included in header-\/only mode}}
+\DoxyCodeLine{1472 \textcolor{comment}{// Use macro expansion in \#include to work around QMake (QTBUG-\/11923)}}
+\DoxyCodeLine{1473 \textcolor{preprocessor}{\#if defined(PUGIXML\_HEADER\_ONLY) \&\& !defined(PUGIXML\_SOURCE)}}
+\DoxyCodeLine{1474 \textcolor{preprocessor}{\#   define PUGIXML\_SOURCE "{}pugixml.cpp"{}}}
+\DoxyCodeLine{1475 \textcolor{preprocessor}{\#   include PUGIXML\_SOURCE}}
+\DoxyCodeLine{1476 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{1477 }
+
+\end{DoxyCode}

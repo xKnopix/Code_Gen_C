@@ -1,0 +1,24 @@
+\hypertarget{_c_make_gen_8h_source}{}\doxysection{CMake\+Gen.\+h}
+\label{_c_make_gen_8h_source}\index{C\_Code\_Gen/CMakeGen.h@{C\_Code\_Gen/CMakeGen.h}}
+\mbox{\hyperlink{_c_make_gen_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef CMAKEGEN\_H}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define CMAKEGEN\_H}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include <iostream>}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{xml__parser_8h}{xml\_parser.h}}"{}}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include <fstream>}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{keyword}{class }\mbox{\hyperlink{class_c_make_gen}{CMakeGen}}\{}
+\DoxyCodeLine{9 \textcolor{keyword}{public}:}
+\DoxyCodeLine{10     \mbox{\hyperlink{class_c_make_gen_a13ff37bfa7ed5df0f33e60801c87c592}{CMakeGen}}(\mbox{\hyperlink{structxml__parser_1_1_get_opt_setup}{xml\_parser::GetOptSetup}} data);}
+\DoxyCodeLine{11 \textcolor{keyword}{private}:}
+\DoxyCodeLine{12     \textcolor{keywordtype}{string} output;}
+\DoxyCodeLine{13     \textcolor{keywordtype}{void} GenHeader();}
+\DoxyCodeLine{14     \textcolor{keywordtype}{void} GenAddExecutable(\mbox{\hyperlink{structxml__parser_1_1_header_file_name}{xml\_parser::HeaderFileName}} header, \mbox{\hyperlink{structxml__parser_1_1_source_file_name}{xml\_parser::SourceFileName}} source);}
+\DoxyCodeLine{15     \textcolor{keywordtype}{void} GenTail();}
+\DoxyCodeLine{16 \};}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

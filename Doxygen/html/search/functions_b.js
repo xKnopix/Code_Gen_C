@@ -1,0 +1,27 @@
+var searchData=
+[
+  ['name_0',['name',['../classpugi_1_1xml__attribute.html#a80d620199c508a8d063c4734828f26cd',1,'pugi::xml_attribute::name()'],['../classpugi_1_1xml__node.html#ac07ca987449e720eab11434427810fb2',1,'pugi::xml_node::name()'],['../classpugi_1_1xpath__variable.html#acf2ab53ee69f0b436c1b3b62bd455eaf',1,'pugi::xpath_variable::name()']]],
+  ['name_5fnull_5fsentry_1',['name_null_sentry',['../structname__null__sentry.html#ae5d1789457736acd9d669bc4765bd811',1,'name_null_sentry']]],
+  ['namespace_5furi_2',['namespace_uri',['../pugixml_8cpp.html#a8b35807a06619c82ae523f4b86bbd916',1,'namespace_uri(xml_node node):&#160;pugixml.cpp'],['../pugixml_8cpp.html#a3c6a5f94bb3e878b91c6c604c0931446',1,'namespace_uri(xml_attribute attr, xml_node parent):&#160;pugixml.cpp'],['../pugixml_8cpp.html#aa252a9731ce9d1ce782ce8b7c1a843ed',1,'namespace_uri(const xpath_node &amp;node):&#160;pugixml.cpp']]],
+  ['namespace_5furi_5fpredicate_3',['namespace_uri_predicate',['../structnamespace__uri__predicate.html#a25bef9c1e12b0fdc908275ae7ab7c202',1,'namespace_uri_predicate']]],
+  ['new_5fxpath_5fvariable_4',['new_xpath_variable',['../pugixml_8cpp.html#a5c748822b0f8be26e9b6c4906d338c1f',1,'new_xpath_variable(const char_t *name):&#160;pugixml.cpp'],['../pugixml_8cpp.html#a1a88a45e7380c67d0599263577fd2871',1,'new_xpath_variable(xpath_value_type type, const char_t *name):&#160;pugixml.cpp']]],
+  ['next_5',['next',['../classxpath__lexer.html#a32684b3097fccb4d626da620b44b72ad',1,'xpath_lexer']]],
+  ['next_5fattribute_6',['next_attribute',['../classpugi_1_1xml__attribute.html#ab419958526a4fdcb1e325c337af0fa9d',1,'pugi::xml_attribute']]],
+  ['next_5fsibling_7',['next_sibling',['../classpugi_1_1xml__node.html#a41ea1bf7356f01d9fa8fe6b168f638ca',1,'pugi::xml_node::next_sibling() const'],['../classpugi_1_1xml__node.html#a2b5f05fa7087ac46159348f584d36103',1,'pugi::xml_node::next_sibling(const char_t *name) const']]],
+  ['node_8',['node',['../classpugi_1_1xpath__node.html#ab2d0ba839e8775a6749afd1490625238',1,'pugi::xpath_node']]],
+  ['node_5fcopy_5fattribute_9',['node_copy_attribute',['../pugixml_8cpp.html#a1ebf3f9e23bb17f7cc6f4ae26e5abdb8',1,'pugixml.cpp']]],
+  ['node_5fcopy_5fcontents_10',['node_copy_contents',['../pugixml_8cpp.html#a2b5c5c36dd22c98e54dbe1d1269f6e9b',1,'pugixml.cpp']]],
+  ['node_5fcopy_5fstring_11',['node_copy_string',['../pugixml_8cpp.html#a05e81501deb4a3abe96a3da900711eb6',1,'pugixml.cpp']]],
+  ['node_5fcopy_5ftree_12',['node_copy_tree',['../pugixml_8cpp.html#a25fed5bc5932c710ca03917ac173f6d1',1,'pugixml.cpp']]],
+  ['node_5fis_5fancestor_13',['node_is_ancestor',['../pugixml_8cpp.html#a417dbf6eefe01fd6dfba270d23986d1a',1,'pugixml.cpp']]],
+  ['node_5fis_5fbefore_14',['node_is_before',['../pugixml_8cpp.html#a61e6bdbd728baac0ec13dd4541c59160',1,'pugixml.cpp']]],
+  ['node_5fis_5fbefore_5fsibling_15',['node_is_before_sibling',['../pugixml_8cpp.html#a5324f8b63f65db6d1f82ab76700c1349',1,'pugixml.cpp']]],
+  ['node_5foutput_16',['node_output',['../pugixml_8cpp.html#a2972dfcdf48725e48ce2901d08f7b4ae',1,'pugixml.cpp']]],
+  ['node_5foutput_5fattributes_17',['node_output_attributes',['../pugixml_8cpp.html#ae35e737e5b408f763f6fe89874ec87cf',1,'pugixml.cpp']]],
+  ['node_5foutput_5fcomment_18',['node_output_comment',['../pugixml_8cpp.html#a41713d70abc2d1fce3f8aca10f450a1d',1,'pugixml.cpp']]],
+  ['node_5foutput_5fend_19',['node_output_end',['../pugixml_8cpp.html#a8113621e64072a3ad2225574db0d5449',1,'pugixml.cpp']]],
+  ['node_5foutput_5fpi_5fvalue_20',['node_output_pi_value',['../pugixml_8cpp.html#a4738723860e1782016479760528efd62',1,'pugixml.cpp']]],
+  ['node_5foutput_5fsimple_21',['node_output_simple',['../pugixml_8cpp.html#a2a7a7ce70701692e97923c850b3cc130',1,'pugixml.cpp']]],
+  ['node_5foutput_5fstart_22',['node_output_start',['../pugixml_8cpp.html#abe15f1e5861695b34b8581805703d03a',1,'pugixml.cpp']]],
+  ['normalize_5fspace_23',['normalize_space',['../pugixml_8cpp.html#a75e2d94ef5aa78a5a208687a3d1bcc79',1,'pugixml.cpp']]]
+];

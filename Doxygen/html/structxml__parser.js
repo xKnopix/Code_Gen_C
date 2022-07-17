@@ -1,0 +1,26 @@
+var structxml__parser =
+[
+    [ "Author", "structxml__parser_1_1_author.html", "structxml__parser_1_1_author" ],
+    [ "Block", "structxml__parser_1_1_block.html", "structxml__parser_1_1_block" ],
+    [ "ClassName", "structxml__parser_1_1_class_name.html", "structxml__parser_1_1_class_name" ],
+    [ "GetOptSetup", "structxml__parser_1_1_get_opt_setup.html", "structxml__parser_1_1_get_opt_setup" ],
+    [ "HeaderFileName", "structxml__parser_1_1_header_file_name.html", "structxml__parser_1_1_header_file_name" ],
+    [ "NameSpace", "structxml__parser_1_1_name_space.html", "structxml__parser_1_1_name_space" ],
+    [ "Option", "structxml__parser_1_1_option.html", "structxml__parser_1_1_option" ],
+    [ "Options", "structxml__parser_1_1_options.html", "structxml__parser_1_1_options" ],
+    [ "OverAllDescription", "structxml__parser_1_1_over_all_description.html", "structxml__parser_1_1_over_all_description" ],
+    [ "Sample", "structxml__parser_1_1_sample.html", "structxml__parser_1_1_sample" ],
+    [ "SampleUsage", "structxml__parser_1_1_sample_usage.html", "structxml__parser_1_1_sample_usage" ],
+    [ "SourceFileName", "structxml__parser_1_1_source_file_name.html", "structxml__parser_1_1_source_file_name" ],
+    [ "xml_parser", "structxml__parser.html#a062d6951738847e674b538a677c8c5f0", null ],
+    [ "GetDataStrctFromXML", "structxml__parser.html#a8e1858eae91f7b0cdb7338862314e348", null ],
+    [ "parse_doctype_group", "structxml__parser.html#a85625c095f072a9938d0e47cf468de6b", null ],
+    [ "parse_doctype_ignore", "structxml__parser.html#a93f0e9c20ffd16c42a287e687a359a0c", null ],
+    [ "parse_doctype_primitive", "structxml__parser.html#a09210dea8745d4d4c45ebb1e1a9211d0", null ],
+    [ "parse_exclamation", "structxml__parser.html#afc651baa774c379ad03244cac2e96015", null ],
+    [ "parse_question", "structxml__parser.html#a8587d716d71121b4dfffdd1cc8e2145f", null ],
+    [ "parse_tree", "structxml__parser.html#a35bac90f1975aa1a9d5de4b60b761f16", null ],
+    [ "alloc", "structxml__parser.html#a48f48b81a9a222b8bcb79f95024faad8", null ],
+    [ "error_offset", "structxml__parser.html#a2476a71cd7e67b3f4bdbcd1323524503", null ],
+    [ "error_status", "structxml__parser.html#a0555859911674e5a7a349447d6533383", null ]
+];
