@@ -387,7 +387,9 @@ string Code::createInternalMethods(xml_parser::GetOptSetup data)
             iM.methodName = data.className.content + "::" + iM.methodName;
             if (!authorCodeAdded)
             {
-                printHelpMethodCode += "myPrint(\"Author: " + author + "\\n\", " + signPerLine + ");\n";
+                printHelpMethodCode += "myPrint(\"Author Name: " + data.author.name + "\\n\", " + signPerLine + ");\n";
+                printHelpMethodCode += "myPrint(\"Author Mail: " + data.author.mail + "\\n\", " + signPerLine + ");\n";
+                printHelpMethodCode += "myPrint(\"Author Phone: " + data.author.phone + "\\n\", " + signPerLine + ");\n";
                 authorCodeAdded = true;
             }
 
