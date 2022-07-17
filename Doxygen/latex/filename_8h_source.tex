@@ -1,0 +1,56 @@
+\hypertarget{filename_8h_source}{}\doxysection{filename.\+h}
+\label{filename_8h_source}\index{C\_Code\_Gen/filename.h@{C\_Code\_Gen/filename.h}}
+\mbox{\hyperlink{filename_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef FILENAME\_H}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define FILENAME\_H}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include <string>}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include <iostream>}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include <Vector>}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{keyword}{using namespace }std;}
+\DoxyCodeLine{9 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespaceparse}{parse}}}
+\DoxyCodeLine{10 \{}
+\DoxyCodeLine{11     \textcolor{keyword}{class }getOptsParse}
+\DoxyCodeLine{12     \{}
+\DoxyCodeLine{13         \textcolor{keywordtype}{bool} boolVersion;}
+\DoxyCodeLine{14         \textcolor{keywordtype}{bool} boolOutputPath;}
+\DoxyCodeLine{15         \textcolor{keywordtype}{string} outpathParam;}
+\DoxyCodeLine{16         \textcolor{keywordtype}{bool} boolAstylePath;}
+\DoxyCodeLine{17         \textcolor{keywordtype}{string} astylepathParam;}
+\DoxyCodeLine{18         \textcolor{keywordtype}{int} signperlineInt;}
+\DoxyCodeLine{19         \textcolor{keywordtype}{bool} boolSignPerLine;}
+\DoxyCodeLine{20         \textcolor{keywordtype}{string} signperlineParam;}
+\DoxyCodeLine{21         \textcolor{keywordtype}{bool} boolOnlyIfNewer;}
+\DoxyCodeLine{22         \textcolor{keywordtype}{bool} boolNoFormat;}
+\DoxyCodeLine{23         \textcolor{keywordtype}{void} myPrint(\textcolor{keywordtype}{string} myString, \textcolor{keywordtype}{int} newLineChecker);}
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25     \textcolor{keyword}{protected}: \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{classparse_1_1get_opts_parse_a956befd8585ced1cbfb55a81f89162e0}{printHelp}}(\textcolor{keywordtype}{int} signPerLine);}
+\DoxyCodeLine{26     \textcolor{keyword}{public}:}
+\DoxyCodeLine{27 }
+\DoxyCodeLine{28         \textcolor{keywordtype}{bool} \mbox{\hyperlink{classparse_1_1get_opts_parse_a9835c69db915e4ccb5ac9d9b81f5972b}{isSetversion}}();}
+\DoxyCodeLine{29         }
+\DoxyCodeLine{30         \textcolor{keywordtype}{bool} \mbox{\hyperlink{classparse_1_1get_opts_parse_af006557fa19ce1ecb6f3bb7fbbd3d52f}{isSetOutputPath}}();}
+\DoxyCodeLine{31         }
+\DoxyCodeLine{32         \textcolor{keywordtype}{string} \mbox{\hyperlink{classparse_1_1get_opts_parse_a7c0525840259c1cc0885e47a87510ac0}{getValueOfOutputPath}}();}
+\DoxyCodeLine{33         }
+\DoxyCodeLine{34         \textcolor{keywordtype}{bool} \mbox{\hyperlink{classparse_1_1get_opts_parse_affed0df2bb5c42a114396a6d63c1adff}{isSetAstylePath}}();}
+\DoxyCodeLine{35         }
+\DoxyCodeLine{36         \textcolor{keywordtype}{string} \mbox{\hyperlink{classparse_1_1get_opts_parse_a399082e69deb028e8fbcf902025fbfb5}{getValueOfAstylePath}}();}
+\DoxyCodeLine{37         }
+\DoxyCodeLine{38         \textcolor{keywordtype}{bool} \mbox{\hyperlink{classparse_1_1get_opts_parse_ac37ecf5a8432bcce49a472d47b967016}{isSetSignPerLine}}();}
+\DoxyCodeLine{39         }
+\DoxyCodeLine{40         \textcolor{keywordtype}{int} \mbox{\hyperlink{classparse_1_1get_opts_parse_a73567b25a4eb7379f784e353b4c2be6b}{getValueOfSignPerLine}}();}
+\DoxyCodeLine{41         }
+\DoxyCodeLine{42         \textcolor{keywordtype}{bool} \mbox{\hyperlink{classparse_1_1get_opts_parse_a535f3c82a23da042ce0775ae95f38fc4}{isSetn}}();}
+\DoxyCodeLine{43         }
+\DoxyCodeLine{44         \textcolor{keywordtype}{bool} \mbox{\hyperlink{classparse_1_1get_opts_parse_a73d6feee4d331823b9fd392367be0d03}{isSetNoFormat}}();}
+\DoxyCodeLine{45         }
+\DoxyCodeLine{46         \textcolor{keywordtype}{void} \mbox{\hyperlink{classparse_1_1get_opts_parse_a0ba6109e3813168f394edccc52ce42ea}{parse}}(\textcolor{keywordtype}{int} argc, \textcolor{keywordtype}{char}* argv[]);}
+\DoxyCodeLine{47         }
+\DoxyCodeLine{48     \};}
+\DoxyCodeLine{49 \}}
+\DoxyCodeLine{50 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}
