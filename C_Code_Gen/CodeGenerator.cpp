@@ -206,7 +206,7 @@ string Code::capitalizeString(string s)
     return s;
 }
 
-string Code::finalHeaderCode()
+string Code::finalHeaderCode(xml_parser::GetOptSetup data)
 {
     string defString = Code::capitalizeString(headerFileName);
 
@@ -246,9 +246,9 @@ string Code::finalHeaderCode()
                                     "#define " +
            defString + "\n" + includesString +
            namespaceString +
-           "namespace " + nameSpace + "\n" +
+           "namespace " + data.nameSpace.content + "\n" +
            "{\n" +
-           "class " + className + "\n" +
+           "class " + data.className.content + "\n" +
            "{\n" +
            globalVariables +
            methodNames +
@@ -259,7 +259,7 @@ string Code::finalHeaderCode()
            "#endif";
 }
 
-string Code::finalCode(string hFileName)
+string Code::finalCode(xml_parser::GetOptSetup data)
 {
     /*
      * Der Finale Code wird erstellt und zurückgegeben
@@ -269,35 +269,76 @@ string Code::finalCode(string hFileName)
 
     // std::cout << "Finmal: " << hFileName << endl;
 
-    return includesString +
-           "#include \"" + hFileName + "\"\n" +
-           namespaceString +
-           "namespace " + nameSpace + "\n" +
-           "{\n" +
-           /*globalVariables + */
-           createInternalMethods() +
-           "void " + className + "::unknownOption(const string& unknown_option)"
-                                 "\n{\n\tcout << \"Unbekannter Parameter '\" + unknown_option + \"'!\" << endl;\nexit(EXIT_SUCCESS);\n}\n" +
+    if (data.nameSpace.content.empty())
+    {
+        return includesString +
+               "#include \"" + data.headerFileName.content + "\"\n" +
+               namespaceString +
+               /*globalVariables + */
+               createInternalMethods(data) +
+               "void " + data.className.content + "::unknownOption(const string& unknown_option)"
+                                                  "\n{\n\tcout << \"Unbekannter Parameter '\" + unknown_option + \"'!\" << endl;\nexit(EXIT_SUCCESS);\n}\n" +
 
-           "void " + className + "::parse(int argc, char* argv[])\n"
-                                 "{\n" +
-           variableDefinitions +
+               "void " + data.className.content + "::parse(int argc, char* argv[])\n"
+                                                  "{\n" +
+               variableDefinitions +
 
-           forLoopAllArgsStart +
-           exclusionCheck +
-           forLoopAllArgsClose +
+               forLoopAllArgsStart +
+               exclusionCheck +
+               forLoopAllArgsClose +
 
-           pathRequiredCheck +
-           convertToInt +
-           returnIfWrongArgs +
-           handleArgs +
-           unknownOptionMethodCall +
-           "}\n"
-           "}\n"
-           "}\n";
+               pathRequiredCheck +
+               convertToInt +
+               returnIfWrongArgs +
+               handleArgs +
+               "int temp = 0;" +
+               "for(int m = 0; m < additionalParams.size(); m++)"
+               "{"
+               "   if(additionalParams[m] == argv[i])\n{\ntemp = 1;\n}\n"
+               "}" +
+               "if(temp == 1)\n{continue;\n}\n" +
+               unknownOptionMethodCall +
+               "}\n"
+               "}\n";
+    }
+    else
+    {
+        return includesString +
+               "#include \"" + data.headerFileName.content + "\"\n" +
+               namespaceString +
+               "namespace " + data.nameSpace.content + "\n" +
+               "{\n" +
+               /*globalVariables + */
+               createInternalMethods(data) +
+               "void " + data.className.content + "::unknownOption(const string& unknown_option)"
+                                                  "\n{\n\tcout << \"Unbekannter Parameter '\" + unknown_option + \"'!\" << endl;\nexit(EXIT_SUCCESS);\n}\n" +
+
+               "void " + data.className.content + "::parse(int argc, char* argv[])\n"
+                                                  "{\n" +
+               variableDefinitions +
+
+               forLoopAllArgsStart +
+               exclusionCheck +
+               forLoopAllArgsClose +
+
+               pathRequiredCheck +
+               convertToInt +
+               returnIfWrongArgs +
+               handleArgs +
+               "int temp = 0;" +
+               "for(int m = 0; m < additionalParams.size(); m++)"
+               "{"
+               "   if(additionalParams[m] == argv[i])\n{\ntemp = 1;\n}\n"
+               "}" +
+               "if(temp == 1)\n{continue;\n}\n" +
+               unknownOptionMethodCall +
+               "}\n"
+               "}\n"
+               "}\n";
+    }
 }
 
-string Code::createInternalMethods()
+string Code::createInternalMethods(xml_parser::GetOptSetup data)
 {
     /*
      * Der Vektor mit allen Instanzen des Structs internalMethod wird durch-iteriert
@@ -314,7 +355,7 @@ string Code::createInternalMethods()
     ///////////////////////myPrint für signPerLine erstellen
 
     internalMethod myPrint = internalMethod();
-    myPrint.methodName = className + "::myPrint";
+    myPrint.methodName = data.className.content + "::myPrint";
     myPrint.methodCode =
         "int lineLength = newLineChecker;\n"
         "for (auto i = 0; i != myString.size(); ++i)\n"
@@ -343,7 +384,7 @@ string Code::createInternalMethods()
             "printHelp") ////HelpMethode wird erstellt
         {
             iM.expectedVars = "int signPerLine";
-            iM.methodName = className + "::" + iM.methodName;
+            iM.methodName = data.className.content + "::" + iM.methodName;
             if (!authorCodeAdded)
             {
                 printHelpMethodCode += "myPrint(\"Author: " + author + "\\n\", " + signPerLine + ");\n";
@@ -361,7 +402,7 @@ string Code::createInternalMethods()
         }
         else
         {
-            methods.addText(iM.returnType + " " + className + "::" + iM.methodName + "(" + iM.expectedVars + ")\n{\n");
+            methods.addText(iM.returnType + " " + data.className.content + "::" + iM.methodName + "(" + iM.expectedVars + ")\n{\n");
             methods.addText(iM.methodCode);
             methods.addText(iM.methodEnd);
 
@@ -454,7 +495,7 @@ void Code::parse(xml_parser::GetOptSetup data)
 
     // Write to the file
     MyFile
-        << finalCode(data.headerFileName.content); // Code in Datei schreiben
+        << finalCode(data); // Code in Datei schreiben
 
     // Close the file
     MyFile.close();
@@ -463,7 +504,7 @@ void Code::parse(xml_parser::GetOptSetup data)
 
     // Write to the file
     MyHeaderFile
-        << finalHeaderCode(); // Code in Datei schreiben
+        << finalHeaderCode(data); // Code in Datei schreiben
 
     // Close the file
     MyHeaderFile.close();
@@ -607,8 +648,8 @@ void Code::addArgument(string ref,
             tempCode); // Code wird in in den Code zur Exclusion-Überprüfung eingefügt
 
         exclCode.startForLoop(
-            "int i = 0; i < exclusions.size(); i++"); // Code wird mit Einrückungen lesbar eingefügt
-        exclCode.startForLoop("int j = 0; j < localExclusions.size(); j++");
+            "int j = 0; j < exclusions.size(); j++"); // Code wird mit Einrückungen lesbar eingefügt
+        exclCode.startForLoop("int k = 0; k < localExclusions.size(); k++");
         exclCode.startIf("to_string(exclusions[i]) == localExclusions[j]");
         // exclCode.addText("cout << \"Es wurde eine ungültige Kombination von Argumenten angegeben!\" << endl;\n");
 
@@ -664,8 +705,10 @@ void Code::addArgument(string ref,
 
         if (hasArguments == "Required" || hasArguments == "optional")
         {
+
             exclusionCheck += "if(i+1 != argc)\n{\n" + reference +
                               "Str = argv[i+1];\n}\n"; // Code Generierung um zusätzliche Argumente einzulesen, falls diese Möglich sein sollen
+            exclusionCheck += "additionalParams.push_back(" + reference + "Str);\n";
         }
         exclusionCheck += "}\n";
     }
@@ -681,9 +724,9 @@ void Code::addArgument(string ref,
 
         pathCheckCode.startIf("!" + reference + "Str.empty() && " + reference + "Str.length() > 1");
         pathCheckCode.startIf(
-            "(" + reference + "Str.at(0) == '-' && " + reference + "Str.at(1) == '-') || " + reference +
+            "(" + reference + "Str.at(0) == '-') || " + reference +
             "Str.length() <= 1");
-        pathCheckCode.addText("cout << \"--" + longOpt + " benötigt ein zusätzliches Argument!\" << endl;\n");
+        pathCheckCode.addText("cout << \"--" + longOpt + " benötigt ein zusätzliches Argument!\\n\"\n\"Da der nachfolgende Parameter mit einem '-' startet wurde kein zusätzliches Argument erkannt!\" << endl;\n");
         pathCheckCode.addText("exitArg = 1;\n");
         pathCheckCode.endIf();
         pathCheckCode.endIf();
@@ -793,20 +836,19 @@ void Code::addArgument(string ref,
     if (!shortOpt.empty() && !longOpt.empty())
     {
         printHelpMethodCode += "myPrint(\"-" + shortOpt + ", --" + longOpt + "\\n\", signPerLine);\n";
-        printHelpMethodCode += "myPrint(\"" + description + "\\n\\n\", " + signPerLine + ");\n";
     } // Die Description wird an einen globalen string hinzugefügt für die printHelp Methode
 
     if (shortOpt.empty() && !longOpt.empty())
     {
         printHelpMethodCode += "myPrint(\"--" + longOpt + "\\n\", signPerLine);\n";
-        printHelpMethodCode += "myPrint(\"\t" + description + "\\n\\n\", signPerLine);\n";
     }
 
     if (!shortOpt.empty() && longOpt.empty())
     {
         printHelpMethodCode += "myPrint(\"--" + shortOpt + "\\n\", " + signPerLine + ");\n";
-        printHelpMethodCode += "myPrint(\"\\t\" + description + \\n\\n\", " + signPerLine + ");\n";
     }
+
+    printHelpMethodCode += "myPrint(\"\t" + description + "\\n\\n\", signPerLine);\n";
 
     if (!interface.empty())
     {
@@ -905,9 +947,9 @@ void Code::addArgument(string ref,
         }
     }
 
-    if ((!connectToInternalMethod.empty() && interface.empty()) || (!connectToExternalMethod.empty() && interface.empty()))
+    if (((!connectToInternalMethod.empty() && interface.empty()) && !hasArguments.empty()) || ((!connectToExternalMethod.empty() && interface.empty()) && !hasArguments.empty()))
     {
-        cerr << "Es fehlt ein Interface bei " << reference << "! Code Generierung wird abgebrochen!\n Interface wird für die Getter Methode benötigt, da zusätzliche Parameter übergeben werden können." << endl;
+        cerr << "Es fehlt ein Interface bei \"" << reference << "!\n Code Generierung wird abgebrochen!\n Interface wird für die Getter Methode benötigt, da zusätzliche Parameter übergeben werden können." << endl;
         exit(EXIT_FAILURE);
     }
 
@@ -973,19 +1015,6 @@ void Code::addArgument(string ref,
         }
         else if (hasArguments != "")
         {
-            // cout << "size: " << additionalParamVarName.back() << endl;
-            /*if (additionalParamVarName.at(additionalParamVarName.back()) == 't') {
-                iM.expectedVars = "int " + additionalParamVarName;
-            }
-            if (additionalParamVarName.at(additionalParamVarName.back()) == 'l') {
-                iM.expectedVars = "bool " + additionalParamVarName;
-            }
-            if (additionalParamVarName.at(additionalParamVarName.back()) == 'r') {
-                iM.expectedVars = "string " + additionalParamVarName;
-            }
-            if (additionalParamVarName.at(additionalParamVarName.back()) == 'm') {
-                iM.expectedVars = "string " + additionalParamVarName;
-            }*/
             if (convertTo == "Integer" || convertTo == "integer")
             {
                 iM.expectedVars = "int " + additionalParamVarName;
@@ -1059,51 +1088,3 @@ void Code::addArgument(string ref,
 
     handleArgs += actOnArgs.code;
 }
-
-/*
-
-    int main() {
-    /*
-    std::cout << "Hello, World!" << std::endl;
-
-    code.createInt("Anzahl", 5);
-    code.createInt("testInt2", 7);
-    code.COUT("Hallo Welt");
-    code.createString("testStr", "Hallo");
-    code.setInt("Anzahl", 3);
-    code.setString("testStr", "Welt");
-     */
-
-/*    Code code = Code("FileName", "HeaderFileName", "parse", "getOptsParse", "79", "SampleUsage Here", "DER AUTOR");
-
-    code.startForLoop("int i = 1; i<argc; i++");                                                                     //Durch jedes Argument einmal durch
-
-        code.addArgument("1", "h", "help",         "2,3",   "printHelp", "Diese Hilfe ausgeben und beenden", "", "", "", "");
-        code.addArgument("2", "v", "version",      "1,3",   "printVersion", "Gibt die Version des Programms aus und beendet", "Version", "", "", "");
-        code.addArgument("",  "",  "out-path",     "1,2,3", "",         "Der Pfad wo das Ergebnis hingeneriert werden soll (sonst ins aktuelle Verzeichnis)", "OutputPath", "Required", "", "");
-        code.addArgument("",  "",  "astyle-path",  "1,2,3", "",         "Der Pfad wo die Astyle executable gefunden werden kann", "AstylePath", "Required", "", "");
-        code.addArgument("",  "",  "sign-per-line","1,2,3", "",         "Die Anzahl der Zeichen pro Linie für den Helptext. Ohne Argument wird der Standartwert genommen.", "SignPerLine", "optional", "Integer", "79");
-        code.addArgument("",  "n", "only-if-newer","1,2,3", "",         "Generiert nur wenn die Eingangsdatei neuer ist wie die bereits generierte", "OnlyIfNewer", "", "", "");
-        code.addArgument("",  "",  "no-format",    "1,2,3", "",         "Erzeugte Datei wird nicht formatiert", "NoFormat", "", "", "");
-        code.addArgument("3", "",  "parse-only",   "1,2",   "ParseXML", "Parst die Datei einmal und beendet das Programm", "", "", "", "");
-    code.endForLoop();                                                                                                  //For Schleife fertig, der  rest kommt in finalCode()
-
-    cout << "CODE: " << endl << code.finalCode();                                                                       //Code ausgeben
-
-    // Create and open a text file (#include<fstream>)
-    ofstream MyFile(R"(C:\Users\hochb\CLionProjects\filename.cpp)");
-
-    // Write to the file
-    MyFile << code.finalCode();                                                                                         //Code in Datei schreiben
-
-    // Close the file
-    MyFile.close();
-
-
-
-
-    return 0;
-    }
-
-
-*/

@@ -24,6 +24,5 @@ int main()
 
     CMakeGen cm(data);
 
-
     return 0;
 }
