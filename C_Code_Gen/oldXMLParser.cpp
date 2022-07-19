@@ -1,16 +1,16 @@
 #include "oldXMLParser.h"
 
-xml_parser::GetOptSetup xml_parser::GetDataStrctFromXML(std::string filename){
+xml_parserold::GetOptSetup xml_parserold::GetDataStrctFromXML(std::string filename){
     DOMDocument* doc = GetDomDocument(filename);
-    xml_parser::GetOptSetup data = xml_parser::GetOptSetup();
+    xml_parserold::GetOptSetup data = xml_parserold::GetOptSetup();
     data = ParseDOMToDataStrct(doc);
     doc->release();
     XMLPlatformUtils::Terminate();
     return data;
 }
 
-xml_parser::GetOptSetup xml_parser::ParseDOMToDataStrct(DOMDocument* doc){
-    xml_parser::GetOptSetup data = xml_parser::GetOptSetup();
+xml_parserold::GetOptSetup xml_parserold::ParseDOMToDataStrct(DOMDocument* doc){
+    xml_parserold::GetOptSetup data = xml_parserold::GetOptSetup();
     DOMElement*  rootNode = doc->getDocumentElement();
     
     //Get signPerLine
@@ -39,16 +39,16 @@ xml_parser::GetOptSetup xml_parser::ParseDOMToDataStrct(DOMDocument* doc){
     std::string hasArguments;
  */
 
-xml_parser::Options xml_parser::GetOptions(DOMDocument* doc)
+xml_parserold::Options xml_parserold::GetOptions(DOMDocument* doc)
 {
-    xml_parser::Options o = xml_parser::Options();
+    xml_parserold::Options o = xml_parserold::Options();
 
     DOMNodeList* optionList = doc->getElementsByTagName(toXMLCh("Option")); //Hole alle Nodes die "Author" heißen
     for ( XMLSize_t i = 0; i < optionList->getLength(); i++ ) { //gehe durch diese liste durch
         if(optionList->item(i)->hasAttributes()){ //Schaue ob Author von (i) Attribute hat wie z.B Name, Email, Phone
             DOMNamedNodeMap *AttrMap = optionList->item(i)->getAttributes(); // Wenn ja erstelle einen Map von diesen Attributen
 
-            xml_parser::Option option = xml_parser::Option();
+            xml_parserold::Option option = xml_parserold::Option();
 
             for ( XMLSize_t j=0; j<AttrMap->getLength(); j++) { // gehe durch diese Map mit For loop durch
 
@@ -80,9 +80,9 @@ xml_parser::Options xml_parser::GetOptions(DOMDocument* doc)
     return o;
 }
 
-xml_parser::SampleUsage xml_parser::GetSampleUsage(DOMDocument* doc)
+xml_parserold::SampleUsage xml_parserold::GetSampleUsage(DOMDocument* doc)
 {
-    xml_parser::SampleUsage sA = xml_parser::SampleUsage();
+    xml_parserold::SampleUsage sA = xml_parserold::SampleUsage();
 
     DOMNodeList* sampleUsageList = doc->getElementsByTagName(toXMLCh("Sample")); //Hole alle Nodes die "Author" heißen
 
@@ -91,7 +91,7 @@ xml_parser::SampleUsage xml_parser::GetSampleUsage(DOMDocument* doc)
     {
         //cout << "textCont: " << toCh(blockList->item(i)->getTextContent())<< endl;
 
-        xml_parser::Sample sample = xml_parser::Sample();
+        xml_parserold::Sample sample = xml_parserold::Sample();
 
         sample.content = toCh(sampleUsageList->item(i)->getTextContent());
 
@@ -106,9 +106,9 @@ xml_parser::SampleUsage xml_parser::GetSampleUsage(DOMDocument* doc)
 
 
 
-xml_parser::OverAllDescription xml_parser::GetOverAllDescription(DOMDocument* doc)
+xml_parserold::OverAllDescription xml_parserold::GetOverAllDescription(DOMDocument* doc)
 {
-    xml_parser::OverAllDescription oA = xml_parser::OverAllDescription();
+    xml_parserold::OverAllDescription oA = xml_parserold::OverAllDescription();
 
          //Passt nur, OverAllDescription das einzige element mit "Block"-Elementen ist, da alle BlockElemente hier geladen werden, aus der ganzen Datei
          DOMNodeList* blockList = doc->getElementsByTagName(toXMLCh("Block")); //Alle Nodes die Block heißen
@@ -117,7 +117,7 @@ xml_parser::OverAllDescription xml_parser::GetOverAllDescription(DOMDocument* do
          {
              //cout << "textCont: " << toCh(blockList->item(i)->getTextContent())<< endl;
 
-             xml_parser::Block block = xml_parser::Block();
+             xml_parserold::Block block = xml_parserold::Block();
 
              block.content = toCh(blockList->item(i)->getTextContent());
 
@@ -152,8 +152,8 @@ xml_parser::OverAllDescription xml_parser::GetOverAllDescription(DOMDocument* do
 
 }
 
-xml_parser::Author xml_parser::GetAuthor(DOMDocument* doc){
-    xml_parser::Author a = xml_parser::Author();
+xml_parserold::Author xml_parserold::GetAuthor(DOMDocument* doc){
+    xml_parserold::Author a = xml_parserold::Author();
 
     DOMNodeList* authorList = doc->getElementsByTagName(toXMLCh("Author")); //Hole alle Nodes die "Author" heißen
     for ( XMLSize_t i = 0; i < authorList->getLength(); i++ ) { //gehe durch diese liste durch
@@ -178,7 +178,7 @@ xml_parser::Author xml_parser::GetAuthor(DOMDocument* doc){
     return a;
 }
 
-DOMDocument* xml_parser::GetDomDocument(std::string xmlName){
+DOMDocument* xml_parserold::GetDomDocument(std::string xmlName){
     try {
         XMLPlatformUtils::Initialize();
     }
