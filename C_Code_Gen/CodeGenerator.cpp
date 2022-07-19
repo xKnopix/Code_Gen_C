@@ -143,7 +143,7 @@ string Code::finalHeaderCode(xml_parser::GetOptSetup data)
            globalVariables +
            methodNames +
            "virtual void unknownOption(const string& unknown_option);" +
-           "void parse(int argc, char* argv[]);\n" +
+           "void parseOptions(int argc, char* argv[]);\n" +
            "};\n"
            "}\n"
            "#endif";
@@ -169,7 +169,7 @@ string Code::finalCode(xml_parser::GetOptSetup data)
                "void " + data.className.content + "::unknownOption(const string& unknown_option)"
                                                   "\n{\n\tcout << \"Unbekannter Parameter '\" + unknown_option + \"'!\" << endl;\nexit(EXIT_SUCCESS);\n}\n" +
 
-               "void " + data.className.content + "::parse(int argc, char* argv[])\n"
+               "void " + data.className.content + "::parseOptions(int argc, char* argv[])\n"
                                                   "{\n" +
                variableDefinitions +
 
@@ -203,7 +203,7 @@ string Code::finalCode(xml_parser::GetOptSetup data)
                "void " + data.className.content + "::unknownOption(const string& unknown_option)"
                                                   "\n{\n\tcout << \"Unbekannter Parameter '\" + unknown_option + \"'!\" << endl;\nexit(EXIT_SUCCESS);\n}\n" +
 
-               "void " + data.className.content + "::parse(int argc, char* argv[])\n"
+               "void " + data.className.content + "::parseOptions(int argc, char* argv[])\n"
                                                   "{\n" +
                variableDefinitions +
 
@@ -277,9 +277,22 @@ string Code::createInternalMethods(xml_parser::GetOptSetup data)
             iM.methodName = data.className.content + "::" + iM.methodName;
             if (!authorCodeAdded)
             {
-                printHelpMethodCode += "myPrint(\"Author Name: " + data.author.name + "\\n\", " + signPerLine + ");\n";
-                printHelpMethodCode += "myPrint(\"Author Mail: " + data.author.mail + "\\n\", " + signPerLine + ");\n";
-                printHelpMethodCode += "myPrint(\"Author Phone: " + data.author.phone + "\\n\", " + signPerLine + ");\n";
+                printHelpMethodCode += "myPrint(\"\\n\", getValueOfsignperline());";
+                printHelpMethodCode += "myPrint(\"Sample Usage:\\n\", getValueOfsignperline());";
+                for (int ij = 0; ij < data.sampleUsage.sample.size(); ij++)
+                {
+                    printHelpMethodCode += "myPrint(\"" + data.sampleUsage.sample[ij].content + "\\n\", getValueOfsignperline());";
+                }
+                printHelpMethodCode += "myPrint(\"\\n\", getValueOfsignperline());";
+                printHelpMethodCode += "myPrint(\"Overall-Description:\\n\", getValueOfsignperline());";
+                for (int ij = 0; ij < data.overAllDescription.block.size(); ij++)
+                {
+                    printHelpMethodCode += "myPrint(\"" + data.overAllDescription.block[ij].content + "\\n\", getValueOfsignperline());";
+                }
+                printHelpMethodCode += "myPrint(\"\\n\", getValueOfsignperline());";
+                printHelpMethodCode += "myPrint(\"Author Name: " + data.author.name + ", \", getValueOfsignperline());\n";
+                printHelpMethodCode += "myPrint(\"Author Mail: " + data.author.mail + ", \", getValueOfsignperline());\n";
+                printHelpMethodCode += "myPrint(\"Author Phone: " + data.author.phone + "\\n\", getValueOfsignperline());\n";
                 authorCodeAdded = true;
             }
 
@@ -348,12 +361,14 @@ void Code::parse(xml_parser::GetOptSetup data)
 {
 
     string sampleUsage;
+    string overAllDescription;
 
     for (int i = 0; i < data.sampleUsage.sample.size(); i++)
     {
         sampleUsage += data.sampleUsage.sample[i].content + "\n";
     }
 
+    data.overAllDescription.block[0];
     Code(data.sourceFileName.content, data.headerFileName.content, data.nameSpace.content, data.className.content, data.signPerLine, sampleUsage, data.author.name);
 
     startForLoop("int i = 1; i<argc; i++");
@@ -535,41 +550,60 @@ void Code::addArgument(string ref,
         }
 
         tempCode += "};\n";
-        // Code zur Vektor-Generierung ist erstellt
-        exclCode.addText(
-            tempCode); // Code wird in in den Code zur Exclusion-Überprüfung eingefügt
 
-        exclCode.startForLoop(
+        tempCode += "for (int j = 0; j < exclusionValuesSorted.size(); j++)";
+        tempCode += "\n{";
+        tempCode += "vector<string> tempExclusionVec = exclusionValuesSorted[j];";
+        tempCode += "for (int k = 0; k < tempExclusionVec.size(); k++)";
+        tempCode += "\n{";
+        tempCode += "for (int m = 0; m < localExclusions.size(); m++)";
+        tempCode += "\n{";
+        tempCode += "if (localExclusions[m] == tempExclusionVec[k])";
+        tempCode += "\n{";
+        tempCode += "cout << \"--" + reference + " ist nicht erlaubt mit \" + argumentnames[j];";
+        tempCode += "\nexit(EXIT_FAILURE);";
+        tempCode += "\n}\n}\n}\n}";
+
+        // Die Exclusions wurden überprüft
+        if (ref != "")
+        {
+            tempCode += "vector<string> temp = {\"" + ref + "\"};\n";
+            tempCode += "exclusionValuesSorted.push_back(temp);\n";
+        }
+        else
+        {
+            tempCode += "exclusionValuesSorted.push_back(localExclusions);\n";
+        }
+
+        tempCode += "argumentnames.push_back(\"--" + reference + "\");\n";
+        // Code zur Vektor-Generierung ist erstellt
+        exclCode.addText(tempCode); // Code wird in in den Code zur Exclusion-Überprüfung eingefügt
+
+        /*exclCode.startForLoop(
             "int j = 0; j < exclusions.size(); j++"); // Code wird mit Einrückungen lesbar eingefügt
         exclCode.startForLoop("int k = 0; k < localExclusions.size(); k++");
         exclCode.startIf("to_string(exclusions[i]) == localExclusions[j]");
         // exclCode.addText("cout << \"Es wurde eine ungültige Kombination von Argumenten angegeben!\" << endl;\n");
 
-        if (interface != "")
-        {
-            exclCode.addText("cerr << \"" + interface +
-                             " und \"<< refValues[exclusions[i]]<<\" sind nicht zusammen erlaubt!\" << endl;\n");
-        } ///// IF Abfrage ob Interface, longOpt oder shortOpt -> Ausgabe: x nicht erlauibt mit refValues[ref]
-        else if (longOpt != "")
-        {
-            exclCode.addText("cerr << \"" + longOpt +
-                             " und \"<< refValues[exclusions[i]]<<\" sind nicht zusammen erlaubt!\" << endl;\n");
-        }
-        else
-        {
-            exclCode.addText("cerr <<  \"" + shortOpt +
-                             " und \"<< refValues[exclusions[i]]<<\" sind nicht zusammen erlaubt!\" << endl;\n");
-        }
+        exclCode.addText("cerr <<  \"" + reference +
+                         " und \"<< refValues[exclusions[j]]<<\" sind nicht zusammen erlaubt!\" << endl;\n");
 
-        exclCode.addText("exitArg = 1;\n");
+        exclCode.addText("exit(EXIT_FAILURE);\n");
         exclCode.endIf();
-        exclCode.endForLoop();
         exclCode.endForLoop();
 
         exclCode.startIf("noRef == 1");
         // exclCode.addText("cerr << \"Es wurde ein Argument übergeben, dass Ref 1-3 nicht zulässt, --help ist somit verboten!\"<< endl;\n");
-        exclCode.addText("exitArg = 1;\n");
+        exclCode.addText("cerr <<  \"" + reference +
+                         " und \"<< refValues[exclusions[j]]<<\" sind nicht zusammen erlaubt!\" << endl;\n");
+        exclCode.addText("exit(EXIT_FAILURE);\n");
         exclCode.endIf();
+
+        exclCode.endForLoop();
+
+        exclCode.startForLoop("int j = 0; j < localExclusions.size(); j++");
+        exclCode.addText("exclusions.push_back(stol(localExclusions[j]));");
+        exclCode.endForLoop();
 
         exclCode.startIf("exitArg != 1");
         if (!ref.empty())
@@ -590,7 +624,7 @@ void Code::addArgument(string ref,
             }
         }
         exclCode.addText("noRef = 1;\n");
-        exclCode.endIf();
+        exclCode.endIf();*/
 
         exclusionCheck += ifStateStart;
         exclusionCheck += exclCode.getCode();
@@ -598,11 +632,26 @@ void Code::addArgument(string ref,
         if (hasArguments == "Required" || hasArguments == "optional")
         {
 
-            exclusionCheck += "if(i+1 != argc)\n{\n" + reference +
+            exclusionCheck += "if(i+1 < argc)\n{\n" + reference +
                               "Str = argv[i+1];\n}\n"; // Code Generierung um zusätzliche Argumente einzulesen, falls diese Möglich sein sollen
+            if (hasArguments == "Required")
+            {
+                exclusionCheck += "else\n{";
+                exclusionCheck += "cout << \"--" + longOpt + " benötigt ein zusätzliches Argument!\\n\"\n\"\" << endl;\nexit(EXIT_FAILURE);\n\n";
+                exclusionCheck += "cerr << \"ERROR: --" + longOpt + " benötigt ein zusätzliches Argument!\\n\"\n\"\" << endl;\nexit(EXIT_FAILURE);\n}\n";
+            }
+
             exclusionCheck += "additionalParams.push_back(" + reference + "Str);\n";
         }
         exclusionCheck += "}\n";
+    }
+    else if (ref != "")
+    {
+        exclusionCheck += "vector<string> temp = {\"" + ref + "\"};\n";
+        exclusionCheck += "exclusionValuesSorted.push_back(temp);\n";
+
+        exclusionCheck += "argumentnames.push_back(\"--" + reference + "\");\n";
+        // exclCode.addText(tempCode);
     }
     ///////////////////////////////////////////////////////////////////////////
     if (hasArguments ==
@@ -618,8 +667,9 @@ void Code::addArgument(string ref,
         pathCheckCode.startIf(
             "(" + reference + "Str.at(0) == '-') || " + reference +
             "Str.length() <= 1");
-        pathCheckCode.addText("cout << \"--" + longOpt + " benötigt ein zusätzliches Argument!\\n\"\n\"Da der nachfolgende Parameter mit einem '-' startet wurde kein zusätzliches Argument erkannt!\" << endl;\n");
-        pathCheckCode.addText("exitArg = 1;\n");
+        pathCheckCode.addText("cout << \"--" + longOpt + " benötigt ein zusätzliches Argument!\\n Da der nächste Parameter mit einem '-' startet, oder zu kurz (<1) ist, wurde kein zusaetzliches Argument erkannt!\"\n\"\" << endl;\n");
+        pathCheckCode.addText("cerr << \"ERROR: --" + longOpt + " benötigt ein zusätzliches Argument!\\n Da der nächste Parameter mit einem '-' startet, oder zu kurz (<1) ist, wurde kein zusaetzliches Argument erkannt!\"\n\"\" << endl;\n");
+        pathCheckCode.addText("exit(EXIT_FAILURE);\n");
         pathCheckCode.endIf();
         pathCheckCode.endIf();
 
@@ -681,10 +731,14 @@ void Code::addArgument(string ref,
             convertInt += "catch (invalid_argument const &e)\n{\n";
             convertInt += "cout << \"Bad input: invalid_argument thrown for " + longOpt +
                           ", using default Value if given\" << endl;\n";
+            convertInt += "cerr << \"Bad input: invalid_argument thrown for " + longOpt +
+                          ", using default Value if given\" << endl;\n";
             convertInt += "}\n";
 
             convertInt += "catch (out_of_range const &e)\n{\n";
             convertInt += "cout << \"Integer overflow: out_of_range thrown for " + longOpt +
+                          ", using default Value if given\" << endl;\n";
+            convertInt += "cerr << \"Integer overflow: out_of_range thrown for " + longOpt +
                           ", using default Value if given\" << endl;\n";
             convertInt += "}\n";
 
@@ -698,7 +752,7 @@ void Code::addArgument(string ref,
 
     } ////////////////////////////////////////////////////////////////////////
 
-    if (convertTo == "bool")
+    if (convertTo == "Bool")
     {
         // std::cout << "convertToBool" << endl;
         if (defaultValue != "")
@@ -727,29 +781,31 @@ void Code::addArgument(string ref,
 
     if (!shortOpt.empty() && !longOpt.empty())
     {
-        printHelpMethodCode += "myPrint(\"-" + shortOpt + ", --" + longOpt + "\\n\", signPerLine);\n";
+        printHelpMethodCode += "myPrint(\"-" + shortOpt + ", --" + longOpt + "\\n\", getValueOfsignperline());\n";
     } // Die Description wird an einen globalen string hinzugefügt für die printHelp Methode
 
     if (shortOpt.empty() && !longOpt.empty())
     {
-        printHelpMethodCode += "myPrint(\"--" + longOpt + "\\n\", signPerLine);\n";
+        printHelpMethodCode += "myPrint(\"--" + longOpt + "\\n\", getValueOfsignperline());\n";
     }
 
     if (!shortOpt.empty() && longOpt.empty())
     {
-        printHelpMethodCode += "myPrint(\"--" + shortOpt + "\\n\", " + signPerLine + ");\n";
+        printHelpMethodCode += "myPrint(\"--" + shortOpt + "\\n\",  getValueOfsignperline());\n";
     }
 
-    printHelpMethodCode += "myPrint(\"\t" + description + "\\n\\n\", signPerLine);\n";
+    printHelpMethodCode += "myPrint(\"  " + description + "\\n\\n\", getValueOfsignperline());\n";
 
     if (!interface.empty())
     {
-        globalVariables += "bool " + reference + "Bool;\n";
+
+        globalVariables += "bool isSet" + reference + "Bool;\n";
+
         internalMethod iM;
 
         iM.methodName = "isSet" + reference;
 
-        iM.methodCode = "return " + reference + "Bool;\n";
+        iM.methodCode = "return isSet" + reference + "Bool;\n";
         iM.returnType = "bool";
 
         internalMethods.push_back(iM);
@@ -799,26 +855,26 @@ void Code::addArgument(string ref,
             {
                 additionalParamVarName = reference + "Bool";
                 internalMethod iM;
-                iM.returnType = "int";
+                iM.returnType = "bool";
                 // iM.methodCode = "return bool" + interface + ";";
 
-                iM.methodCode = "if(" + reference + "Param == \"true\" || == \"1\")\n"
-                                                    "{\n" +
+                iM.methodCode = "if(" + reference + "Param == \"true\" || " + reference + "Param == \"1\")\n"
+                                                                                          "{\n" +
                                 reference + "Bool = true;\n"
                                             "}\n"
                                             "else if(" +
                                 reference +
-                                "Param == \"false\" || == \"0\")\n"
-                                "{\n"
-                                "   " +
+                                "Param == \"false\" || " + reference + "Param == \"0\")\n"
+                                                                       "{\n"
+                                                                       "   " +
                                 reference + "Bool = false;\n"
                                             "}\n"
                                             "else\n"
                                             "{\n"
                                             "cerr << \"bool wurde nicht im korrekten Format angegeben, erlaubt ist [true/1][false/0]! \" << endl;\n"
                                             "}\n"
-                                            "return bool " +
-                                reference + ";\n";
+                                            "return " +
+                                reference + "Bool;\n";
 
                 iM.methodName = "getValueOf" + reference;
                 internalMethods.push_back(iM);
@@ -856,7 +912,7 @@ void Code::addArgument(string ref,
 
         iM.returnType = "bool";
 
-        iM.methodCode = "return " + boolIsSetName + ";";
+        iM.methodCode = "return isSet" + reference + "Bool;";
 
         internalMethods.push_back(iM);
     }
@@ -872,7 +928,7 @@ void Code::addArgument(string ref,
         {
             eM.expectedVars = "int a";
         }
-        else if (convertTo == "bool")
+        else if (convertTo == "Bool")
         {
             eM.expectedVars = "bool b";
         }
@@ -902,7 +958,7 @@ void Code::addArgument(string ref,
                               "(signperlineInt);\n"); ///############################HARD CODED nicht gut
             if (!interface.empty())
             {
-                actOnArgs.addText(reference + "Bool = true;\n");
+                actOnArgs.addText("isSet" + reference + "Bool = true;\n");
             }
         }
         else if (hasArguments != "")
@@ -928,7 +984,7 @@ void Code::addArgument(string ref,
             actOnArgs.addText(connectToInternalMethod + "(" + additionalParamVarName + ");\n");
             if (!interface.empty())
             {
-                actOnArgs.addText(reference + "Bool = true;\n");
+                actOnArgs.addText("isSet" + reference + "Bool = true;\n");
             }
         }
     }
@@ -938,14 +994,15 @@ void Code::addArgument(string ref,
                           " erfolgreich übergeben!\" << endl;\n"); // Feedback print, wenn ein Argument angegeben wurde
         if (interface != "")
         {
-            actOnArgs.addText(reference + "Bool = true;\n");
+            actOnArgs.addText("isSet" + reference + "Bool = true;\n");
         }
         if (!hasArguments.empty())
         {
-            actOnArgs.addText("cout << \"Zusätzliche Argumente:\" << " + reference +
-                              "Str << endl;\n"); // Zusätzliche Argumente zur Überprüfung mit ausgeben
             actOnArgs.addText(reference + "Param = " + reference + "Str;\n");
-            actOnArgs.addText((boolIsSetName + " = true;\n"));
+            actOnArgs.addText("cout << \"Zusätzliche Argumente:\" << getValueOf" + reference +
+                              "() << endl;\n"); // Zusätzliche Argumente zur Überprüfung mit ausgeben
+
+            actOnArgs.addText(("isSet" + reference + "Bool = true;\n"));
         }
     }
 

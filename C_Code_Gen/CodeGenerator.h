@@ -10,9 +10,9 @@
 
 using namespace std;
 
-/// This is the brief description for this class.
-///
-/// This is the detailed description. More Stuff here.
+/// Code ist eine Klasse um übersichtlicher und verständlicher Code generieren zu können
+/// Dabei wurden verschiedene Funktionen für Code-Strukturen, die man generieren möchte
+/// erstellt, um diese einfacher aber auch mit eigenen Werten generieren zu können
 class Code
 {
     /*
@@ -87,12 +87,14 @@ class Code
 
         namespaceString = "using namespace std;\n",
 
-           globalVariables = "",
+           globalVariables = "string tempString;",
            variableDefinitions = "vector<int> exclusions;\n" /////variableDefinitions////
                                  "int exitArg = 0;\n"        // Hier wird der String mit allen Variablen Deklarationen gespeichert
                                  "int noRef = -1;\n"
                                  "string refValues[63];\n"
-                                 "vector<string> additionalParams;\n",
+                                 "vector<string> additionalParams;\n"
+                                 "vector<vector<string>> exclusionValuesSorted;\n"
+                                 "vector<string> argumentnames;\n",
 
            returnIfWrongArgs = "if(exitArg > 0)\n"           ////returnIfWrongArgs*////
                                "{\n"                         // If-Else Code, um das den Argument-Parser zu beenden,
