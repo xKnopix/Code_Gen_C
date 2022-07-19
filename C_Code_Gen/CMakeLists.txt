@@ -14,6 +14,8 @@ message("Xerces Libs " ${XercesC_LIBRARIES})
 
 add_executable (C_Code_Gen "main.cpp" "pugixml-1.12/src/pugixml.cpp" "xml_parser.cpp" "xml_parser.h" "CodeGenerator.cpp" "CodeGenerator.h" "check.cpp" "check.h" "mainGenerator.cpp" "mainGenerator.h" "CMakeGen.h" "CMakeGen.cpp")
 
+target_link_libraries(C_Code_Gen XercesC::XercesC)
+
 if (WIN32)
 	configure_file("Example.xml" "Debug/Example.xml")
   configure_file("Example.xml" "Example.xml")
