@@ -11,8 +11,6 @@
 using namespace std;
 
 /// Code ist eine Klasse um übersichtlicher und verständlicher Code generieren zu können
-/// Dabei wurden verschiedene Funktionen für Code-Strukturen, die man generieren möchte
-/// erstellt, um diese einfacher aber auch mit eigenen Werten generieren zu können
 class Code
 {
     /*
@@ -94,6 +92,7 @@ class Code
                                  "string refValues[63];\n"
                                  "vector<string> additionalParams;\n"
                                  "vector<vector<string>> exclusionValuesSorted;\n"
+                                 "vector<string> refValuesSorted;\n"
                                  "vector<string> argumentnames;\n",
 
            returnIfWrongArgs = "if(exitArg > 0)\n"           ////returnIfWrongArgs*////
