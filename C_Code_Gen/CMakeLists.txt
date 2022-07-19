@@ -7,6 +7,9 @@ cmake_minimum_required (VERSION 3.8)
 if (UNIX)
 	set(CMAKE_PREFIX_PATH "/opt/xerces-c")
 endif (UNIX)
+if (WIN32)
+  set(CMAKE_PREFIX_PATH "C/xerces-c")
+endif (WIN32)
 
 find_package(XercesC REQUIRED)
 
