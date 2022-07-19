@@ -429,29 +429,6 @@ void Code::addArgument(string ref,
                        string defaultValue,            // DONE
                        string connectToExternalMethod) // Funktion, die alle Argumente aus der xml annimmt
 {
-    /*cout << "********************************************" << endl;
-    cout << "ref: " << ref << endl;
-    cout << "shortOpt: " << shortOpt << endl;
-    cout << "longOpt: " << longOpt << endl;
-    cout << "exclusion: " << exclusion << endl;
-    cout << "connectToiM: " << connectToInternalMethod << endl;
-    cout << "connectToeM: " << connectToExternalMethod << endl;
-    cout << "description: " << description << endl;
-    cout << "interface: " << interface << endl;
-    cout << "hasArguments: " << hasArguments << endl;
-    cout << "convertTo: " << convertTo << endl;
-    cout << "defaultValue: " << defaultValue << endl;
-    cout << "********************************************" << endl;*/
-    /*
-     * Es wird zunächst ein String generiert, welcher in eine if-Abfrage eingefügt werden kann, um zu überprüfen,
-     * ob das aktuelle Argument der Iteration dem gewünschten String entspricht (shortOpt/longOpt)
-     *
-     * Wenn "exclusion" gesetzt wurde, wir der übergeben String bei dem char ',' aufgetrennt
-     * und es wird Code generiert, welcher nun prüft, ob die gesetzten Exclusions bereits existieren.
-     * Anschließend wird Code generiert, welcher das Argument selbst "registriert" für zukünftige
-     * exclusion - checks.
-     */
-
     if (headerFileName.empty())
     {
         std::cerr << "Es muss ein Name für die Header-Datei in der XML-Datei angegeben werden!" << endl;
@@ -470,8 +447,6 @@ void Code::addArgument(string ref,
     {
         reference = longOpt;
         reference.erase(remove(reference.begin(), reference.end(), '-'), reference.end()); // remove A from string
-        // std::cout << "lOpt: " << longOpt << ", reference: " << reference << endl;
-        // std::cout << "found '-' in " << longOpt << endl;
     }
     else if (interface != "")
     {
@@ -552,6 +527,25 @@ void Code::addArgument(string ref,
         tempCode += "};\n";
 
         // Die Exclusions wurden überprüft
+
+        tempCode += "for (int m = 0; m < localExclusions.size(); m++)";
+        tempCode += "\n{";
+
+        tempCode += "for(int k = 0; k < refValuesSorted.size(); k++)";
+        tempCode += "\n{";
+
+        tempCode += "if(refValuesSorted[k] == localExclusions[m])";
+        tempCode += "\n{";
+
+        tempCode += "cout << \"--" + reference + " ist nicht erlaubt mit \" + argumentnames[k];";
+        tempCode += "\nexit(EXIT_FAILURE);";
+
+        tempCode += "\n}\n}\n}";
+
+        tempCode += "exclusionValuesSorted.push_back(localExclusions);\n";
+
+        tempCode += "argumentnames.push_back(\"--" + reference + "\");\n"; // hier löschen
+
         if (ref != "")
         {
             tempCode += "for (int j = 0; j < exclusionValuesSorted.size(); j++)";
@@ -571,25 +565,12 @@ void Code::addArgument(string ref,
         {
             tempCode += "refValuesSorted.push_back(\"x\");\n";
         }
-
-        tempCode += "for (int m = 0; m < localExclusions.size(); m++)";
-        tempCode += "\n{";
-
-        tempCode += "for(int k = 0; k < refValuesSorted.size(); k++)";
-        tempCode += "\n{";
-
-        tempCode += "if(refValuesSorted[k] == localExclusions[m])";
-        tempCode += "\n{";
-
-        tempCode += "cout << \"--" + reference + " ist nicht erlaubt mit \" + argumentnames[k];";
-        tempCode += "\nexit(EXIT_FAILURE);";
-
-        tempCode += "\n}\n}\n}";
-
-        tempCode += "exclusionValuesSorted.push_back(localExclusions);\n";
-
-        tempCode += "argumentnames.push_back(\"--" + reference + "\");\n";
         // Code zur Vektor-Generierung ist erstellt
+
+        if (hasArguments == "")
+        {
+            tempCode += "\n}";
+        }
         exclCode.addText(tempCode); // Code wird in in den Code zur Exclusion-Überprüfung eingefügt
 
         exclusionCheck += ifStateStart;
@@ -616,17 +597,24 @@ void Code::addArgument(string ref,
 
         exclusionCheck += "for(int r = 0; r < exclusionValuesSorted.size(); r++)";
         exclusionCheck += "\n{";
-        exclusionCheck += "if(to_string(" + ref + ") == exclusionValuesSorted[r])";
+        exclusionCheck += "vector<string> temp = exclusionValuesSorted[r];\n";
+
+        exclusionCheck += "for(int q = 0; q < temp.size(); q++)";
+        exclusionCheck += "{\n";
+
+        exclusionCheck += "if(to_string(" + ref + ") == temp[q])";
+        exclusionCheck += "\n{";
         exclusionCheck += "cout << \"--" + reference + " ist nicht erlaubt mit \" + argumentnames[r];";
         exclusionCheck += "\n}";
 
-        exclusionCheck += "vector<string> temp = {\"x\"};\n";
+        exclusionCheck += "}\n";
+
+        exclusionCheck += "\n}\n";
+        exclusionCheck += "vector<string> tempVec = {\"x\"};\n";
         exclusionCheck += "refValuesSorted.push_back(to_string(" + ref + "));\n";
-        exclusionCheck += "exclusionValuesSorted.push_back(temp);\n";
+        exclusionCheck += "exclusionValuesSorted.push_back(tempVec);\n";
 
         exclusionCheck += "argumentnames.push_back(\"--" + reference + "\");\n";
-        exclusionCheck += "\n}";
-
         // exclCode.addText(tempCode);
     }
     ///////////////////////////////////////////////////////////////////////////
