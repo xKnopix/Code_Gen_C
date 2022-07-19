@@ -8,7 +8,7 @@ if (UNIX)
 	set(CMAKE_PREFIX_PATH "/opt/xerces-c")
 endif (UNIX)
 if (WIN32)
-  set(CMAKE_PREFIX_PATH "C/xerces-c")
+  # set(CMAKE_PREFIX_PATH "C/xerces-c")
 endif (WIN32)
 
 find_package(XercesC REQUIRED)

@@ -594,7 +594,8 @@ void Code::addArgument(string ref,
     }
     if (ref != "" && exclusion == "")
     {
-
+        exclusionCheck += "if(" + nameCheckBool + ")";
+        exclusionCheck += "\n{";
         exclusionCheck += "for(int r = 0; r < exclusionValuesSorted.size(); r++)";
         exclusionCheck += "\n{";
         exclusionCheck += "vector<string> temp = exclusionValuesSorted[r];\n";
@@ -604,7 +605,8 @@ void Code::addArgument(string ref,
 
         exclusionCheck += "if(to_string(" + ref + ") == temp[q])";
         exclusionCheck += "\n{";
-        exclusionCheck += "cout << \"--" + reference + " ist nicht erlaubt mit \" + argumentnames[r];";
+        exclusionCheck += "cout << \"--" + reference + " ist nicht erlaubt mit \" + argumentnames[r] << endl;";
+        exclusionCheck += "exit(EXIT_FAILURE);";
         exclusionCheck += "\n}";
 
         exclusionCheck += "}\n";
@@ -615,6 +617,7 @@ void Code::addArgument(string ref,
         exclusionCheck += "exclusionValuesSorted.push_back(tempVec);\n";
 
         exclusionCheck += "argumentnames.push_back(\"--" + reference + "\");\n";
+        exclusionCheck += "\n}";
         // exclCode.addText(tempCode);
     }
     ///////////////////////////////////////////////////////////////////////////

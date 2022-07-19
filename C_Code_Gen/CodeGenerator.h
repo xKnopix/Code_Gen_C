@@ -90,7 +90,10 @@ class Code
                                  "int exitArg = 0;\n"        // Hier wird der String mit allen Variablen Deklarationen gespeichert
                                  "int noRef = -1;\n"
                                  "string refValues[63];\n"
-                                 "vector<string> additionalParams;\n",
+                                 "vector<string> additionalParams;\n"
+                                 "vector<string> argumentnames;\n"
+                                 "vector<string> refValuesSorted;\n"
+                                 "vector<vector<string>> exclusionValuesSorted;\n",
 
            returnIfWrongArgs = "if(exitArg > 0)\n"           ////returnIfWrongArgs*////
                                "{\n"                         // If-Else Code, um das den Argument-Parser zu beenden,
