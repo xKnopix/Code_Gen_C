@@ -3,10 +3,34 @@
 
 #include "xml_parser.h"
 
+/// Diese Klasse ist da um zu überprüfen ob in der XML alles angegeben wurde und die Daten zu sortieren
 class check
 {
 public:
+    ///Diese Methode wird aufgerufen um ein datenOpjekt (des Typs GetOptSetup) auf vollständigkeit zu überpüfen
+    ///@param data daten Objekt des Typs xml_parser::GetOptSetup
+    ///@return 1 wenn alles gut ist und -1 wenn etwas fehlt
+    /// \n **Beispiel Anwendung:**
+    /// ~~~~~~~~~~~~~~~~~~~~~~~~~.cpp
+    /// #include "check.h"
+    ///
+    /// check c;
+    /// c.check_data(data);
+    /// ~~~~~~~~~~~~~~~~~~~~~~~~~
+    ///@author Michael  
     int check_data(xml_parser::GetOptSetup data);
+    ///Diese Methode wird aufgerufen um ein datenOpjekt (des Typs GetOptSetup) nach dem Alphabet zu Sortieren
+    ///Es wird hier bei nach shortOpt sortiert und wenn es kein shortOpt gibt, nach LongOpt
+    ///@param xml_parser::GetOptSetup data daten Objekt des Typs xml_parser::GetOptSetup
+    ///@return xml_parser::GetOptSetup data in sortierter Reienfolge 
+    /// \n **Beispiel Anwendung:**
+    /// ~~~~~~~~~~~~~~~~~~~~~~~~~.cpp
+    ///#include "check.h"
+    ///
+    /// check c;
+    /// xml_parser::GetOptSetup data = c.sortData(data);
+    /// ~~~~~~~~~~~~~~~~~~~~~~~~~
+    ///@author Michael 
     xml_parser::GetOptSetup sortData(xml_parser::GetOptSetup data);
 private:
     int check_author(xml_parser::Author);

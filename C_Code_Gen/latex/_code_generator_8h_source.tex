@@ -1,0 +1,200 @@
+\hypertarget{_code_generator_8h_source}{}\doxysection{Code\+Generator.\+h}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef CODEGEN\_H}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define CODEGEN\_H}}
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include <iostream>}}
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include <vector>}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include <fstream>}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include <string>}}
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#include <algorithm>}}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#include "{}xml\_parser.h"{}}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{keyword}{using namespace }std;}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{14 \textcolor{keyword}{class }\mbox{\hyperlink{class_code}{Code}}}
+\DoxyCodeLine{15 \{}
+\DoxyCodeLine{16     \textcolor{comment}{/*}}
+\DoxyCodeLine{17 \textcolor{comment}{     * Diese Klasse soll dazu dienen, einfacher und überischtlicher}}
+\DoxyCodeLine{18 \textcolor{comment}{     * ein Programm zu schreiben, welches als output c++ Code hat}}
+\DoxyCodeLine{19 \textcolor{comment}{     *}}
+\DoxyCodeLine{20 \textcolor{comment}{     *}}
+\DoxyCodeLine{21 \textcolor{comment}{     *}}
+\DoxyCodeLine{22 \textcolor{comment}{     *}}
+\DoxyCodeLine{23 \textcolor{comment}{     *}}
+\DoxyCodeLine{24 \textcolor{comment}{     *}}
+\DoxyCodeLine{25 \textcolor{comment}{     */}}
+\DoxyCodeLine{26 }
+\DoxyCodeLine{27     \textcolor{keyword}{struct }internalMethod         }
+\DoxyCodeLine{28     \{                             \textcolor{comment}{// In diesem Struct werden Informationen zu einer internen Methode gespeichert}}
+\DoxyCodeLine{29         \textcolor{keywordtype}{string} methodName = \textcolor{stringliteral}{"{}"{}};   }
+\DoxyCodeLine{30                                   \textcolor{comment}{// der Name der Methode, welcher auch beim Aufruf genutzt wird, OHNE KLAMMERN}}
+\DoxyCodeLine{31         \textcolor{keywordtype}{string} methodCode = \textcolor{stringliteral}{"{}"{}};   }
+\DoxyCodeLine{32                                   \textcolor{comment}{// der Code, welcher von der Methode ausgeführt werden soll}}
+\DoxyCodeLine{33         \textcolor{keywordtype}{string} methodEnd = \textcolor{stringliteral}{"{}\}\(\backslash\)n"{}}; }
+\DoxyCodeLine{34                                   \textcolor{comment}{// String für die Lesbarkeit, beinhaltet lediglich "{}\}"{} um die Methode abzuschließen}}
+\DoxyCodeLine{35         \textcolor{keywordtype}{string} returnType = \textcolor{stringliteral}{"{}void"{}};}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37         \textcolor{keywordtype}{string} expectedVars = \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{38     \};}
+\DoxyCodeLine{39 }
+\DoxyCodeLine{40     \textcolor{keyword}{struct }externalMethod       }
+\DoxyCodeLine{41     \{                           \textcolor{comment}{// In diesem Struct werden Informationen zu einer internen Methode gespeichert}}
+\DoxyCodeLine{42         \textcolor{keywordtype}{string} methodName = \textcolor{stringliteral}{"{}"{}}; }
+\DoxyCodeLine{43         \textcolor{comment}{// der Name der Methode, welcher auch beim Aufruf genutzt wird, OHNE KLAMMERN}}
+\DoxyCodeLine{44         \textcolor{comment}{// string methodCode = "{}"{};                                                                                             ////methodCode////}}
+\DoxyCodeLine{45         \textcolor{comment}{// der Code, welcher von der Methode ausgeführt werden soll}}
+\DoxyCodeLine{46         \textcolor{comment}{// string methodEnd = "{}\}\(\backslash\)n"{};                                                                                           ////methodEnd////}}
+\DoxyCodeLine{47         \textcolor{comment}{// String für die Lesbarkeit, beinhaltet lediglich "{}\}"{} um die Methode abzuschließen}}
+\DoxyCodeLine{48         \textcolor{keywordtype}{string} returnType = \textcolor{stringliteral}{"{}void"{}};}
+\DoxyCodeLine{49 }
+\DoxyCodeLine{50         \textcolor{keywordtype}{string} expectedVars = \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{51     \};}
+\DoxyCodeLine{52 }
+\DoxyCodeLine{53     \textcolor{comment}{// Deklaration aller Strings, die benötigt werden, um den c++ Code zu generieren}}
+\DoxyCodeLine{54     \textcolor{keywordtype}{string} headerFileName = \textcolor{stringliteral}{"{}NewFile.h"{}}, }
+\DoxyCodeLine{55                                          \textcolor{comment}{// der Name des zu generierenden H-\/Datei}}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{57         sourceFileName = \textcolor{stringliteral}{"{}noSourceFileName"{}},}
+\DoxyCodeLine{58 }
+\DoxyCodeLine{59            nameSpace = \textcolor{stringliteral}{"{}noNameSpace"{}},}
+\DoxyCodeLine{60 }
+\DoxyCodeLine{61            className = \textcolor{stringliteral}{"{}noClassname"{}},}
+\DoxyCodeLine{62 }
+\DoxyCodeLine{63            signPerLine = \textcolor{stringliteral}{"{}79"{}},}
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65            helpMethod = \textcolor{stringliteral}{"{}"{}},}
+\DoxyCodeLine{66 }
+\DoxyCodeLine{67            sampleUsage = \textcolor{stringliteral}{"{}"{}},}
+\DoxyCodeLine{68 }
+\DoxyCodeLine{69            author = \textcolor{stringliteral}{"{}anonymous"{}},}
+\DoxyCodeLine{70 }
+\DoxyCodeLine{71            boolIsSetName = \textcolor{stringliteral}{"{}"{}},}
+\DoxyCodeLine{72 }
+\DoxyCodeLine{73            additionalParamVarName = \textcolor{stringliteral}{"{}"{}},}
+\DoxyCodeLine{74 }
+\DoxyCodeLine{75            unknownOptionMethodCall = \textcolor{stringliteral}{"{}unknownOption(argv[i]);"{}},}
+\DoxyCodeLine{76 }
+\DoxyCodeLine{77            filename = \textcolor{stringliteral}{"{}newFile"{}}, \textcolor{comment}{// optional damit kiene fehler kommen}}
+\DoxyCodeLine{78 }
+\DoxyCodeLine{79         printHelpMethodCode, }
+\DoxyCodeLine{80                              \textcolor{comment}{// Code, der in die printHelp Methode eingesetzt wird}}
+\DoxyCodeLine{81 }
+\DoxyCodeLine{82         includesString = \textcolor{stringliteral}{"{}\#include <string>\(\backslash\)n"{}}   }
+\DoxyCodeLine{83                          \textcolor{stringliteral}{"{}\#include <iostream>\(\backslash\)n"{}} \textcolor{comment}{// Alle includes, die eventuell benötigt werden,}}
+\DoxyCodeLine{84                          \textcolor{stringliteral}{"{}\#include <vector>\(\backslash\)n"{}},  \textcolor{comment}{// im generierten Argument-\/Parser}}
+\DoxyCodeLine{85 }
+\DoxyCodeLine{86         namespaceString = \textcolor{stringliteral}{"{}using namespace std;\(\backslash\)n"{}},}
+\DoxyCodeLine{87 }
+\DoxyCodeLine{88            globalVariables = \textcolor{stringliteral}{"{}"{}},}
+\DoxyCodeLine{89            variableDefinitions = \textcolor{stringliteral}{"{}vector<int> exclusions;\(\backslash\)n"{}} }
+\DoxyCodeLine{90                                  \textcolor{stringliteral}{"{}int exitArg = 0;\(\backslash\)n"{}}        \textcolor{comment}{// Hier wird der String mit allen Variablen Deklarationen gespeichert}}
+\DoxyCodeLine{91                                  \textcolor{stringliteral}{"{}int noRef = -\/1;\(\backslash\)n"{}}}
+\DoxyCodeLine{92                                  \textcolor{stringliteral}{"{}string refValues[63];\(\backslash\)n"{}}}
+\DoxyCodeLine{93                                  \textcolor{stringliteral}{"{}vector<string> additionalParams;\(\backslash\)n"{}},}
+\DoxyCodeLine{94 }
+\DoxyCodeLine{95            returnIfWrongArgs = \textcolor{stringliteral}{"{}if(exitArg > 0)\(\backslash\)n"{}}           }
+\DoxyCodeLine{96                                \textcolor{stringliteral}{"{}\{\(\backslash\)n"{}}                         \textcolor{comment}{// If-\/Else Code, um das den Argument-\/Parser zu beenden,}}
+\DoxyCodeLine{97                                \textcolor{stringliteral}{"{}cout << \(\backslash\)"{}EXIT\(\backslash\)"{} << endl;\(\backslash\)n"{}} \textcolor{comment}{// falls beim parsen der Argumente ein Fehler aufgetreten}}
+\DoxyCodeLine{98                                \textcolor{stringliteral}{"{}return;\(\backslash\)n"{}}                   \textcolor{comment}{// ist}}
+\DoxyCodeLine{99                                \textcolor{stringliteral}{"{}\}\(\backslash\)n"{}},}
+\DoxyCodeLine{100 }
+\DoxyCodeLine{101            exclusionCheck, }
+\DoxyCodeLine{102                            \textcolor{comment}{// String, in welchem eine For-\/Schleife gespeichert wird,}}
+\DoxyCodeLine{103                            \textcolor{comment}{// in welcher Alle übergebenen Argumente durchgegangen werden}}
+\DoxyCodeLine{104                            \textcolor{comment}{// und auf ungültige kombinationen geprüft werden}}
+\DoxyCodeLine{105 }
+\DoxyCodeLine{106         pathRequiredCheck, }
+\DoxyCodeLine{107                            \textcolor{comment}{// Wenn bei einem Argument hasArguments auf 'required' gesetzt ist}}
+\DoxyCodeLine{108                            \textcolor{comment}{// wird in diesem String Code gespeichert, der überprüft, ob das nächste}}
+\DoxyCodeLine{109                            \textcolor{comment}{// Argument mit '-\/-\/' anfängt, wenn ja, wird das Programm abgebrochen und}}
+\DoxyCodeLine{110                            \textcolor{comment}{// es gibt einen fehler aus, da nur die 'Haupt-\/Argumente' mit '-\/-\/' anfangen sollen}}
+\DoxyCodeLine{111 }
+\DoxyCodeLine{112         convertToInt, }
+\DoxyCodeLine{113                       \textcolor{comment}{// Hier wird der Code gespeichert, in welchem in einem Try-\/Catch-\/Block}}
+\DoxyCodeLine{114                       \textcolor{comment}{// probiert wird, den übergebenen String in einen Integer umzuwandeln}}
+\DoxyCodeLine{115 }
+\DoxyCodeLine{116         code, }
+\DoxyCodeLine{117               \textcolor{comment}{// String, in dem der zu generierende Code bei einer Instanziierung von Code()}}
+\DoxyCodeLine{118               \textcolor{comment}{// gespeichert wird}}
+\DoxyCodeLine{119 }
+\DoxyCodeLine{120         forLoopAllArgsStart = \textcolor{stringliteral}{"{}for(int i = 1; i<argc; i++)\(\backslash\)n\{\(\backslash\)n"{}}, }
+\DoxyCodeLine{121         forLoopAllArgsClose = \textcolor{stringliteral}{"{}\}\(\backslash\)n"{}},                              \textcolor{comment}{// Für bessere Lesbarkeit generierte Strings, welche den Anfang und das Ende}}
+\DoxyCodeLine{122                                                                   \textcolor{comment}{// einer For-\/Schleife enthalten, welche einemal alle, beim Programmaufruf}}
+\DoxyCodeLine{123                                                                   \textcolor{comment}{//übergebenen Argumente durch-\/iteriert}}
+\DoxyCodeLine{124 }
+\DoxyCodeLine{125         handleArgs = forLoopAllArgsStart; }
+\DoxyCodeLine{126                                           \textcolor{comment}{// In handleArgs wird eine 2. For-\/Schliefe gespeichert, welche nach dem}}
+\DoxyCodeLine{127                                           \textcolor{comment}{// die Argumente auf ihre Korrektheit überprüft wurden nochmals alle Argumente}}
+\DoxyCodeLine{128                                           \textcolor{comment}{// durch-\/iteriert und nun auf die übergebenen Argumente reagiert.}}
+\DoxyCodeLine{129 }
+\DoxyCodeLine{130     \textcolor{comment}{// Deklaration aller Vektoren}}
+\DoxyCodeLine{131     vector<internalMethod> internalMethods; }
+\DoxyCodeLine{132                                             \textcolor{comment}{// In diesem Vector werden alle Instanzen des Structs internalMethod gespeichert}}
+\DoxyCodeLine{133 }
+\DoxyCodeLine{134     vector<externalMethod> externalMethods;}
+\DoxyCodeLine{135     internalMethod iM;}
+\DoxyCodeLine{136 }
+\DoxyCodeLine{137     \textcolor{keywordtype}{bool} authorCodeAdded = \textcolor{keyword}{false};}
+\DoxyCodeLine{138 }
+\DoxyCodeLine{139 \textcolor{keyword}{public}:}
+\DoxyCodeLine{142     \mbox{\hyperlink{class_code_a3605683bd8fd54691437ff05ba4431b9}{Code}}();}
+\DoxyCodeLine{143 }
+\DoxyCodeLine{145     \mbox{\hyperlink{class_code_a3605683bd8fd54691437ff05ba4431b9}{Code}}(\textcolor{keywordtype}{string} sourceFileName, \textcolor{keywordtype}{string} headerFileName, \textcolor{keywordtype}{string} nameSpace, \textcolor{keywordtype}{string} className, \textcolor{keywordtype}{string} signPerLine, \textcolor{keywordtype}{string} sampleUsage, \textcolor{keywordtype}{string} author);}
+\DoxyCodeLine{146 }
+\DoxyCodeLine{147     \textcolor{comment}{// Alle Methoden mit dem Rückgabewert 'void'}}
+\DoxyCodeLine{148 }
+\DoxyCodeLine{169     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_code_a2f9ba083d2aa80114532f79396359fec}{addText}}(\textcolor{keywordtype}{string} s);}
+\DoxyCodeLine{170     \textcolor{comment}{//\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{171 }
+\DoxyCodeLine{191     \textcolor{keywordtype}{string} \mbox{\hyperlink{class_code_a13b54e149cade63e97e0090f8a7ce5d1}{getCode}}();}
+\DoxyCodeLine{192     \textcolor{comment}{//\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{193 }
+\DoxyCodeLine{220     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_code_abf338f12af0e2e0a6c5a3c351ff2451a}{startForLoop}}(\textcolor{keywordtype}{string} s);}
+\DoxyCodeLine{221     \textcolor{comment}{//\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{222 }
+\DoxyCodeLine{246     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_code_ae850f4ffc6c2b4f37482e47ee6895067}{endForLoop}}();}
+\DoxyCodeLine{247     \textcolor{comment}{//\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{248 }
+\DoxyCodeLine{278     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_code_aabaa5ec8ac80e749d9f7681c3a839d76}{startIf}}(\textcolor{keywordtype}{string} s);}
+\DoxyCodeLine{279     \textcolor{comment}{//\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{280 }
+\DoxyCodeLine{307     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_code_ab76eee9b12531825c85391b72628597d}{endIf}}();}
+\DoxyCodeLine{308     \textcolor{comment}{//\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{309 }
+\DoxyCodeLine{327     \textcolor{keywordtype}{string} \mbox{\hyperlink{class_code_ae0d03d1735f1c3592c8a1a073306afc7}{capitalizeString}}(\textcolor{keywordtype}{string} s);}
+\DoxyCodeLine{328     \textcolor{comment}{//\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{329 }
+\DoxyCodeLine{346     \textcolor{keywordtype}{string} \mbox{\hyperlink{class_code_af915046d059839dc96b2b35e80c3ef73}{finalHeaderCode}}(\mbox{\hyperlink{structxml__parser_1_1_get_opt_setup}{xml\_parser::GetOptSetup}} data);}
+\DoxyCodeLine{347     \textcolor{comment}{//\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{348 }
+\DoxyCodeLine{365     \textcolor{keywordtype}{string} \mbox{\hyperlink{class_code_abfdcd7841df90d972b8592d16fa1e133}{finalCode}}(\mbox{\hyperlink{structxml__parser_1_1_get_opt_setup}{xml\_parser::GetOptSetup}} data);}
+\DoxyCodeLine{366     \textcolor{comment}{//\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{367 }
+\DoxyCodeLine{398     \textcolor{keywordtype}{string} \mbox{\hyperlink{class_code_a82f0521c58f058218c70370b225480c3}{createInternalMethods}}(\mbox{\hyperlink{structxml__parser_1_1_get_opt_setup}{xml\_parser::GetOptSetup}} data);}
+\DoxyCodeLine{399     \textcolor{comment}{//\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{400 }
+\DoxyCodeLine{429     vector<string> \mbox{\hyperlink{class_code_a423237a7f7d318c9632a588144bd68e3}{split}}(\textcolor{keywordtype}{string} str, \textcolor{keywordtype}{char} seperator);}
+\DoxyCodeLine{430     \textcolor{comment}{//\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{431 }
+\DoxyCodeLine{444     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_code_a1049930b594b0c2a1aba2bcdf36b086f}{parse}}(\mbox{\hyperlink{structxml__parser_1_1_get_opt_setup}{xml\_parser::GetOptSetup}} data);}
+\DoxyCodeLine{445     \textcolor{comment}{//\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{446 }
+\DoxyCodeLine{469     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_code_ab5e0a54ed9339d8a932fcc817a808db8}{addArgument}}(\textcolor{keywordtype}{string} ref = \textcolor{stringliteral}{"{}"{}},}
+\DoxyCodeLine{470                      \textcolor{keywordtype}{string} shortOpt = \textcolor{stringliteral}{"{}"{}},}
+\DoxyCodeLine{471                      \textcolor{keywordtype}{string} longOpt = \textcolor{stringliteral}{"{}"{}},}
+\DoxyCodeLine{472                      \textcolor{keywordtype}{string} exclusion = \textcolor{stringliteral}{"{}"{}}, \textcolor{comment}{// DONE}}
+\DoxyCodeLine{473                      \textcolor{keywordtype}{string} connectToInternalMethod = \textcolor{stringliteral}{"{}"{}},}
+\DoxyCodeLine{474                      \textcolor{keywordtype}{string} description = \textcolor{stringliteral}{"{}"{}},}
+\DoxyCodeLine{475                      \textcolor{keywordtype}{string} interface = \textcolor{stringliteral}{"{}"{}},}
+\DoxyCodeLine{476                      \textcolor{keywordtype}{string} hasArguments = \textcolor{stringliteral}{"{}"{}}, \textcolor{comment}{// DONE}}
+\DoxyCodeLine{477                      \textcolor{keywordtype}{string} convertTo = \textcolor{stringliteral}{"{}"{}},}
+\DoxyCodeLine{478                      \textcolor{keywordtype}{string} defaultValue = \textcolor{stringliteral}{"{}"{}},             \textcolor{comment}{// DONE}}
+\DoxyCodeLine{479                      \textcolor{keywordtype}{string} connectToExternalMethod = \textcolor{stringliteral}{"{}"{}}); \textcolor{comment}{// Funktion, die alle Argumente aus der xml annimmt}}
+\DoxyCodeLine{480 \};}
+\DoxyCodeLine{481 }
+\DoxyCodeLine{482 \textcolor{comment}{// int main();}}
+\DoxyCodeLine{483 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

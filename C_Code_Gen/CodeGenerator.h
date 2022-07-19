@@ -11,8 +11,6 @@
 using namespace std;
 
 /// This is the brief description for this class.
-///
-/// This is the detailed description. More Stuff here.
 class Code
 {
     /*
