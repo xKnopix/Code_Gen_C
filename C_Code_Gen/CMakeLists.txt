@@ -4,6 +4,9 @@
 cmake_minimum_required (VERSION 3.8)
 
 # Fügen Sie der ausführbaren Datei dieses Projekts eine Quelle hinzu.
+if (UNIX)
+	set(CMAKE_PREFIX_PATH "/opt/xerces-c")
+endif (UNIX)
 
 find_package(XercesC REQUIRED)
 
