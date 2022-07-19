@@ -10,6 +10,7 @@
 
 int main()
 {
+
     xml_parser x;
     xml_parser::GetOptSetup data = x.GetDataStrctFromXML("Example.xml");
 
