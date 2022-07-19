@@ -5,6 +5,13 @@ cmake_minimum_required (VERSION 3.8)
 
 # Fügen Sie der ausführbaren Datei dieses Projekts eine Quelle hinzu.
 
+find_package(XercesC REQUIRED)
+
+message("Foud Xerces? " ${XercesC_FOUND})
+message("Xerces Verion " ${XercesC_VERSION})
+message("Xerces Dirs " ${XercesC_INCLUDE_DIRS})
+message("Xerces Libs " ${XercesC_LIBRARIES})
+
 add_executable (C_Code_Gen "main.cpp" "pugixml-1.12/src/pugixml.cpp" "xml_parser.cpp" "xml_parser.h" "CodeGenerator.cpp" "CodeGenerator.h" "check.cpp" "check.h" "mainGenerator.cpp" "mainGenerator.h" "CMakeGen.h" "CMakeGen.cpp")
 
 if (WIN32)
