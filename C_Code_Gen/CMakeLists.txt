@@ -13,6 +13,10 @@ endif (WIN32)
 
 find_package(XercesC REQUIRED)
 
+if(!${XercesC_FOUND})
+  message("Xerces not Found!!! please use cmake -DCMAKE_PREFIX_PATH=\"path to xerces Root\"")
+endif(!${XercesC_FOUND})
+
 message("Foud Xerces? " ${XercesC_FOUND})
 message("Xerces Verion " ${XercesC_VERSION})
 message("Xerces Dirs " ${XercesC_INCLUDE_DIRS})
