@@ -15,7 +15,7 @@
 using namespace std;
 using namespace xercesc;
 
-class xml_parser{
+class xml_parserold{
 public:
     struct Author {
         std::string name;
