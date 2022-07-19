@@ -23,7 +23,7 @@ void mainGenerator::genMain(){
     
     this->output.append("int main(int argc, char *argv[]){\n\n");
     this->output.append("\tKlasse k;\n");
-    this->output.append("\tk.parse(argc, argv);\n");
+    this->output.append("\tk.parseOptions(argc, argv);\n");
     this->output.append("}");
 }
 
