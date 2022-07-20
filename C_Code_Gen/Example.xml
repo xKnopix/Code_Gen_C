@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <GetOptSetup SignPerLine="79">
-	<Author Name= "Michael" Phone="1" Mail="M@gmail.com" />
+	<Author Name= "Michael Hornstein, Jacob Hochbaum, Johannes Müssig, Jakob Irle, Linus Fallert" Phone="" Mail="Michael.hornstein9@icloud.com" />
 	<HeaderFileName>options.h</HeaderFileName>
 	<SourceFileName>options.cpp</SourceFileName>
-	<NameSpace>DHBW</NameSpace>
-	<ClassName>Test</ClassName>
+	<NameSpace>DHBW-Programmieren</NameSpace>
+	<ClassName>Beispiel_XML</ClassName>
 	<OverAllDescription>
 		<Block>Erstellt einen Rumpf zum einlesen von Argumenten aus der Kommandozeile.</Block>
 		<Block>Es kann sowohl mit innenliegenden Container wie externer Klassenanbindung eine Datenhaltung erfolgen.</Block>
@@ -17,11 +17,11 @@
 	</SampleUsage>
 	<Options>
 		<!-- Option help greift auf die interne Klasseninterne Methode printHelp zu. Ein gleichzeitiger Aufruf mit version und parse-only ist nicht erlaubt.  -->
-		<Option Ref = "63" LongOpt="test" ConnectToInternalMethod="printHelp"/> 
+		<Option Ref ="1" ShortOpt="h" LongOpt="help" ConnectToInternalMethod="printHelp"/> 
 		<!-- Option version greift auf die interne Klassenexterne (abstrakte) Methode printVersion zu. Ein gleichzeitiger Aufruf mit helpund parse-only  ist nicht erlaubt. -->
-		<Option Ref="2" ShortOpt="v" Interface="Version" Exclusion="63,3" ConnectToExternalMethod="printVersion" ConvertTo="Integer" Description="Gibt die Version des Programms aus und beendet" /> 
+		<Option Ref="2" ShortOpt="v" Interface="version" Exclusion="1,3" ConnectToExternalMethod="printVersion" ConvertTo="Integer" Description="Gibt die Version des Programms aus und beendet" /> 
 		<!-- Option out-path braucht ein zusätzliches Argument und schreibt auf einen Klassenintern generierten String das Argument. Die Option help, version und parse-only  darf nicht angegeben sein -->
-		<Option LongOpt="out-path" HasArguments="Required" Exclusion="63,2,3" Interface="OutputPath" Description="Der Pfad wo das Ergebnis hingenriert werden soll (sonst ins aktuelle Verzeichnis)" />
+		<Option LongOpt="out-path" HasArguments="Required" Exclusion="1,2,3" Interface="OutputPath" Description="Der Pfad wo das Ergebnis hingenriert werden soll (sonst ins aktuelle Verzeichnis)" />
 		<Option LongOpt="astyle-path" HasArguments="Required" Interface="AstylePath" Exclusion="1,2,3" Description="Der Pfad wo die Astyle executable gefunden werden kann" />
 		<!-- Option sign-per-line kann ein zusätzliches Argument übergeben werden und schreibt auf einen Klassenintern generierten Integer SignPerLine. Wenn kein Parameter übergeben wird ist der Defaultwert 79. Die Option help, version und parse-only darf nicht angegeben sein -->
 		<Option LongOpt="sign-per-line" HasArguments="optional" Interface="SignPerLine" Exclusion="1,2,3,63" ConvertTo="Integer" DefaultValue="79" Description="Die Anzahl der Zeichen pro Linie für den Helptext. Ohne Argument wird der Standartwert genommen." />
