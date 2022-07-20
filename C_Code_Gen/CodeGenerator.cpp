@@ -719,7 +719,7 @@ void Code::addArgument(string ref,
 
     } ////////////////////////////////////////////////////////////////////////
 
-    if (convertTo == "Bool")
+    if (convertTo == "Bool" || convertTo == "bool")
     {
         // std::cout << "convertToBool" << endl;
         if (defaultValue != "")
