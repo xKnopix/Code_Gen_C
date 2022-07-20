@@ -685,7 +685,7 @@ void Code::addArgument(string ref,
     }
 
     // Code Generierung für convertToInt mit try-catch
-    if (convertTo == "Integer")
+    if (convertTo == "Integer" || convertTo == "integer")
     {
         // variableDefinitions += "int " + interface + "Int = 0;\n";
         if (defaultValue != "")
@@ -791,7 +791,7 @@ void Code::addArgument(string ref,
                 globalVariables += "string " + reference + "Param = \"" + defaultValue + "\";\n";
                 additionalParamVarName = reference + "Param";
             }
-            if (convertTo == "Integer")
+            if (convertTo == "Integer" || convertTo == "integer")
             {
                 additionalParamVarName = reference + "Int";
                 internalMethod iM;
@@ -818,7 +818,7 @@ void Code::addArgument(string ref,
 
                 internalMethods.push_back(iM);
             }
-            else if (convertTo == "Bool")
+            else if (convertTo == "Bool" || convertTo == "bool")
             {
                 additionalParamVarName = reference + "Bool";
                 internalMethod iM;
@@ -891,11 +891,11 @@ void Code::addArgument(string ref,
         eM.methodName = connectToExternalMethod;
         eM.returnType = "virtual void";
 
-        if (convertTo == "Integer")
+        if (convertTo == "Integer" || convertTo == "integer")
         {
             eM.expectedVars = "int a";
         }
-        else if (convertTo == "Bool")
+        else if (convertTo == "Bool" || convertTo == "bool")
         {
             eM.expectedVars = "bool b";
         }
