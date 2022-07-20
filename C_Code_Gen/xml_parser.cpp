@@ -1,79 +1,139 @@
 #include "xml_parser.h"
 
 xml_parser::GetOptSetup xml_parser::GetDataStrctFromXML(std::string filename){
-    xml_document doc; //crates a xmldoc;
 
     xml_parser::GetOptSetup data;
 
-    xml_parse_result result = doc.load_file(filename.c_str()); //convert string to const char*
-    cout << "XML File load result: " << result.description() << endl;
-    xml_node GetOptSetup = doc.child("GetOptSetup");//config is new parent node
-    data.signPerLine = GetOptSetup.attribute("SignPerLine").value();
+    DOMDocument* doc = GetDomDocument(filename);
+    DOMElement*  rootNode = doc->getDocumentElement();
 
-    xml_node Author = GetOptSetup.child("Author");
-    xml_node HeaderFileName = GetOptSetup.child("HeaderFileName");
-    xml_node SourceFileName = GetOptSetup.child("SourceFileName");
-    xml_node NameSpace = GetOptSetup.child("NameSpace");
-    xml_node ClassName = GetOptSetup.child("ClassName");
-    xml_node OverAllDescription = GetOptSetup.child("OverAllDescription");
-    xml_node SampleUsage = GetOptSetup.child("SampleUsage");
-    xml_node Options = GetOptSetup.child("Options");
+    //Get sign perline
+    DOMNamedNodeMap *AttrMap = rootNode->getAttributes();
+    data.signPerLine = toCh(AttrMap->item(0)->getTextContent());
 
-    vector<xml_node> Blocks = getChildNodes(OverAllDescription, (pugi::char_t*)"Block");
-    vector<xml_node> Samples = getChildNodes(SampleUsage, (pugi::char_t*)"Sample");
-    vector<xml_node> Optionss = getChildNodes(Options, (pugi::char_t*)"Option");
+    DOMNodeList* Author = doc->getElementsByTagName(toXMLCh("Author")); //Alle Nodes die Author heißen
+    DOMNodeList* HeaderFileName = doc->getElementsByTagName(toXMLCh("HeaderFileName")); //Alle Nodes die HeaderFileName heißen
+    DOMNodeList* SourceFileName = doc->getElementsByTagName(toXMLCh("SourceFileName")); //Alle Nodes die SourceFileName heißen
+    DOMNodeList* NameSpace = doc->getElementsByTagName(toXMLCh("NameSpace")); //Alle Nodes die NameSpace heißen
+    DOMNodeList* ClassName = doc->getElementsByTagName(toXMLCh("ClassName")); //Alle Nodes die ClassName heißen
+    DOMNodeList* OverAllDescription = doc->getElementsByTagName(toXMLCh("OverAllDescription")); //Alle Nodes die OverAllDescription heißen
+    DOMNodeList* SampleUsage = doc->getElementsByTagName(toXMLCh("SampleUsage")); //Alle Nodes die SampleUsage heißen
+    DOMNodeList* Options = doc->getElementsByTagName(toXMLCh("Options")); //Alle Nodes die Options heißen
 
-    data.signPerLine = GetOptSetup.attribute("SignPerLine").value();
+    DOMNodeList* Blocks = doc->getElementsByTagName(toXMLCh("Block")); //Alle Nodes die Options heißen
+    DOMNodeList* Samples = doc->getElementsByTagName(toXMLCh("Sample")); //Alle Nodes die Options heißen
+    DOMNodeList* Optionss = doc->getElementsByTagName(toXMLCh("Option")); //Alle Nodes die Options heißen
 
-    data.author.mail = Author.attribute("Mail").value();
-    data.author.phone = Author.attribute("Phone").value();
-    data.author.name = Author.attribute("Name").value();
+    data.author.mail = getAttriburte(Author->item(0), "Mail");
+    data.author.phone = getAttriburte(Author->item(0), "Phone");
+    data.author.name = getAttriburte(Author->item(0), "Name");
 
-    data.headerFileName.content = HeaderFileName.child_value();
-    data.sourceFileName.content = SourceFileName.child_value();
+    data.headerFileName.content = toCh(HeaderFileName->item(0)->getTextContent());
+    data.sourceFileName.content = toCh(SourceFileName->item(0)->getTextContent());
 
-    data.nameSpace.content = NameSpace.child_value();
+    data.nameSpace.content = toCh(NameSpace->item(0)->getTextContent());
+    data.className.content = toCh(ClassName->item(0)->getTextContent());
 
-    data.className.content = ClassName.child_value();
-
-    for(int i = 0; i < Blocks.size(); i++){
+    for(int i = 0; i < Blocks->getLength(); i++){
         xml_parser::Block b;
-        b.content = Blocks[i].child_value();
+        b.content = toCh(Blocks->item(i)->getTextContent());
         data.overAllDescription.addBlock(b); 
     }
 
-    for(int i = 0; i < Samples.size(); i++){
+    for(int i = 0; i < Samples->getLength(); i++){
         xml_parser::Sample s;
-        s.content = Samples[i].child_value();
+        s.content = toCh(Samples->item(i)->getTextContent());
         data.sampleUsage.addSample(s);
     }
 
-    for(int i = 0; i < Optionss.size(); i++){
+    for(int i = 0; i < Optionss->getLength(); i++){
         xml_parser::Option o;
-        o.connectToInternalMethod = Optionss[i].attribute("ConnectToInternalMethod").value();
-        o.description = Optionss[i].attribute("Description").value();
-        o.exclusion = Optionss[i].attribute("Exclusion").value();
-        o.hasArguments = Optionss[i].attribute("HasArguments").value();
-        o.interface = Optionss[i].attribute("Interface").value();
-        o.longOpt = Optionss[i].attribute("LongOpt").value();
-        o.ref = Optionss[i].attribute("Ref").value();
-        o.shortOpt = Optionss[i].attribute("ShortOpt").value();
-        o.connectToExternalMethod = Optionss[i].attribute("ConnectToExternalMethod").value();
-        o.convertTo = Optionss[i].attribute("ConvertTo").value();
-        o.defaultValue = Optionss[i].attribute("DefaultValue").value();
+
+        o.connectToInternalMethod = getAttriburte(Optionss->item(i), "ConnectToInternalMethod");
+        o.description = getAttriburte(Optionss->item(i), "Description");
+        o.exclusion = getAttriburte(Optionss->item(i), "Exclusion");
+        o.hasArguments = getAttriburte(Optionss->item(i), "HasArguments");
+        o.interface = getAttriburte(Optionss->item(i), "Interface");
+        o.longOpt = getAttriburte(Optionss->item(i), "LongOpt");
+        o.ref = getAttriburte(Optionss->item(i), "Ref");
+        o.shortOpt = getAttriburte(Optionss->item(i), "ShortOpt");
+        o.connectToExternalMethod =getAttriburte(Optionss->item(i), "ConnectToExternalMethod"); 
+        o.convertTo = getAttriburte(Optionss->item(i), "ConvertTo");
+        o.defaultValue = getAttriburte(Optionss->item(i), "DefaultValue");
         data.options.addOption(o);
-    }  
+        
+    }
     return data;
 }
 
 //Helperfunktion
-vector<xml_node> xml_parser::getChildNodes(xml_node parentNode, pugi::char_t* childName) {
-	
-	vector<xml_node> childNodes;
+string xml_parser::getAttriburte(DOMNode* Node, string search) {
+	string ret;
+    
+        if(Node->hasAttributes()){ //Schaue ob Author von (i) Attribute hat wie z.B Name, Email, Phone
+            DOMNamedNodeMap *AttrMap = Node->getAttributes(); // Wenn ja erstelle einen Map von diesen Attributen
+            
+            for ( XMLSize_t j=0; j<AttrMap->getLength(); j++) { // gehe durch diese Map mit For loop durch
+                
+                string nodeName = toCh(AttrMap->item(j)->getNodeName());// attribut von xmlchar zu String convertieren um vergleiche zu können 
+                if(nodeName == search){ //Vergleiche ob Attibut mail heißt
+                    ret = toCh(AttrMap->item(j)->getTextContent()); // schreibe den content von Attribut Mail in a.mail
+                }
+            }
+        }else{
+            cout << "Es gint keine Attribute" << endl;
+        }
+        return ret;
+}
 
-	for (xml_node child = parentNode.child(childName); child; child = child.next_sibling(childName)) {
-		childNodes.push_back(child);
-		//cout << child.attribute("student_type").value() << endl;
-	}
-	return childNodes;
+DOMDocument* xml_parser::GetDomDocument(std::string xmlName){
+    try {
+        XMLPlatformUtils::Initialize();
+    }
+    catch (const XMLException& ec) {
+        cout << "Error during initialization!" << endl;
+    }
+
+    /*
+     * gValScheme = XercesDOMParser::Val_Never;
+     * gValScheme = XercesDOMParser::Val_Auto;
+     * gValScheme = XercesDOMParser::Val_Always;
+     */
+
+    XercesDOMParser* parser = new XercesDOMParser();
+    parser->setValidationScheme(XercesDOMParser::Val_Always);
+    parser->setDoNamespaces(true);    // optional
+
+    /*
+     *  parser->setDoSchema(false);
+     *  parser->setHandleMultipleImports (true);
+     *  parser->setValidationSchemaFullChecking(true);
+     *  parser->setCreateEntityReferenceNodes(false);
+     */
+
+    ErrorHandler* errHandler = (ErrorHandler*) new HandlerBase();
+    parser->setErrorHandler(errHandler);
+
+    
+    try{
+        parser->parse(xmlName.c_str()); // Methode akkzeptiert nur const char
+        DOMDocument* doc = parser->adoptDocument();
+        return doc;
+    }
+    catch (const DOMException& ec) {
+        cout << "DOMException : " << endl;
+    }
+    catch ( const SAXParseException &ec ) {
+        std::cout << "SAXParseException during Parsing\n";
+    }
+    catch (...) {
+        std::cout << "Unexpected Exception During Parsing\n" ;
+    }
+    finally:{
+        delete parser;
+        delete errHandler;
+    }
+
+
+
 }

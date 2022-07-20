@@ -5,8 +5,16 @@
 #include <vector>
 #include "pugixml-1.12/src/pugixml.hpp"
 
+#include <xercesc/parsers/XercesDOMParser.hpp>
+#include <xercesc/dom/DOM.hpp>
+#include <xercesc/sax/HandlerBase.hpp>
+#include <xercesc/util/XMLString.hpp>
+#include <xercesc/util/PlatformUtils.hpp>
+
+#include "xmlCh.h"
+
 using namespace std;
-using namespace pugi;
+using namespace xercesc;
 
 class xml_parser{
 public:
@@ -67,6 +75,9 @@ public:
     struct Options{
         std::vector<Option> option;
         virtual void addOption(Option const &o){ option.push_back(o);}
+        virtual void printOpions(){for(int i = 0; i< option.size(); i++){cout << "option " << i << option[i].connectToExternalMethod << ", " << option[i].connectToInternalMethod << ", " << option[i].convertTo << ", " << option[i].defaultValue
+                                                                                << ", " << option[i].description << ", " << option[i].exclusion << ", " << option[i].hasArguments << ", " << option[i].interface << ", " << option[i].longOpt << ", "
+                                                                                << option[i].ref << ", " << option[i].shortOpt << endl;}}
     };
     struct GetOptSetup {
         string signPerLine = "79";
@@ -82,6 +93,7 @@ public:
 
     GetOptSetup GetDataStrctFromXML(std::string filename);
 private:
-    vector<xml_node> getChildNodes(xml_node parentNode, pugi::char_t* child_Name);
+    DOMDocument* GetDomDocument(std::string xmlName);
+    string getAttriburte(DOMNode* Node, string search);
 };
 #endif
