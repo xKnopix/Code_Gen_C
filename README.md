@@ -12,7 +12,7 @@ in build Ordner wechseln
 
 cmd in dem build Ordner öffnen 
 
-"cmake .." in cmd eingeben 
+"cmake -DCMAKE_PREFIX_PATH=C:\UserData\z180338\tools\xerces-c -G "MinGW Makefiles" .." in cmd eingeben 
 
 "cmake --build ." eingeben
 
@@ -30,7 +30,7 @@ in build Ordner wechseln
 
 terminal in build ordner öffnen
 
-"cmake .." in terminal eingeben
+"cmake .." in terminal eingeben wenn xerces nicht gefunden wurde dann "cmake -DCMAKE_PREFIX_PATH="opt/xerces-c" .." 
 
 "make" in terminal eingeben
 
