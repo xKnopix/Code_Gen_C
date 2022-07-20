@@ -14,6 +14,8 @@ int main()
     xml_parser x;
     xml_parser::GetOptSetup data = x.GetDataStrctFromXML("Example.xml");
 
+    //cout << data.signPerLine << endl;
+
     check c;
     c.check_data(data);
     data = c.sortData(data);

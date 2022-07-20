@@ -51,11 +51,11 @@ void mainGenerator::genInheriteClass(xml_parser::Options options, xml_parser::Cl
             this->output.append(s[i]);
             this->output.append("(");
             if(!c.empty()){//Wenn etwas in coverTo steht dann...
-                if(!c[i].compare("Integer")){
+                if(!c[i].compare("Integer") || !c[i].compare("integer")){
                     this->output.append("int a");
-                }else if(!c[i].compare("bool")){
+                }else if(!c[i].compare("Bool") || !c[i].compare("bool")){
                     this->output.append("bool b");
-                }else if(!c[i].compare("String")){
+                }else if(!c[i].compare("String") || !c[i].compare("string")){
                     this->output.append("string s");
                 }
             }

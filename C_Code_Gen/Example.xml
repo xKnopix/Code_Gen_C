@@ -3,7 +3,7 @@
 	<Author Name= "Michael Hornstein, Jacob Hochbaum, Johannes Müssig, Jakob Irle, Linus Fallert" Phone="" Mail="Michael.hornstein9@icloud.com" />
 	<HeaderFileName>options.h</HeaderFileName>
 	<SourceFileName>options.cpp</SourceFileName>
-	<NameSpace>DHBW-Programmieren</NameSpace>
+	<NameSpace>DHBW_Programmieren</NameSpace>
 	<ClassName>Beispiel_XML</ClassName>
 	<OverAllDescription>
 		<Block>Erstellt einen Rumpf zum einlesen von Argumenten aus der Kommandozeile.</Block>
