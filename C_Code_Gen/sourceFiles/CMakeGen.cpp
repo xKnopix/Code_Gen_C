@@ -1,6 +1,6 @@
 //Author: Michael Hornstein
 
-#include "CMakeGen.h"
+#include "../headerFiles/CMakeGen.h"
 
 CMakeGen::CMakeGen(xml_parser::GetOptSetup data){
     GenHeader();//setze String zusammen
