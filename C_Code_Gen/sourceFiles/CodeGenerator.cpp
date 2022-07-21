@@ -119,7 +119,7 @@ string Code::finalHeaderCode(xml_parser::GetOptSetup data)
 
         if (iM.methodName == "printHelp")
         {
-            iM.expectedVars = "int signPerLine";
+            iM.expectedVars = "const int signPerLine";
             iM.privacy = "protected:";
             iM.returnType = "\nvirtual void ";
         }
@@ -280,7 +280,7 @@ string Code::createInternalMethods(xml_parser::GetOptSetup data)
         if (iM.methodName ==
             "printHelp") // HelpMethode wird erstellt
         {
-            iM.expectedVars = "int signPerLine";
+            iM.expectedVars = "const int signPerLine";
             iM.methodName = data.className.content + "::" + iM.methodName;
             if (!authorCodeAdded)
             {
@@ -305,7 +305,7 @@ string Code::createInternalMethods(xml_parser::GetOptSetup data)
 
             iM.methodCode = "cout<<\"" + sampleUsage + "\"<< endl;\n" + printHelpMethodCode;
 
-            methods.addText("void " + iM.methodName + "(int signPerLine)\n{\n");
+            methods.addText("void " + iM.methodName + "(constint signPerLine)\n{\n");
             methods.addText(iM.methodCode);
             methods.addText(iM.methodEnd);
             // methods.addText("\npublic:\n");
@@ -399,18 +399,18 @@ void Code::parse(xml_parser::GetOptSetup data)
     MyHeaderFile.close();
 }
 
-void Code::addArgument(string ref,
-                       string shortOpt,
-                       string longOpt,
-                       string exclusion, // DONE
-                       string connectToInternalMethod,
-                       string description,
-                       string interface,
-                       string hasArguments, // DONE
-                       string convertTo,
-                       string defaultValue, // DONE
-                       string connectToExternalMethod,
-                       string GetOptSetupsignPerLineDefaultValue) // Funktion, die alle Argumente aus der xml annimmt
+void Code::addArgument(const string ref,
+                       const string shortOpt,
+                       const string longOpt,
+                       const string exclusion, // DONE
+                       const string connectToInternalMethod,
+                       const string description,
+                       const string interface,
+                       const string hasArguments, // DONE
+                       const string convertTo,
+                       const string defaultValue, // DONE
+                       const string connectToExternalMethod,
+                       const string GetOptSetupsignPerLineDefaultValue) // Funktion, die alle Argumente aus der xml annimmt
 {
     if (headerFileName.empty())
     {
@@ -452,7 +452,7 @@ void Code::addArgument(string ref,
 
     // std::cout << "REFERENZ = " << reference << endl;
 
-    string codeArgParse;
+    // string codeArgParse;
     string ifStateStart;
     string nameCheckBool;
 
