@@ -1,0 +1,51 @@
+\label{index_mainpage}%
+\Hypertarget{index_mainpage}%
+ Um das Projekt zu \char`\"{}builden\char`\"{}\+:
+
+Win\+:
+
+In Haupverzeichnis wechseln (dort wo der Ordner C\+\_\+\+Code\+\_\+\+Gen und CMake\+Lists.\+txt und Readme.\+md liegt)
+
+neuen Ordner namens \char`\"{}build\char`\"{} anlegen
+
+in build Ordner wechseln
+
+cmd in dem build Ordner öffnen
+
+\char`\"{}cmake -\/\+DCMAKE\+\_\+\+PREFIX\+\_\+\+PATH=\+C\+:\textbackslash{}\+User\+Data\textbackslash{}z180338\textbackslash{}tools\textbackslash{}xerces-\/c -\/\+G \char`\"{}Min\+GW Makefiles\char`\"{} ..\char`\"{} in cmd eingeben
+
+\char`\"{}cmake -\/-\/build .\char`\"{} eingeben
+
+Die Fertige exe kann dann unter build/\+C\+\_\+\+Code\+\_\+\+Gen/\+Debug gefunden werden
+
+Linux/\+Unix\+:
+
+In Haupverzeichnis wechseln (dort wo der Ordner C\+\_\+\+Code\+\_\+\+Gen und CMake\+Lists.\+txt und Readme.\+md liegt)
+
+neuen Ordner namens \char`\"{}build\char`\"{} anlegen
+
+in build Ordner wechseln
+
+terminal in build ordner öffnen
+
+\char`\"{}cmake ..\char`\"{} in terminal eingeben wenn xerces nicht gefunden wurde dann \char`\"{}cmake -\/\+DCMAKE\+\_\+\+PREFIX\+\_\+\+PATH=\char`\"{}opt/xerces-\/c\char`\"{} ..\char`\"{}
+
+\char`\"{}make\char`\"{} in terminal eingeben
+
+Das fertige Programm kann dann unter /build/\+C\+\_\+\+Code\+\_\+\+Gen gefunden werden
+
+Visual Studio \mbox{\hyperlink{class_code}{Code}} und Cmake\+:
+
+Plugins, Cmake suchen und installieren (von Microsoft)
+
+Plugins, C++ suchen und installieren
+
+VSCode neustarten
+
+Den Haupt Ordner in Visual\+Studio\+Code öffnen
+
+Jetzt sollten von cmake unten links Buttons zum builden, Debugen und runnen sicht bar sein\+:
+
+Hinweis zur generierung der Getter Methoden\+: Da in den Requirements immer der long\+Opt-\/\+Name als name in den Methoden gewünscht war haben wir in unserem code wenn ein \textquotesingle{}-\/\textquotesingle{} wie bei sign-\/per-\/line vorkommt, dieses \textquotesingle{}-\/\textquotesingle{} aus dem namen gelöscht und zu signperline (Bsp.\+: is\+Setsignperline()) gemacht.
+
+Hinweis zur Angabe von zusätzlichen Argumenten\+: in unserem generierten Argument-\/\+Parser werden zusätzliche Argumente ohne Zusätze einfach mit einem Leerzeichen getrennt hinter das Hauptargument geschrieben. Bsp.\+: --out-\/path C\+:\textbackslash{}\+Users\textbackslash{} --sign-\/per-\/line 10 -\/v 
