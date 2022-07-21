@@ -1,6 +1,3 @@
-Main Page {#mainpage}
-=========
-
 # C Code Gen
 
 # Table of Contents
