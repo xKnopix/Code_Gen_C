@@ -66,7 +66,7 @@ void Code::startForLoop(string s)
 void Code::endForLoop()
 {
     /*
-     * NUR FueR LESBARKEIT!
+     * NUR Fuer lesbarkeit!
      * Es wird eine geschweifte Klammer angehaengt, um eine begonnene for-Schleife zu schließen
      */
     code += "}\n";
@@ -111,6 +111,7 @@ string Code::finalHeaderCode(xml_parser::GetOptSetup data)
 
     string methodNames = "private: void myPrint(string myString, int newLineChecker);\n";
 
+    // Es wird ein String erstellt, um alle Methoden zu definieren
     for (int i = 0; i < internalMethods.size(); i++)
     {
 
@@ -136,20 +137,22 @@ string Code::finalHeaderCode(xml_parser::GetOptSetup data)
     // std::cout << methodNames << endl;
 
     return "#ifndef " + defString + "\n"
-                                    "#define " +
-           defString + "\n" + includesString +
-           namespaceString +
-           "namespace " + data.nameSpace.content + "\n" +
+                                    "#define " + // Include-Guard
+           defString +
+           "\n" +
+           includesString +                               // alle Includes
+           namespaceString +                              // using namespace std
+           "namespace " + data.nameSpace.content + "\n" + // der eigene Namespace der Klasse
            "{\n" +
-           "class " + data.className.content + "\n" +
+           "class " + data.className.content + "\n" + // die Klasse wird definiert
            "{\n" +
-           globalVariables +
-           methodNames +
-           "virtual void unknownOption(const string& unknown_option);" +
-           "\n public: void parseOptions(int argc, char* argv[]);\n" +
+           globalVariables +                                             // die globalen Variablen der Klasse werden definiert
+           methodNames +                                                 // die Methoden deklarationen
+           "virtual void unknownOption(const string& unknown_option);" + // die unknownOption - Methode
+           "\n public: void parseOptions(int argc, char* argv[]);\n" +   // die parseOptions Methode
            "};\n"
            "}\n"
-           "#endif";
+           "#endif"; // include-Guard Ende
 }
 
 string Code::finalCode(xml_parser::GetOptSetup data)
@@ -165,37 +168,38 @@ string Code::finalCode(xml_parser::GetOptSetup data)
     if (data.nameSpace.content.empty())
     {
         return includesString +
-               "#include \"" + data.headerFileName.content + "\"\n" +
+               "#include \"" + data.headerFileName.content + "\"\n" + // das generierte h-file wird includiert
                namespaceString +
-               /*globalVariables + */
-               createInternalMethods(data) +
-               "void " + data.className.content + "::unknownOption(const string& unknown_option)"
+               /* globalVariables + */
+               createInternalMethods(data) +                                                      // die Methoden werden definiert
+               "void " + data.className.content + "::unknownOption(const string& unknown_option)" // die unknownOption - Methode wird definiert
                                                   "\n{\n\tcout << \"Unbekannter Parameter '\" + unknown_option + \"'!\" << endl;\nexit(EXIT_SUCCESS);\n}\n" +
 
-               "void " + data.className.content + "::parseOptions(int argc, char* argv[])\n"
+               "void " + data.className.content + "::parseOptions(int argc, char* argv[])\n" // die parseOptions - Methode wird definiert
                                                   "{\n" +
-               variableDefinitions +
+               variableDefinitions + // alle variablen innerhalb der parseOptions - Methode
 
-               forLoopAllArgsStart +
-               exclusionCheck +
-               forLoopAllArgsClose +
+               forLoopAllArgsStart + // Generierung der forschleife, um alle argumente aus argv durchzugehen
+               exclusionCheck +      // Code generierung, um exclusions zu pruefen
+               forLoopAllArgsClose + // Die Generierung der For-Schleife wird abgeschlossen
 
-               pathRequiredCheck +
-               convertToInt +
-               returnIfWrongArgs +
-               handleArgs +
+               pathRequiredCheck + // Code generierung um zu pruefen, ob ein zusaetzliches Argument uebergeben wurde, oder ob wieder ein neues Argument mit '-' beginnend folgt
+               convertToInt +      // Code Generierung, um die Wandlung zu einem Integer durchzufuehren
+               returnIfWrongArgs + // Code Generierung: Wenn Exclusions angeschlagen sind soll das Programm beendet werden
+               handleArgs +        // Code Generierung: Es folgt eine 2. Forschleife, wenn keine Exclusions aufgetreten sind und die Argumente werden "normal" geparst
                "int temp = 0;" +
-               "for(int m = 0; m < additionalParams.size(); m++)"
+               "for(int m = 0; m < additionalParams.size(); m++)" // Code Generierung: Es werden alle zusaetzlichen Argumente in einem Vector gespeichert, ueber den dann herausgefunden werden kann, ob ein unbekanntes Argument vorkommt
                "{"
                "   if(additionalParams[m] == argv[i])\n{\ntemp = 1;\n}\n"
                "}" +
                "if(temp == 1)\n{continue;\n}\n" +
-               unknownOptionMethodCall +
+               unknownOptionMethodCall + // der Aufruf für die unknownOption - Methode wird generiert
                "}\n"
                "}\n";
     }
     else
     {
+        // Der code wird ohne namespace generiert, wie oben, wenn kein namespace angegeben wurde
         return includesString +
                "#include \"" + data.headerFileName.content + "\"\n" +
                namespaceString +
@@ -274,7 +278,7 @@ string Code::createInternalMethods(xml_parser::GetOptSetup data)
         // std::cout << "building Method: " << iM.methodName << endl;
 
         if (iM.methodName ==
-            "printHelp") ////HelpMethode wird erstellt
+            "printHelp") // HelpMethode wird erstellt
         {
             iM.expectedVars = "int signPerLine";
             iM.methodName = data.className.content + "::" + iM.methodName;
@@ -315,9 +319,8 @@ string Code::createInternalMethods(xml_parser::GetOptSetup data)
             methods.addText(iM.methodEnd);
 
             methodNames += iM.methodName +
-                           "();\n"; /////////////////////////////////////////////////////////////////////////
-        }                           ////H Datei
-                                    /////////////////////////////////////////////////////////////////////////
+                           "();\n";
+        }
     }
 
     return methods.code;
@@ -378,30 +381,21 @@ void Code::parse(xml_parser::GetOptSetup data)
 
     endForLoop(); // For Schleife fertig, der  rest kommt in finalCode()
 
-    string filename = "newFile"; // Optional damit keine Fehler auftreten
-
-    // EXIT TEST: exit(EXIT_SUCCESS)
-
-    // cout << "CODE: " << endl
-    //   << finalCode();                                                                       //Code ausgeben
-
-    // Create and open a text file
+    // Eine Datei öffnen
     ofstream MyFile(data.sourceFileName.content);
 
-    // Write to the file
+    // In die Datei reinschreiben
     MyFile
         << finalCode(data); // Code in Datei schreiben
 
-    // Close the file
+    // Die Datei wieder schließen
     MyFile.close();
 
     ofstream MyHeaderFile(data.headerFileName.content);
 
-    // Write to the file
     MyHeaderFile
-        << finalHeaderCode(data); // Code in Datei schreiben
+        << finalHeaderCode(data);
 
-    // Close the file
     MyHeaderFile.close();
 }
 
@@ -537,6 +531,7 @@ void Code::addArgument(string ref,
 
         if (ref != "")
         {
+            // Wenn eine referenz nummer existiert müssen exclusions geprüft werden, Code Generierung dafür hier:
             tempCode += "for (int j = 0; j < exclusionValuesSorted.size(); j++)";
             tempCode += "\n{";
             tempCode += "vector<string> tempExclusionVec = exclusionValuesSorted[j];";
@@ -567,7 +562,7 @@ void Code::addArgument(string ref,
 
         if (hasArguments == "Required" || hasArguments == "optional")
         {
-
+            // Code Generierung um zu prüfen, ob zusätzliche Argumente angegeben wurden
             exclusionCheck += "if(i+1 < argc)\n{\n" + reference +
                               "Str = argv[i+1];\n}\n"; // Code Generierung um zusaetzliche Argumente einzulesen, falls diese Moeglich sein sollen
             if (hasArguments == "Required")
@@ -583,6 +578,7 @@ void Code::addArgument(string ref,
     }
     if (ref != "" && exclusion == "")
     {
+        // Code Generierung für den Fall, dass es eine Referenznummer gibt, aber keine Exclusions in der Option
         exclusionCheck += "if(" + nameCheckBool + ")";
         exclusionCheck += "\n{";
         exclusionCheck += "for(int r = 0; r < exclusionValuesSorted.size(); r++)";
@@ -607,14 +603,13 @@ void Code::addArgument(string ref,
 
         exclusionCheck += "argumentnames.push_back(\"--" + reference + "\");\n";
         exclusionCheck += "\n}";
-        // exclCode.addText(tempCode);
     }
-    ///////////////////////////////////////////////////////////////////////////
+
     if (hasArguments ==
         "Required") // Code Generierung, um zu ueberpruefen, ob ein zusaetzliches Argument angegeben wurde,
     // wenn es required ist
     {
-        Code pathCheckCode = Code(); ////pathCheckCode////
+        Code pathCheckCode = Code(); // pathCheckCode//
         // Neue Instanz von Code() um zu generierenden Code zwischenzuspeichern
 
         variableDefinitions += "string " + reference + "Str;\n";
@@ -641,19 +636,18 @@ void Code::addArgument(string ref,
         "optional") // Code Generierung, um zu ueberpruefen, ob ein zusaetzliches Argument angegeben wurde,
     // wenn es required ist
     {
-        Code pathCheckCode = Code(); ////pathCheckCode////
+        Code pathCheckCode = Code(); // pathCheckCode//
         // Neue Instanz von Code() um zu generierenden Code zwischenzuspeichern
 
         if (defaultValue == "")
         {
             variableDefinitions += "string " + reference + "Str;\n";
         }
-        /////////////////////////////////////////////////////////////////
+
         if (!defaultValue.empty()) // Code Generierung, falls es default Parameter gibt
         {
             variableDefinitions += "string " + reference + "Str = \"" + defaultValue + "\";\n";
         }
-        //////////////////////////////////////////////////////////////////
 
         pathCheckCode.startIf("!" + reference + "Str.empty() && " + reference + "Str.length() > 1");
         pathCheckCode.startIf(
@@ -665,18 +659,13 @@ void Code::addArgument(string ref,
         pathCheckCode.endIf();
         pathCheckCode.endIf();
 
-        /*pathCheckCode.startIf(reference +"Str.length() == 1");
-        pathCheckCode.addText("cout << \"" +longOpt +" benoetigt einen Pfad als Argument!\" << endl;\n");
-        pathCheckCode.addText("exitArg = 1;\n");
-        pathCheckCode.endIf();*/
-
         pathRequiredCheck += pathCheckCode.getCode();
     }
 
     // Code Generierung fuer convertToInt mit try-catch
     if (convertTo == "Integer" || convertTo == "integer")
     {
-        // variableDefinitions += "int " + interface + "Int = 0;\n";
+
         if (defaultValue != "")
         {
             globalVariables += "int " + reference + "Int = " + defaultValue + ";\n";
@@ -705,18 +694,15 @@ void Code::addArgument(string ref,
             globalVariables += "int " + reference + "Int = 0;\n";
             additionalParamVarName = interface + "Int";
         }
-
-    } ////////////////////////////////////////////////////////////////////////
+    }
 
     if (convertTo == "Bool" || convertTo == "bool")
+    // Code Generierung für die ConvertToBool - Abhandlung
     {
-        // std::cout << "convertToBool" << endl;
         if (defaultValue != "")
         {
             globalVariables += "bool " + reference + "Bool = " + defaultValue + ";\n";
             additionalParamVarName = reference + "Bool";
-
-            // std::cout << "addparamVarName: " << additionalParamVarName << endl;
         }
         else
         {
@@ -769,7 +755,7 @@ void Code::addArgument(string ref,
 
         if (hasArguments != "")
         {
-            // std::cout << reference << "                                                                                                                         hasArguments!" << endl;
+            // Code Generierung, wenn hasArguments gesetzt ist.
             if (hasArguments == "Required")
             {
                 globalVariables += "string " + reference + "Param;\n";
@@ -781,13 +767,14 @@ void Code::addArgument(string ref,
                 globalVariables += "string " + reference + "Param = \"" + defaultValue + "\";\n";
                 additionalParamVarName = reference + "Param";
             }
+
+            // Es folgt die Code - Generierung für die Bool und Integer Konvertierung
             if (convertTo == "Integer" || convertTo == "integer")
             {
                 additionalParamVarName = reference + "Int";
                 internalMethod iM;
                 iM.privacy = "public: ";
                 iM.returnType = "int";
-                // iM.methodCode = "return " + reference + "Int;\n"; Kommt jetzt im großen string im Anschluss
 
                 iM.methodCode = "try {\n"
                                 "                " +
@@ -857,17 +844,19 @@ void Code::addArgument(string ref,
 
     if (((!connectToInternalMethod.empty() && interface.empty()) && !hasArguments.empty()) || ((!connectToExternalMethod.empty() && interface.empty()) && !hasArguments.empty()))
     {
+        // Laut requirements sollte dann auch ein interface angegeben sein.
         cerr << "Es fehlt ein Interface bei \"" << reference << "!\n Code Generierung wird abgebrochen!\n Interface wird fuer die Getter Methode benoetigt, da zusaetzliche Parameter uebergeben werden koennen." << endl;
         exit(EXIT_FAILURE);
     }
 
     if (interface == "" && connectToInternalMethod == "" && connectToExternalMethod == "")
     {
+        // Requirement Functional Nr. 20 ^^^^
         internalMethod iM;
         iM.privacy = "public: ";
         iM.returnType = "bool";
 
-        iM.methodName = "isSet" + reference; // Da durch das - im Namen Probleme auftreten
+        iM.methodName = "isSet" + reference;
         boolIsSetName = "boolIsSet" + reference;
         globalVariables += "bool " + boolIsSetName + ";\n";
 
@@ -878,6 +867,7 @@ void Code::addArgument(string ref,
 
     if (connectToExternalMethod != "")
     {
+        // Erstellen der externen Methoden
         externalMethod eM;
 
         eM.methodName = connectToExternalMethod;
@@ -900,11 +890,11 @@ void Code::addArgument(string ref,
         externalMethods.push_back(eM);
     }
 
-    Code actOnArgs = Code();
+    Code actOnArgs = Code(); // Code Objekt für die Zweite For-Schleife, in der die Argumente nach ihrer Überprüfung geparst werden
 
     actOnArgs.startIf(nameCheckBool);
-    if (!connectToInternalMethod.empty()) /////////////////////////////////////////////////////////////////////////
-    {                                     // Code Generierung fuer connectToInternalMethod
+    if (!connectToInternalMethod.empty())
+    { // Code Generierung fuer connectToInternalMethod um die Methoden Aufzurufen
         internalMethod iM = internalMethod();
 
         iM.privacy = "private: ";
@@ -920,7 +910,7 @@ void Code::addArgument(string ref,
             iM.privacy = "protected: ";
             // internalMethods.push_back(iM);
             actOnArgs.addText(connectToInternalMethod +
-                              "(signperlineInt);\n"); ///############################HARD CODED nicht gut
+                              "(signperlineInt);\n");
             if (!interface.empty())
             {
                 actOnArgs.addText("isSet" + reference + "Bool = true;\n");
@@ -974,6 +964,7 @@ void Code::addArgument(string ref,
 
     if (connectToExternalMethod != "")
     {
+        // Code Generierung für den Aufruf der externen Methoden
         actOnArgs.addText(connectToExternalMethod + "(");
 
         if (convertTo == "")
@@ -994,7 +985,7 @@ void Code::addArgument(string ref,
         }
         else
         {
-            actOnArgs.addText(reference + "Param);\n"); // Beim Testen schauen, obs funktioniert, sonst Str statt Param anhaengen!!!
+            actOnArgs.addText(reference + "Param);\n");
             std::cerr << "convertTo = String" << convertTo << shortOpt << longOpt << endl;
         }
     }

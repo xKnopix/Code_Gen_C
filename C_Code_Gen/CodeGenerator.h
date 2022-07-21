@@ -16,7 +16,7 @@ using namespace std;
 class Code
 {
     /*
-     * Diese Klasse soll dazu dienen, einfacher und überischtlicher
+     * Diese Klasse soll dazu dienen, einfacher und ueberischtlicher
      * ein Programm zu schreiben, welches als output c++ Code hat
      *
      *
@@ -31,9 +31,9 @@ class Code
         string methodName = "";   ////Methodname////
                                   // der Name der Methode, welcher auch beim Aufruf genutzt wird, OHNE KLAMMERN
         string methodCode = "";   ////methodCode////
-                                  // der Code, welcher von der Methode ausgeführt werden soll
+                                  // der Code, welcher von der Methode ausgefuehrt werden soll
         string methodEnd = "}\n"; ////methodEnd////
-                                  // String für die Lesbarkeit, beinhaltet lediglich "}" um die Methode abzuschließen
+                                  // String fuer die Lesbarkeit, beinhaltet lediglich "}" um die Methode abzuschliessen
         string returnType = "void";
 
         string expectedVars = "";
@@ -46,9 +46,9 @@ class Code
         string methodName = ""; ////Methodname////
         // der Name der Methode, welcher auch beim Aufruf genutzt wird, OHNE KLAMMERN
         // string methodCode = "";                                                                                             ////methodCode////
-        // der Code, welcher von der Methode ausgeführt werden soll
+        // der Code, welcher von der Methode ausgefuehrt werden soll
         // string methodEnd = "}\n";                                                                                           ////methodEnd////
-        // String für die Lesbarkeit, beinhaltet lediglich "}" um die Methode abzuschließen
+        // String fuer die Lesbarkeit, beinhaltet lediglich "}" um die Methode abzuschliessen
         string returnType = "void";
 
         string expectedVars = "";
@@ -56,7 +56,7 @@ class Code
         string privacy = "";
     };
 
-    // Deklaration aller Strings, die benötigt werden, um den c++ Code zu generieren
+    // Deklaration aller Strings, die benoetigt werden, um den c++ Code zu generieren
     string headerFileName = "NewFile.h", ////headerFileName////
                                          // der Name des zu generierenden H-Datei
 
@@ -86,7 +86,7 @@ class Code
                              // Code, der in die printHelp Methode eingesetzt wird
 
         includesString = "#include <string>\n"   ////includesString////
-                         "#include <iostream>\n" // Alle includes, die eventuell benötigt werden,
+                         "#include <iostream>\n" // Alle includes, die eventuell benoetigt werden,
                          "#include <vector>\n",  // im generierten Argument-Parser
 
         namespaceString = "using namespace std;\n",
@@ -110,32 +110,32 @@ class Code
 
            exclusionCheck, ////exclusionCheck////
                            // String, in welchem eine For-Schleife gespeichert wird,
-                           // in welcher Alle übergebenen Argumente durchgegangen werden
-                           // und auf ungültige kombinationen geprüft werden
+                           // in welcher Alle uebergebenen Argumente durchgegangen werden
+                           // und auf ungueltige kombinationen geprueft werden
 
         pathRequiredCheck, ////pathRequiredCheck///
                            // Wenn bei einem Argument hasArguments auf 'required' gesetzt ist
-                           // wird in diesem String Code gespeichert, der überprüft, ob das nächste
-                           // Argument mit '--' anfängt, wenn ja, wird das Programm abgebrochen und
+                           // wird in diesem String Code gespeichert, der ueberprueft, ob das naechste
+                           // Argument mit '--' anfaengt, wenn ja, wird das Programm abgebrochen und
                            // es gibt einen fehler aus, da nur die 'Haupt-Argumente' mit '--' anfangen sollen
 
         convertToInt, ////convertToInt////
                       // Hier wird der Code gespeichert, in welchem in einem Try-Catch-Block
-                      // probiert wird, den übergebenen String in einen Integer umzuwandeln
+                      // probiert wird, den uebergebenen String in einen Integer umzuwandeln
 
         code, ////code////
               // String, in dem der zu generierende Code bei einer Instanziierung von Code()
               // gespeichert wird
 
         forLoopAllArgsStart = "for(int i = 1; i<argc; i++)\n{\n", ////forLoopAllArgs[Start/Close]////
-        forLoopAllArgsClose = "}\n",                              // Für bessere Lesbarkeit generierte Strings, welche den Anfang und das Ende
+        forLoopAllArgsClose = "}\n",                              // Fuer bessere Lesbarkeit generierte Strings, welche den Anfang und das Ende
                                                                   // einer For-Schleife enthalten, welche einemal alle, beim Programmaufruf
-                                                                  //übergebenen Argumente durch-iteriert
+                                                                  // uebergebenen Argumente durch-iteriert
 
         handleArgs = forLoopAllArgsStart; ////handleArgs////
                                           // In handleArgs wird eine 2. For-Schliefe gespeichert, welche nach dem
-                                          // die Argumente auf ihre Korrektheit überprüft wurden nochmals alle Argumente
-                                          // durch-iteriert und nun auf die übergebenen Argumente reagiert.
+                                          // die Argumente auf ihre Korrektheit ueberprueft wurden nochmals alle Argumente
+                                          // durch-iteriert und nun auf die uebergebenen Argumente reagiert.
 
     // Deklaration aller Vektoren
     vector<internalMethod> internalMethods; ////internalMethods////
@@ -147,19 +147,19 @@ class Code
     bool authorCodeAdded = false;
 
 public:
-    /// Leerer Konstruktor für schnell zu generierende Code-Objekte.
+    /// Leerer Konstruktor fuer schnell zu generierende Code-Objekte.
     ///  \n Erstellt ein neuese leeres Coder-Objekt
     Code();
 
-    /// Konstruktor, um das Code-Objekt für den Argument-Parser zu erstellen, dabei werden ein paar Strings bereits gesetzt.
+    /// Konstruktor, um das Code-Objekt fuer den Argument-Parser zu erstellen, dabei werden ein paar Strings bereits gesetzt.
     Code(string sourceFileName, string headerFileName, string nameSpace, string className, string signPerLine, string sampleUsage, string author);
 
-    // Alle Methoden mit dem Rückgabewert 'void'
+    // Alle Methoden mit dem Rueckgabewert 'void'
 
-    /// Funktion, um dem code eines Code Objektes beliebigen Text hinzuzufügen.
+    /// Funktion, um dem code eines Code Objektes beliebigen Text hinzuzufuegen.
     ///
-    /// Diese Funktion fügt dem Code des Code-Objektes den Text in den runden Klammern hinzu.
-    ///@param s Der String, der angehängt werden soll
+    /// Diese Funktion fuegt dem Code des Code-Objektes den Text in den runden Klammern hinzu.
+    ///@param s Der String, der angehaengt werden soll
     ///@returns void
     /// \n **Beispiel Anwendung:**
     /// ~~~~~~~~~~~~~~~~~~~~~~~~~.cpp
@@ -181,7 +181,7 @@ public:
 
     /// Funktion, um den Code aus dem Code Objekt als String zu erhalten.
     ///
-    /// Diese Funktion gibt den Code des Code Objektes als String zurück.
+    /// Diese Funktion gibt den Code des Code Objektes als String zurueck.
     ///@returns string
     /// \n **Beispiel Anwendung:**
     /// ~~~~~~~~~~~~~~~~~~~~~~~~~.cpp
@@ -201,9 +201,9 @@ public:
     string getCode();
     //##########################################
 
-    /// Funktion, um dem Code eines Code Objektes eine For-Schleife hinzuzufügen.
+    /// Funktion, um dem Code eines Code Objektes eine For-Schleife hinzuzufuegen.
     ///
-    /// Diese Funktion fügt dem Code des Code-Objektes eine For-Schleife hinzu.
+    /// Diese Funktion fuegt dem Code des Code-Objektes eine For-Schleife hinzu.
     /// \n In den runden Klammern steht ein String, der wie die Zeichen in den runden Klammern der zu erzeugenden For-Schleife aussieht
     ///@param s Die "Bedingung" der For-Schleife
     ///@returns void
@@ -224,15 +224,15 @@ public:
     ///     cout << i << endl;
     /// }
     /// ~~~~~~~~~~~~~~~~~~~~~~~~~
-    ///@attention Der Text in den runden Klammern der For-Schleife wird nicht überprüft, sondern direkt übernommen, somit obliegt die Überprüfung auf Korrektheit beim Programmierer!
+    ///@attention Der Text in den runden Klammern der For-Schleife wird nicht ueberprueft, sondern direkt uebernommen, somit obliegt die ueberpruefung auf Korrektheit beim Programmierer!
     /// @see endForLoop() startIf() endIf()
     ///@author Jacob
     void startForLoop(string s);
     //##########################################
 
-    /// Funktion, um dem Code eines Code Objektes das Ende einer For-Schleife hinzuzufügen ('}').
+    /// Funktion, um dem Code eines Code Objektes das Ende einer For-Schleife hinzuzufuegen ('}').
     ///
-    /// Diese Funktion fügt dem Code des Code-Objektes das Ende einer For-Schleife hinzu, eigentlich nur eine geschweifte Klammer '}'.
+    /// Diese Funktion fuegt dem Code des Code-Objektes das Ende einer For-Schleife hinzu, eigentlich nur eine geschweifte Klammer '}'.
     ///@returns void
     /// \n **Beispiel Anwendung:**
     /// ~~~~~~~~~~~~~~~~~~~~~~~~~.cpp
@@ -256,9 +256,9 @@ public:
     void endForLoop();
     //##########################################
 
-    /// Funktion, um dem Code eines Code Objektes eine If-Verzweigung hinzuzufügen.
+    /// Funktion, um dem Code eines Code Objektes eine If-Verzweigung hinzuzufuegen.
     ///
-    /// Diese Funktion fügt dem Code des Code-Objektes eine If-Verzweigung hinzu.
+    /// Diese Funktion fuegt dem Code des Code-Objektes eine If-Verzweigung hinzu.
     /// \n In den runden Klammern steht ein Boolscher ausdruck, wie wenn man eine normale If-Verzweigung implementiert, nur als String.
     ///@param s Die "Bedingung" der If-Verzweigung
     ///@returns void
@@ -282,15 +282,15 @@ public:
     ///     cout << "a ist kleiner als b!" << endl;
     /// }
     /// ~~~~~~~~~~~~~~~~~~~~~~~~~
-    ///@attention Der Text in den runden Klammern der If-Verzweigung wird nicht überprüft, sondern direkt übernommen, somit obliegt die Überprüfung auf Korrektheit beim Programmierer!
+    ///@attention Der Text in den runden Klammern der If-Verzweigung wird nicht ueberprueft, sondern direkt uebernommen, somit obliegt die ueberpruefung auf Korrektheit beim Programmierer!
     /// @see startForLoop() endForLoop() endIf()
     ///@author Jacob
     void startIf(string s);
     //##########################################
 
-    /// Funktion, um dem Code eines Code Objektes das Ender einer If-Verzweigung hinzuzufügen.
+    /// Funktion, um dem Code eines Code Objektes das Ender einer If-Verzweigung hinzuzufuegen.
     ///
-    /// Diese Funktion fügt dem Code des Code-Objektes das Ender einer If-Verzweigung hinzu.
+    /// Diese Funktion fuegt dem Code des Code-Objektes das Ender einer If-Verzweigung hinzu.
     ///@returns void
     /// \n **Beispiel Anwendung:**
     /// ~~~~~~~~~~~~~~~~~~~~~~~~~.cpp
@@ -317,9 +317,9 @@ public:
     void endIf();
     //###############################
 
-    /// Funktion, um einen String in Großbuchstaben umzuwandeln.
+    /// Funktion, um einen String in Grossbuchstaben umzuwandeln.
     ///
-    /// Diese Funktion wandelt einen String aus Groß- und Kleinbuchstaben in einen String, bei dem alle Kleinbuchstaben in Großbuchstaben gewandelt wurden.
+    /// Diese Funktion wandelt einen String aus Gross- und Kleinbuchstaben in einen String, bei dem alle Kleinbuchstaben in Grossbuchstaben gewandelt wurden.
     ///@param s Der String, welcher gewandelt werden soll
     ///@returns string
     /// \n **Beispiel Anwendung:**
@@ -339,7 +339,7 @@ public:
 
     /// Funktion, um den Code des zu generierenden Header-Files zu erhalten.
     ///
-    /// Diese Funktion gibt als String den Code des zu generierenden Header-Files zurück.
+    /// Diese Funktion gibt als String den Code des zu generierenden Header-Files zurueck.
     ///@param data Das xml-Objekt der zuvor geparsten xml-Datei
     ///@returns string
     /// \n **Beispiel Anwendung:**
@@ -358,7 +358,7 @@ public:
 
     /// Funktion, um den Code des zu generierenden Source-Code-Files zu erhalten.
     ///
-    /// Diese Funktion gibt als String den Code des zu generierenden Header-Files zurück.
+    /// Diese Funktion gibt als String den Code des zu generierenden Header-Files zurueck.
     ///@param data Das xml-Objekt der zuvor geparsten xml-Datei
     ///@returns string
     /// \n **Beispiel Anwendung:**
@@ -410,9 +410,9 @@ public:
 
     /// Funktion, um einen String bei bestimmen Zeichen aufzutrennen.
     ///
-    /// Diese Funktion nimmt einen String und gibt einen Vector zurück, der alle Teilstrings zwischen den Seperator-Zeichen als Elemente enthält.
+    /// Diese Funktion nimmt einen String und gibt einen Vector zurueck, der alle Teilstrings zwischen den Seperator-Zeichen als Elemente enthaelt.
     ///@param str der String, der aufgetrennt werden soll
-    ///@param seperator der Char, der im übergebenen String als Seperator dient
+    ///@param seperator der Char, der im uebergebenen String als Seperator dient
     ///@returns vector<string>
     /// \n **Beispiel Anwendung:**
     /// ~~~~~~~~~~~~~~~~~~~~~~~~~.cpp
@@ -441,7 +441,7 @@ public:
 
     /// Funktion, die den Argument-Parser erstellt.
     ///
-    /// Diese Funktion ist die Hauptfunktion der Klasse, da sie den Code für den zu erstellenden Argument-Parser aus dem XML-Objekt erstellt.
+    /// Diese Funktion ist die Hauptfunktion der Klasse, da sie den Code fuer den zu erstellenden Argument-Parser aus dem XML-Objekt erstellt.
     ///@param data Das XML-Objekt
     ///@returns void
     /// \n **Beispiel Anwendung:**
@@ -454,9 +454,9 @@ public:
     void parse(xml_parser::GetOptSetup data);
     //##########################################
 
-    /// Funktion, die dem Argument-Parser ein Argument hinzufügt.
+    /// Funktion, die dem Argument-Parser ein Argument hinzufuegt.
     ///
-    /// Diese Funktion wird für jede "Option" in der xml-Datei aufgerufen und erstellt Code, um das Argument, \n sollte es aufgerufen werden, ordungsgemäss auf Exclusons zu überprüfen und auszuführen.
+    /// Diese Funktion wird fuer jede "Option" in der xml-Datei aufgerufen und erstellt Code, um das Argument, \n sollte es aufgerufen werden, ordungsgemaess auf Exclusons zu ueberpruefen und auszufuehren.
     ///@param ref der Wert, der in der xml bei der Option bei ref steht
     ///@param shortOpt der Wert, der in der xml bei der Option bei shortOpt steht
     ///@param longOpt der Wert, der in der xml bei der Option bei longOpt steht
