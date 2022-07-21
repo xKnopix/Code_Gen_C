@@ -1,4 +1,4 @@
-// Author: Jacob Hochbaum
+// Autor: Jacob Hochbaum
 
 #ifndef CODEGEN_H
 #define CODEGEN_H

@@ -1,4 +1,4 @@
-//Author: Michael Hornstein
+//Autor: Michael Hornstein
 
 #include "../headerFiles/check.h"
 

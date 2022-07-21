@@ -1,4 +1,4 @@
-// Author Michael Hornstein, Jacob Hochbaum, Johannes Muessig
+// Autor Michael Hornstein, Jacob Hochbaum, Johannes Muessig
 
 #include "../headerFiles/xml_parser.h"
 #include "../headerFiles/CodeGenerator.h"
