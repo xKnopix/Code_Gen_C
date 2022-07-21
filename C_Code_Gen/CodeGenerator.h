@@ -1,4 +1,4 @@
-//Author: Jacob Hochbaum
+// Author: Jacob Hochbaum
 
 #ifndef CODEGEN_H
 #define CODEGEN_H
@@ -37,6 +37,8 @@ class Code
         string returnType = "void";
 
         string expectedVars = "";
+
+        string privacy = "";
     };
 
     struct externalMethod       ////internalMethod////
@@ -50,6 +52,8 @@ class Code
         string returnType = "void";
 
         string expectedVars = "";
+
+        string privacy = "";
     };
 
     // Deklaration aller Strings, die benötigt werden, um den c++ Code zu generieren
@@ -95,7 +99,8 @@ class Code
                                  "vector<string> additionalParams;\n"
                                  "vector<string> argumentnames;\n"
                                  "vector<string> refValuesSorted;\n"
-                                 "vector<vector<string>> exclusionValuesSorted;\n",
+                                 "vector<vector<string>> exclusionValuesSorted;\n"
+                                 "int signPerLineDefaultValue = 79;\n",
 
            returnIfWrongArgs = "if(exitArg > 0)\n"           ////returnIfWrongArgs*////
                                "{\n"                         // If-Else Code, um das den Argument-Parser zu beenden,
@@ -452,7 +457,18 @@ public:
     /// Funktion, die dem Argument-Parser ein Argument hinzufügt.
     ///
     /// Diese Funktion wird für jede "Option" in der xml-Datei aufgerufen und erstellt Code, um das Argument, \n sollte es aufgerufen werden, ordungsgemäss auf Exclusons zu überprüfen und auszuführen.
-    ///@param data Das XML-Objekt
+    ///@param ref der Wert, der in der xml bei der Option bei ref steht
+    ///@param shortOpt der Wert, der in der xml bei der Option bei shortOpt steht
+    ///@param longOpt der Wert, der in der xml bei der Option bei longOpt steht
+    ///@param exclusion der Wert, der in der xml bei der Option bei exclusion steht
+    ///@param connectToInternalMethod der Wert, der in der xml bei der Option bei connectToInternalMethod steht
+    ///@param description der Wert, der in der xml bei der Option bei description steht
+    ///@param interface der Wert, der in der xml bei der Option bei interface steht
+    ///@param hasArguments der Wert, der in der xml bei der Option bei hasArguments steht
+    ///@param convertTo der Wert, der in der xml bei der Option bei convertTo steht
+    ///@param defaultValue der Wert, der in der xml bei der Option bei defaultValue steht
+    ///@param connectToExternalMethod der Wert, der in der xml bei der Option bei connectToExternalMethod steht
+    ///@param GetOptSetupsignPerLineDefaultValue der Wert, der in der xml bei der Option bei GetOptSetup signPerLine
     ///@returns void
     /// \n **Beispiel Anwendung:**
     /// ~~~~~~~~~~~~~~~~~~~~~~~~~.cpp
@@ -480,8 +496,9 @@ public:
                      string interface = "",
                      string hasArguments = "", // DONE
                      string convertTo = "",
-                     string defaultValue = "",             // DONE
-                     string connectToExternalMethod = ""); // Funktion, die alle Argumente aus der xml annimmt
+                     string defaultValue = "", // DONE
+                     string connectToExternalMethod = "",
+                     string GetOptSetupsignPerLineDefaultValue = "79"); // Funktion, die alle Argumente aus der xml annimmt
 };
 
 // int main();
