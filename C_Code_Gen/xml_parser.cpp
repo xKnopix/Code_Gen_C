@@ -1,3 +1,5 @@
+//Author: Michael Hornstein
+
 #include "xml_parser.h"
 
 xml_parser::GetOptSetup xml_parser::GetDataStrctFromXML(std::string filename){
