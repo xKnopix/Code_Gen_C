@@ -1,4 +1,6 @@
-﻿# CMakeList.txt: CMake-Projekt für "C_Code_Gen". Schließen Sie die Quelle ein, und definieren Sie
+﻿#Author Michael Hornstein
+
+# CMakeList.txt: CMake-Projekt für "C_Code_Gen". Schließen Sie die Quelle ein, und definieren Sie
 # projektspezifische Logik hier.
 #
 cmake_minimum_required (VERSION 3.8)
