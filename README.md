@@ -49,3 +49,10 @@ VSCode neustarten
 Den Haupt Ordner in VisualStudioCode öffnen
 
 Jetzt sollten von cmake unten links Buttons zum builden, Debugen und runnen sicht bar sein:
+
+Hinweis zur generierung der Getter Methoden: Da in den Requirements immer der longOpt-Name als name in den Methoden gewünscht war haben wir in unserem code wenn ein '-'
+wie bei sign-per-line vorkommt, dieses '-' aus dem namen gelöscht und zu signperline (Bsp.: isSetsignperline()) gemacht.
+
+Hinweis zur Angabe von zusätzlichen Argumenten:
+in unserem generierten Argument-Parser werden zusätzliche Argumente ohne Zusätze einfach mit einem Leerzeichen getrennt hinter das Hauptargument geschrieben.
+Bsp.: --out-path C:\Users\ --sign-per-line 10 -v
