@@ -53,6 +53,8 @@ wenn xerces nicht gefunden wurde (bsp: opt/xerces-c)
 ```
 cmake -DCMAKE_PREFIX_PATH="$Path to xerces install" .. 
 ```
+wenn dies auch fehlschlägt, dann in den Hauptordner wechseln, von dort in C_Code_Gen wechseln und die Datei CMakeLists.txt öffnen.
+Dort wir in Zeile 10 set(CMAKE_PREFIX_PATH "/opt/xerces-c") zu dem Installations Pfad von xerces gesetzt.
 "make" in terminal eingeben
 ```
 make
@@ -105,7 +107,7 @@ Unix
 make
 ```
 6. Es sollte nun im "build" Ordner ein weiter Ordner "Debug" sein, in welchem sich nun im Debug Ordner eine ExampleMain.exe befindet (Win).
-7. Es sollte nun im "build" Ordner ein weiter Ordner "ExampleMain" sein, in welchem sich nun ein ExampleMain Programm befindet (Unix) 
+7. Es sollte nun im "build" ein ExampleMain Programm zu sehen sein. (Unix) 
 
 # Use_Parser
 
