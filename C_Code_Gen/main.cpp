@@ -1,3 +1,5 @@
+//Author Michael Hornstein, Jacob Hochbaum, Johannes Muessig
+
 // g++ -o main.exe main.cpp xml_parser.cpp -IC:\xerces-c\include -LC:\xerces-c\lib -lxerces-c.dll -std=c++11
 #include "xml_parser.h"
 #include "CodeGenerator.h"
