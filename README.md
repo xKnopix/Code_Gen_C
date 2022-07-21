@@ -103,7 +103,7 @@ Unix
 ```
 make
 ```
-6. Es sollte nun im "build" Ordner ein weiter Ordner "ExampleMain" sein, in welchem sich nun im Debug Ordner eine ExampleMain.exe befindet (Win).
+6. Es sollte nun im "build" Ordner ein weiter Ordner "Debug" sein, in welchem sich nun im Debug Ordner eine ExampleMain.exe befindet (Win).
 7. Es sollte nun im "build" Ordner ein weiter Ordner "ExampleMain" sein, in welchem sich nun ein ExampleMain Programm befindet (Unix) 
 
 # Use_Parser
