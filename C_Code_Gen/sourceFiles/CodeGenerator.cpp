@@ -305,7 +305,7 @@ string Code::createInternalMethods(xml_parser::GetOptSetup data)
 
             iM.methodCode = "cout<<\"" + sampleUsage + "\"<< endl;\n" + printHelpMethodCode;
 
-            methods.addText("void " + iM.methodName + "(constint signPerLine)\n{\n");
+            methods.addText("void " + iM.methodName + "(const int signPerLine)\n{\n");
             methods.addText(iM.methodCode);
             methods.addText(iM.methodEnd);
             // methods.addText("\npublic:\n");

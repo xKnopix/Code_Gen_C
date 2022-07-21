@@ -12,7 +12,9 @@
 
 using namespace std;
 
-/// This is the brief description for this class.
+/// Diese Klasse hilft etwas übersichtlicher Code zu generieren.
+///
+/// Mithilfe der Klasse Code und den eingebauten Funktionen kann lesbarer und übersichtlicher Code generiert werden, als nur über string addierung.
 class Code
 {
     /*
@@ -25,7 +27,7 @@ class Code
      *
      *
      */
-
+private:
     struct internalMethod         ////internalMethod////
     {                             // In diesem Struct werden Informationen zu einer internen Methode gespeichert
         string methodName = "";   ////Methodname////
@@ -154,6 +156,7 @@ public:
     /// Konstruktor, um das Code-Objekt fuer den Argument-Parser zu erstellen, dabei werden ein paar Strings bereits gesetzt.
     Code(string sourceFileName, string headerFileName, string nameSpace, string className, string signPerLine, string sampleUsage, string author);
 
+private:
     // Alle Methoden mit dem Rueckgabewert 'void'
 
     /// Funktion, um dem code eines Code Objektes beliebigen Text hinzuzufuegen.
@@ -451,6 +454,7 @@ public:
     /// code.parse(data);
     /// ~~~~~~~~~~~~~~~~~~~~~~~~~
     ///@author Jacob
+public:
     void parse(xml_parser::GetOptSetup data);
     //##########################################
 
@@ -487,6 +491,7 @@ public:
     ///                  data.options.option[i].connectToExternalMethod);
     /// ~~~~~~~~~~~~~~~~~~~~~~~~~
     ///@author Jacob
+private:
     void addArgument(const string ref = "",
                      const string shortOpt = "",
                      const string longOpt = "",
