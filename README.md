@@ -1,3 +1,6 @@
+Main Page {#mainpage}
+=========
+
 # C Code Gen
 
 # Table of Contents
@@ -58,6 +61,10 @@ cmake -DCMAKE_PREFIX_PATH="$Path to xerces install" ..
 make
 ```
 Das fertige Programm kann dann unter /build/C_Code_Gen gefunden werden
+
+# XML
+
+in der Example.xml kann angepasst werden, wie der Code Generator Code erzeugt. Die Example.xml muss angepasst werden, wenn der Parser etwas anderes machen soll als die Beispiel Implementation
 
 # Build_ExampleProject
 
