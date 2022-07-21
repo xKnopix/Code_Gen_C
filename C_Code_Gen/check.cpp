@@ -1,3 +1,5 @@
+//Author: Michael Hornstein
+
 #include "check.h"
 
 int check::check_data(xml_parser::GetOptSetup data)
