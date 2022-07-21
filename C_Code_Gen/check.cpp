@@ -16,7 +16,7 @@ int check::check_data(xml_parser::GetOptSetup data)
     return status;
 }
 
-xml_parser::GetOptSetup check::sortData(xml_parser::GetOptSetup data)
+xml_parser::GetOptSetup check::sortData(xml_parser::GetOptSetup data)///Sortiert die optionen Alphabetisch mit dem BubbleSort Algorithmus
 {
     //Standart Bubblesort
     int i, j, pass = 0;
@@ -58,18 +58,11 @@ xml_parser::GetOptSetup check::sortData(xml_parser::GetOptSetup data)
         }
         pass++;
     }
-    /*
-    cerr << "Sorted Element List ...\n";
-    for (i = 0; i < data.options.option.size(); i++)
-    {
-        cerr << data.options.option[i].shortOpt << "\t" << data.options.option[i].longOpt << "\n";
-    }
-    */
 
     return data;
 }
 
-int check::compStringS1SmalerS2(string s1, string s2)
+int check::compStringS1SmalerS2(string s1, string s2)///um zwei Strings mit < vergleichen zukönnen (Hilfsfunktion)
 { // returns 1 if s1 is smaler than s2
 
     char c1 = s1.front();
@@ -86,7 +79,7 @@ int check::compStringS1SmalerS2(string s1, string s2)
     return 0;
 }
 
-int check::check_author(xml_parser::Author author)
+int check::check_author(xml_parser::Author author)///überpüft die Daten, welche zu dem Author gemacht worden sind und ob notwendige Daten Fehlen
 {
     int status = 1;
     if (author.name.empty())
@@ -115,7 +108,7 @@ int check::check_author(xml_parser::Author author)
     }
     return status;
 }
-int check::check_headerfile(xml_parser::HeaderFileName header)
+int check::check_headerfile(xml_parser::HeaderFileName header)///überpüft die Daten, welche zu dem headerfile gemacht worden sind und ob notwendige Daten Fehlen
 {
     int status = 1;
     if (header.content.empty())
@@ -130,7 +123,7 @@ int check::check_headerfile(xml_parser::HeaderFileName header)
     }
     return status;
 }
-int check::check_sourcefile(xml_parser::SourceFileName source)
+int check::check_sourcefile(xml_parser::SourceFileName source)///überpüft die Daten, welche zu dem sourcefile gemacht worden sind und ob notwendige Daten Fehlen
 {
     int status = 1;
     if (source.content.empty())
@@ -145,7 +138,7 @@ int check::check_sourcefile(xml_parser::SourceFileName source)
     }
     return status;
 }
-int check::check_namespace(xml_parser::NameSpace namesp)
+int check::check_namespace(xml_parser::NameSpace namesp)///überpüft die Daten, welche zu dem namespace gemacht worden sind und ob notwendige Daten Fehlen
 {
     int status = 1;
     if (namesp.content.empty())
@@ -155,7 +148,7 @@ int check::check_namespace(xml_parser::NameSpace namesp)
     }
     return status;
 }
-int check::check_classname(xml_parser::ClassName cname)
+int check::check_classname(xml_parser::ClassName cname)///überpüft die Daten, welche zu dem classname gemacht worden sind und ob notwendige Daten Fehlen
 {
     int status = 1;
     if (cname.content.empty())
@@ -165,7 +158,7 @@ int check::check_classname(xml_parser::ClassName cname)
     }
     return status;
 }
-int check::check_overall_description(xml_parser::OverAllDescription ovdes)
+int check::check_overall_description(xml_parser::OverAllDescription ovdes)///überpüft die Daten, welche zu dem overall_description gemacht worden sind und ob notwendige Daten Fehlen
 {
     if (ovdes.block.size() == 0 || ovdes.block[0].content.empty())
     {
@@ -177,7 +170,7 @@ int check::check_overall_description(xml_parser::OverAllDescription ovdes)
     }
     return 1;
 }
-int check::check_block(xml_parser::Block bl)
+int check::check_block(xml_parser::Block bl)///überpüft die Daten, welche zu dem block gemacht worden sind und ob notwendige Daten Fehlen
 {
     if (bl.content.empty())
     {
@@ -185,7 +178,7 @@ int check::check_block(xml_parser::Block bl)
     }
     return 1;
 }
-int check::check_sample_usage(xml_parser::SampleUsage sample)
+int check::check_sample_usage(xml_parser::SampleUsage sample)///überpüft die Daten, welche zu dem sample_usage gemacht worden sind und ob notwendige Daten Fehlen
 {
     if (sample.sample.size() == 0 || sample.sample[0].content.empty())
     {
@@ -197,7 +190,7 @@ int check::check_sample_usage(xml_parser::SampleUsage sample)
     }
     return 1;
 }
-int check::check_sample(xml_parser::Sample sp)
+int check::check_sample(xml_parser::Sample sp)///überpüft die Daten, welche zu dem sample gemacht worden sind und ob notwendige Daten Fehlen
 {
     if (sp.content.empty())
     {
@@ -205,7 +198,7 @@ int check::check_sample(xml_parser::Sample sp)
     }
     return 1;
 }
-int check::check_options(xml_parser::Options opti)
+int check::check_options(xml_parser::Options opti)///überpüft die Daten, welche zu dem options gemacht worden sind und ob notwendige Daten Fehlen
 {
     int status = 1;
     if (opti.option.size() == 0)
@@ -223,7 +216,7 @@ int check::check_options(xml_parser::Options opti)
     }
     return status;
 }
-int check::check_option(xml_parser::Option opt, int i)
+int check::check_option(xml_parser::Option opt, int i)///überpüft die Daten, welche zu der option gemacht worden sind und ob notwendige Daten Fehlen
 {
     if (opt.shortOpt.empty() && opt.longOpt.empty())
     {
