@@ -1,0 +1,65 @@
+\hypertarget{xml_ch_8h_source}{}\doxysection{xml\+Ch.\+h}
+\label{xml_ch_8h_source}\index{D:/Studium/Code\_Gen\_C/C\_Code\_Gen/headerFiles/xmlCh.h@{D:/Studium/Code\_Gen\_C/C\_Code\_Gen/headerFiles/xmlCh.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef XMLCH\_H}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define XMLCH\_H}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include <iostream>}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include <xercesc/dom/DOM.hpp>}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include <xercesc/util/XMLString.hpp>}}
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#include <xercesc/framework/LocalFileFormatTarget.hpp>}}
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include <xercesc/framework/StdOutFormatTarget.hpp>}}
+\DoxyCodeLine{9 }
+\DoxyCodeLine{10 XERCES\_CPP\_NAMESPACE\_USE}
+\DoxyCodeLine{11 }
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#define toXMLCh(str) XStr(str).unicodeForm()}}
+\DoxyCodeLine{13 \textcolor{preprocessor}{\#define toCh(str) StrX(str).localForm()}}
+\DoxyCodeLine{14 }
+\DoxyCodeLine{16 \textcolor{keyword}{class }\mbox{\hyperlink{class_str_x}{StrX}}}
+\DoxyCodeLine{17   \{}
+\DoxyCodeLine{18   public :}
+\DoxyCodeLine{19       \mbox{\hyperlink{class_str_x}{StrX}}(\textcolor{keyword}{const} XMLCh* \textcolor{keyword}{const} toTranscode)}
+\DoxyCodeLine{20       \{}
+\DoxyCodeLine{21           fLocalForm = XMLString::transcode(toTranscode);}
+\DoxyCodeLine{22       \}}
+\DoxyCodeLine{23 }
+\DoxyCodeLine{24       \mbox{\hyperlink{class_str_x}{\string~StrX}}()}
+\DoxyCodeLine{25       \{}
+\DoxyCodeLine{26           XMLString::release(\&fLocalForm);}
+\DoxyCodeLine{27       \}}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29       \textcolor{keyword}{const} \textcolor{keywordtype}{char}* localForm()\textcolor{keyword}{ const}}
+\DoxyCodeLine{30 \textcolor{keyword}{      }\{}
+\DoxyCodeLine{31           \textcolor{keywordflow}{return} fLocalForm;}
+\DoxyCodeLine{32       \}}
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34   private :}
+\DoxyCodeLine{35       \textcolor{keywordtype}{char}*   fLocalForm;}
+\DoxyCodeLine{36   \};}
+\DoxyCodeLine{37 }
+\DoxyCodeLine{39 \textcolor{keyword}{class }\mbox{\hyperlink{class_x_str}{XStr}}}
+\DoxyCodeLine{40 \{}
+\DoxyCodeLine{41 public :}
+\DoxyCodeLine{42     \mbox{\hyperlink{class_x_str}{XStr}}(\textcolor{keyword}{const} \textcolor{keywordtype}{char}* \textcolor{keyword}{const} toTranscode)}
+\DoxyCodeLine{43     \{}
+\DoxyCodeLine{44         fUnicodeForm = XMLString::transcode(toTranscode);}
+\DoxyCodeLine{45     \}}
+\DoxyCodeLine{46 }
+\DoxyCodeLine{47     \mbox{\hyperlink{class_x_str}{\string~XStr}}()}
+\DoxyCodeLine{48     \{}
+\DoxyCodeLine{49         XMLString::release(\&fUnicodeForm);}
+\DoxyCodeLine{50     \}}
+\DoxyCodeLine{51 }
+\DoxyCodeLine{52     \textcolor{keyword}{const} XMLCh* unicodeForm()\textcolor{keyword}{ const}}
+\DoxyCodeLine{53 \textcolor{keyword}{    }\{}
+\DoxyCodeLine{54         \textcolor{keywordflow}{return} fUnicodeForm;}
+\DoxyCodeLine{55     \}}
+\DoxyCodeLine{56 }
+\DoxyCodeLine{57 private :}
+\DoxyCodeLine{58     XMLCh*   fUnicodeForm;}
+\DoxyCodeLine{59 \};}
+\DoxyCodeLine{60 }
+\DoxyCodeLine{61 \textcolor{preprocessor}{\#endif }}
+
+\end{DoxyCode}

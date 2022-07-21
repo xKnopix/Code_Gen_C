@@ -1,0 +1,83 @@
+\hypertarget{options_8h_source}{}\doxysection{options.\+h}
+\label{options_8h_source}\index{D:/Studium/Code\_Gen\_C/exampleProject/options.h@{D:/Studium/Code\_Gen\_C/exampleProject/options.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef NEWFILE\_H}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define NEWFILE\_H}}
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include <string>}}
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include <iostream>}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include <vector>}}
+\DoxyCodeLine{6 \textcolor{keyword}{using namespace }std;}
+\DoxyCodeLine{7 \textcolor{keyword}{namespace }DHBW\_Programmieren}
+\DoxyCodeLine{8 \{}
+\DoxyCodeLine{9     \textcolor{keyword}{class }\mbox{\hyperlink{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l}{Beispiel\_XML}}}
+\DoxyCodeLine{10     \{}
+\DoxyCodeLine{11         \textcolor{keywordtype}{bool} isSetastylepathBool;       }
+\DoxyCodeLine{12         \textcolor{keywordtype}{string} astylepathParam;         }
+\DoxyCodeLine{13         \textcolor{keywordtype}{bool} isSetonlyifnewerBool;      }
+\DoxyCodeLine{14         \textcolor{keywordtype}{bool} isSetnoformatBool;         }
+\DoxyCodeLine{15         \textcolor{keywordtype}{bool} isSetoutpathBool;          }
+\DoxyCodeLine{16         \textcolor{keywordtype}{string} outpathParam;            }
+\DoxyCodeLine{17         \textcolor{keywordtype}{bool} parseonlyBool = 0;         }
+\DoxyCodeLine{18         \textcolor{keywordtype}{bool} isSetparseonlyBool;        }
+\DoxyCodeLine{19         \textcolor{keywordtype}{string} parseonlyParam;          }
+\DoxyCodeLine{20         \textcolor{keywordtype}{int} signperlineInt = 79;        }
+\DoxyCodeLine{21         \textcolor{keywordtype}{bool} isSetsignperlineBool;      }
+\DoxyCodeLine{22         \textcolor{keywordtype}{string} signperlineParam = \textcolor{stringliteral}{"{}79"{}}; }
+\DoxyCodeLine{23         \textcolor{keywordtype}{int} versionInt = 0;             }
+\DoxyCodeLine{24         \textcolor{keywordtype}{bool} isSetversionBool;          }
+\DoxyCodeLine{25 }
+\DoxyCodeLine{47     \textcolor{keyword}{private}:}
+\DoxyCodeLine{48         \textcolor{keywordtype}{void} myPrint(\textcolor{keywordtype}{string} myString, \textcolor{keywordtype}{int} newLineChecker);}
+\DoxyCodeLine{49 }
+\DoxyCodeLine{72     \textcolor{keyword}{public}:}
+\DoxyCodeLine{73         \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_a55576a04790cf7d997865d72a7437169}{isSetastylepath}}();}
+\DoxyCodeLine{83     \textcolor{keyword}{public}:}
+\DoxyCodeLine{84         \textcolor{keywordtype}{string} \mbox{\hyperlink{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_a68658e94d4ee6a9dd910fc6d5a905f63}{getValueOfastylepath}}();}
+\DoxyCodeLine{85 }
+\DoxyCodeLine{95     \textcolor{keyword}{protected}:}
+\DoxyCodeLine{96         \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_af99254a0c1eb1d99c1aeec7d137dadb8}{printHelp}}(\textcolor{keywordtype}{int} signPerLine);}
+\DoxyCodeLine{97 }
+\DoxyCodeLine{110     \textcolor{keyword}{public}:}
+\DoxyCodeLine{111         \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_ae24872d7cfdc1f13a9e646557d37c3cc}{isSetonlyifnewer}}();}
+\DoxyCodeLine{112 }
+\DoxyCodeLine{125     \textcolor{keyword}{public}:}
+\DoxyCodeLine{126         \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_a81d27b616bb15102a5d714fabd17e98b}{isSetnoformat}}();}
+\DoxyCodeLine{127 }
+\DoxyCodeLine{140     \textcolor{keyword}{public}:}
+\DoxyCodeLine{141         \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_a8268888bea1b10c9d7ceaffb5ea28fc7}{isSetoutpath}}();}
+\DoxyCodeLine{142 }
+\DoxyCodeLine{152 }
+\DoxyCodeLine{153     \textcolor{keyword}{public}:}
+\DoxyCodeLine{154         \textcolor{keywordtype}{string} \mbox{\hyperlink{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_ac413cbf5f0856eca81ee1d5e423afaa3}{getValueOfoutpath}}();}
+\DoxyCodeLine{155 }
+\DoxyCodeLine{168     \textcolor{keyword}{public}:}
+\DoxyCodeLine{169         \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_a156682ac8d3fcb8cfa2a73a5ea9ba33b}{isSetparseonly}}();}
+\DoxyCodeLine{170 }
+\DoxyCodeLine{180     \textcolor{keyword}{public}:}
+\DoxyCodeLine{181         \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_aec497a6c84ca5671b0b935daac468aa6}{getValueOfparseonly}}();}
+\DoxyCodeLine{182 }
+\DoxyCodeLine{192     \textcolor{keyword}{public}:}
+\DoxyCodeLine{193         \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_aed545890ec296dc37d9017e10cdb8cb4}{isSetsignperline}}();}
+\DoxyCodeLine{194 }
+\DoxyCodeLine{204     \textcolor{keyword}{public}:}
+\DoxyCodeLine{205         \textcolor{keywordtype}{int} \mbox{\hyperlink{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_a00256c0d28acf4b9df496b4a062fb23e}{getValueOfsignperline}}();}
+\DoxyCodeLine{206 }
+\DoxyCodeLine{219     \textcolor{keyword}{public}:}
+\DoxyCodeLine{220         \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_a959c3110244dc2a337d8e52a3a0ddf1b}{isSetversion}}();}
+\DoxyCodeLine{221     }
+\DoxyCodeLine{224     \textcolor{keyword}{protected}:}
+\DoxyCodeLine{225         \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_ae175bb8f4c460b41be64f804aa8b0f4c}{ParseXML}}(\textcolor{keywordtype}{bool} b) = 0;}
+\DoxyCodeLine{226     }
+\DoxyCodeLine{229     \textcolor{keyword}{protected}:}
+\DoxyCodeLine{230         \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_a488cae40a40dc5124e7017df9718a69d}{printVersion}}(\textcolor{keywordtype}{int} a) = 0;}
+\DoxyCodeLine{231 }
+\DoxyCodeLine{237         \textcolor{keyword}{virtual} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_a8a3a0cd81f5c8455fca2f9686d635874}{unknownOption}}(\textcolor{keyword}{const} \textcolor{keywordtype}{string} \&unknown\_option);}
+\DoxyCodeLine{238 }
+\DoxyCodeLine{244     \textcolor{keyword}{public}:}
+\DoxyCodeLine{245         \textcolor{keywordtype}{void} \mbox{\hyperlink{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_ad8f276d14ae853d078448c10b6464787}{parseOptions}}(\textcolor{keywordtype}{int} argc, \textcolor{keywordtype}{char} *argv[]);}
+\DoxyCodeLine{246     \};}
+\DoxyCodeLine{247 \};}
+\DoxyCodeLine{248 \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

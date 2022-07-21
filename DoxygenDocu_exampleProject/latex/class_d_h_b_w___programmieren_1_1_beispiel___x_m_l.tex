@@ -1,0 +1,377 @@
+\hypertarget{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l}{}\doxysection{DHBW\+\_\+\+Programmieren\+::Beispiel\+\_\+\+XML Class Reference}
+\label{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l}\index{DHBW\_Programmieren::Beispiel\_XML@{DHBW\_Programmieren::Beispiel\_XML}}
+Inheritance diagram for DHBW\+\_\+\+Programmieren\+::Beispiel\+\_\+\+XML\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_a55576a04790cf7d997865d72a7437169}{is\+Setastylepath}} ()
+\item 
+string \mbox{\hyperlink{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_a68658e94d4ee6a9dd910fc6d5a905f63}{get\+Value\+Ofastylepath}} ()
+\item 
+bool \mbox{\hyperlink{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_ae24872d7cfdc1f13a9e646557d37c3cc}{is\+Setonlyifnewer}} ()
+\item 
+bool \mbox{\hyperlink{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_a81d27b616bb15102a5d714fabd17e98b}{is\+Setnoformat}} ()
+\item 
+bool \mbox{\hyperlink{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_a8268888bea1b10c9d7ceaffb5ea28fc7}{is\+Setoutpath}} ()
+\item 
+string \mbox{\hyperlink{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_ac413cbf5f0856eca81ee1d5e423afaa3}{get\+Value\+Ofoutpath}} ()
+\item 
+bool \mbox{\hyperlink{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_a156682ac8d3fcb8cfa2a73a5ea9ba33b}{is\+Setparseonly}} ()
+\item 
+bool \mbox{\hyperlink{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_aec497a6c84ca5671b0b935daac468aa6}{get\+Value\+Ofparseonly}} ()
+\item 
+bool \mbox{\hyperlink{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_aed545890ec296dc37d9017e10cdb8cb4}{is\+Setsignperline}} ()
+\item 
+int \mbox{\hyperlink{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_a00256c0d28acf4b9df496b4a062fb23e}{get\+Value\+Ofsignperline}} ()
+\item 
+bool \mbox{\hyperlink{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_a959c3110244dc2a337d8e52a3a0ddf1b}{is\+Setversion}} ()
+\item 
+void \mbox{\hyperlink{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_ad8f276d14ae853d078448c10b6464787}{parse\+Options}} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \mbox{\hyperlink{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_af99254a0c1eb1d99c1aeec7d137dadb8}{print\+Help}} (int sign\+Per\+Line)
+\item 
+virtual void \mbox{\hyperlink{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_ae175bb8f4c460b41be64f804aa8b0f4c}{Parse\+XML}} (bool b)=0
+\item 
+virtual void \mbox{\hyperlink{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_a488cae40a40dc5124e7017df9718a69d}{print\+Version}} (int a)=0
+\item 
+virtual void \mbox{\hyperlink{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_a8a3a0cd81f5c8455fca2f9686d635874}{unknown\+Option}} (const string \&unknown\+\_\+option)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_a68658e94d4ee6a9dd910fc6d5a905f63}\label{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_a68658e94d4ee6a9dd910fc6d5a905f63}} 
+\index{DHBW\_Programmieren::Beispiel\_XML@{DHBW\_Programmieren::Beispiel\_XML}!getValueOfastylepath@{getValueOfastylepath}}
+\index{getValueOfastylepath@{getValueOfastylepath}!DHBW\_Programmieren::Beispiel\_XML@{DHBW\_Programmieren::Beispiel\_XML}}
+\doxysubsubsection{\texorpdfstring{getValueOfastylepath()}{getValueOfastylepath()}}
+{\footnotesize\ttfamily string DHBW\+\_\+\+Programmieren\+::\+Beispiel\+\_\+\+XML\+::get\+Value\+Ofastylepath (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Funktion, um auf das zusätzliche Argument von astyle-\/path zuzugreifen
+
+Diese Funktion gibt das Argument zurück, das als zusätzliches Argument zu Astyle-\/path angegeben wurde \begin{DoxyReturn}{Returns}
+string ~\newline
+ {\bfseries{Beispiel Anwendung\+:}} 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{cout << \mbox{\hyperlink{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_a68658e94d4ee6a9dd910fc6d5a905f63}{getValueOfastylepath}} << endl;}
+
+\end{DoxyCode}
+ 
+\end{DoxyReturn}
+\begin{DoxyAuthor}{Author}
+Jacob 
+\end{DoxyAuthor}
+\mbox{\Hypertarget{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_ac413cbf5f0856eca81ee1d5e423afaa3}\label{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_ac413cbf5f0856eca81ee1d5e423afaa3}} 
+\index{DHBW\_Programmieren::Beispiel\_XML@{DHBW\_Programmieren::Beispiel\_XML}!getValueOfoutpath@{getValueOfoutpath}}
+\index{getValueOfoutpath@{getValueOfoutpath}!DHBW\_Programmieren::Beispiel\_XML@{DHBW\_Programmieren::Beispiel\_XML}}
+\doxysubsubsection{\texorpdfstring{getValueOfoutpath()}{getValueOfoutpath()}}
+{\footnotesize\ttfamily string DHBW\+\_\+\+Programmieren\+::\+Beispiel\+\_\+\+XML\+::get\+Value\+Ofoutpath (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Funktion, um auf das zusätzliche Argument von out-\/path zuzugreifen
+
+Diese Funktion gibt das Argument zurück, das als zusätzliches Argument zu Astyle-\/path angegeben wurde \begin{DoxyReturn}{Returns}
+string ~\newline
+ {\bfseries{Beispiel Anwendung\+:}} 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{cout << \mbox{\hyperlink{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_ac413cbf5f0856eca81ee1d5e423afaa3}{getValueOfoutpath}} << endl;}
+
+\end{DoxyCode}
+ 
+\end{DoxyReturn}
+\begin{DoxyAuthor}{Author}
+Jacob 
+\end{DoxyAuthor}
+\mbox{\Hypertarget{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_aec497a6c84ca5671b0b935daac468aa6}\label{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_aec497a6c84ca5671b0b935daac468aa6}} 
+\index{DHBW\_Programmieren::Beispiel\_XML@{DHBW\_Programmieren::Beispiel\_XML}!getValueOfparseonly@{getValueOfparseonly}}
+\index{getValueOfparseonly@{getValueOfparseonly}!DHBW\_Programmieren::Beispiel\_XML@{DHBW\_Programmieren::Beispiel\_XML}}
+\doxysubsubsection{\texorpdfstring{getValueOfparseonly()}{getValueOfparseonly()}}
+{\footnotesize\ttfamily bool DHBW\+\_\+\+Programmieren\+::\+Beispiel\+\_\+\+XML\+::get\+Value\+Ofparseonly (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Funktion, um auf das zusätzliche Argument von parse-\/only zuzugreifen
+
+Diese Funktion gibt das Argument zurück, das als zusätzliches Argument zu parse-\/only angegeben wurde \begin{DoxyReturn}{Returns}
+bool ~\newline
+ {\bfseries{Beispiel Anwendung\+:}} 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{cout << \mbox{\hyperlink{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_aec497a6c84ca5671b0b935daac468aa6}{getValueOfparseonly}} << endl;}
+
+\end{DoxyCode}
+ 
+\end{DoxyReturn}
+\begin{DoxyAuthor}{Author}
+Jacob 
+\end{DoxyAuthor}
+\mbox{\Hypertarget{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_a00256c0d28acf4b9df496b4a062fb23e}\label{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_a00256c0d28acf4b9df496b4a062fb23e}} 
+\index{DHBW\_Programmieren::Beispiel\_XML@{DHBW\_Programmieren::Beispiel\_XML}!getValueOfsignperline@{getValueOfsignperline}}
+\index{getValueOfsignperline@{getValueOfsignperline}!DHBW\_Programmieren::Beispiel\_XML@{DHBW\_Programmieren::Beispiel\_XML}}
+\doxysubsubsection{\texorpdfstring{getValueOfsignperline()}{getValueOfsignperline()}}
+{\footnotesize\ttfamily int DHBW\+\_\+\+Programmieren\+::\+Beispiel\+\_\+\+XML\+::get\+Value\+Ofsignperline (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Funktion, um auf das zusätzliche Argument von sign-\/per-\/line zuzugreifen
+
+Diese Funktion gibt das Argument zurück, das als zusätzliches Argument zu sign-\/per-\/line angegeben wurde \begin{DoxyReturn}{Returns}
+int ~\newline
+ {\bfseries{Beispiel Anwendung\+:}} 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{cout << \mbox{\hyperlink{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_a00256c0d28acf4b9df496b4a062fb23e}{getValueOfsignperline}} << endl;}
+
+\end{DoxyCode}
+ 
+\end{DoxyReturn}
+\begin{DoxyAuthor}{Author}
+Jacob 
+\end{DoxyAuthor}
+\mbox{\Hypertarget{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_a55576a04790cf7d997865d72a7437169}\label{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_a55576a04790cf7d997865d72a7437169}} 
+\index{DHBW\_Programmieren::Beispiel\_XML@{DHBW\_Programmieren::Beispiel\_XML}!isSetastylepath@{isSetastylepath}}
+\index{isSetastylepath@{isSetastylepath}!DHBW\_Programmieren::Beispiel\_XML@{DHBW\_Programmieren::Beispiel\_XML}}
+\doxysubsubsection{\texorpdfstring{isSetastylepath()}{isSetastylepath()}}
+{\footnotesize\ttfamily bool DHBW\+\_\+\+Programmieren\+::\+Beispiel\+\_\+\+XML\+::is\+Setastylepath (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Funktion, um zu überprüfen, ob das Argument astyle-\/path angegeben wurde.
+
+Diese Funktion überprüft, ob beim aufrufen der .exe datei das Argument --astyle-\/path angegeben wurde. \begin{DoxyReturn}{Returns}
+bool ~\newline
+ {\bfseries{Beispiel Anwendung\+:}} 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{if}(\mbox{\hyperlink{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_a55576a04790cf7d997865d72a7437169}{isSetastylepath}}())}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{    cout << \textcolor{stringliteral}{"{}astyle-\/path wurde übergeben!"{}} << endl;}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{OUTPUT:}
+\DoxyCodeLine{}
+\DoxyCodeLine{Das i}
+\DoxyCodeLine{st ei}
+\DoxyCodeLine{n Tes}
+\DoxyCodeLine{t für}
+\DoxyCodeLine{sign-\/}
+\DoxyCodeLine{per-\/l}
+\DoxyCodeLine{ine}
+
+\end{DoxyCode}
+ 
+\end{DoxyReturn}
+\begin{DoxyAuthor}{Author}
+Jacob 
+\end{DoxyAuthor}
+\mbox{\Hypertarget{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_a81d27b616bb15102a5d714fabd17e98b}\label{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_a81d27b616bb15102a5d714fabd17e98b}} 
+\index{DHBW\_Programmieren::Beispiel\_XML@{DHBW\_Programmieren::Beispiel\_XML}!isSetnoformat@{isSetnoformat}}
+\index{isSetnoformat@{isSetnoformat}!DHBW\_Programmieren::Beispiel\_XML@{DHBW\_Programmieren::Beispiel\_XML}}
+\doxysubsubsection{\texorpdfstring{isSetnoformat()}{isSetnoformat()}}
+{\footnotesize\ttfamily bool DHBW\+\_\+\+Programmieren\+::\+Beispiel\+\_\+\+XML\+::is\+Setnoformat (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Funktion, um zu überprüfen, ob das Argument no-\/format angegeben wurde.
+
+Diese Funktion überprüft, ob beim aufrufen der .exe datei das Argument --no-\/format angegeben wurde. \begin{DoxyReturn}{Returns}
+bool ~\newline
+ {\bfseries{Beispiel Anwendung\+:}} 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{if}(\mbox{\hyperlink{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_a81d27b616bb15102a5d714fabd17e98b}{isSetnoformat}}())}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{    cout << \textcolor{stringliteral}{"{}no-\/format wurde übergeben!"{}} << endl;}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ 
+\end{DoxyReturn}
+\begin{DoxyAuthor}{Author}
+Jacob 
+\end{DoxyAuthor}
+\mbox{\Hypertarget{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_ae24872d7cfdc1f13a9e646557d37c3cc}\label{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_ae24872d7cfdc1f13a9e646557d37c3cc}} 
+\index{DHBW\_Programmieren::Beispiel\_XML@{DHBW\_Programmieren::Beispiel\_XML}!isSetonlyifnewer@{isSetonlyifnewer}}
+\index{isSetonlyifnewer@{isSetonlyifnewer}!DHBW\_Programmieren::Beispiel\_XML@{DHBW\_Programmieren::Beispiel\_XML}}
+\doxysubsubsection{\texorpdfstring{isSetonlyifnewer()}{isSetonlyifnewer()}}
+{\footnotesize\ttfamily bool DHBW\+\_\+\+Programmieren\+::\+Beispiel\+\_\+\+XML\+::is\+Setonlyifnewer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Funktion, um zu überprüfen, ob das Argument only-\/if-\/newer angegeben wurde.
+
+Diese Funktion überprüft, ob beim aufrufen der .exe datei das Argument --astyle-\/path angegeben wurde. \begin{DoxyReturn}{Returns}
+bool ~\newline
+ {\bfseries{Beispiel Anwendung\+:}} 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{if}(\mbox{\hyperlink{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_ae24872d7cfdc1f13a9e646557d37c3cc}{isSetonlyifnewer}}())}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{    cout << \textcolor{stringliteral}{"{}only-\/if-\/newer wurde übergeben!"{}} << endl;}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ 
+\end{DoxyReturn}
+\begin{DoxyAuthor}{Author}
+Jacob 
+\end{DoxyAuthor}
+\mbox{\Hypertarget{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_a8268888bea1b10c9d7ceaffb5ea28fc7}\label{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_a8268888bea1b10c9d7ceaffb5ea28fc7}} 
+\index{DHBW\_Programmieren::Beispiel\_XML@{DHBW\_Programmieren::Beispiel\_XML}!isSetoutpath@{isSetoutpath}}
+\index{isSetoutpath@{isSetoutpath}!DHBW\_Programmieren::Beispiel\_XML@{DHBW\_Programmieren::Beispiel\_XML}}
+\doxysubsubsection{\texorpdfstring{isSetoutpath()}{isSetoutpath()}}
+{\footnotesize\ttfamily bool DHBW\+\_\+\+Programmieren\+::\+Beispiel\+\_\+\+XML\+::is\+Setoutpath (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Funktion, um zu überprüfen, ob das Argument out-\/path angegeben wurde.
+
+Diese Funktion überprüft, ob beim aufrufen der .exe datei das Argument --out-\/path angegeben wurde. \begin{DoxyReturn}{Returns}
+bool ~\newline
+ {\bfseries{Beispiel Anwendung\+:}} 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{if}(\mbox{\hyperlink{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_a8268888bea1b10c9d7ceaffb5ea28fc7}{isSetoutpath}}())}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{    cout << \textcolor{stringliteral}{"{}out-\/path wurde übergeben!"{}} << endl;}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ 
+\end{DoxyReturn}
+\begin{DoxyAuthor}{Author}
+Jacob 
+\end{DoxyAuthor}
+\mbox{\Hypertarget{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_a156682ac8d3fcb8cfa2a73a5ea9ba33b}\label{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_a156682ac8d3fcb8cfa2a73a5ea9ba33b}} 
+\index{DHBW\_Programmieren::Beispiel\_XML@{DHBW\_Programmieren::Beispiel\_XML}!isSetparseonly@{isSetparseonly}}
+\index{isSetparseonly@{isSetparseonly}!DHBW\_Programmieren::Beispiel\_XML@{DHBW\_Programmieren::Beispiel\_XML}}
+\doxysubsubsection{\texorpdfstring{isSetparseonly()}{isSetparseonly()}}
+{\footnotesize\ttfamily bool DHBW\+\_\+\+Programmieren\+::\+Beispiel\+\_\+\+XML\+::is\+Setparseonly (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Funktion, um zu überprüfen, ob das Argument parse-\/only angegeben wurde.
+
+Diese Funktion überprüft, ob beim aufrufen der .exe datei das Argument --parse-\/only angegeben wurde. \begin{DoxyReturn}{Returns}
+bool ~\newline
+ {\bfseries{Beispiel Anwendung\+:}} 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{if}(\mbox{\hyperlink{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_a156682ac8d3fcb8cfa2a73a5ea9ba33b}{isSetparseonly}}())}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{    cout << \textcolor{stringliteral}{"{}parse-\/only wurde übergeben!"{}} << endl;}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ 
+\end{DoxyReturn}
+\begin{DoxyAuthor}{Author}
+Jacob 
+\end{DoxyAuthor}
+\mbox{\Hypertarget{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_aed545890ec296dc37d9017e10cdb8cb4}\label{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_aed545890ec296dc37d9017e10cdb8cb4}} 
+\index{DHBW\_Programmieren::Beispiel\_XML@{DHBW\_Programmieren::Beispiel\_XML}!isSetsignperline@{isSetsignperline}}
+\index{isSetsignperline@{isSetsignperline}!DHBW\_Programmieren::Beispiel\_XML@{DHBW\_Programmieren::Beispiel\_XML}}
+\doxysubsubsection{\texorpdfstring{isSetsignperline()}{isSetsignperline()}}
+{\footnotesize\ttfamily bool DHBW\+\_\+\+Programmieren\+::\+Beispiel\+\_\+\+XML\+::is\+Setsignperline (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Funktion, um auf das zusätzliche Argument von sign-\/per-\/line zuzugreifen
+
+Diese Funktion gibt das Argument zurück, das als zusätzliches Argument zu sign-\/per-\/line angegeben wurde \begin{DoxyReturn}{Returns}
+bool ~\newline
+ {\bfseries{Beispiel Anwendung\+:}} 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{cout << \mbox{\hyperlink{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_a00256c0d28acf4b9df496b4a062fb23e}{getValueOfsignperline}} << endl;}
+
+\end{DoxyCode}
+ 
+\end{DoxyReturn}
+\begin{DoxyAuthor}{Author}
+Jacob 
+\end{DoxyAuthor}
+\mbox{\Hypertarget{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_a959c3110244dc2a337d8e52a3a0ddf1b}\label{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_a959c3110244dc2a337d8e52a3a0ddf1b}} 
+\index{DHBW\_Programmieren::Beispiel\_XML@{DHBW\_Programmieren::Beispiel\_XML}!isSetversion@{isSetversion}}
+\index{isSetversion@{isSetversion}!DHBW\_Programmieren::Beispiel\_XML@{DHBW\_Programmieren::Beispiel\_XML}}
+\doxysubsubsection{\texorpdfstring{isSetversion()}{isSetversion()}}
+{\footnotesize\ttfamily bool DHBW\+\_\+\+Programmieren\+::\+Beispiel\+\_\+\+XML\+::is\+Setversion (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Funktion, um zu überprüfen, ob das Argument version angegeben wurde.
+
+Diese Funktion überprüft, ob beim aufrufen der .exe datei das Argument --version angegeben wurde. \begin{DoxyReturn}{Returns}
+bool ~\newline
+ {\bfseries{Beispiel Anwendung\+:}} 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{if}(\mbox{\hyperlink{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_a959c3110244dc2a337d8e52a3a0ddf1b}{isSetversion}}())}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{    cout << \textcolor{stringliteral}{"{}version wurde übergeben!"{}} << endl;}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ 
+\end{DoxyReturn}
+\begin{DoxyAuthor}{Author}
+Jacob 
+\end{DoxyAuthor}
+\mbox{\Hypertarget{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_ad8f276d14ae853d078448c10b6464787}\label{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_ad8f276d14ae853d078448c10b6464787}} 
+\index{DHBW\_Programmieren::Beispiel\_XML@{DHBW\_Programmieren::Beispiel\_XML}!parseOptions@{parseOptions}}
+\index{parseOptions@{parseOptions}!DHBW\_Programmieren::Beispiel\_XML@{DHBW\_Programmieren::Beispiel\_XML}}
+\doxysubsubsection{\texorpdfstring{parseOptions()}{parseOptions()}}
+{\footnotesize\ttfamily void DHBW\+\_\+\+Programmieren\+::\+Beispiel\+\_\+\+XML\+::parse\+Options (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$}]{argv\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
+
+Funktion, um auf übergebene Argumente reagieren zu können.
+
+Diese Funktion wird aufgerufen, wenn die main() ausgeführt wird. \begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+\begin{DoxyAuthor}{Author}
+Jacob 
+\end{DoxyAuthor}
+\mbox{\Hypertarget{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_ae175bb8f4c460b41be64f804aa8b0f4c}\label{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_ae175bb8f4c460b41be64f804aa8b0f4c}} 
+\index{DHBW\_Programmieren::Beispiel\_XML@{DHBW\_Programmieren::Beispiel\_XML}!ParseXML@{ParseXML}}
+\index{ParseXML@{ParseXML}!DHBW\_Programmieren::Beispiel\_XML@{DHBW\_Programmieren::Beispiel\_XML}}
+\doxysubsubsection{\texorpdfstring{ParseXML()}{ParseXML()}}
+{\footnotesize\ttfamily virtual void DHBW\+\_\+\+Programmieren\+::\+Beispiel\+\_\+\+XML\+::\+Parse\+XML (\begin{DoxyParamCaption}\item[{bool}]{b }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [pure virtual]}}
+
+Externe Methode, kann in der example\+Main überschrieben Werden\begin{DoxyAuthor}{Author}
+Jacob 
+\end{DoxyAuthor}
+
+
+Implemented in \mbox{\hyperlink{class_klasse_a74d131d3ef2f33dbeec6f642f85f6364}{Klasse}}.
+
+\mbox{\Hypertarget{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_af99254a0c1eb1d99c1aeec7d137dadb8}\label{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_af99254a0c1eb1d99c1aeec7d137dadb8}} 
+\index{DHBW\_Programmieren::Beispiel\_XML@{DHBW\_Programmieren::Beispiel\_XML}!printHelp@{printHelp}}
+\index{printHelp@{printHelp}!DHBW\_Programmieren::Beispiel\_XML@{DHBW\_Programmieren::Beispiel\_XML}}
+\doxysubsubsection{\texorpdfstring{printHelp()}{printHelp()}}
+{\footnotesize\ttfamily void DHBW\+\_\+\+Programmieren\+::\+Beispiel\+\_\+\+XML\+::print\+Help (\begin{DoxyParamCaption}\item[{int}]{sign\+Per\+Line }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+Funktion, um den Hilfetext auszugeben
+
+Diese Funktion gibt den Hilfetext aus \begin{DoxyReturn}{Returns}
+void ~\newline
+ {\bfseries{Beispiel Anwendung\+:}} 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_af99254a0c1eb1d99c1aeec7d137dadb8}{printHelp}}()}
+
+\end{DoxyCode}
+ 
+\end{DoxyReturn}
+\begin{DoxyAuthor}{Author}
+Jacob 
+\end{DoxyAuthor}
+\mbox{\Hypertarget{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_a488cae40a40dc5124e7017df9718a69d}\label{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_a488cae40a40dc5124e7017df9718a69d}} 
+\index{DHBW\_Programmieren::Beispiel\_XML@{DHBW\_Programmieren::Beispiel\_XML}!printVersion@{printVersion}}
+\index{printVersion@{printVersion}!DHBW\_Programmieren::Beispiel\_XML@{DHBW\_Programmieren::Beispiel\_XML}}
+\doxysubsubsection{\texorpdfstring{printVersion()}{printVersion()}}
+{\footnotesize\ttfamily virtual void DHBW\+\_\+\+Programmieren\+::\+Beispiel\+\_\+\+XML\+::print\+Version (\begin{DoxyParamCaption}\item[{int}]{a }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [pure virtual]}}
+
+Externe Methode, kann in der example\+Main überschrieben Werden\begin{DoxyAuthor}{Author}
+Jacob 
+\end{DoxyAuthor}
+
+
+Implemented in \mbox{\hyperlink{class_klasse_a2150e2861962983e63e3b860d0e751f1}{Klasse}}.
+
+\mbox{\Hypertarget{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_a8a3a0cd81f5c8455fca2f9686d635874}\label{class_d_h_b_w___programmieren_1_1_beispiel___x_m_l_a8a3a0cd81f5c8455fca2f9686d635874}} 
+\index{DHBW\_Programmieren::Beispiel\_XML@{DHBW\_Programmieren::Beispiel\_XML}!unknownOption@{unknownOption}}
+\index{unknownOption@{unknownOption}!DHBW\_Programmieren::Beispiel\_XML@{DHBW\_Programmieren::Beispiel\_XML}}
+\doxysubsubsection{\texorpdfstring{unknownOption()}{unknownOption()}}
+{\footnotesize\ttfamily void DHBW\+\_\+\+Programmieren\+::\+Beispiel\+\_\+\+XML\+::unknown\+Option (\begin{DoxyParamCaption}\item[{const string \&}]{unknown\+\_\+option }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+Funktion, um auf unbekannte Argumente reagieren zu können.
+
+Diese Funktion wird aufgerufen, wenn ein unbekanntes Argument erkannt wurde. \begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+\begin{DoxyAuthor}{Author}
+Jacob 
+\end{DoxyAuthor}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+D\+:/\+Studium/\+Code\+\_\+\+Gen\+\_\+\+C/example\+Project/options.\+h\item 
+D\+:/\+Studium/\+Code\+\_\+\+Gen\+\_\+\+C/example\+Project/options.\+cpp\end{DoxyCompactItemize}
