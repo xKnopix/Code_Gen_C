@@ -8,7 +8,7 @@ namespace DHBW_Programmieren
 {
 class Beispiel_XML
 {
-bool isSetastylepathBool;
+bool isSetastylepathBool; 
 string astylepathParam;
 bool isSetonlyifnewerBool;
 bool isSetnoformatBool;
