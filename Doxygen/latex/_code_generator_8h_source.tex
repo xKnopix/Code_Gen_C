@@ -1,19 +1,21 @@
 \hypertarget{_code_generator_8h_source}{}\doxysection{Code\+Generator.\+h}
-\label{_code_generator_8h_source}\index{C\_Code\_Gen/CodeGenerator.h@{C\_Code\_Gen/CodeGenerator.h}}
-\mbox{\hyperlink{_code_generator_8h}{Go to the documentation of this file.}}
+\label{_code_generator_8h_source}\index{D:/Studium/Code\_Gen\_C/C\_Code\_Gen/CodeGenerator.h@{D:/Studium/Code\_Gen\_C/C\_Code\_Gen/CodeGenerator.h}}
+
 \begin{DoxyCode}{0}
-\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef CODEGEN\_H}}
-\DoxyCodeLine{2 \textcolor{preprocessor}{\#define CODEGEN\_H}}
-\DoxyCodeLine{3 \textcolor{preprocessor}{\#include <iostream>}}
-\DoxyCodeLine{4 \textcolor{preprocessor}{\#include <vector>}}
-\DoxyCodeLine{5 \textcolor{preprocessor}{\#include <fstream>}}
-\DoxyCodeLine{6 \textcolor{preprocessor}{\#include <string>}}
-\DoxyCodeLine{7 \textcolor{preprocessor}{\#include <algorithm>}}
-\DoxyCodeLine{8 }
-\DoxyCodeLine{9 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{xml__parser_8h}{xml\_parser.h}}"{}}}
+\DoxyCodeLine{1 \textcolor{comment}{//Author: Jacob Hochbaum}}
+\DoxyCodeLine{2 }
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#ifndef CODEGEN\_H}}
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#define CODEGEN\_H}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include <iostream>}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include <vector>}}
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#include <fstream>}}
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include <string>}}
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#include <algorithm>}}
 \DoxyCodeLine{10 }
-\DoxyCodeLine{11 \textcolor{keyword}{using namespace }std;}
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include "{}xml\_parser.h"{}}}
 \DoxyCodeLine{12 }
+\DoxyCodeLine{13 \textcolor{keyword}{using namespace }std;}
+\DoxyCodeLine{14 }
 \DoxyCodeLine{16 \textcolor{keyword}{class }\mbox{\hyperlink{class_code}{Code}}}
 \DoxyCodeLine{17 \{}
 \DoxyCodeLine{18     \textcolor{comment}{/*}}
@@ -93,109 +95,112 @@
 \DoxyCodeLine{92                                  \textcolor{stringliteral}{"{}int exitArg = 0;\(\backslash\)n"{}}        \textcolor{comment}{// Hier wird der String mit allen Variablen Deklarationen gespeichert}}
 \DoxyCodeLine{93                                  \textcolor{stringliteral}{"{}int noRef = -\/1;\(\backslash\)n"{}}}
 \DoxyCodeLine{94                                  \textcolor{stringliteral}{"{}string refValues[63];\(\backslash\)n"{}}}
-\DoxyCodeLine{95                                  \textcolor{stringliteral}{"{}vector<string> additionalParams;\(\backslash\)n"{}},}
-\DoxyCodeLine{96 }
-\DoxyCodeLine{97            returnIfWrongArgs = \textcolor{stringliteral}{"{}if(exitArg > 0)\(\backslash\)n"{}}           }
-\DoxyCodeLine{98                                \textcolor{stringliteral}{"{}\{\(\backslash\)n"{}}                         \textcolor{comment}{// If-\/Else Code, um das den Argument-\/Parser zu beenden,}}
-\DoxyCodeLine{99                                \textcolor{stringliteral}{"{}cout << \(\backslash\)"{}EXIT\(\backslash\)"{} << endl;\(\backslash\)n"{}} \textcolor{comment}{// falls beim parsen der Argumente ein Fehler aufgetreten}}
-\DoxyCodeLine{100                                \textcolor{stringliteral}{"{}return;\(\backslash\)n"{}}                   \textcolor{comment}{// ist}}
-\DoxyCodeLine{101                                \textcolor{stringliteral}{"{}\}\(\backslash\)n"{}},}
-\DoxyCodeLine{102 }
-\DoxyCodeLine{103            exclusionCheck, }
-\DoxyCodeLine{104                            \textcolor{comment}{// String, in welchem eine For-\/Schleife gespeichert wird,}}
-\DoxyCodeLine{105                            \textcolor{comment}{// in welcher Alle übergebenen Argumente durchgegangen werden}}
-\DoxyCodeLine{106                            \textcolor{comment}{// und auf ungültige kombinationen geprüft werden}}
-\DoxyCodeLine{107 }
-\DoxyCodeLine{108         pathRequiredCheck, }
-\DoxyCodeLine{109                            \textcolor{comment}{// Wenn bei einem Argument hasArguments auf 'required' gesetzt ist}}
-\DoxyCodeLine{110                            \textcolor{comment}{// wird in diesem String Code gespeichert, der überprüft, ob das nächste}}
-\DoxyCodeLine{111                            \textcolor{comment}{// Argument mit '-\/-\/' anfängt, wenn ja, wird das Programm abgebrochen und}}
-\DoxyCodeLine{112                            \textcolor{comment}{// es gibt einen fehler aus, da nur die 'Haupt-\/Argumente' mit '-\/-\/' anfangen sollen}}
-\DoxyCodeLine{113 }
-\DoxyCodeLine{114         convertToInt, }
-\DoxyCodeLine{115                       \textcolor{comment}{// Hier wird der Code gespeichert, in welchem in einem Try-\/Catch-\/Block}}
-\DoxyCodeLine{116                       \textcolor{comment}{// probiert wird, den übergebenen String in einen Integer umzuwandeln}}
-\DoxyCodeLine{117 }
-\DoxyCodeLine{118         code, }
-\DoxyCodeLine{119               \textcolor{comment}{// String, in dem der zu generierende Code bei einer Instanziierung von Code()}}
-\DoxyCodeLine{120               \textcolor{comment}{// gespeichert wird}}
-\DoxyCodeLine{121 }
-\DoxyCodeLine{122         forLoopAllArgsStart = \textcolor{stringliteral}{"{}for(int i = 1; i<argc; i++)\(\backslash\)n\{\(\backslash\)n"{}}, }
-\DoxyCodeLine{123         forLoopAllArgsClose = \textcolor{stringliteral}{"{}\}\(\backslash\)n"{}},                              \textcolor{comment}{// Für bessere Lesbarkeit generierte Strings, welche den Anfang und das Ende}}
-\DoxyCodeLine{124                                                                   \textcolor{comment}{// einer For-\/Schleife enthalten, welche einemal alle, beim Programmaufruf}}
-\DoxyCodeLine{125                                                                   \textcolor{comment}{//übergebenen Argumente durch-\/iteriert}}
-\DoxyCodeLine{126 }
-\DoxyCodeLine{127         handleArgs = forLoopAllArgsStart; }
-\DoxyCodeLine{128                                           \textcolor{comment}{// In handleArgs wird eine 2. For-\/Schliefe gespeichert, welche nach dem}}
-\DoxyCodeLine{129                                           \textcolor{comment}{// die Argumente auf ihre Korrektheit überprüft wurden nochmals alle Argumente}}
-\DoxyCodeLine{130                                           \textcolor{comment}{// durch-\/iteriert und nun auf die übergebenen Argumente reagiert.}}
-\DoxyCodeLine{131 }
-\DoxyCodeLine{132     \textcolor{comment}{// Deklaration aller Vektoren}}
-\DoxyCodeLine{133     vector<internalMethod> internalMethods; }
-\DoxyCodeLine{134                                             \textcolor{comment}{// In diesem Vector werden alle Instanzen des Structs internalMethod gespeichert}}
-\DoxyCodeLine{135 }
-\DoxyCodeLine{136     vector<externalMethod> externalMethods;}
-\DoxyCodeLine{137     internalMethod iM;}
+\DoxyCodeLine{95                                  \textcolor{stringliteral}{"{}vector<string> additionalParams;\(\backslash\)n"{}}}
+\DoxyCodeLine{96                                  \textcolor{stringliteral}{"{}vector<string> argumentnames;\(\backslash\)n"{}}}
+\DoxyCodeLine{97                                  \textcolor{stringliteral}{"{}vector<string> refValuesSorted;\(\backslash\)n"{}}}
+\DoxyCodeLine{98                                  \textcolor{stringliteral}{"{}vector<vector<string>> exclusionValuesSorted;\(\backslash\)n"{}},}
+\DoxyCodeLine{99 }
+\DoxyCodeLine{100            returnIfWrongArgs = \textcolor{stringliteral}{"{}if(exitArg > 0)\(\backslash\)n"{}}           }
+\DoxyCodeLine{101                                \textcolor{stringliteral}{"{}\{\(\backslash\)n"{}}                         \textcolor{comment}{// If-\/Else Code, um das den Argument-\/Parser zu beenden,}}
+\DoxyCodeLine{102                                \textcolor{stringliteral}{"{}cout << \(\backslash\)"{}EXIT\(\backslash\)"{} << endl;\(\backslash\)n"{}} \textcolor{comment}{// falls beim parsen der Argumente ein Fehler aufgetreten}}
+\DoxyCodeLine{103                                \textcolor{stringliteral}{"{}return;\(\backslash\)n"{}}                   \textcolor{comment}{// ist}}
+\DoxyCodeLine{104                                \textcolor{stringliteral}{"{}\}\(\backslash\)n"{}},}
+\DoxyCodeLine{105 }
+\DoxyCodeLine{106            exclusionCheck, }
+\DoxyCodeLine{107                            \textcolor{comment}{// String, in welchem eine For-\/Schleife gespeichert wird,}}
+\DoxyCodeLine{108                            \textcolor{comment}{// in welcher Alle übergebenen Argumente durchgegangen werden}}
+\DoxyCodeLine{109                            \textcolor{comment}{// und auf ungültige kombinationen geprüft werden}}
+\DoxyCodeLine{110 }
+\DoxyCodeLine{111         pathRequiredCheck, }
+\DoxyCodeLine{112                            \textcolor{comment}{// Wenn bei einem Argument hasArguments auf 'required' gesetzt ist}}
+\DoxyCodeLine{113                            \textcolor{comment}{// wird in diesem String Code gespeichert, der überprüft, ob das nächste}}
+\DoxyCodeLine{114                            \textcolor{comment}{// Argument mit '-\/-\/' anfängt, wenn ja, wird das Programm abgebrochen und}}
+\DoxyCodeLine{115                            \textcolor{comment}{// es gibt einen fehler aus, da nur die 'Haupt-\/Argumente' mit '-\/-\/' anfangen sollen}}
+\DoxyCodeLine{116 }
+\DoxyCodeLine{117         convertToInt, }
+\DoxyCodeLine{118                       \textcolor{comment}{// Hier wird der Code gespeichert, in welchem in einem Try-\/Catch-\/Block}}
+\DoxyCodeLine{119                       \textcolor{comment}{// probiert wird, den übergebenen String in einen Integer umzuwandeln}}
+\DoxyCodeLine{120 }
+\DoxyCodeLine{121         code, }
+\DoxyCodeLine{122               \textcolor{comment}{// String, in dem der zu generierende Code bei einer Instanziierung von Code()}}
+\DoxyCodeLine{123               \textcolor{comment}{// gespeichert wird}}
+\DoxyCodeLine{124 }
+\DoxyCodeLine{125         forLoopAllArgsStart = \textcolor{stringliteral}{"{}for(int i = 1; i<argc; i++)\(\backslash\)n\{\(\backslash\)n"{}}, }
+\DoxyCodeLine{126         forLoopAllArgsClose = \textcolor{stringliteral}{"{}\}\(\backslash\)n"{}},                              \textcolor{comment}{// Für bessere Lesbarkeit generierte Strings, welche den Anfang und das Ende}}
+\DoxyCodeLine{127                                                                   \textcolor{comment}{// einer For-\/Schleife enthalten, welche einemal alle, beim Programmaufruf}}
+\DoxyCodeLine{128                                                                   \textcolor{comment}{//übergebenen Argumente durch-\/iteriert}}
+\DoxyCodeLine{129 }
+\DoxyCodeLine{130         handleArgs = forLoopAllArgsStart; }
+\DoxyCodeLine{131                                           \textcolor{comment}{// In handleArgs wird eine 2. For-\/Schliefe gespeichert, welche nach dem}}
+\DoxyCodeLine{132                                           \textcolor{comment}{// die Argumente auf ihre Korrektheit überprüft wurden nochmals alle Argumente}}
+\DoxyCodeLine{133                                           \textcolor{comment}{// durch-\/iteriert und nun auf die übergebenen Argumente reagiert.}}
+\DoxyCodeLine{134 }
+\DoxyCodeLine{135     \textcolor{comment}{// Deklaration aller Vektoren}}
+\DoxyCodeLine{136     vector<internalMethod> internalMethods; }
+\DoxyCodeLine{137                                             \textcolor{comment}{// In diesem Vector werden alle Instanzen des Structs internalMethod gespeichert}}
 \DoxyCodeLine{138 }
-\DoxyCodeLine{139     \textcolor{keywordtype}{bool} authorCodeAdded = \textcolor{keyword}{false};}
-\DoxyCodeLine{140 }
-\DoxyCodeLine{141 \textcolor{keyword}{public}:}
-\DoxyCodeLine{144     \mbox{\hyperlink{class_code_a3605683bd8fd54691437ff05ba4431b9}{Code}}();}
-\DoxyCodeLine{145 }
-\DoxyCodeLine{147     \mbox{\hyperlink{class_code_a3605683bd8fd54691437ff05ba4431b9}{Code}}(\textcolor{keywordtype}{string} sourceFileName, \textcolor{keywordtype}{string} headerFileName, \textcolor{keywordtype}{string} nameSpace, \textcolor{keywordtype}{string} className, \textcolor{keywordtype}{string} signPerLine, \textcolor{keywordtype}{string} sampleUsage, \textcolor{keywordtype}{string} author);}
+\DoxyCodeLine{139     vector<externalMethod> externalMethods;}
+\DoxyCodeLine{140     internalMethod iM;}
+\DoxyCodeLine{141 }
+\DoxyCodeLine{142     \textcolor{keywordtype}{bool} authorCodeAdded = \textcolor{keyword}{false};}
+\DoxyCodeLine{143 }
+\DoxyCodeLine{144 \textcolor{keyword}{public}:}
+\DoxyCodeLine{147     \mbox{\hyperlink{class_code_a3605683bd8fd54691437ff05ba4431b9}{Code}}();}
 \DoxyCodeLine{148 }
-\DoxyCodeLine{149     \textcolor{comment}{// Alle Methoden mit dem Rückgabewert 'void'}}
-\DoxyCodeLine{150 }
-\DoxyCodeLine{171     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_code_a2f9ba083d2aa80114532f79396359fec}{addText}}(\textcolor{keywordtype}{string} s);}
-\DoxyCodeLine{172     \textcolor{comment}{//\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
-\DoxyCodeLine{173 }
-\DoxyCodeLine{193     \textcolor{keywordtype}{string} \mbox{\hyperlink{class_code_a13b54e149cade63e97e0090f8a7ce5d1}{getCode}}();}
-\DoxyCodeLine{194     \textcolor{comment}{//\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
-\DoxyCodeLine{195 }
-\DoxyCodeLine{222     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_code_abf338f12af0e2e0a6c5a3c351ff2451a}{startForLoop}}(\textcolor{keywordtype}{string} s);}
-\DoxyCodeLine{223     \textcolor{comment}{//\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
-\DoxyCodeLine{224 }
-\DoxyCodeLine{248     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_code_ae850f4ffc6c2b4f37482e47ee6895067}{endForLoop}}();}
-\DoxyCodeLine{249     \textcolor{comment}{//\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
-\DoxyCodeLine{250 }
-\DoxyCodeLine{280     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_code_aabaa5ec8ac80e749d9f7681c3a839d76}{startIf}}(\textcolor{keywordtype}{string} s);}
-\DoxyCodeLine{281     \textcolor{comment}{//\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
-\DoxyCodeLine{282 }
-\DoxyCodeLine{309     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_code_ab76eee9b12531825c85391b72628597d}{endIf}}();}
-\DoxyCodeLine{310     \textcolor{comment}{//\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
-\DoxyCodeLine{311 }
-\DoxyCodeLine{329     \textcolor{keywordtype}{string} \mbox{\hyperlink{class_code_ae0d03d1735f1c3592c8a1a073306afc7}{capitalizeString}}(\textcolor{keywordtype}{string} s);}
-\DoxyCodeLine{330     \textcolor{comment}{//\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
-\DoxyCodeLine{331 }
-\DoxyCodeLine{348     \textcolor{keywordtype}{string} \mbox{\hyperlink{class_code_af915046d059839dc96b2b35e80c3ef73}{finalHeaderCode}}(\mbox{\hyperlink{structxml__parser_1_1_get_opt_setup}{xml\_parser::GetOptSetup}} data);}
-\DoxyCodeLine{349     \textcolor{comment}{//\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
-\DoxyCodeLine{350 }
-\DoxyCodeLine{367     \textcolor{keywordtype}{string} \mbox{\hyperlink{class_code_abfdcd7841df90d972b8592d16fa1e133}{finalCode}}(\mbox{\hyperlink{structxml__parser_1_1_get_opt_setup}{xml\_parser::GetOptSetup}} data);}
-\DoxyCodeLine{368     \textcolor{comment}{//\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
-\DoxyCodeLine{369 }
-\DoxyCodeLine{400     \textcolor{keywordtype}{string} \mbox{\hyperlink{class_code_a82f0521c58f058218c70370b225480c3}{createInternalMethods}}(\mbox{\hyperlink{structxml__parser_1_1_get_opt_setup}{xml\_parser::GetOptSetup}} data);}
-\DoxyCodeLine{401     \textcolor{comment}{//\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
-\DoxyCodeLine{402 }
-\DoxyCodeLine{431     vector<string> \mbox{\hyperlink{class_code_a423237a7f7d318c9632a588144bd68e3}{split}}(\textcolor{keywordtype}{string} str, \textcolor{keywordtype}{char} seperator);}
-\DoxyCodeLine{432     \textcolor{comment}{//\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
-\DoxyCodeLine{433 }
-\DoxyCodeLine{446     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_code_a1049930b594b0c2a1aba2bcdf36b086f}{parse}}(\mbox{\hyperlink{structxml__parser_1_1_get_opt_setup}{xml\_parser::GetOptSetup}} data);}
-\DoxyCodeLine{447     \textcolor{comment}{//\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
-\DoxyCodeLine{448 }
-\DoxyCodeLine{471     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_code_ab5e0a54ed9339d8a932fcc817a808db8}{addArgument}}(\textcolor{keywordtype}{string} ref = \textcolor{stringliteral}{"{}"{}},}
-\DoxyCodeLine{472                      \textcolor{keywordtype}{string} shortOpt = \textcolor{stringliteral}{"{}"{}},}
-\DoxyCodeLine{473                      \textcolor{keywordtype}{string} longOpt = \textcolor{stringliteral}{"{}"{}},}
-\DoxyCodeLine{474                      \textcolor{keywordtype}{string} exclusion = \textcolor{stringliteral}{"{}"{}}, \textcolor{comment}{// DONE}}
-\DoxyCodeLine{475                      \textcolor{keywordtype}{string} connectToInternalMethod = \textcolor{stringliteral}{"{}"{}},}
-\DoxyCodeLine{476                      \textcolor{keywordtype}{string} description = \textcolor{stringliteral}{"{}"{}},}
-\DoxyCodeLine{477                      \textcolor{keywordtype}{string} interface = \textcolor{stringliteral}{"{}"{}},}
-\DoxyCodeLine{478                      \textcolor{keywordtype}{string} hasArguments = \textcolor{stringliteral}{"{}"{}}, \textcolor{comment}{// DONE}}
-\DoxyCodeLine{479                      \textcolor{keywordtype}{string} convertTo = \textcolor{stringliteral}{"{}"{}},}
-\DoxyCodeLine{480                      \textcolor{keywordtype}{string} defaultValue = \textcolor{stringliteral}{"{}"{}},             \textcolor{comment}{// DONE}}
-\DoxyCodeLine{481                      \textcolor{keywordtype}{string} connectToExternalMethod = \textcolor{stringliteral}{"{}"{}}); \textcolor{comment}{// Funktion, die alle Argumente aus der xml annimmt}}
-\DoxyCodeLine{482 \};}
-\DoxyCodeLine{483 }
-\DoxyCodeLine{484 \textcolor{comment}{// int main();}}
-\DoxyCodeLine{485 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{150     \mbox{\hyperlink{class_code_a3605683bd8fd54691437ff05ba4431b9}{Code}}(\textcolor{keywordtype}{string} sourceFileName, \textcolor{keywordtype}{string} headerFileName, \textcolor{keywordtype}{string} nameSpace, \textcolor{keywordtype}{string} className, \textcolor{keywordtype}{string} signPerLine, \textcolor{keywordtype}{string} sampleUsage, \textcolor{keywordtype}{string} author);}
+\DoxyCodeLine{151 }
+\DoxyCodeLine{152     \textcolor{comment}{// Alle Methoden mit dem Rückgabewert 'void'}}
+\DoxyCodeLine{153 }
+\DoxyCodeLine{174     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_code_a2f9ba083d2aa80114532f79396359fec}{addText}}(\textcolor{keywordtype}{string} s);}
+\DoxyCodeLine{175     \textcolor{comment}{//\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{176 }
+\DoxyCodeLine{196     \textcolor{keywordtype}{string} \mbox{\hyperlink{class_code_a13b54e149cade63e97e0090f8a7ce5d1}{getCode}}();}
+\DoxyCodeLine{197     \textcolor{comment}{//\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{198 }
+\DoxyCodeLine{225     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_code_abf338f12af0e2e0a6c5a3c351ff2451a}{startForLoop}}(\textcolor{keywordtype}{string} s);}
+\DoxyCodeLine{226     \textcolor{comment}{//\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{227 }
+\DoxyCodeLine{251     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_code_ae850f4ffc6c2b4f37482e47ee6895067}{endForLoop}}();}
+\DoxyCodeLine{252     \textcolor{comment}{//\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{253 }
+\DoxyCodeLine{283     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_code_aabaa5ec8ac80e749d9f7681c3a839d76}{startIf}}(\textcolor{keywordtype}{string} s);}
+\DoxyCodeLine{284     \textcolor{comment}{//\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{285 }
+\DoxyCodeLine{312     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_code_ab76eee9b12531825c85391b72628597d}{endIf}}();}
+\DoxyCodeLine{313     \textcolor{comment}{//\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{314 }
+\DoxyCodeLine{332     \textcolor{keywordtype}{string} \mbox{\hyperlink{class_code_ae0d03d1735f1c3592c8a1a073306afc7}{capitalizeString}}(\textcolor{keywordtype}{string} s);}
+\DoxyCodeLine{333     \textcolor{comment}{//\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{334 }
+\DoxyCodeLine{351     \textcolor{keywordtype}{string} \mbox{\hyperlink{class_code_af915046d059839dc96b2b35e80c3ef73}{finalHeaderCode}}(\mbox{\hyperlink{structxml__parser_1_1_get_opt_setup}{xml\_parser::GetOptSetup}} data);}
+\DoxyCodeLine{352     \textcolor{comment}{//\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{353 }
+\DoxyCodeLine{370     \textcolor{keywordtype}{string} \mbox{\hyperlink{class_code_abfdcd7841df90d972b8592d16fa1e133}{finalCode}}(\mbox{\hyperlink{structxml__parser_1_1_get_opt_setup}{xml\_parser::GetOptSetup}} data);}
+\DoxyCodeLine{371     \textcolor{comment}{//\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{372 }
+\DoxyCodeLine{403     \textcolor{keywordtype}{string} \mbox{\hyperlink{class_code_a82f0521c58f058218c70370b225480c3}{createInternalMethods}}(\mbox{\hyperlink{structxml__parser_1_1_get_opt_setup}{xml\_parser::GetOptSetup}} data);}
+\DoxyCodeLine{404     \textcolor{comment}{//\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{405 }
+\DoxyCodeLine{434     vector<string> \mbox{\hyperlink{class_code_a423237a7f7d318c9632a588144bd68e3}{split}}(\textcolor{keywordtype}{string} str, \textcolor{keywordtype}{char} seperator);}
+\DoxyCodeLine{435     \textcolor{comment}{//\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{436 }
+\DoxyCodeLine{449     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_code_a1049930b594b0c2a1aba2bcdf36b086f}{parse}}(\mbox{\hyperlink{structxml__parser_1_1_get_opt_setup}{xml\_parser::GetOptSetup}} data);}
+\DoxyCodeLine{450     \textcolor{comment}{//\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{451 }
+\DoxyCodeLine{474     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_code_ab5e0a54ed9339d8a932fcc817a808db8}{addArgument}}(\textcolor{keywordtype}{string} ref = \textcolor{stringliteral}{"{}"{}},}
+\DoxyCodeLine{475                      \textcolor{keywordtype}{string} shortOpt = \textcolor{stringliteral}{"{}"{}},}
+\DoxyCodeLine{476                      \textcolor{keywordtype}{string} longOpt = \textcolor{stringliteral}{"{}"{}},}
+\DoxyCodeLine{477                      \textcolor{keywordtype}{string} exclusion = \textcolor{stringliteral}{"{}"{}}, \textcolor{comment}{// DONE}}
+\DoxyCodeLine{478                      \textcolor{keywordtype}{string} connectToInternalMethod = \textcolor{stringliteral}{"{}"{}},}
+\DoxyCodeLine{479                      \textcolor{keywordtype}{string} description = \textcolor{stringliteral}{"{}"{}},}
+\DoxyCodeLine{480                      \textcolor{keywordtype}{string} interface = \textcolor{stringliteral}{"{}"{}},}
+\DoxyCodeLine{481                      \textcolor{keywordtype}{string} hasArguments = \textcolor{stringliteral}{"{}"{}}, \textcolor{comment}{// DONE}}
+\DoxyCodeLine{482                      \textcolor{keywordtype}{string} convertTo = \textcolor{stringliteral}{"{}"{}},}
+\DoxyCodeLine{483                      \textcolor{keywordtype}{string} defaultValue = \textcolor{stringliteral}{"{}"{}},             \textcolor{comment}{// DONE}}
+\DoxyCodeLine{484                      \textcolor{keywordtype}{string} connectToExternalMethod = \textcolor{stringliteral}{"{}"{}}); \textcolor{comment}{// Funktion, die alle Argumente aus der xml annimmt}}
+\DoxyCodeLine{485 \};}
+\DoxyCodeLine{486 }
+\DoxyCodeLine{487 \textcolor{comment}{// int main();}}
+\DoxyCodeLine{488 \textcolor{preprocessor}{\#endif}}
 
 \end{DoxyCode}

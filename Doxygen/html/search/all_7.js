@@ -1,7 +1,4 @@
 var searchData=
 [
-  ['hasarguments_0',['hasArguments',['../structxml__parser_1_1_option.html#adf9778ad16d13a57982a7793c3f6663a',1,'xml_parser::Option']]],
-  ['headerfilename_1',['headerFileName',['../structxml__parser_1_1_get_opt_setup.html#a9817152b43124b5fdd9f0ad8619e6590',1,'xml_parser::GetOptSetup']]],
-  ['headerfilename_2',['HeaderFileName',['../structxml__parser_1_1_header_file_name.html',1,'xml_parser']]],
-  ['help_3',['Help',['../class_help.html',1,'']]]
+  ['maingenerator_0',['mainGenerator',['../classmain_generator.html',1,'mainGenerator'],['../classmain_generator.html#a82a5af8097ac0afa55af41f74b5913a0',1,'mainGenerator::mainGenerator()']]]
 ];

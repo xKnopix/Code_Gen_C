@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['parse_0',['parse',['../class_code.html#a1049930b594b0c2a1aba2bcdf36b086f',1,'Code::parse()'],['../classparse_1_1get_opts_parse.html#a0ba6109e3813168f394edccc52ce42ea',1,'parse::getOptsParse::parse(int argc, char *argv[])'],['../classparse_1_1get_opts_parse.html#a0ba6109e3813168f394edccc52ce42ea',1,'parse::getOptsParse::parse(int argc, char *argv[])']]],
-  ['printhelp_1',['printHelp',['../classparse_1_1get_opts_parse.html#a956befd8585ced1cbfb55a81f89162e0',1,'parse::getOptsParse::printHelp(int signPerLine)'],['../classparse_1_1get_opts_parse.html#a956befd8585ced1cbfb55a81f89162e0',1,'parse::getOptsParse::printHelp(int signPerLine)'],['../class_help.html#a382e8256e8eefd6602ba162de0f04ba2',1,'Help::printHelp()']]]
+  ['sortdata_0',['sortData',['../classcheck.html#a1d1fa731bbbc4c29a137b2e19462a857',1,'check']]],
+  ['split_1',['split',['../class_code.html#a423237a7f7d318c9632a588144bd68e3',1,'Code']]],
+  ['startforloop_2',['startForLoop',['../class_code.html#abf338f12af0e2e0a6c5a3c351ff2451a',1,'Code']]],
+  ['startif_3',['startIf',['../class_code.html#aabaa5ec8ac80e749d9f7681c3a839d76',1,'Code']]]
 ];
