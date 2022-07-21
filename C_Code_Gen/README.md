@@ -4,34 +4,36 @@ Main Page {#mainpage}
 # C Code Gen
 
 # Table of Contents
-1. [Cmake](#Nmap)
-    1. [Cmake Win32](#Listen_For_Reverse_Shell) 
-    2. [Cmake Unix](#Listen_For_Reverse_Shell) 
+1. [Cmake](#Cmake)
+    1. [Cmake Win32](#Cmake_Win32) 
+    2. [Cmake Unix](#Cmake_Unix) 
 3. [Build ExampleProject](#DirBuster)
 4. [Use Parser](#DirBuster)
 
+# Cmake
+## Cmake_Win32
+1. In Haupverzeichnis wechseln (dort wo der Ordner C_Code_Gen und CMakeLists.txt und Readme.md liegt)
+2. neuen Ordner namens "build" anlegen
 
-Um das Projekt zu "builden":
+3. in build Ordner wechseln 
+```
+cd ./build
+```
+4. cmd in dem build Ordner öffnen 
 
-Win:
-
-In Haupverzeichnis wechseln (dort wo der Ordner C_Code_Gen und CMakeLists.txt und Readme.md liegt)
-
-neuen Ordner namens "build" anlegen
-
-in build Ordner wechseln 
-
-cmd in dem build Ordner öffnen 
-
-"cmake -DCMAKE_PREFIX_PATH=C:\UserData\z180338\tools\xerces-c -G "MinGW Makefiles" .." in cmd eingeben 
-
-"cmake --build ." eingeben
-
+5. "cmake -DCMAKE_PREFIX_PATH=C:\UserData\z180338\tools\xerces-c -G "MinGW Makefiles" .." in cmd eingeben 
+```
+cmake -DCMAKE_PREFIX_PATH=C:\UserData\z180338\tools\xerces-c -G "MinGW Makefiles" ..
+```
+6. "cmake --build ." eingeben
+```
+cmake --build .
+```
 Die Fertige exe kann dann unter build/C_Code_Gen/Debug gefunden werden
 
 
 
-Linux/Unix:
+## Cmake_Unix
 
 In Haupverzeichnis wechseln (dort wo der Ordner C_Code_Gen und CMakeLists.txt und Readme.md liegt)
 
