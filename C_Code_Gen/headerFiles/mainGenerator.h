@@ -1,4 +1,4 @@
-//Author: Michael Hornstein
+//Autor: Michael Hornstein
 
 #ifndef MAINGENERATOR_H
 #define MAINGENERATOR_H

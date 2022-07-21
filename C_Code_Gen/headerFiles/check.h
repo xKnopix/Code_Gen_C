@@ -1,4 +1,4 @@
-//Author: Michael Hornstein
+//Autor: Michael Hornstein
 
 #ifndef CHECK_H
 #define CHECK_H
