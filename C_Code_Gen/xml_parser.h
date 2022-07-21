@@ -17,6 +17,7 @@
 using namespace std;
 using namespace xercesc;
 
+///Diese Klasse ist da um eine XML einzulesen und in dem Struct GetOptSetup zu speichern
 class xml_parser{
 public:
     struct Author {
