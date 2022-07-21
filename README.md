@@ -65,7 +65,8 @@ in der Example.xml kann angepasst werden, wie der Code Generator Code erzeugt. D
 
 # Build_ExampleProject
 
-Nach dem die C_Code_gen.exe (Win) oder C_Code_Gen ausgeführt wurde, wurden 4 neue Dateien erzeugt. (exampleMain.cpp, HeaderFileName.cpp, SourceFileName.h und CMakeLists.txt) diese Dateien sollten in einen Neuen Projektordner Kopiert werden. 
+Nach dem die C_Code_gen.exe (Win) oder C_Code_Gen ausgeführt wurde, wurden 4 neue Dateien erzeugt. (exampleMain.cpp, HeaderFileName.h, SourceFileName.cpp und CMakeLists.txt) Wobei HeaderFileName.h, SourceFileName.cpp vorher in der XML definiert wurden und deswegen anders heißen werden.
+Diese Dateien sollten in einen Neuen Projektordner Kopiert werden. 
 Der Neue Ordner sollte die Strucktur:
 
 Projekt<br /> 
