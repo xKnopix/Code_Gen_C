@@ -12,6 +12,7 @@ XERCES_CPP_NAMESPACE_USE
 #define toXMLCh(str) XStr(str).unicodeForm()
 #define toCh(str) StrX(str).localForm()
 
+///Dies ist eine Hilfsklasse um mit Xerces zu arbeiten
 class StrX
   {
   public :
@@ -34,6 +35,7 @@ class StrX
       char*   fLocalForm;
   };
 
+///Dies ist eine Hilfsklasse um mit Xerces zu arbeiten
 class XStr
 {
 public :
