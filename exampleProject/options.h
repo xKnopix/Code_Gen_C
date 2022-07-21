@@ -218,10 +218,14 @@ namespace DHBW_Programmieren
         ///@author Jacob
     public:
         bool isSetversion();
-
+	
+	/// Externe Methode, kann in der exampleMain überschrieben Werden
+        ///@author Jacob
     protected:
         virtual void ParseXML(bool b) = 0;
-
+	
+	/// Externe Methode, kann in der exampleMain überschrieben Werden
+        ///@author Jacob
     protected:
         virtual void printVersion(int a) = 0;
 
