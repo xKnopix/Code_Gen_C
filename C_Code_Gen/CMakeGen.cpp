@@ -1,3 +1,5 @@
+//Author: Michael Hornstein
+
 #include "CMakeGen.h"
 
 CMakeGen::CMakeGen(xml_parser::GetOptSetup data){
