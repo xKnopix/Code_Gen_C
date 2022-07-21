@@ -64,6 +64,7 @@
 \DoxyCodeLine{cmake -\/DCMAKE\_PREFIX\_PATH="{}\$Path to xerces install"{} .. }
 
 \end{DoxyCode}
+ wenn dies auch fehlschlägt, dann in den Hauptordner wechseln, von dort in C\+\_\+\+Code\+\_\+\+Gen wechseln und die Datei CMake\+Lists.\+txt öffnen. Dort wir in Zeile 10 set(CMAKE\+\_\+\+PREFIX\+\_\+\+PATH \char`\"{}/opt/xerces-\/c\char`\"{}) zu dem Installations Pfad von xerces gesetzt.~\newline
  \char`\"{}make\char`\"{} in terminal eingeben 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{make}
@@ -72,7 +73,7 @@
  Das fertige Programm kann dann unter /build/\+C\+\_\+\+Code\+\_\+\+Gen gefunden werden
 \end{DoxyEnumerate}\hypertarget{index_autotoc_md5}{}\doxysection{XML}\label{index_autotoc_md5}
 in der Example.\+xml kann angepasst werden, wie der \mbox{\hyperlink{class_code}{Code}} Generator \mbox{\hyperlink{class_code}{Code}} erzeugt. Die Example.\+xml muss angepasst werden, wenn der Parser etwas anderes machen soll als die Beispiel Implementation\hypertarget{index_autotoc_md6}{}\doxysection{Build\+\_\+\+Example\+Project}\label{index_autotoc_md6}
-Nach dem die C\+\_\+\+Code\+\_\+gen.\+exe (Win) oder C\+\_\+\+Code\+\_\+\+Gen ausgeführt wurde, wurden 4 neue Dateien erzeugt. (example\+Main.\+cpp, Header\+File\+Name.\+cpp, Source\+File\+Name.\+h und CMake\+Lists.\+txt) diese Dateien sollten in einen Neuen Projektordner Kopiert werden. Der Neue Ordner sollte die Strucktur\+:
+Nach dem die C\+\_\+\+Code\+\_\+gen.\+exe (Win) oder C\+\_\+\+Code\+\_\+\+Gen ausgeführt wurde, wurden 4 neue Dateien erzeugt. (example\+Main.\+cpp, Header\+File\+Name.\+h, Source\+File\+Name.\+cpp und CMake\+Lists.\+txt) Wobei Header\+File\+Name.\+h, Source\+File\+Name.\+cpp vorher in der XML definiert wurden und deswegen anders heißen werden. Diese Dateien sollten in einen Neuen Projektordner Kopiert werden. Der Neue Ordner sollte die Strucktur\+:
 
 Projekt~\newline
  $\vert$~\newline
@@ -111,8 +112,8 @@ Hierzu wird die example\+Main.\+cpp geöffnet. Dann wird nach einer Klasse namen
 
 \end{DoxyCode}
 
-\item Es sollte nun im \char`\"{}build\char`\"{} Ordner ein weiter Ordner \char`\"{}\+Example\+Main\char`\"{} sein, in welchem sich nun im Debug Ordner eine Example\+Main.\+exe befindet (Win).
-\item Es sollte nun im \char`\"{}build\char`\"{} Ordner ein weiter Ordner \char`\"{}\+Example\+Main\char`\"{} sein, in welchem sich nun ein Example\+Main Programm befindet (Unix)
+\item Es sollte nun im \char`\"{}build\char`\"{} Ordner ein weiter Ordner \char`\"{}\+Debug\char`\"{} sein, in welchem sich nun im Debug Ordner eine Example\+Main.\+exe befindet (Win).
+\item Es sollte nun im \char`\"{}build\char`\"{} ein Example\+Main Programm zu sehen sein. (Unix)
 \end{DoxyEnumerate}\hypertarget{index_autotoc_md9}{}\doxysection{Use\+\_\+\+Parser}\label{index_autotoc_md9}
 Das Programm auszühren und dann mit --help die Hilfe ausgeben lassen Win 
 \begin{DoxyCode}{0}

@@ -57,7 +57,7 @@ wenn xerces nicht gefunden wurde (bsp: opt/xerces-c)
 cmake -DCMAKE_PREFIX_PATH="$Path to xerces install" .. 
 ```
 wenn dies auch fehlschlägt, dann in den Hauptordner wechseln, von dort in C_Code_Gen wechseln und die Datei CMakeLists.txt öffnen.
-Dort wir in Zeile 10 set(CMAKE_PREFIX_PATH "/opt/xerces-c") zu dem Installations Pfad von xerces gesetzt.
+Dort wir in Zeile 10 set(CMAKE_PREFIX_PATH "/opt/xerces-c") zu dem Installations Pfad von xerces gesetzt.<br />
 "make" in terminal eingeben
 ```
 make
