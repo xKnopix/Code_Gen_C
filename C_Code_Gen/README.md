@@ -8,7 +8,8 @@ Main Page {#mainpage}
     1. [Cmake Win32](#Cmake_Win32) 
     2. [Cmake Unix](#Cmake_Unix) 
 3. [Build ExampleProject](#Build_ExampleProject)
-4. [Use Parser](#DirBuster)
+4. [Use Parser](#Use_Parser)
+5. [Hinweise](#Hinweise)
 
 # Cmake
 ## Cmake_Win32
@@ -97,10 +98,27 @@ Windows
 ```
 cmake --build .
 ```
-unix
+Unix
 ```
 make
 ```
+6. Es sollte nun im "build" Ordner ein weiter Ordner "ExampleMain" sein, in welchem sich nun im Debug Ordner eine ExampleMain.exe befindet (Win).
+7. Es sollte nun im "build" Ordner ein weiter Ordner "ExampleMain" sein, in welchem sich nun ein ExampleMain Programm befindet (Unix) 
+
+# Use_Parser
+
+Das Programm auszühren und dann mit --help die Hilfe ausgeben lassen
+Win
+```
+ExampleMain.exe [args]
+ExampleMain.exe -v
+```
+Unix
+```
+ExampleMain [args]
+ExampleMain -v
+```
+# Hinweise
 
 Hinweis zur generierung der Getter Methoden: Da in den Requirements immer der longOpt-Name als name in den Methoden gewünscht war haben wir in unserem code wenn ein '-'
 wie bei sign-per-line vorkommt, dieses '-' aus dem namen gelöscht und zu signperline (Bsp.: isSetsignperline()) gemacht.
