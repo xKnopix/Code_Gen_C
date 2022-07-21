@@ -1,3 +1,5 @@
+//Author: Jacob Hochbaum
+
 #include "CodeGenerator.h"
 #include <iostream>
 #include <vector>

@@ -1,3 +1,5 @@
+//Author: Jacob Hochbaum
+
 #ifndef CODEGEN_H
 #define CODEGEN_H
 #include <iostream>
