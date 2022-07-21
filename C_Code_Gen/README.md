@@ -1,5 +1,5 @@
-# Code_Gen_C
-
+Main Page {#mainpage}
+=========
 Um das Projekt zu "builden":
 
 Win:
