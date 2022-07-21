@@ -42,6 +42,10 @@ void mainGenerator::genInheriteClass(xml_parser::Options options, xml_parser::Cl
     }
 
     if(s.size() >0){
+        
+        this->output.append("///Diese Klasse erbt von");
+        this->output.append(classN.content);
+        this->output.append(" , hier können die Externen Methoden überschrieben werden\n");
 
         this->output.append("class Klasse : public ");
         this->output.append(classN.content);
@@ -61,7 +65,9 @@ void mainGenerator::genInheriteClass(xml_parser::Options options, xml_parser::Cl
                     this->output.append("string s");
                 }
             }
-            this->output.append("){\n\tcout << \"Example implementation of external Method\" << endl;\n}\n\n");
+            this->output.append("){");
+            this->output.append("///Die Methode wird vererbt und soll überschrieben werden");
+            this->output.append("\n\tcout << \"Example implementation of external Method\" << endl;\n}\n\n");
         }
         this->output.append("};\n\n");
     }
