@@ -106,7 +106,8 @@ Cmake_Unix</h2>
 <li>terminal in build ordner öffnen</li>
 <li>"cmake .." in terminal eingeben wenn xerces nicht gefunden wurde dann "cmake -DCMAKE_PREFIX_PATH="opt/xerces-c" .." <div class="fragment"><div class="line">cmake ..</div>
 </div><!-- fragment --> wenn xerces nicht gefunden wurde (bsp: opt/xerces-c) <div class="fragment"><div class="line">cmake -DCMAKE_PREFIX_PATH=&quot;$Path to xerces install&quot; .. </div>
-</div><!-- fragment --> "make" in terminal eingeben <div class="fragment"><div class="line">make</div>
+</div><!-- fragment --> wenn dies auch fehlschlägt, dann in den Hauptordner wechseln, von dort in C_Code_Gen wechseln und die Datei CMakeLists.txt öffnen. Dort wir in Zeile 10 set(CMAKE_PREFIX_PATH "/opt/xerces-c") zu dem Installations Pfad von xerces gesetzt.<br  />
+ "make" in terminal eingeben <div class="fragment"><div class="line">make</div>
 </div><!-- fragment --> Das fertige Programm kann dann unter /build/C_Code_Gen gefunden werden</li>
 </ol>
 <h1><a class="anchor" id="autotoc_md5"></a>
@@ -114,7 +115,7 @@ XML</h1>
 <p >in der Example.xml kann angepasst werden, wie der <a class="el" href="class_code.html">Code</a> Generator <a class="el" href="class_code.html">Code</a> erzeugt. Die Example.xml muss angepasst werden, wenn der Parser etwas anderes machen soll als die Beispiel Implementation</p>
 <h1><a class="anchor" id="autotoc_md6"></a>
 Build_ExampleProject</h1>
-<p >Nach dem die C_Code_gen.exe (Win) oder C_Code_Gen ausgeführt wurde, wurden 4 neue Dateien erzeugt. (exampleMain.cpp, HeaderFileName.cpp, SourceFileName.h und CMakeLists.txt) diese Dateien sollten in einen Neuen Projektordner Kopiert werden. Der Neue Ordner sollte die Strucktur:</p>
+<p >Nach dem die C_Code_gen.exe (Win) oder C_Code_Gen ausgeführt wurde, wurden 4 neue Dateien erzeugt. (exampleMain.cpp, HeaderFileName.h, SourceFileName.cpp und CMakeLists.txt) Wobei HeaderFileName.h, SourceFileName.cpp vorher in der XML definiert wurden und deswegen anders heißen werden. Diese Dateien sollten in einen Neuen Projektordner Kopiert werden. Der Neue Ordner sollte die Strucktur:</p>
 <p >Projekt<br  />
  |<br  />
  |&mdash;exampleMain.cpp<br  />
@@ -138,8 +139,8 @@ Build_ExampleProject</h1>
 <li>cmake &ndash;build . (Win) oder make (Linux) eingeben Windows <div class="fragment"><div class="line">cmake --build .</div>
 </div><!-- fragment --> Unix <div class="fragment"><div class="line">make</div>
 </div><!-- fragment --></li>
-<li>Es sollte nun im "build" Ordner ein weiter Ordner "ExampleMain" sein, in welchem sich nun im Debug Ordner eine ExampleMain.exe befindet (Win).</li>
-<li>Es sollte nun im "build" Ordner ein weiter Ordner "ExampleMain" sein, in welchem sich nun ein ExampleMain Programm befindet (Unix)</li>
+<li>Es sollte nun im "build" Ordner ein weiter Ordner "Debug" sein, in welchem sich nun im Debug Ordner eine ExampleMain.exe befindet (Win).</li>
+<li>Es sollte nun im "build" ein ExampleMain Programm zu sehen sein. (Unix)</li>
 </ol>
 <h1><a class="anchor" id="autotoc_md9"></a>
 Use_Parser</h1>
