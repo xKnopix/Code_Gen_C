@@ -1,6 +1,6 @@
 //Author: Michael Hornstein
 
-#include "mainGenerator.h"
+#include "../headerFiles/mainGenerator.h"
 
 mainGenerator::mainGenerator(xml_parser::GetOptSetup data){
     

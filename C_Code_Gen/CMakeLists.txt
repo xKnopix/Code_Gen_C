@@ -27,7 +27,7 @@ message("Xerces Libs " ${XercesC_LIBRARIES})
 include_directories(${XercesC_INCLUDE_DIR})
 include_directories(${PROJECT_SOURCE_DIR}/include)
 
-add_executable (C_Code_Gen "main.cpp" "xml_parser.cpp" "xml_parser.h" "CodeGenerator.cpp" "CodeGenerator.h" "check.cpp" "check.h" "mainGenerator.cpp" "mainGenerator.h" "CMakeGen.h" "CMakeGen.cpp")
+add_executable (C_Code_Gen "sourceFiles/main.cpp" "sourceFiles/xml_parser.cpp" "headerFiles/xml_parser.h" "sourceFiles/CodeGenerator.cpp" "headerFiles/CodeGenerator.h" "sourceFiles/check.cpp" "headerFiles/check.h" "sourceFiles/mainGenerator.cpp" "headerFiles/mainGenerator.h" "headerFiles/CMakeGen.h" "sourceFiles/CMakeGen.cpp")
 
 target_link_libraries(C_Code_Gen XercesC::XercesC)
 

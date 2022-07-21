@@ -1,6 +1,6 @@
 // Author: Jacob Hochbaum
 
-#include "CodeGenerator.h"
+#include "../headerFiles/CodeGenerator.h"
 #include <iostream>
 #include <vector>
 #include <fstream>

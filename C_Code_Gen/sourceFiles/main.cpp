@@ -1,10 +1,10 @@
 //Author Michael Hornstein, Jacob Hochbaum, Johannes Muessig
 
-#include "xml_parser.h"
-#include "CodeGenerator.h"
-#include "check.h"
-#include "mainGenerator.h"
-#include "CMakeGen.h"
+#include "../headerFiles/xml_parser.h"
+#include "../headerFiles/CodeGenerator.h"
+#include "../headerFiles/check.h"
+#include "../headerFiles/mainGenerator.h"
+#include "../headerFiles/CMakeGen.h"
 
 int main()
 {
