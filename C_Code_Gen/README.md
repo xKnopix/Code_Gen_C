@@ -7,14 +7,14 @@ Main Page {#mainpage}
 1. [Cmake](#Cmake)
     1. [Cmake Win32](#Cmake_Win32) 
     2. [Cmake Unix](#Cmake_Unix) 
-3. [Build ExampleProject](#DirBuster)
+3. [Build ExampleProject](#Build_ExampleProject)
 4. [Use Parser](#DirBuster)
 
 # Cmake
 ## Cmake_Win32
+
 1. In Haupverzeichnis wechseln (dort wo der Ordner C_Code_Gen und CMakeLists.txt und Readme.md liegt)
 2. neuen Ordner namens "build" anlegen
-
 3. in build Ordner wechseln 
 ```
 cd ./build
@@ -51,27 +51,56 @@ cd ./build
 ```
 cmake ..
 ```
+wenn xerces nicht gefunden wurde (bsp: opt/xerces-c)
 ```
-cmake -DCMAKE_PREFIX_PATH="opt/xerces-c" ..
+cmake -DCMAKE_PREFIX_PATH="$Path to xerces install" .. 
 ```
-
 "make" in terminal eingeben
-
+```
+make
+```
 Das fertige Programm kann dann unter /build/C_Code_Gen gefunden werden
 
+# Build_ExampleProject
 
+Nach dem die C_Code_gen.exe (Win) oder C_Code_Gen ausgeführt wurde, wurden 4 neue Dateien erzeugt. (exampleMain.cpp, HeaderFileName.cpp, SourceFileName.h und CMakeLists.txt) diese Dateien sollten in einen Neuen Projektordner Kopiert werden. 
+Der Neue Ordner sollte die Strucktur:
 
-Visual Studio Code und Cmake:
+Projekt
+|
+|---exampleMain.cpp
+|---HeaderFileName.h
+|---SourceFileName.cpp
+|---CMakeLists.txt
 
-Plugins, Cmake suchen und installieren (von Microsoft)
+haben.
 
-Plugins, C++ suchen und installieren 
+## 1. Externe Methoden Implementieren:
+Hierzu wird die exampleMain.cpp geöffnet.
+Dann wird nach einer Klasse namens "Klasse" gesucht, welche von dem angegeben ClassName erbt.
+Hier sind nun beispiel Implementierungen vorhanden, die beliebig geändert werden können.
 
-VSCode neustarten
+## 2. build
 
-Den Haupt Ordner in VisualStudioCode öffnen
-
-Jetzt sollten von cmake unten links Buttons zum builden, Debugen und runnen sicht bar sein:
+1. Im Projekt Ordner neuen Ordner namens build anlegen 
+2. CMD (Win) oder Terminal(Unix) öffnen
+3. In build Ordner wechseln 
+```
+cd ./build
+```
+4. "cmake .." eingeben
+```
+cmake ..
+```
+5. cmake --build . (Win) oder make (Linux) eingeben 
+Windows
+```
+cmake --build .
+```
+unix
+```
+make
+```
 
 Hinweis zur generierung der Getter Methoden: Da in den Requirements immer der longOpt-Name als name in den Methoden gewünscht war haben wir in unserem code wenn ein '-'
 wie bei sign-per-line vorkommt, dieses '-' aus dem namen gelöscht und zu signperline (Bsp.: isSetsignperline()) gemacht.
