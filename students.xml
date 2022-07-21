@@ -1,0 +1,10 @@
+<?xml version=”1.0” encoding=”UTF-8”?>
+ <students>
+    <studentdeliver=”true” surname=”Jacob” name=”Hochbaum” mail=”hochbaum.jacob-it21@it.dhbw-ravensburg.de”
+        course=”TIT21”/>
+    <student surname="Michael" name="Hornstein" mail="optional" course="TIT21"/>
+    <student surname="Johannes" name="Muessig" mail="optional" course="TIT21"/>
+    <student surname="Jakob" name="Irle" mail="optional" course="TIT21"/>
+    <student surname="Linus" name="Fallert" mail="optional" course="TIT21"/>
+</students>
+      
