@@ -16,7 +16,8 @@ int check::check_data(xml_parser::GetOptSetup data)
     return status;
 }
 
-xml_parser::GetOptSetup check::sortData(xml_parser::GetOptSetup data)///Sortiert die optionen Alphabetisch mit dem BubbleSort Algorithmus
+///Sortiert die optionen Alphabetisch mit dem BubbleSort Algorithmus
+xml_parser::GetOptSetup check::sortData(xml_parser::GetOptSetup data)
 {
     //Standart Bubblesort
     int i, j, pass = 0;
@@ -62,7 +63,8 @@ xml_parser::GetOptSetup check::sortData(xml_parser::GetOptSetup data)///Sortiert
     return data;
 }
 
-int check::compStringS1SmalerS2(string s1, string s2)///um zwei Strings mit < vergleichen zukönnen (Hilfsfunktion)
+///um zwei Strings mit < vergleichen zukönnen (Hilfsfunktion)
+int check::compStringS1SmalerS2(string s1, string s2)
 { // returns 1 if s1 is smaler than s2
 
     char c1 = s1.front();
@@ -79,7 +81,8 @@ int check::compStringS1SmalerS2(string s1, string s2)///um zwei Strings mit < ve
     return 0;
 }
 
-int check::check_author(xml_parser::Author author)///überpüft die Daten, welche zu dem Author gemacht worden sind und ob notwendige Daten Fehlen
+///überpüft die Daten, welche zu dem Author gemacht worden sind und ob notwendige Daten Fehlen
+int check::check_author(xml_parser::Author author)
 {
     int status = 1;
     if (author.name.empty())
@@ -108,7 +111,9 @@ int check::check_author(xml_parser::Author author)///überpüft die Daten, welch
     }
     return status;
 }
-int check::check_headerfile(xml_parser::HeaderFileName header)///überpüft die Daten, welche zu dem headerfile gemacht worden sind und ob notwendige Daten Fehlen
+
+///überpüft die Daten, welche zu dem headerfile gemacht worden sind und ob notwendige Daten Fehlen
+int check::check_headerfile(xml_parser::HeaderFileName header)
 {
     int status = 1;
     if (header.content.empty())
@@ -123,7 +128,9 @@ int check::check_headerfile(xml_parser::HeaderFileName header)///überpüft die 
     }
     return status;
 }
-int check::check_sourcefile(xml_parser::SourceFileName source)///überpüft die Daten, welche zu dem sourcefile gemacht worden sind und ob notwendige Daten Fehlen
+
+///überpüft die Daten, welche zu dem sourcefile gemacht worden sind und ob notwendige Daten Fehlen
+int check::check_sourcefile(xml_parser::SourceFileName source)
 {
     int status = 1;
     if (source.content.empty())
@@ -138,7 +145,9 @@ int check::check_sourcefile(xml_parser::SourceFileName source)///überpüft die 
     }
     return status;
 }
-int check::check_namespace(xml_parser::NameSpace namesp)///überpüft die Daten, welche zu dem namespace gemacht worden sind und ob notwendige Daten Fehlen
+
+///überpüft die Daten, welche zu dem namespace gemacht worden sind und ob notwendige Daten Fehlen
+int check::check_namespace(xml_parser::NameSpace namesp)
 {
     int status = 1;
     if (namesp.content.empty())
@@ -148,7 +157,9 @@ int check::check_namespace(xml_parser::NameSpace namesp)///überpüft die Daten,
     }
     return status;
 }
-int check::check_classname(xml_parser::ClassName cname)///überpüft die Daten, welche zu dem classname gemacht worden sind und ob notwendige Daten Fehlen
+
+///überpüft die Daten, welche zu dem classname gemacht worden sind und ob notwendige Daten Fehlen
+int check::check_classname(xml_parser::ClassName cname)
 {
     int status = 1;
     if (cname.content.empty())
@@ -158,7 +169,9 @@ int check::check_classname(xml_parser::ClassName cname)///überpüft die Daten, 
     }
     return status;
 }
-int check::check_overall_description(xml_parser::OverAllDescription ovdes)///überpüft die Daten, welche zu dem overall_description gemacht worden sind und ob notwendige Daten Fehlen
+
+///überpüft die Daten, welche zu dem overall_description gemacht worden sind und ob notwendige Daten Fehlen
+int check::check_overall_description(xml_parser::OverAllDescription ovdes)
 {
     if (ovdes.block.size() == 0 || ovdes.block[0].content.empty())
     {
@@ -170,7 +183,9 @@ int check::check_overall_description(xml_parser::OverAllDescription ovdes)///üb
     }
     return 1;
 }
-int check::check_block(xml_parser::Block bl)///überpüft die Daten, welche zu dem block gemacht worden sind und ob notwendige Daten Fehlen
+
+///überpüft die Daten, welche zu dem block gemacht worden sind und ob notwendige Daten Fehlen
+int check::check_block(xml_parser::Block bl)
 {
     if (bl.content.empty())
     {
@@ -190,7 +205,8 @@ int check::check_sample_usage(xml_parser::SampleUsage sample)///überpüft die D
     }
     return 1;
 }
-int check::check_sample(xml_parser::Sample sp)///überpüft die Daten, welche zu dem sample gemacht worden sind und ob notwendige Daten Fehlen
+///überpüft die Daten, welche zu dem sample gemacht worden sind und ob notwendige Daten Fehlen
+int check::check_sample(xml_parser::Sample sp)
 {
     if (sp.content.empty())
     {
@@ -198,7 +214,9 @@ int check::check_sample(xml_parser::Sample sp)///überpüft die Daten, welche zu
     }
     return 1;
 }
-int check::check_options(xml_parser::Options opti)///überpüft die Daten, welche zu dem options gemacht worden sind und ob notwendige Daten Fehlen
+
+///überpüft die Daten, welche zu dem options gemacht worden sind und ob notwendige Daten Fehlen
+int check::check_options(xml_parser::Options opti)
 {
     int status = 1;
     if (opti.option.size() == 0)
@@ -216,7 +234,9 @@ int check::check_options(xml_parser::Options opti)///überpüft die Daten, welch
     }
     return status;
 }
-int check::check_option(xml_parser::Option opt, int i)///überpüft die Daten, welche zu der option gemacht worden sind und ob notwendige Daten Fehlen
+
+///überpüft die Daten, welche zu der option gemacht worden sind und ob notwendige Daten Fehlen
+int check::check_option(xml_parser::Option opt, int i)
 {
     if (opt.shortOpt.empty() && opt.longOpt.empty())
     {
