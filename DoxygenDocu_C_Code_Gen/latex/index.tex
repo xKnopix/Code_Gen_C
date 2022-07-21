@@ -1,51 +1,132 @@
 \label{index_mainpage}%
 \Hypertarget{index_mainpage}%
- Um das Projekt zu \char`\"{}builden\char`\"{}\+:
+\hypertarget{index_autotoc_md0}{}\doxysection{C Code Gen}\label{index_autotoc_md0}
+\hypertarget{index_autotoc_md1}{}\doxysection{Table of Contents}\label{index_autotoc_md1}
 
-Win\+:
+\begin{DoxyEnumerate}
+\item Cmake
+\begin{DoxyEnumerate}
+\item Cmake Win32
+\item Cmake Unix
+\end{DoxyEnumerate}
+\item Build Example\+Project
+\item Use Parser
+\item Hinweise
+\end{DoxyEnumerate}\hypertarget{index_autotoc_md2}{}\doxysection{Cmake}\label{index_autotoc_md2}
+\hypertarget{index_autotoc_md3}{}\doxysubsection{Cmake\+\_\+\+Win32}\label{index_autotoc_md3}
 
-In Haupverzeichnis wechseln (dort wo der Ordner C\+\_\+\+Code\+\_\+\+Gen und CMake\+Lists.\+txt und Readme.\+md liegt)
+\begin{DoxyEnumerate}
+\item In Haupverzeichnis wechseln (dort wo der Ordner C\+\_\+\+Code\+\_\+\+Gen und CMake\+Lists.\+txt und Readme.\+md liegt)
+\item neuen Ordner namens \char`\"{}build\char`\"{} anlegen
+\item in build Ordner wechseln 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{cd ./build}
 
-neuen Ordner namens \char`\"{}build\char`\"{} anlegen
+\end{DoxyCode}
 
-in build Ordner wechseln
+\item cmd in dem build Ordner öffnen
+\item \char`\"{}cmake -\/\+DCMAKE\+\_\+\+PREFIX\+\_\+\+PATH=\+C\+:\textbackslash{}\+User\+Data\textbackslash{}z180338\textbackslash{}tools\textbackslash{}xerces-\/c -\/\+G \char`\"{}Min\+GW Makefiles\char`\"{} ..\char`\"{} in cmd eingeben 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{cmake -\/DCMAKE\_PREFIX\_PATH=C:\(\backslash\)UserData\(\backslash\)z180338\(\backslash\)tools\(\backslash\)xerces-\/c -\/G "{}MinGW Makefiles"{} ..}
 
-cmd in dem build Ordner öffnen
+\end{DoxyCode}
 
-\char`\"{}cmake -\/\+DCMAKE\+\_\+\+PREFIX\+\_\+\+PATH=\+C\+:\textbackslash{}\+User\+Data\textbackslash{}z180338\textbackslash{}tools\textbackslash{}xerces-\/c -\/\+G \char`\"{}Min\+GW Makefiles\char`\"{} ..\char`\"{} in cmd eingeben
+\item \char`\"{}cmake -\/-\/build .\char`\"{} eingeben 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{cmake -\/-\/build .}
 
-\char`\"{}cmake -\/-\/build .\char`\"{} eingeben
+\end{DoxyCode}
+ Die Fertige exe kann dann unter build/\+C\+\_\+\+Code\+\_\+\+Gen/\+Debug gefunden werden
+\end{DoxyEnumerate}\hypertarget{index_autotoc_md4}{}\doxysubsection{Cmake\+\_\+\+Unix}\label{index_autotoc_md4}
 
-Die Fertige exe kann dann unter build/\+C\+\_\+\+Code\+\_\+\+Gen/\+Debug gefunden werden
+\begin{DoxyEnumerate}
+\item In Haupverzeichnis wechseln (dort wo der Ordner C\+\_\+\+Code\+\_\+\+Gen und CMake\+Lists.\+txt und Readme.\+md liegt)
+\item neuen Ordner namens \char`\"{}build\char`\"{} anlegen 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{mkdir build}
 
-Linux/\+Unix\+:
+\end{DoxyCode}
 
-In Haupverzeichnis wechseln (dort wo der Ordner C\+\_\+\+Code\+\_\+\+Gen und CMake\+Lists.\+txt und Readme.\+md liegt)
+\item in build Ordner wechseln 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{cd ./build}
 
-neuen Ordner namens \char`\"{}build\char`\"{} anlegen
+\end{DoxyCode}
 
-in build Ordner wechseln
+\item terminal in build ordner öffnen
+\item \char`\"{}cmake ..\char`\"{} in terminal eingeben wenn xerces nicht gefunden wurde dann \char`\"{}cmake -\/\+DCMAKE\+\_\+\+PREFIX\+\_\+\+PATH=\char`\"{}opt/xerces-\/c\char`\"{} ..\char`\"{} 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{cmake ..}
 
-terminal in build ordner öffnen
+\end{DoxyCode}
+ wenn xerces nicht gefunden wurde (bsp\+: opt/xerces-\/c) 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{cmake -\/DCMAKE\_PREFIX\_PATH="{}\$Path to xerces install"{} .. }
 
-\char`\"{}cmake ..\char`\"{} in terminal eingeben wenn xerces nicht gefunden wurde dann \char`\"{}cmake -\/\+DCMAKE\+\_\+\+PREFIX\+\_\+\+PATH=\char`\"{}opt/xerces-\/c\char`\"{} ..\char`\"{}
+\end{DoxyCode}
+ \char`\"{}make\char`\"{} in terminal eingeben 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{make}
 
-\char`\"{}make\char`\"{} in terminal eingeben
+\end{DoxyCode}
+ Das fertige Programm kann dann unter /build/\+C\+\_\+\+Code\+\_\+\+Gen gefunden werden
+\end{DoxyEnumerate}\hypertarget{index_autotoc_md5}{}\doxysection{XML}\label{index_autotoc_md5}
+in der Example.\+xml kann angepasst werden, wie der \mbox{\hyperlink{class_code}{Code}} Generator \mbox{\hyperlink{class_code}{Code}} erzeugt. Die Example.\+xml muss angepasst werden, wenn der Parser etwas anderes machen soll als die Beispiel Implementation\hypertarget{index_autotoc_md6}{}\doxysection{Build\+\_\+\+Example\+Project}\label{index_autotoc_md6}
+Nach dem die C\+\_\+\+Code\+\_\+gen.\+exe (Win) oder C\+\_\+\+Code\+\_\+\+Gen ausgeführt wurde, wurden 4 neue Dateien erzeugt. (example\+Main.\+cpp, Header\+File\+Name.\+cpp, Source\+File\+Name.\+h und CMake\+Lists.\+txt) diese Dateien sollten in einen Neuen Projektordner Kopiert werden. Der Neue Ordner sollte die Strucktur\+:
 
-Das fertige Programm kann dann unter /build/\+C\+\_\+\+Code\+\_\+\+Gen gefunden werden
+Projekt~\newline
+ $\vert$~\newline
+ $\vert$---example\+Main.\+cpp~\newline
+ $\vert$---Header\+File\+Name.\+h~\newline
+ $\vert$---Source\+File\+Name.\+cpp~\newline
+ $\vert$---CMake\+Lists.\+txt~\newline
 
-Visual Studio \mbox{\hyperlink{class_code}{Code}} und Cmake\+:
 
-Plugins, Cmake suchen und installieren (von Microsoft)
+haben.\hypertarget{index_autotoc_md7}{}\doxysubsection{1. Externe Methoden Implementieren\+:}\label{index_autotoc_md7}
+Hierzu wird die example\+Main.\+cpp geöffnet. Dann wird nach einer Klasse namens \char`\"{}\+Klasse\char`\"{} gesucht, welche von dem angegeben Class\+Name erbt. Hier sind nun beispiel Implementierungen vorhanden, die beliebig geändert werden können.\hypertarget{index_autotoc_md8}{}\doxysubsection{2. build}\label{index_autotoc_md8}
 
-Plugins, C++ suchen und installieren
+\begin{DoxyEnumerate}
+\item Im Projekt Ordner neuen Ordner namens build anlegen
+\item CMD (Win) oder Terminal(\+Unix) öffnen
+\item In build Ordner wechseln 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{cd ./build}
 
-VSCode neustarten
+\end{DoxyCode}
 
-Den Haupt Ordner in Visual\+Studio\+Code öffnen
+\item \char`\"{}cmake ..\char`\"{} eingeben 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{cmake ..}
 
-Jetzt sollten von cmake unten links Buttons zum builden, Debugen und runnen sicht bar sein\+:
+\end{DoxyCode}
 
+\item cmake --build . (Win) oder make (Linux) eingeben Windows 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{cmake -\/-\/build .}
+
+\end{DoxyCode}
+ Unix 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{make}
+
+\end{DoxyCode}
+
+\item Es sollte nun im \char`\"{}build\char`\"{} Ordner ein weiter Ordner \char`\"{}\+Example\+Main\char`\"{} sein, in welchem sich nun im Debug Ordner eine Example\+Main.\+exe befindet (Win).
+\item Es sollte nun im \char`\"{}build\char`\"{} Ordner ein weiter Ordner \char`\"{}\+Example\+Main\char`\"{} sein, in welchem sich nun ein Example\+Main Programm befindet (Unix)
+\end{DoxyEnumerate}\hypertarget{index_autotoc_md9}{}\doxysection{Use\+\_\+\+Parser}\label{index_autotoc_md9}
+Das Programm auszühren und dann mit --help die Hilfe ausgeben lassen Win 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{ExampleMain.exe [args]}
+\DoxyCodeLine{ExampleMain.exe -\/v}
+
+\end{DoxyCode}
+ Unix 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{ExampleMain [args]}
+\DoxyCodeLine{ExampleMain -\/v}
+
+\end{DoxyCode}
+ \hypertarget{index_autotoc_md10}{}\doxysection{Hinweise}\label{index_autotoc_md10}
 Hinweis zur generierung der Getter Methoden\+: Da in den Requirements immer der long\+Opt-\/\+Name als name in den Methoden gewünscht war haben wir in unserem code wenn ein \textquotesingle{}-\/\textquotesingle{} wie bei sign-\/per-\/line vorkommt, dieses \textquotesingle{}-\/\textquotesingle{} aus dem namen gelöscht und zu signperline (Bsp.\+: is\+Setsignperline()) gemacht.
 
 Hinweis zur Angabe von zusätzlichen Argumenten\+: in unserem generierten Argument-\/\+Parser werden zusätzliche Argumente ohne Zusätze einfach mit einem Leerzeichen getrennt hinter das Hauptargument geschrieben. Bsp.\+: --out-\/path C\+:\textbackslash{}\+Users\textbackslash{} --sign-\/per-\/line 10 -\/v 
