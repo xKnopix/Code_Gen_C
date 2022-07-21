@@ -1,3 +1,5 @@
+//Author: Michael Hornstein
+
 #ifndef CMAKEGEN_H
 #define CMAKEGEN_H
 
