@@ -9,11 +9,11 @@ class Klasse : public Beispiel_XML{
 public:
 
 void ParseXML(bool b){
-	cout << "Example implementation of external Method" << endl;
+	cout << "Example implementation of external Methode" << endl;
 }
 
 void printVersion(int a){
-	cout << "Example implementation of external Method" << endl;
+	cout << "Example implementation of external Methode" << endl;
 }
 
 };
