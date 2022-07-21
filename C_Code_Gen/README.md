@@ -66,12 +66,12 @@ Das fertige Programm kann dann unter /build/C_Code_Gen gefunden werden
 Nach dem die C_Code_gen.exe (Win) oder C_Code_Gen ausgeführt wurde, wurden 4 neue Dateien erzeugt. (exampleMain.cpp, HeaderFileName.cpp, SourceFileName.h und CMakeLists.txt) diese Dateien sollten in einen Neuen Projektordner Kopiert werden. 
 Der Neue Ordner sollte die Strucktur:
 
-Projekt
-|
-|---exampleMain.cpp
-|---HeaderFileName.h
-|---SourceFileName.cpp
-|---CMakeLists.txt
+Projekt<br /> 
+|<br /> 
+|---exampleMain.cpp<br /> 
+|---HeaderFileName.h<br /> 
+|---SourceFileName.cpp<br /> 
+|---CMakeLists.txt<br /> 
 
 haben.
 
