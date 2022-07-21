@@ -1,4 +1,4 @@
-//Author Jacob Hochbaum
+//Author: Jacob Hochbaum
 
 #include "CodeGenerator.h"
 #include <iostream>
