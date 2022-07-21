@@ -1,3 +1,5 @@
+//Author: Michael Hornstein
+
 #ifndef XML_PARSER_H
 #define XML_PARSER_H
 
