@@ -1,33 +1,27 @@
 //Author Michael Hornstein, Jacob Hochbaum, Johannes Muessig
 
-// g++ -o main.exe main.cpp xml_parser.cpp -IC:\xerces-c\include -LC:\xerces-c\lib -lxerces-c.dll -std=c++11
 #include "xml_parser.h"
 #include "CodeGenerator.h"
 #include "check.h"
 #include "mainGenerator.h"
 #include "CMakeGen.h"
-// Wichtig! Unter File Preferences Settings Extensions "Run Code configuration" "Executor Map" "Edit in settings.json"
-// nach g++ $file weg machen und dafür main.cpp xml_parser.cpp einfügen, sonst geht der code runner Button nicht mehr
-// hat den grund dass beim Compelieren alle Source Dateien mit angegeben werden müssen und nicht nur die main.cpp
 
 int main()
 {
 
     xml_parser x;
-    xml_parser::GetOptSetup data = x.GetDataStrctFromXML("Example.xml");
-
-    //cout << data.signPerLine << endl;
+    xml_parser::GetOptSetup data = x.GetDataStrctFromXML("Example.xml");//gibt GetOptSetup Struct data zurück
 
     check c;
-    c.check_data(data);
-    data = c.sortData(data);
+    c.check_data(data); //checkt die daten auf vollständigkeit
+    data = c.sortData(data); //sortiert die optionen alphabetisch prio: shortOpt
 
     Code code;
-    code.parse(data);
+    code.parse(data); //generiert den Code fuer den Parser
 
-    mainGenerator m = mainGenerator(data);
+    mainGenerator m = mainGenerator(data); //Generiert die exampleMain.cpp unter beachtung der daten
 
-    CMakeGen cm(data);
+    CMakeGen cm(data); //Generiert die CMakeLists.txt unter beachtung der daten
 
     return 0;
 }

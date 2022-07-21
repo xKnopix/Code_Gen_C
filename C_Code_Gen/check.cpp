@@ -16,6 +16,7 @@ int check::check_data(xml_parser::GetOptSetup data)
     return status;
 }
 
+///Sortiert die optionen Alphabetisch mit dem BubbleSort Algorithmus
 xml_parser::GetOptSetup check::sortData(xml_parser::GetOptSetup data)
 {
     //Standart Bubblesort
@@ -58,17 +59,11 @@ xml_parser::GetOptSetup check::sortData(xml_parser::GetOptSetup data)
         }
         pass++;
     }
-    /*
-    cerr << "Sorted Element List ...\n";
-    for (i = 0; i < data.options.option.size(); i++)
-    {
-        cerr << data.options.option[i].shortOpt << "\t" << data.options.option[i].longOpt << "\n";
-    }
-    */
 
     return data;
 }
 
+///um zwei Strings mit < vergleichen zukönnen (Hilfsfunktion)
 int check::compStringS1SmalerS2(string s1, string s2)
 { // returns 1 if s1 is smaler than s2
 
@@ -86,6 +81,7 @@ int check::compStringS1SmalerS2(string s1, string s2)
     return 0;
 }
 
+///überpüft die Daten, welche zu dem Author gemacht worden sind und ob notwendige Daten Fehlen
 int check::check_author(xml_parser::Author author)
 {
     int status = 1;
@@ -115,6 +111,8 @@ int check::check_author(xml_parser::Author author)
     }
     return status;
 }
+
+///überpüft die Daten, welche zu dem headerfile gemacht worden sind und ob notwendige Daten Fehlen
 int check::check_headerfile(xml_parser::HeaderFileName header)
 {
     int status = 1;
@@ -130,6 +128,8 @@ int check::check_headerfile(xml_parser::HeaderFileName header)
     }
     return status;
 }
+
+///überpüft die Daten, welche zu dem sourcefile gemacht worden sind und ob notwendige Daten Fehlen
 int check::check_sourcefile(xml_parser::SourceFileName source)
 {
     int status = 1;
@@ -145,6 +145,8 @@ int check::check_sourcefile(xml_parser::SourceFileName source)
     }
     return status;
 }
+
+///überpüft die Daten, welche zu dem namespace gemacht worden sind und ob notwendige Daten Fehlen
 int check::check_namespace(xml_parser::NameSpace namesp)
 {
     int status = 1;
@@ -155,6 +157,8 @@ int check::check_namespace(xml_parser::NameSpace namesp)
     }
     return status;
 }
+
+///überpüft die Daten, welche zu dem classname gemacht worden sind und ob notwendige Daten Fehlen
 int check::check_classname(xml_parser::ClassName cname)
 {
     int status = 1;
@@ -165,6 +169,8 @@ int check::check_classname(xml_parser::ClassName cname)
     }
     return status;
 }
+
+///überpüft die Daten, welche zu dem overall_description gemacht worden sind und ob notwendige Daten Fehlen
 int check::check_overall_description(xml_parser::OverAllDescription ovdes)
 {
     if (ovdes.block.size() == 0 || ovdes.block[0].content.empty())
@@ -177,6 +183,8 @@ int check::check_overall_description(xml_parser::OverAllDescription ovdes)
     }
     return 1;
 }
+
+///überpüft die Daten, welche zu dem block gemacht worden sind und ob notwendige Daten Fehlen
 int check::check_block(xml_parser::Block bl)
 {
     if (bl.content.empty())
@@ -185,7 +193,7 @@ int check::check_block(xml_parser::Block bl)
     }
     return 1;
 }
-int check::check_sample_usage(xml_parser::SampleUsage sample)
+int check::check_sample_usage(xml_parser::SampleUsage sample)///überpüft die Daten, welche zu dem sample_usage gemacht worden sind und ob notwendige Daten Fehlen
 {
     if (sample.sample.size() == 0 || sample.sample[0].content.empty())
     {
@@ -197,6 +205,7 @@ int check::check_sample_usage(xml_parser::SampleUsage sample)
     }
     return 1;
 }
+///überpüft die Daten, welche zu dem sample gemacht worden sind und ob notwendige Daten Fehlen
 int check::check_sample(xml_parser::Sample sp)
 {
     if (sp.content.empty())
@@ -205,6 +214,8 @@ int check::check_sample(xml_parser::Sample sp)
     }
     return 1;
 }
+
+///überpüft die Daten, welche zu dem options gemacht worden sind und ob notwendige Daten Fehlen
 int check::check_options(xml_parser::Options opti)
 {
     int status = 1;
@@ -215,7 +226,7 @@ int check::check_options(xml_parser::Options opti)
     }
     for (int i = 0; i < opti.option.size(); i++)
     {
-        int s = check_option(opti.option[i], i);
+        const int s = check_option(opti.option[i], i);
         if (!s)
         {
             status = -1;
@@ -223,6 +234,8 @@ int check::check_options(xml_parser::Options opti)
     }
     return status;
 }
+
+///überpüft die Daten, welche zu der option gemacht worden sind und ob notwendige Daten Fehlen
 int check::check_option(xml_parser::Option opt, int i)
 {
     if (opt.shortOpt.empty() && opt.longOpt.empty())
