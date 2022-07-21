@@ -130,3 +130,5 @@ wie bei sign-per-line vorkommt, dieses '-' aus dem namen gelöscht und zu signpe
 Hinweis zur Angabe von zusätzlichen Argumenten:
 in unserem generierten Argument-Parser werden zusätzliche Argumente ohne Zusätze einfach mit einem Leerzeichen getrennt hinter das Hauptargument geschrieben.
 Bsp.: --out-path C:\Users\ --sign-per-line 10 -v
+
+Autoren: Michael Hornstein, Jacob Hochbaum, Johannes Muessig
