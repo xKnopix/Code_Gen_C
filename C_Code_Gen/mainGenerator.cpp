@@ -10,18 +10,18 @@ mainGenerator::mainGenerator(xml_parser::GetOptSetup data){
     genMain();
 
     std::ofstream MyFile("exampleMain.cpp");
-    MyFile << this->output;
+    MyFile << this->output; //schreibt string in datei examoleMain.cpp
     MyFile.close();
 }
 
-void mainGenerator::useNameSpace(xml_parser::NameSpace namesp){
+void mainGenerator::useNameSpace(xml_parser::NameSpace namesp){//Generiert use Namespace... in dem strings zusammen gesetzt werden
     this->output.append("using namespace std;\n");
     this->output.append("using namespace ");
     this->output.append(namesp.content);
     this->output.append(";\n\n");
 }
 
-void mainGenerator::genMain(){
+void mainGenerator::genMain(){//Generiert main methode in dem strings zusammen gesetzt werden
     
     this->output.append("int main(int argc, char *argv[]){\n\n");
     this->output.append("\tKlasse k;\n");
@@ -29,7 +29,7 @@ void mainGenerator::genMain(){
     this->output.append("}");
 }
 
-void mainGenerator::genInheriteClass(xml_parser::Options options, xml_parser::ClassName classN){
+void mainGenerator::genInheriteClass(xml_parser::Options options, xml_parser::ClassName classN){//Generiert Klasse, indem strings zusammen gesetzt werden. Diese Klasse erbt von einer anderen klasse um so externe Mthode zu überschreiben
 
     vector<std::string> s;
     vector<std::string> c;
@@ -74,7 +74,7 @@ void mainGenerator::genInheriteClass(xml_parser::Options options, xml_parser::Cl
 
 }
 
-void mainGenerator::includes(xml_parser::HeaderFileName header){
+void mainGenerator::includes(xml_parser::HeaderFileName header){//Fuegt includes hinzu
     this->output.append("#include<iostream>\n");
     this->output.append("#include\"");    
     this->output.append(header.content); 

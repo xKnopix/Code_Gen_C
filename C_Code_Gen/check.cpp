@@ -215,7 +215,7 @@ int check::check_options(xml_parser::Options opti)
     }
     for (int i = 0; i < opti.option.size(); i++)
     {
-        int s = check_option(opti.option[i], i);
+        const int s = check_option(opti.option[i], i);
         if (!s)
         {
             status = -1;

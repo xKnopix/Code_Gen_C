@@ -26,11 +26,11 @@ xml_parser::GetOptSetup xml_parser::GetDataStrctFromXML(std::string filename){
     DOMNodeList* Samples = doc->getElementsByTagName(toXMLCh("Sample")); //Alle Nodes die Options heißen
     DOMNodeList* Optionss = doc->getElementsByTagName(toXMLCh("Option")); //Alle Nodes die Options heißen
 
-    data.author.mail = getAttriburte(Author->item(0), "Mail");
+    data.author.mail = getAttriburte(Author->item(0), "Mail");//Erster Author Node und dann Mail
     data.author.phone = getAttriburte(Author->item(0), "Phone");
     data.author.name = getAttriburte(Author->item(0), "Name");
 
-    data.headerFileName.content = toCh(HeaderFileName->item(0)->getTextContent());
+    data.headerFileName.content = toCh(HeaderFileName->item(0)->getTextContent());//Das was zwischen den tags steht 
     data.sourceFileName.content = toCh(SourceFileName->item(0)->getTextContent());
 
     data.nameSpace.content = toCh(NameSpace->item(0)->getTextContent());
@@ -69,7 +69,7 @@ xml_parser::GetOptSetup xml_parser::GetDataStrctFromXML(std::string filename){
 }
 
 //Helperfunktion
-string xml_parser::getAttriburte(DOMNode* Node, string search) {
+string xml_parser::getAttriburte(DOMNode* Node, string search) {//return einen Wert von einem Attribut, welcher in einem Node gesucht wird
 	string ret;
     
         if(Node->hasAttributes()){ //Schaue ob Author von (i) Attribute hat wie z.B Name, Email, Phone
@@ -88,7 +88,7 @@ string xml_parser::getAttriburte(DOMNode* Node, string search) {
         return ret;
 }
 
-DOMDocument* xml_parser::GetDomDocument(std::string xmlName){
+DOMDocument* xml_parser::GetDomDocument(std::string xmlName){// gibt ein dom document zurück, mit dem dann weiter gearbeitet werden kann
     try {
         XMLPlatformUtils::Initialize();
     }

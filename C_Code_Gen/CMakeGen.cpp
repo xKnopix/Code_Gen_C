@@ -3,12 +3,12 @@
 #include "CMakeGen.h"
 
 CMakeGen::CMakeGen(xml_parser::GetOptSetup data){
-    GenHeader();
-    GenAddExecutable(data.headerFileName, data.sourceFileName);
-    GenTail();
+    GenHeader();//setze String zusammen
+    GenAddExecutable(data.headerFileName, data.sourceFileName);//setze String zusammen
+    GenTail();//setze String zusammen
 
     std::ofstream MyFile("CMakeLists.txt");
-    MyFile << this->output;
+    MyFile << this->output;//schreibe String in CMakeLists.txt
     MyFile.close();
 }
 
