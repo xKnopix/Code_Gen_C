@@ -78,6 +78,7 @@ Table of Contents</h1>
 </li>
 <li>Build ExampleProject</li>
 <li>Use Parser</li>
+<li>Hinweise</li>
 </ol>
 <h1><a class="anchor" id="autotoc_md2"></a>
 Cmake</h1>
@@ -96,19 +97,58 @@ Cmake_Win32</h2>
 </ol>
 <h2><a class="anchor" id="autotoc_md4"></a>
 Cmake_Unix</h2>
-<p >In Haupverzeichnis wechseln (dort wo der Ordner C_Code_Gen und CMakeLists.txt und Readme.md liegt)</p>
-<p >neuen Ordner namens "build" anlegen</p>
-<p >in build Ordner wechseln</p>
-<p >terminal in build ordner öffnen</p>
-<p >"cmake .." in terminal eingeben wenn xerces nicht gefunden wurde dann "cmake -DCMAKE_PREFIX_PATH="opt/xerces-c" .."</p>
-<p >"make" in terminal eingeben</p>
-<p >Das fertige Programm kann dann unter /build/C_Code_Gen gefunden werden</p>
-<p >Visual Studio <a class="el" href="class_code.html">Code</a> und Cmake:</p>
-<p >Plugins, Cmake suchen und installieren (von Microsoft)</p>
-<p >Plugins, C++ suchen und installieren</p>
-<p >VSCode neustarten</p>
-<p >Den Haupt Ordner in VisualStudioCode öffnen</p>
-<p >Jetzt sollten von cmake unten links Buttons zum builden, Debugen und runnen sicht bar sein:</p>
+<ol type="1">
+<li>In Haupverzeichnis wechseln (dort wo der Ordner C_Code_Gen und CMakeLists.txt und Readme.md liegt)</li>
+<li>neuen Ordner namens "build" anlegen <div class="fragment"><div class="line">mkdir build</div>
+</div><!-- fragment --></li>
+<li>in build Ordner wechseln <div class="fragment"><div class="line">cd ./build</div>
+</div><!-- fragment --></li>
+<li>terminal in build ordner öffnen</li>
+<li>"cmake .." in terminal eingeben wenn xerces nicht gefunden wurde dann "cmake -DCMAKE_PREFIX_PATH="opt/xerces-c" .." <div class="fragment"><div class="line">cmake ..</div>
+</div><!-- fragment --> wenn xerces nicht gefunden wurde (bsp: opt/xerces-c) <div class="fragment"><div class="line">cmake -DCMAKE_PREFIX_PATH=&quot;$Path to xerces install&quot; .. </div>
+</div><!-- fragment --> "make" in terminal eingeben <div class="fragment"><div class="line">make</div>
+</div><!-- fragment --> Das fertige Programm kann dann unter /build/C_Code_Gen gefunden werden</li>
+</ol>
+<h1><a class="anchor" id="autotoc_md5"></a>
+XML</h1>
+<p >in der Example.xml kann angepasst werden, wie der <a class="el" href="class_code.html">Code</a> Generator <a class="el" href="class_code.html">Code</a> erzeugt. Die Example.xml muss angepasst werden, wenn der Parser etwas anderes machen soll als die Beispiel Implementation</p>
+<h1><a class="anchor" id="autotoc_md6"></a>
+Build_ExampleProject</h1>
+<p >Nach dem die C_Code_gen.exe (Win) oder C_Code_Gen ausgeführt wurde, wurden 4 neue Dateien erzeugt. (exampleMain.cpp, HeaderFileName.cpp, SourceFileName.h und CMakeLists.txt) diese Dateien sollten in einen Neuen Projektordner Kopiert werden. Der Neue Ordner sollte die Strucktur:</p>
+<p >Projekt<br  />
+ |<br  />
+ |&mdash;exampleMain.cpp<br  />
+ |&mdash;HeaderFileName.h<br  />
+ |&mdash;SourceFileName.cpp<br  />
+ |&mdash;CMakeLists.txt<br  />
+</p>
+<p >haben.</p>
+<h2><a class="anchor" id="autotoc_md7"></a>
+1. Externe Methoden Implementieren:</h2>
+<p >Hierzu wird die exampleMain.cpp geöffnet. Dann wird nach einer Klasse namens "Klasse" gesucht, welche von dem angegeben ClassName erbt. Hier sind nun beispiel Implementierungen vorhanden, die beliebig geändert werden können.</p>
+<h2><a class="anchor" id="autotoc_md8"></a>
+2. build</h2>
+<ol type="1">
+<li>Im Projekt Ordner neuen Ordner namens build anlegen</li>
+<li>CMD (Win) oder Terminal(Unix) öffnen</li>
+<li>In build Ordner wechseln <div class="fragment"><div class="line">cd ./build</div>
+</div><!-- fragment --></li>
+<li>"cmake .." eingeben <div class="fragment"><div class="line">cmake ..</div>
+</div><!-- fragment --></li>
+<li>cmake &ndash;build . (Win) oder make (Linux) eingeben Windows <div class="fragment"><div class="line">cmake --build .</div>
+</div><!-- fragment --> Unix <div class="fragment"><div class="line">make</div>
+</div><!-- fragment --></li>
+<li>Es sollte nun im "build" Ordner ein weiter Ordner "ExampleMain" sein, in welchem sich nun im Debug Ordner eine ExampleMain.exe befindet (Win).</li>
+<li>Es sollte nun im "build" Ordner ein weiter Ordner "ExampleMain" sein, in welchem sich nun ein ExampleMain Programm befindet (Unix)</li>
+</ol>
+<h1><a class="anchor" id="autotoc_md9"></a>
+Use_Parser</h1>
+<p >Das Programm auszühren und dann mit &ndash;help die Hilfe ausgeben lassen Win </p><div class="fragment"><div class="line">ExampleMain.exe [args]</div>
+<div class="line">ExampleMain.exe -v</div>
+</div><!-- fragment --><p> Unix </p><div class="fragment"><div class="line">ExampleMain [args]</div>
+<div class="line">ExampleMain -v</div>
+</div><!-- fragment --> <h1><a class="anchor" id="autotoc_md10"></a>
+Hinweise</h1>
 <p >Hinweis zur generierung der Getter Methoden: Da in den Requirements immer der longOpt-Name als name in den Methoden gewünscht war haben wir in unserem code wenn ein '-' wie bei sign-per-line vorkommt, dieses '-' aus dem namen gelöscht und zu signperline (Bsp.: isSetsignperline()) gemacht.</p>
 <p >Hinweis zur Angabe von zusätzlichen Argumenten: in unserem generierten Argument-Parser werden zusätzliche Argumente ohne Zusätze einfach mit einem Leerzeichen getrennt hinter das Hauptargument geschrieben. Bsp.: &ndash;out-path C:\Users\ &ndash;sign-per-line 10 -v </p>
 </div></div><!-- PageDoc -->

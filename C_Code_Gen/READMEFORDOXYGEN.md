@@ -62,6 +62,10 @@ make
 ```
 Das fertige Programm kann dann unter /build/C_Code_Gen gefunden werden
 
+# XML
+
+in der Example.xml kann angepasst werden, wie der Code Generator Code erzeugt. Die Example.xml muss angepasst werden, wenn der Parser etwas anderes machen soll als die Beispiel Implementation
+
 # Build_ExampleProject
 
 Nach dem die C_Code_gen.exe (Win) oder C_Code_Gen ausgeführt wurde, wurden 4 neue Dateien erzeugt. (exampleMain.cpp, HeaderFileName.cpp, SourceFileName.h und CMakeLists.txt) diese Dateien sollten in einen Neuen Projektordner Kopiert werden. 
