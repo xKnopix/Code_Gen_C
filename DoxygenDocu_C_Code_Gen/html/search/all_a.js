@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['parse_0',['parse',['../class_code.html#a1049930b594b0c2a1aba2bcdf36b086f',1,'Code']]]
+  ['xml_5fparser_0',['xml_parser',['../classxml__parser.html',1,'']]],
+  ['xstr_1',['XStr',['../class_x_str.html',1,'']]]
 ];

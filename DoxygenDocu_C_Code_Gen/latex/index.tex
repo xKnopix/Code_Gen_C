@@ -1,25 +1,42 @@
 \label{index_mainpage}%
 \Hypertarget{index_mainpage}%
- Um das Projekt zu \char`\"{}builden\char`\"{}\+:
+\hypertarget{index_autotoc_md0}{}\doxysection{C Code Gen}\label{index_autotoc_md0}
+\hypertarget{index_autotoc_md1}{}\doxysection{Table of Contents}\label{index_autotoc_md1}
 
-Win\+:
+\begin{DoxyEnumerate}
+\item Cmake
+\begin{DoxyEnumerate}
+\item Cmake Win32
+\item Cmake Unix
+\end{DoxyEnumerate}
+\item Build Example\+Project
+\item Use Parser
+\end{DoxyEnumerate}\hypertarget{index_autotoc_md2}{}\doxysection{Cmake}\label{index_autotoc_md2}
+\hypertarget{index_autotoc_md3}{}\doxysubsection{Cmake\+\_\+\+Win32}\label{index_autotoc_md3}
 
-In Haupverzeichnis wechseln (dort wo der Ordner C\+\_\+\+Code\+\_\+\+Gen und CMake\+Lists.\+txt und Readme.\+md liegt)
+\begin{DoxyEnumerate}
+\item In Haupverzeichnis wechseln (dort wo der Ordner C\+\_\+\+Code\+\_\+\+Gen und CMake\+Lists.\+txt und Readme.\+md liegt)
+\item neuen Ordner namens \char`\"{}build\char`\"{} anlegen
+\item in build Ordner wechseln 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{cd ./build}
 
-neuen Ordner namens \char`\"{}build\char`\"{} anlegen
+\end{DoxyCode}
 
-in build Ordner wechseln
+\item cmd in dem build Ordner öffnen
+\item \char`\"{}cmake -\/\+DCMAKE\+\_\+\+PREFIX\+\_\+\+PATH=\+C\+:\textbackslash{}\+User\+Data\textbackslash{}z180338\textbackslash{}tools\textbackslash{}xerces-\/c -\/\+G \char`\"{}Min\+GW Makefiles\char`\"{} ..\char`\"{} in cmd eingeben 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{cmake -\/DCMAKE\_PREFIX\_PATH=C:\(\backslash\)UserData\(\backslash\)z180338\(\backslash\)tools\(\backslash\)xerces-\/c -\/G "{}MinGW Makefiles"{} ..}
 
-cmd in dem build Ordner öffnen
+\end{DoxyCode}
 
-\char`\"{}cmake -\/\+DCMAKE\+\_\+\+PREFIX\+\_\+\+PATH=\+C\+:\textbackslash{}\+User\+Data\textbackslash{}z180338\textbackslash{}tools\textbackslash{}xerces-\/c -\/\+G \char`\"{}Min\+GW Makefiles\char`\"{} ..\char`\"{} in cmd eingeben
+\item \char`\"{}cmake -\/-\/build .\char`\"{} eingeben 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{cmake -\/-\/build .}
 
-\char`\"{}cmake -\/-\/build .\char`\"{} eingeben
-
-Die Fertige exe kann dann unter build/\+C\+\_\+\+Code\+\_\+\+Gen/\+Debug gefunden werden
-
-Linux/\+Unix\+:
-
+\end{DoxyCode}
+ Die Fertige exe kann dann unter build/\+C\+\_\+\+Code\+\_\+\+Gen/\+Debug gefunden werden
+\end{DoxyEnumerate}\hypertarget{index_autotoc_md4}{}\doxysubsection{Cmake\+\_\+\+Unix}\label{index_autotoc_md4}
 In Haupverzeichnis wechseln (dort wo der Ordner C\+\_\+\+Code\+\_\+\+Gen und CMake\+Lists.\+txt und Readme.\+md liegt)
 
 neuen Ordner namens \char`\"{}build\char`\"{} anlegen

@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['endforloop_0',['endForLoop',['../class_code.html#ae850f4ffc6c2b4f37482e47ee6895067',1,'Code']]],
-  ['endif_1',['endIf',['../class_code.html#ab76eee9b12531825c85391b72628597d',1,'Code']]]
+  ['getdatastrctfromxml_0',['GetDataStrctFromXML',['../classxml__parser.html#a8e1858eae91f7b0cdb7338862314e348',1,'xml_parser']]],
+  ['getoptsetup_1',['GetOptSetup',['../structxml__parser_1_1_get_opt_setup.html',1,'xml_parser']]]
 ];

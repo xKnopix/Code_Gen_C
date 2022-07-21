@@ -65,16 +65,37 @@ $(function() {
   <div class="headertitle"><div class="title">Main Page </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p ><a class="anchor" id="mainpage"></a> Um das Projekt zu "builden":</p>
-<p >Win:</p>
-<p >In Haupverzeichnis wechseln (dort wo der Ordner C_Code_Gen und CMakeLists.txt und Readme.md liegt)</p>
-<p >neuen Ordner namens "build" anlegen</p>
-<p >in build Ordner wechseln</p>
-<p >cmd in dem build Ordner öffnen</p>
-<p >"cmake -DCMAKE_PREFIX_PATH=C:\UserData\z180338\tools\xerces-c -G "MinGW Makefiles" .." in cmd eingeben</p>
-<p >"cmake --build ." eingeben</p>
-<p >Die Fertige exe kann dann unter build/C_Code_Gen/Debug gefunden werden</p>
-<p >Linux/Unix:</p>
+<div class="textblock"><p ><a class="anchor" id="mainpage"></a></p>
+<h1><a class="anchor" id="autotoc_md0"></a>
+C Code Gen</h1>
+<h1><a class="anchor" id="autotoc_md1"></a>
+Table of Contents</h1>
+<ol type="1">
+<li>Cmake<ol type="a">
+<li>Cmake Win32</li>
+<li>Cmake Unix</li>
+</ol>
+</li>
+<li>Build ExampleProject</li>
+<li>Use Parser</li>
+</ol>
+<h1><a class="anchor" id="autotoc_md2"></a>
+Cmake</h1>
+<h2><a class="anchor" id="autotoc_md3"></a>
+Cmake_Win32</h2>
+<ol type="1">
+<li>In Haupverzeichnis wechseln (dort wo der Ordner C_Code_Gen und CMakeLists.txt und Readme.md liegt)</li>
+<li>neuen Ordner namens "build" anlegen</li>
+<li>in build Ordner wechseln <div class="fragment"><div class="line">cd ./build</div>
+</div><!-- fragment --></li>
+<li>cmd in dem build Ordner öffnen</li>
+<li>"cmake -DCMAKE_PREFIX_PATH=C:\UserData\z180338\tools\xerces-c -G "MinGW Makefiles" .." in cmd eingeben <div class="fragment"><div class="line">cmake -DCMAKE_PREFIX_PATH=C:\UserData\z180338\tools\xerces-c -G &quot;MinGW Makefiles&quot; ..</div>
+</div><!-- fragment --></li>
+<li>"cmake --build ." eingeben <div class="fragment"><div class="line">cmake --build .</div>
+</div><!-- fragment --> Die Fertige exe kann dann unter build/C_Code_Gen/Debug gefunden werden</li>
+</ol>
+<h2><a class="anchor" id="autotoc_md4"></a>
+Cmake_Unix</h2>
 <p >In Haupverzeichnis wechseln (dort wo der Ordner C_Code_Gen und CMakeLists.txt und Readme.md liegt)</p>
 <p >neuen Ordner namens "build" anlegen</p>
 <p >in build Ordner wechseln</p>
@@ -82,7 +103,7 @@ $(function() {
 <p >"cmake .." in terminal eingeben wenn xerces nicht gefunden wurde dann "cmake -DCMAKE_PREFIX_PATH="opt/xerces-c" .."</p>
 <p >"make" in terminal eingeben</p>
 <p >Das fertige Programm kann dann unter /build/C_Code_Gen gefunden werden</p>
-<p >Visual Studio <a class="el" href="class_code.html" title="This is the brief description for this class.">Code</a> und Cmake:</p>
+<p >Visual Studio <a class="el" href="class_code.html">Code</a> und Cmake:</p>
 <p >Plugins, Cmake suchen und installieren (von Microsoft)</p>
 <p >Plugins, C++ suchen und installieren</p>
 <p >VSCode neustarten</p>
