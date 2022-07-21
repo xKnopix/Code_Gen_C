@@ -35,15 +35,25 @@ Die Fertige exe kann dann unter build/C_Code_Gen/Debug gefunden werden
 
 ## Cmake_Unix
 
-In Haupverzeichnis wechseln (dort wo der Ordner C_Code_Gen und CMakeLists.txt und Readme.md liegt)
+1. In Haupverzeichnis wechseln (dort wo der Ordner C_Code_Gen und CMakeLists.txt und Readme.md liegt)
 
-neuen Ordner namens "build" anlegen
+2. neuen Ordner namens "build" anlegen
+```
+mkdir build
+```
+3. in build Ordner wechseln 
+```
+cd ./build
+```
+4. terminal in build ordner öffnen
 
-in build Ordner wechseln 
-
-terminal in build ordner öffnen
-
-"cmake .." in terminal eingeben wenn xerces nicht gefunden wurde dann "cmake -DCMAKE_PREFIX_PATH="opt/xerces-c" .." 
+5. "cmake .." in terminal eingeben wenn xerces nicht gefunden wurde dann "cmake -DCMAKE_PREFIX_PATH="opt/xerces-c" .." 
+```
+cmake ..
+```
+```
+cmake -DCMAKE_PREFIX_PATH="opt/xerces-c" ..
+```
 
 "make" in terminal eingeben
 
