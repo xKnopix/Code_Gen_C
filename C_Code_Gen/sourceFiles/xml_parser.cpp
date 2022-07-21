@@ -68,7 +68,10 @@ xml_parser::GetOptSetup xml_parser::GetDataStrctFromXML(std::string filename){
     return data;
 }
 
-//Helperfunktion
+///Hilfsfunktion
+/// @param DOMNode* Node
+/// @param string search
+/// @return string Attributwert
 string xml_parser::getAttriburte(DOMNode* Node, string search) {//return einen Wert von einem Attribut, welcher in einem Node gesucht wird
 	string ret;
     
@@ -135,7 +138,4 @@ DOMDocument* xml_parser::GetDomDocument(std::string xmlName){// gibt ein dom doc
         delete parser;
         delete errHandler;
     }
-
-
-
 }
