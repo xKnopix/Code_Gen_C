@@ -487,18 +487,18 @@ public:
     ///                  data.options.option[i].connectToExternalMethod);
     /// ~~~~~~~~~~~~~~~~~~~~~~~~~
     ///@author Jacob
-    void addArgument(string ref = "",
-                     string shortOpt = "",
-                     string longOpt = "",
-                     string exclusion = "", // DONE
-                     string connectToInternalMethod = "",
-                     string description = "",
-                     string interface = "",
-                     string hasArguments = "", // DONE
-                     string convertTo = "",
-                     string defaultValue = "", // DONE
-                     string connectToExternalMethod = "",
-                     string GetOptSetupsignPerLineDefaultValue = "79"); // Funktion, die alle Argumente aus der xml annimmt
+    void addArgument(const string ref = "",
+                     const string shortOpt = "",
+                     const string longOpt = "",
+                     const string exclusion = "", // DONE
+                     const string connectToInternalMethod = "",
+                     const string description = "",
+                     const string interface = "",
+                     const string hasArguments = "", // DONE
+                     const string convertTo = "",
+                     const string defaultValue = "", // DONE
+                     const string connectToExternalMethod = "",
+                     const string GetOptSetupsignPerLineDefaultValue = "79"); // Funktion, die alle Argumente aus der xml annimmt
 };
 
 // int main();
