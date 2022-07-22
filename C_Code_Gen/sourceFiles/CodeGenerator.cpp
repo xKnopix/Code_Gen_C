@@ -733,7 +733,7 @@ void Code::addArgument(const string ref,
 
     if (!shortOpt.empty() && longOpt.empty())
     {
-        printHelpMethodCode += "myPrint(\"--" + shortOpt + "\\n\",  " + GetOptSetupsignPerLineDefaultValue + ");\n";
+        printHelpMethodCode += "myPrint(\"-" + shortOpt + "\\n\",  " + GetOptSetupsignPerLineDefaultValue + ");\n";
     }
 
     printHelpMethodCode += "myPrint(\"  " + description + "\\n\\n\", " + GetOptSetupsignPerLineDefaultValue + ");\n";

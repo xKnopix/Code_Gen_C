@@ -93,7 +93,7 @@ Cmake_Win32</h2>
 <li>"cmake -DCMAKE_PREFIX_PATH=C:\UserData\z180338\tools\xerces-c -G "MinGW Makefiles" .." in cmd eingeben <div class="fragment"><div class="line">cmake -DCMAKE_PREFIX_PATH=C:\UserData\z180338\tools\xerces-c -G &quot;MinGW Makefiles&quot; ..</div>
 </div><!-- fragment --></li>
 <li>"cmake --build ." eingeben <div class="fragment"><div class="line">cmake --build .</div>
-</div><!-- fragment --> Die Fertige exe kann dann unter build/C_Code_Gen/Debug gefunden werden</li>
+</div><!-- fragment --> Die Fertige exe liegt jetzt im build-Ordner.</li>
 </ol>
 <h2><a class="anchor" id="autotoc_md4"></a>
 Cmake_Unix</h2>
@@ -150,8 +150,15 @@ Use_Parser</h1>
 <div class="line">ExampleMain -v</div>
 </div><!-- fragment --> <h1><a class="anchor" id="autotoc_md10"></a>
 Hinweise</h1>
-<p >Hinweis zur generierung der Getter Methoden: Da in den Requirements immer der longOpt-Name als name in den Methoden gewünscht war haben wir in unserem code wenn ein '-' wie bei sign-per-line vorkommt, dieses '-' aus dem namen gelöscht und zu signperline (Bsp.: isSetsignperline()) gemacht.</p>
-<p >Hinweis zur Angabe von zusätzlichen Argumenten: in unserem generierten Argument-Parser werden zusätzliche Argumente ohne Zusätze einfach mit einem Leerzeichen getrennt hinter das Hauptargument geschrieben. Bsp.: &ndash;out-path C:\Users\ &ndash;sign-per-line 10 -v</p>
+<h3 >1. Hinweis zur generierung der Getter Methoden:</h3>
+<p >		Da in den Requirements immer der longOpt-Name als name in den Methoden gewünscht war haben wir in unserem code wenn ein '-' wie bei sign-per-line vorkommt, dieses '-' aus dem namen gelöscht und zu signperline (Bsp.: isSetsignperline()) gemacht.</p>
+<h3 >2. Hinweis zur Angabe von zusätzlichen Argumenten:</h3>
+<p >		in unserem generierten Argument-Parser werden zusätzliche Argumente ohne Zusätze einfach mit einem Leerzeichen getrennt hinter das Hauptargument geschrieben. Bsp.: &ndash;out-path C:\Users\ &ndash;sign-per-line 10 -v</p>
+<h3 >3. Hinweis zu unserem Verständnis von FunctionalRequirement 5:</h3>
+<p >		Der Hilfetext ist so einzufassen, dass er die Angabe aus dem Attribute SignPerLine nicht überschreitet (Defaultwert 79 Zeichen/Linie).</p>
+<p >		Wir waren uns zunächst nicht sicher, ob mit diesem requirement das Attribut signPerLine (2.5.10 Muster XML, Zeile 2) gemeint ist, oder der Wert, der Option --sign-per-line (2.5.10 Muster XML, Zeile 26). Wir haben uns dann für das Attribut in wie in Zeile 2 entschieden,</p>
+<p > 		da der Hilfetext ja das signPerLine-Argument eh ausschliesst und somit aus unserer Sich weniger Sinn gemacht haette.</p>
+<br ></br>
 <p >Autoren: Michael Hornstein, Jacob Hochbaum, Johannes Muessig </p>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
