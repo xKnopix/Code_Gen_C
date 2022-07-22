@@ -981,12 +981,12 @@ void Code::addArgument(const string ref,
         else if (convertTo == "Bool" || convertTo == "bool")
         {
             actOnArgs.addText(reference + "Bool);\n");
-            std::cout << "convertTo = Bool" << shortOpt << longOpt << endl;
+            // std::cout << "convertTo = Bool" << shortOpt << longOpt << endl;
         }
         else
         {
             actOnArgs.addText(reference + "Param);\n");
-            std::cerr << "convertTo = String" << convertTo << shortOpt << longOpt << endl;
+            // std::cerr << "convertTo = String" << convertTo << shortOpt << longOpt << endl;
         }
     }
     actOnArgs.addText("continue;");
