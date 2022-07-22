@@ -82,7 +82,6 @@ namespace DHBW_Programmieren
         ///@author Jacob
     public:
         string getValueOfastylepath();
-
         /// Funktion, um den Hilfetext auszugeben
         ///
         /// Diese Funktion gibt den Hilfetext aus
@@ -93,8 +92,7 @@ namespace DHBW_Programmieren
         /// ~~~~~~~~~~~~~~~~~~~~~~~~~
         ///@author Jacob
     protected:
-        virtual void printHelp(int signPerLine);
-
+        virtual void printHelp(const int signPerLine);
         /// Funktion, um zu überprüfen, ob das Argument only-if-newer angegeben wurde.
         ///
         /// Diese Funktion überprüft, ob beim aufrufen der .exe datei das Argument --astyle-path angegeben wurde.
@@ -109,7 +107,6 @@ namespace DHBW_Programmieren
         ///@author Jacob
     public:
         bool isSetonlyifnewer();
-
         /// Funktion, um zu überprüfen, ob das Argument no-format angegeben wurde.
         ///
         /// Diese Funktion überprüft, ob beim aufrufen der .exe datei das Argument --no-format angegeben wurde.
@@ -124,7 +121,6 @@ namespace DHBW_Programmieren
         ///@author Jacob
     public:
         bool isSetnoformat();
-
         /// Funktion, um zu überprüfen, ob das Argument out-path angegeben wurde.
         ///
         /// Diese Funktion überprüft, ob beim aufrufen der .exe datei das Argument --out-path angegeben wurde.
@@ -139,7 +135,6 @@ namespace DHBW_Programmieren
         ///@author Jacob
     public:
         bool isSetoutpath();
-
         /// Funktion, um auf das zusätzliche Argument von out-path zuzugreifen
         ///
         /// Diese Funktion gibt das Argument zurück, das als zusätzliches Argument zu Astyle-path angegeben wurde
@@ -149,10 +144,8 @@ namespace DHBW_Programmieren
         /// cout << getValueOfoutpath << endl;
         /// ~~~~~~~~~~~~~~~~~~~~~~~~~
         ///@author Jacob
-
     public:
         string getValueOfoutpath();
-
         /// Funktion, um zu überprüfen, ob das Argument parse-only angegeben wurde.
         ///
         /// Diese Funktion überprüft, ob beim aufrufen der .exe datei das Argument --parse-only angegeben wurde.
@@ -167,7 +160,6 @@ namespace DHBW_Programmieren
         ///@author Jacob
     public:
         bool isSetparseonly();
-
         /// Funktion, um auf das zusätzliche Argument von parse-only zuzugreifen
         ///
         /// Diese Funktion gibt das Argument zurück, das als zusätzliches Argument zu parse-only angegeben wurde
@@ -179,7 +171,6 @@ namespace DHBW_Programmieren
         ///@author Jacob
     public:
         bool getValueOfparseonly();
-
         /// Funktion, um auf das zusätzliche Argument von sign-per-line zuzugreifen
         ///
         /// Diese Funktion gibt das Argument zurück, das als zusätzliches Argument zu sign-per-line angegeben wurde
@@ -191,7 +182,6 @@ namespace DHBW_Programmieren
         ///@author Jacob
     public:
         bool isSetsignperline();
-
         /// Funktion, um auf das zusätzliche Argument von sign-per-line zuzugreifen
         ///
         /// Diese Funktion gibt das Argument zurück, das als zusätzliches Argument zu sign-per-line angegeben wurde
@@ -203,7 +193,6 @@ namespace DHBW_Programmieren
         ///@author Jacob
     public:
         int getValueOfsignperline();
-
         /// Funktion, um zu überprüfen, ob das Argument version angegeben wurde.
         ///
         /// Diese Funktion überprüft, ob beim aufrufen der .exe datei das Argument --version angegeben wurde.
@@ -218,24 +207,20 @@ namespace DHBW_Programmieren
         ///@author Jacob
     public:
         bool isSetversion();
-	
-	/// Externe Methode, kann in der exampleMain überschrieben Werden
+        /// Externe Methode, kann in der exampleMain überschrieben Werden
         ///@author Jacob
     protected:
         virtual void ParseXML(bool b) = 0;
-	
-	/// Externe Methode, kann in der exampleMain überschrieben Werden
+        /// Externe Methode, kann in der exampleMain überschrieben Werden
         ///@author Jacob
     protected:
         virtual void printVersion(int a) = 0;
-
         /// Funktion, um auf unbekannte Argumente reagieren zu können.
         ///
         /// Diese Funktion wird aufgerufen, wenn ein unbekanntes Argument erkannt wurde.
         ///@returns void
         ///@author Jacob
         virtual void unknownOption(const string &unknown_option);
-
         /// Funktion, um auf übergebene Argumente reagieren zu können.
         ///
         /// Diese Funktion wird aufgerufen, wenn die main() ausgeführt wird.
@@ -244,5 +229,5 @@ namespace DHBW_Programmieren
     public:
         void parseOptions(int argc, char *argv[]);
     };
-};
+}
 #endif

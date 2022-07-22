@@ -520,7 +520,7 @@ void Code::addArgument(const string ref,
         tempCode += "if(refValuesSorted[k] == localExclusions[m])";
         tempCode += "\n{";
 
-        tempCode += "cout << \"--" + reference + " ist nicht erlaubt mit \" + argumentnames[k];";
+        tempCode += "cout << \"--" + reference + " ist nicht erlaubt mit \" + argumentnames[k] << endl;";
         tempCode += "\nexit(EXIT_FAILURE);";
 
         tempCode += "\n}\n}\n}";
@@ -539,7 +539,7 @@ void Code::addArgument(const string ref,
             tempCode += "\n{";
             tempCode += "if (\" " + ref + "\" == tempExclusionVec[k])";
             tempCode += "\n{";
-            tempCode += "cout << \"--" + reference + " ist nicht erlaubt mit \" + argumentnames[j];";
+            tempCode += "cout << \"--" + reference + " ist nicht erlaubt mit \" + argumentnames[j] << endl;";
             tempCode += "\nexit(EXIT_FAILURE);";
             tempCode += "\n}\n}\n}";
             tempCode += "vector<string> temp = {\"" + ref + "\"};\n";

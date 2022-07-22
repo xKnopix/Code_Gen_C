@@ -86,20 +86,20 @@ Cmake</h1>
 Cmake_Win32</h2>
 <ol type="1">
 <li>In Haupverzeichnis wechseln (dort wo der Ordner C_Code_Gen und CMakeLists.txt und Readme.md liegt)</li>
-<li>neuen Ordner namens "build" anlegen</li>
+<li>neuen Ordner namens "build" anlegen. Sollte dieser bereits vorhanden sein ist es besser den Ordner, bzw. dessen Inhalt zu löschen und ggf. den Ordner neu anzulegen</li>
 <li>in build Ordner wechseln <div class="fragment"><div class="line">cd ./build</div>
 </div><!-- fragment --></li>
 <li>cmd in dem build Ordner öffnen</li>
 <li>"cmake -DCMAKE_PREFIX_PATH=C:\UserData\z180338\tools\xerces-c -G "MinGW Makefiles" .." in cmd eingeben <div class="fragment"><div class="line">cmake -DCMAKE_PREFIX_PATH=C:\UserData\z180338\tools\xerces-c -G &quot;MinGW Makefiles&quot; ..</div>
 </div><!-- fragment --></li>
 <li>"cmake --build ." eingeben <div class="fragment"><div class="line">cmake --build .</div>
-</div><!-- fragment --> Die Fertige exe liegt jetzt im build-Ordner.</li>
+</div><!-- fragment --> Das Fertige Programm kann dann unter build/C_Code_Gen gefunden werden.</li>
 </ol>
 <h2><a class="anchor" id="autotoc_md4"></a>
 Cmake_Unix</h2>
 <ol type="1">
 <li>In Haupverzeichnis wechseln (dort wo der Ordner C_Code_Gen und CMakeLists.txt und Readme.md liegt)</li>
-<li>neuen Ordner namens "build" anlegen <div class="fragment"><div class="line">mkdir build</div>
+<li>neuen Ordner namens "build" anlegen. Sollte dieser bereits vorhanden sein ist es besser den Ordner, bzw. dessen Inhalt zu löschen und ggf. den Ordner neu anzulegen<div class="fragment"><div class="line">mkdir build</div>
 </div><!-- fragment --></li>
 <li>in build Ordner wechseln <div class="fragment"><div class="line">cd ./build</div>
 </div><!-- fragment --></li>
@@ -139,8 +139,8 @@ Build_ExampleProject</h1>
 <li>cmake &ndash;build . (Win) oder make (Linux) eingeben Windows <div class="fragment"><div class="line">cmake --build .</div>
 </div><!-- fragment --> Unix <div class="fragment"><div class="line">make</div>
 </div><!-- fragment --></li>
-<li>Es sollte nun im "build" Ordner ein weiter Ordner "Debug" sein, in welchem sich nun im Debug Ordner eine ExampleMain.exe befindet (Win).</li>
-<li>Es sollte nun im "build" ein ExampleMain Programm zu sehen sein. (Unix)</li>
+<li>(Win) Es sollte nun im "build" Ordner ein weiter Ordner "Debug" sein, in welchem sich nun im Debug Ordner eine ExampleMain.exe befindet.</li>
+<li>(Unix) Es sollte nun im "build" ein ExampleMain Programm zu sehen sein.</li>
 </ol>
 <h1><a class="anchor" id="autotoc_md9"></a>
 Use_Parser</h1>
