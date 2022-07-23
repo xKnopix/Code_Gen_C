@@ -969,14 +969,14 @@ void Code::addArgument(const string ref,
 
         if (convertTo == "")
         {
-            std::cout << "convertTo" << endl;
+            //std::cout << "convertTo" << endl;
             actOnArgs.addText(");\n");
         }
 
         else if (convertTo == "Integer" || convertTo == "integer")
         {
             actOnArgs.addText(reference + "Int);\n");
-            std::cout << "convertTo = Int" << shortOpt << longOpt << endl;
+            //std::cout << "convertTo = Int" << shortOpt << longOpt << endl;
         }
         else if (convertTo == "Bool" || convertTo == "bool")
         {
