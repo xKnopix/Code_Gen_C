@@ -24,13 +24,17 @@ cd ./build
 
 5. "cmake -DCMAKE_PREFIX_PATH=C:\UserData\z180338\tools\xerces-c -G "MinGW Makefiles" .." in cmd eingeben 
 ```
+cmake -DCMAKE_PREFIX_PATH="Path to xerces-c" -G "MinGW Makefiles" ..
+```
+Bsp:
+```
 cmake -DCMAKE_PREFIX_PATH=C:\UserData\z180338\tools\xerces-c -G "MinGW Makefiles" ..
 ```
 6. "cmake --build ." eingeben
 ```
 cmake --build .
 ```
-Die Fertige exe kann dann unter build/C_Code_Gen/Debug gefunden werden
+Die Fertige exe kann dann unter build/C_Code_Gen gefunden werden
 
 
 
@@ -90,7 +94,7 @@ Hier sind nun beispiel Implementierungen vorhanden, die beliebig geändert werde
 
 ## 2. build
 
-1. Im Projekt Ordner neuen Ordner namens build anlegen 
+1. Im Projekt Ordner neuen Ordner namens build anlegen (Dieser Ordner sollte nicht direkt in dem 'build'- Ordner Aus dem 1. Schritt liegen, da dies zu Fehlern führen kann. Es ist am Besten außerhalb des Projektes einen Neuen Ordner für die generierten Dateien anzulegen, in welchem man dann den neuen 'build' - Ordner erstellt, oder aber mindestens einen Unterordner in dem 'build' - Ordner anzulegen und die generierten Dateien mit der generierten CMakeLists.txt und ExampleMain.cpp. 
 2. CMD (Win) oder Terminal(Unix) öffnen
 3. In build Ordner wechseln 
 ```
@@ -99,6 +103,10 @@ cd ./build
 4. "cmake .." eingeben
 ```
 cmake ..
+```
+Beispiel minGW:
+```
+cmake -G "MinGW Makefiles" ..
 ```
 5. cmake --build . (Win) oder make (Linux) eingeben 
 Windows
@@ -127,11 +135,17 @@ ExampleMain -v
 ```
 # Hinweise
 
-Hinweis zur generierung der Getter Methoden: Da in den Requirements immer der longOpt-Name als name in den Methoden gewünscht war haben wir in unserem code wenn ein '-'
+### Hinweis zur generierung der Getter Methoden:
+Da in den Requirements immer der longOpt-Name als name in den Methoden gewünscht war haben wir in unserem code wenn ein '-'
 wie bei sign-per-line vorkommt, dieses '-' aus dem namen gelöscht und zu signperline (Bsp.: isSetsignperline()) gemacht.
 
-Hinweis zur Angabe von zusätzlichen Argumenten:
+### Hinweis zur Angabe von zusätzlichen Argumenten:
 in unserem generierten Argument-Parser werden zusätzliche Argumente ohne Zusätze einfach mit einem Leerzeichen getrennt hinter das Hauptargument geschrieben.
 Bsp.: --out-path C:\Users\ --sign-per-line 10 -v
+
+### Hinweis zur Zeilenlimitierung von sign-per-line
+{ReqFunc4} Dieses Requirement wurde von uns zunächst zweideutig gesehen, ob dabei das Attribut <GetOptSetup SignPerLine="79"> aus der XML - Datei in Zeile 3 gemeint ist,
+oder ob man den optionalen Übergabeparameter aus der Option --sign-per-line auslesen soll. Wir haben uns am Ende darauf geeinigt den Wert aus dem Attribut aus Zeile 
+3 zu benutzen, jedoch funktionierte das Programm auch mit der getter-Funktion der --sign-per-line Option.
 
 Autoren: Michael Hornstein, Jacob Hochbaum, Johannes Muessig
