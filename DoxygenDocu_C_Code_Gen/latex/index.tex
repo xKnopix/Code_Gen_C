@@ -54,17 +54,17 @@
 \end{DoxyCode}
 
 \item terminal in build ordner öffnen
-\item \char`\"{}cmake ..\char`\"{} in terminal eingeben wenn xerces nicht gefunden wurde dann \char`\"{}cmake -\/\+DCMAKE\+\_\+\+PREFIX\+\_\+\+PATH=\char`\"{}opt/xerces-\/c\char`\"{} ..\char`\"{} 
-\begin{DoxyCode}{0}
-\DoxyCodeLine{cmake ..}
-
-\end{DoxyCode}
- wenn xerces nicht gefunden wurde (bsp\+: opt/xerces-\/c) 
+\item \char`\"{}cmake -\/\+DCMAKE\+\_\+\+PREFIX\+\_\+\+PATH=\char`\"{}\$\+Path to xerces install\char`\"{} ..\char`\"{} in terminal eingeben 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{cmake -\/DCMAKE\_PREFIX\_PATH="{}\$Path to xerces install"{} .. }
 
 \end{DoxyCode}
- wenn dies auch fehlschlägt, dann in den Hauptordner wechseln, von dort in C\+\_\+\+Code\+\_\+\+Gen wechseln und die Datei CMake\+Lists.\+txt öffnen. Dort wir in Zeile 10 set(CMAKE\+\_\+\+PREFIX\+\_\+\+PATH \char`\"{}/opt/xerces-\/c\char`\"{}) zu dem Installations Pfad von xerces gesetzt.~\newline
+ Beispiel\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{cmake -\/DCMAKE\_PREFIX\_PATH="{}/opt/xerces-\/c"{} .. }
+
+\end{DoxyCode}
+ wenn dies fehlschlägt, dann in den Hauptordner wechseln, von dort in C\+\_\+\+Code\+\_\+\+Gen wechseln und die Datei CMake\+Lists.\+txt öffnen. Dort wir in Zeile 10 set(CMAKE\+\_\+\+PREFIX\+\_\+\+PATH \char`\"{}/opt/xerces-\/c\char`\"{}) zu dem Installations Pfad von xerces gesetzt. ~\newline
  \char`\"{}make\char`\"{} in terminal eingeben 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{make}

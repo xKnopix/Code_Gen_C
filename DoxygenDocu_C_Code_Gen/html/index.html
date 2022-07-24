@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.4"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>My Project: Main Page</title>
+<title>C_Code_Gen: Main Page</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -21,7 +21,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">My Project
+   <div id="projectname">C_Code_Gen
    </div>
   </td>
  </tr>
@@ -86,27 +86,27 @@ Cmake</h1>
 Cmake_Win32</h2>
 <ol type="1">
 <li>In Haupverzeichnis wechseln (dort wo der Ordner C_Code_Gen und CMakeLists.txt und Readme.md liegt)</li>
-<li>neuen Ordner namens "build" anlegen. Sollte dieser bereits vorhanden sein ist es besser den Ordner, bzw. dessen Inhalt zu löschen und ggf. den Ordner neu anzulegen</li>
+<li>neuen Ordner namens "build" anlegen</li>
 <li>in build Ordner wechseln <div class="fragment"><div class="line">cd ./build</div>
 </div><!-- fragment --></li>
 <li>cmd in dem build Ordner öffnen</li>
 <li>"cmake -DCMAKE_PREFIX_PATH=C:\UserData\z180338\tools\xerces-c -G "MinGW Makefiles" .." in cmd eingeben <div class="fragment"><div class="line">cmake -DCMAKE_PREFIX_PATH=C:\UserData\z180338\tools\xerces-c -G &quot;MinGW Makefiles&quot; ..</div>
 </div><!-- fragment --></li>
 <li>"cmake --build ." eingeben <div class="fragment"><div class="line">cmake --build .</div>
-</div><!-- fragment --> Das Fertige Programm kann dann unter build/C_Code_Gen gefunden werden.</li>
+</div><!-- fragment --> Die Fertige exe kann dann unter build/C_Code_Gen/Debug gefunden werden</li>
 </ol>
 <h2><a class="anchor" id="autotoc_md4"></a>
 Cmake_Unix</h2>
 <ol type="1">
 <li>In Haupverzeichnis wechseln (dort wo der Ordner C_Code_Gen und CMakeLists.txt und Readme.md liegt)</li>
-<li>neuen Ordner namens "build" anlegen. Sollte dieser bereits vorhanden sein ist es besser den Ordner, bzw. dessen Inhalt zu löschen und ggf. den Ordner neu anzulegen<div class="fragment"><div class="line">mkdir build</div>
+<li>neuen Ordner namens "build" anlegen <div class="fragment"><div class="line">mkdir build</div>
 </div><!-- fragment --></li>
 <li>in build Ordner wechseln <div class="fragment"><div class="line">cd ./build</div>
 </div><!-- fragment --></li>
 <li>terminal in build ordner öffnen</li>
-<li>"cmake .." in terminal eingeben wenn xerces nicht gefunden wurde dann "cmake -DCMAKE_PREFIX_PATH="opt/xerces-c" .." <div class="fragment"><div class="line">cmake ..</div>
-</div><!-- fragment --> wenn xerces nicht gefunden wurde (bsp: opt/xerces-c) <div class="fragment"><div class="line">cmake -DCMAKE_PREFIX_PATH=&quot;$Path to xerces install&quot; .. </div>
-</div><!-- fragment --> wenn dies auch fehlschlägt, dann in den Hauptordner wechseln, von dort in C_Code_Gen wechseln und die Datei CMakeLists.txt öffnen. Dort wir in Zeile 10 set(CMAKE_PREFIX_PATH "/opt/xerces-c") zu dem Installations Pfad von xerces gesetzt.<br  />
+<li>"cmake -DCMAKE_PREFIX_PATH="$Path to xerces install" .." in terminal eingeben <div class="fragment"><div class="line">cmake -DCMAKE_PREFIX_PATH=&quot;$Path to xerces install&quot; .. </div>
+</div><!-- fragment --> Beispiel: <div class="fragment"><div class="line">cmake -DCMAKE_PREFIX_PATH=&quot;/opt/xerces-c&quot; .. </div>
+</div><!-- fragment --> wenn dies fehlschlägt, dann in den Hauptordner wechseln, von dort in C_Code_Gen wechseln und die Datei CMakeLists.txt öffnen. Dort wir in Zeile 10 set(CMAKE_PREFIX_PATH "/opt/xerces-c") zu dem Installations Pfad von xerces gesetzt. <br  />
  "make" in terminal eingeben <div class="fragment"><div class="line">make</div>
 </div><!-- fragment --> Das fertige Programm kann dann unter /build/C_Code_Gen gefunden werden</li>
 </ol>
@@ -130,7 +130,7 @@ Build_ExampleProject</h1>
 <h2><a class="anchor" id="autotoc_md8"></a>
 2. build</h2>
 <ol type="1">
-<li>Im Projekt Ordner neuen Ordner namens build anlegen (Es ist sicherer die generierten Dateien zuvor aus dem vorherigen build Ordner, (aus Punkt 1) zunächst in einen neuen Ordner zu legen, da sonst Fehler auftreten können)</li>
+<li>Im Projekt Ordner neuen Ordner namens build anlegen</li>
 <li>CMD (Win) oder Terminal(Unix) öffnen</li>
 <li>In build Ordner wechseln <div class="fragment"><div class="line">cd ./build</div>
 </div><!-- fragment --></li>
@@ -139,8 +139,8 @@ Build_ExampleProject</h1>
 <li>cmake &ndash;build . (Win) oder make (Linux) eingeben Windows <div class="fragment"><div class="line">cmake --build .</div>
 </div><!-- fragment --> Unix <div class="fragment"><div class="line">make</div>
 </div><!-- fragment --></li>
-<li>(Win) Es sollte nun im "build" Ordner ein weiter Ordner "Debug" sein, in welchem sich nun im Debug Ordner eine ExampleMain.exe befindet.</li>
-<li>(Unix) Es sollte nun im "build" ein ExampleMain Programm zu sehen sein.</li>
+<li>Es sollte nun im "build" Ordner ein weiter Ordner "Debug" sein, in welchem sich nun im Debug Ordner eine ExampleMain.exe befindet (Win).</li>
+<li>Es sollte nun im "build" ein ExampleMain Programm zu sehen sein. (Unix)</li>
 </ol>
 <h1><a class="anchor" id="autotoc_md9"></a>
 Use_Parser</h1>
@@ -150,15 +150,8 @@ Use_Parser</h1>
 <div class="line">ExampleMain -v</div>
 </div><!-- fragment --> <h1><a class="anchor" id="autotoc_md10"></a>
 Hinweise</h1>
-<h3 >1. Hinweis zur generierung der Getter Methoden:</h3>
-<p >		Da in den Requirements immer der longOpt-Name als name in den Methoden gewünscht war haben wir in unserem code wenn ein '-' wie bei sign-per-line vorkommt, dieses '-' aus dem namen gelöscht und zu signperline (Bsp.: isSetsignperline()) gemacht.</p>
-<h3 >2. Hinweis zur Angabe von zusätzlichen Argumenten:</h3>
-<p >		in unserem generierten Argument-Parser werden zusätzliche Argumente ohne Zusätze einfach mit einem Leerzeichen getrennt hinter das Hauptargument geschrieben. Bsp.: &ndash;out-path C:\Users\ &ndash;sign-per-line 10 -v</p>
-<h3 >3. Hinweis zu unserem Verständnis von FunctionalRequirement 5:</h3>
-<p >		Der Hilfetext ist so einzufassen, dass er die Angabe aus dem Attribute SignPerLine nicht überschreitet (Defaultwert 79 Zeichen/Linie).</p>
-<p >		Wir waren uns zunächst nicht sicher, ob mit diesem requirement das Attribut signPerLine (2.5.10 Muster XML, Zeile 2) gemeint ist, oder der Wert, der Option --sign-per-line (2.5.10 Muster XML, Zeile 26). Wir haben uns dann für das Attribut in wie in Zeile 2 entschieden,</p>
-<p > 		da der Hilfetext ja das signPerLine-Argument eh ausschliesst und somit aus unserer Sich weniger Sinn gemacht haette.</p>
-<br ></br>
+<p >Hinweis zur generierung der Getter Methoden: Da in den Requirements immer der longOpt-Name als name in den Methoden gewünscht war haben wir in unserem code wenn ein '-' wie bei sign-per-line vorkommt, dieses '-' aus dem namen gelöscht und zu signperline (Bsp.: isSetsignperline()) gemacht.</p>
+<p >Hinweis zur Angabe von zusätzlichen Argumenten: in unserem generierten Argument-Parser werden zusätzliche Argumente ohne Zusätze einfach mit einem Leerzeichen getrennt hinter das Hauptargument geschrieben. Bsp.: &ndash;out-path C:\Users\ &ndash;sign-per-line 10 -v</p>
 <p >Autoren: Michael Hornstein, Jacob Hochbaum, Johannes Muessig </p>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
