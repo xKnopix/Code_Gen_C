@@ -97,6 +97,10 @@ cd ./build
 ```
 cmake ..
 ```
+Beispiel minGW:
+```
+cmake -G "MinGW Makefiles" ..
+```
 5. cmake --build . (Win) oder make (Linux) eingeben 
 Windows
 ```
