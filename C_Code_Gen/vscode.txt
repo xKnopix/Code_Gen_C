@@ -1,1 +1,0 @@
-"cpp": "cd $dir && g++ main.cpp xml_parser.cpp xml_parser.h -o $fileNameWithoutExt -IC:\\xerces-c\\include -LC:\\xerces-c\\lib -lxerces-c.dll -std=c++11 && $dir$fileNameWithoutExt",
