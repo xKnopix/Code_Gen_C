@@ -87,7 +87,7 @@ Hier sind nun beispiel Implementierungen vorhanden, die beliebig geändert werde
 
 ## 2. build
 
-1. Im Projekt Ordner neuen Ordner namens build anlegen 
+1. Im Projekt Ordner neuen Ordner namens build anlegen (Dieser Ordner sollte nicht direkt in dem 'build'- Ordner Aus dem 1. Schritt liegen, da dies zu Fehlern führen kann. Es ist am Besten außerhalb des Projektes einen Neuen Ordner für die generierten Dateien anzulegen, in welchem man dann den neuen 'build' - Ordner erstellt, oder aber mindestens einen Unterordner in dem 'build' - Ordner anzulegen und die generierten Dateien mit der generierten CMakeLists.txt und ExampleMain.cpp. 
 2. CMD (Win) oder Terminal(Unix) öffnen
 3. In build Ordner wechseln 
 ```
