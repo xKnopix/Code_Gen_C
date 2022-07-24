@@ -27,7 +27,7 @@ cmake -DCMAKE_PREFIX_PATH=C:\UserData\z180338\tools\xerces-c -G "MinGW Makefiles
 ```
 cmake --build .
 ```
-Die Fertige exe kann dann unter build/C_Code_Gen/Debug gefunden werden
+Die Fertige exe kann dann unter build/C_Code_Gen gefunden werden
 
 
 
