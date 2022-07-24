@@ -27,6 +27,11 @@
 \item cmd in dem build Ordner öffnen
 \item \char`\"{}cmake -\/\+DCMAKE\+\_\+\+PREFIX\+\_\+\+PATH=\+C\+:\textbackslash{}\+User\+Data\textbackslash{}z180338\textbackslash{}tools\textbackslash{}xerces-\/c -\/\+G \char`\"{}Min\+GW Makefiles\char`\"{} ..\char`\"{} in cmd eingeben 
 \begin{DoxyCode}{0}
+\DoxyCodeLine{cmake -\/DCMAKE\_PREFIX\_PATH="{}Path to xerces-\/c"{} -\/G "{}MinGW Makefiles"{} ..}
+
+\end{DoxyCode}
+ Bsp\+: 
+\begin{DoxyCode}{0}
 \DoxyCodeLine{cmake -\/DCMAKE\_PREFIX\_PATH=C:\(\backslash\)UserData\(\backslash\)z180338\(\backslash\)tools\(\backslash\)xerces-\/c -\/G "{}MinGW Makefiles"{} ..}
 
 \end{DoxyCode}
@@ -36,7 +41,7 @@
 \DoxyCodeLine{cmake -\/-\/build .}
 
 \end{DoxyCode}
- Die Fertige exe kann dann unter build/\+C\+\_\+\+Code\+\_\+\+Gen/\+Debug gefunden werden
+ Die Fertige exe kann dann unter build/\+C\+\_\+\+Code\+\_\+\+Gen gefunden werden
 \end{DoxyEnumerate}\hypertarget{index_autotoc_md4}{}\doxysubsection{Cmake\+\_\+\+Unix}\label{index_autotoc_md4}
 
 \begin{DoxyEnumerate}
@@ -87,7 +92,7 @@ haben.\hypertarget{index_autotoc_md7}{}\doxysubsection{1. Externe Methoden Imple
 Hierzu wird die example\+Main.\+cpp geöffnet. Dann wird nach einer Klasse namens \char`\"{}\+Klasse\char`\"{} gesucht, welche von dem angegeben Class\+Name erbt. Hier sind nun beispiel Implementierungen vorhanden, die beliebig geändert werden können.\hypertarget{index_autotoc_md8}{}\doxysubsection{2. build}\label{index_autotoc_md8}
 
 \begin{DoxyEnumerate}
-\item Im Projekt Ordner neuen Ordner namens build anlegen
+\item Im Projekt Ordner neuen Ordner namens build anlegen (Dieser Ordner sollte nicht direkt in dem \textquotesingle{}build\textquotesingle{}-\/ Ordner Aus dem 1. Schritt liegen, da dies zu Fehlern führen kann. Es ist am Besten außerhalb des Projektes einen Neuen Ordner für die generierten Dateien anzulegen, in welchem man dann den neuen \textquotesingle{}build\textquotesingle{} -\/ Ordner erstellt, oder aber mindestens einen Unterordner in dem \textquotesingle{}build\textquotesingle{} -\/ Ordner anzulegen und die generierten Dateien mit der generierten CMake\+Lists.\+txt und Example\+Main.\+cpp.
 \item CMD (Win) oder Terminal(\+Unix) öffnen
 \item In build Ordner wechseln 
 \begin{DoxyCode}{0}
@@ -98,6 +103,11 @@ Hierzu wird die example\+Main.\+cpp geöffnet. Dann wird nach einer Klasse namen
 \item \char`\"{}cmake ..\char`\"{} eingeben 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{cmake ..}
+
+\end{DoxyCode}
+ Beispiel min\+GW\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{cmake -\/G "{}MinGW Makefiles"{} ..}
 
 \end{DoxyCode}
 
@@ -128,8 +138,9 @@ Das Programm auszühren und dann mit --help die Hilfe ausgeben lassen Win
 
 \end{DoxyCode}
  \hypertarget{index_autotoc_md10}{}\doxysection{Hinweise}\label{index_autotoc_md10}
-Hinweis zur generierung der Getter Methoden\+: Da in den Requirements immer der long\+Opt-\/\+Name als name in den Methoden gewünscht war haben wir in unserem code wenn ein \textquotesingle{}-\/\textquotesingle{} wie bei sign-\/per-\/line vorkommt, dieses \textquotesingle{}-\/\textquotesingle{} aus dem namen gelöscht und zu signperline (Bsp.\+: is\+Setsignperline()) gemacht.
-
-Hinweis zur Angabe von zusätzlichen Argumenten\+: in unserem generierten Argument-\/\+Parser werden zusätzliche Argumente ohne Zusätze einfach mit einem Leerzeichen getrennt hinter das Hauptargument geschrieben. Bsp.\+: --out-\/path C\+:\textbackslash{}\+Users\textbackslash{} --sign-\/per-\/line 10 -\/v
+\hypertarget{index_autotoc_md11}{}\doxysubsubsection{Hinweis zur generierung der Getter Methoden\+:}\label{index_autotoc_md11}
+Da in den Requirements immer der long\+Opt-\/\+Name als name in den Methoden gewünscht war haben wir in unserem code wenn ein \textquotesingle{}-\/\textquotesingle{} wie bei sign-\/per-\/line vorkommt, dieses \textquotesingle{}-\/\textquotesingle{} aus dem namen gelöscht und zu signperline (Bsp.\+: is\+Setsignperline()) gemacht.\hypertarget{index_autotoc_md12}{}\doxysubsubsection{Hinweis zur Angabe von zusätzlichen Argumenten\+:}\label{index_autotoc_md12}
+in unserem generierten Argument-\/\+Parser werden zusätzliche Argumente ohne Zusätze einfach mit einem Leerzeichen getrennt hinter das Hauptargument geschrieben. Bsp.\+: --out-\/path C\+:\textbackslash{}\+Users\textbackslash{} --sign-\/per-\/line 10 -\/v\hypertarget{index_autotoc_md13}{}\doxysubsubsection{Hinweis zur Zeilenlimitierung von sign-\/per-\/line}\label{index_autotoc_md13}
+\{Req\+Func4\} Dieses Requirement wurde von uns zunächst zweideutig gesehen, ob dabei das Attribut $<$\+Get\+Opt\+Setup Sign\+Per\+Line=\char`\"{}79\char`\"{}$>$ aus der XML -\/ Datei in Zeile 3 gemeint ist, oder ob man den optionalen Übergabeparameter aus der Option --sign-\/per-\/line auslesen soll. Wir haben uns am Ende darauf geeinigt den Wert aus dem Attribut aus Zeile 3 zu benutzen, jedoch funktionierte das Programm auch mit der getter-\/\+Funktion der --sign-\/per-\/line Option.
 
 Autoren\+: Michael Hornstein, Jacob Hochbaum, Johannes Muessig 

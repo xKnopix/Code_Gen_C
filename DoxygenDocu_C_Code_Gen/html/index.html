@@ -21,7 +21,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">C_Code_Gen
+   <div id="projectname">C_Code_Gen<span id="projectnumber">&#160;1.0</span>
    </div>
   </td>
  </tr>
@@ -90,10 +90,11 @@ Cmake_Win32</h2>
 <li>in build Ordner wechseln <div class="fragment"><div class="line">cd ./build</div>
 </div><!-- fragment --></li>
 <li>cmd in dem build Ordner öffnen</li>
-<li>"cmake -DCMAKE_PREFIX_PATH=C:\UserData\z180338\tools\xerces-c -G "MinGW Makefiles" .." in cmd eingeben <div class="fragment"><div class="line">cmake -DCMAKE_PREFIX_PATH=C:\UserData\z180338\tools\xerces-c -G &quot;MinGW Makefiles&quot; ..</div>
+<li>"cmake -DCMAKE_PREFIX_PATH=C:\UserData\z180338\tools\xerces-c -G "MinGW Makefiles" .." in cmd eingeben <div class="fragment"><div class="line">cmake -DCMAKE_PREFIX_PATH=&quot;Path to xerces-c&quot; -G &quot;MinGW Makefiles&quot; ..</div>
+</div><!-- fragment --> Bsp: <div class="fragment"><div class="line">cmake -DCMAKE_PREFIX_PATH=C:\UserData\z180338\tools\xerces-c -G &quot;MinGW Makefiles&quot; ..</div>
 </div><!-- fragment --></li>
 <li>"cmake --build ." eingeben <div class="fragment"><div class="line">cmake --build .</div>
-</div><!-- fragment --> Die Fertige exe kann dann unter build/C_Code_Gen/Debug gefunden werden</li>
+</div><!-- fragment --> Die Fertige exe kann dann unter build/C_Code_Gen gefunden werden</li>
 </ol>
 <h2><a class="anchor" id="autotoc_md4"></a>
 Cmake_Unix</h2>
@@ -130,11 +131,12 @@ Build_ExampleProject</h1>
 <h2><a class="anchor" id="autotoc_md8"></a>
 2. build</h2>
 <ol type="1">
-<li>Im Projekt Ordner neuen Ordner namens build anlegen</li>
+<li>Im Projekt Ordner neuen Ordner namens build anlegen (Dieser Ordner sollte nicht direkt in dem 'build'- Ordner Aus dem 1. Schritt liegen, da dies zu Fehlern führen kann. Es ist am Besten außerhalb des Projektes einen Neuen Ordner für die generierten Dateien anzulegen, in welchem man dann den neuen 'build' - Ordner erstellt, oder aber mindestens einen Unterordner in dem 'build' - Ordner anzulegen und die generierten Dateien mit der generierten CMakeLists.txt und ExampleMain.cpp.</li>
 <li>CMD (Win) oder Terminal(Unix) öffnen</li>
 <li>In build Ordner wechseln <div class="fragment"><div class="line">cd ./build</div>
 </div><!-- fragment --></li>
 <li>"cmake .." eingeben <div class="fragment"><div class="line">cmake ..</div>
+</div><!-- fragment --> Beispiel minGW: <div class="fragment"><div class="line">cmake -G &quot;MinGW Makefiles&quot; ..</div>
 </div><!-- fragment --></li>
 <li>cmake &ndash;build . (Win) oder make (Linux) eingeben Windows <div class="fragment"><div class="line">cmake --build .</div>
 </div><!-- fragment --> Unix <div class="fragment"><div class="line">make</div>
@@ -150,8 +152,15 @@ Use_Parser</h1>
 <div class="line">ExampleMain -v</div>
 </div><!-- fragment --> <h1><a class="anchor" id="autotoc_md10"></a>
 Hinweise</h1>
-<p >Hinweis zur generierung der Getter Methoden: Da in den Requirements immer der longOpt-Name als name in den Methoden gewünscht war haben wir in unserem code wenn ein '-' wie bei sign-per-line vorkommt, dieses '-' aus dem namen gelöscht und zu signperline (Bsp.: isSetsignperline()) gemacht.</p>
-<p >Hinweis zur Angabe von zusätzlichen Argumenten: in unserem generierten Argument-Parser werden zusätzliche Argumente ohne Zusätze einfach mit einem Leerzeichen getrennt hinter das Hauptargument geschrieben. Bsp.: &ndash;out-path C:\Users\ &ndash;sign-per-line 10 -v</p>
+<h3><a class="anchor" id="autotoc_md11"></a>
+Hinweis zur generierung der Getter Methoden:</h3>
+<p >Da in den Requirements immer der longOpt-Name als name in den Methoden gewünscht war haben wir in unserem code wenn ein '-' wie bei sign-per-line vorkommt, dieses '-' aus dem namen gelöscht und zu signperline (Bsp.: isSetsignperline()) gemacht.</p>
+<h3><a class="anchor" id="autotoc_md12"></a>
+Hinweis zur Angabe von zusätzlichen Argumenten:</h3>
+<p >in unserem generierten Argument-Parser werden zusätzliche Argumente ohne Zusätze einfach mit einem Leerzeichen getrennt hinter das Hauptargument geschrieben. Bsp.: &ndash;out-path C:\Users\ &ndash;sign-per-line 10 -v</p>
+<h3><a class="anchor" id="autotoc_md13"></a>
+Hinweis zur Zeilenlimitierung von sign-per-line</h3>
+<p >{ReqFunc4} Dieses Requirement wurde von uns zunächst zweideutig gesehen, ob dabei das Attribut &lt;GetOptSetup SignPerLine="79"&gt; aus der XML - Datei in Zeile 3 gemeint ist, oder ob man den optionalen Übergabeparameter aus der Option &ndash;sign-per-line auslesen soll. Wir haben uns am Ende darauf geeinigt den Wert aus dem Attribut aus Zeile 3 zu benutzen, jedoch funktionierte das Programm auch mit der getter-Funktion der &ndash;sign-per-line Option.</p>
 <p >Autoren: Michael Hornstein, Jacob Hochbaum, Johannes Muessig </p>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
