@@ -45,15 +45,15 @@ cd ./build
 ```
 4. terminal in build ordner öffnen
 
-5. "cmake .." in terminal eingeben wenn xerces nicht gefunden wurde dann "cmake -DCMAKE_PREFIX_PATH="opt/xerces-c" .." 
-```
-cmake ..
-```
-wenn xerces nicht gefunden wurde (bsp: opt/xerces-c)
+5. "cmake -DCMAKE_PREFIX_PATH="$Path to xerces install" .." in terminal eingeben 
 ```
 cmake -DCMAKE_PREFIX_PATH="$Path to xerces install" .. 
 ```
-wenn dies auch fehlschlägt, dann in den Hauptordner wechseln, von dort in C_Code_Gen wechseln und die Datei CMakeLists.txt öffnen.
+Beispiel:
+```
+cmake -DCMAKE_PREFIX_PATH="/opt/xerces-c" .. 
+```
+wenn dies fehlschlägt, dann in den Hauptordner wechseln, von dort in C_Code_Gen wechseln und die Datei CMakeLists.txt öffnen.
 Dort wir in Zeile 10 set(CMAKE_PREFIX_PATH "/opt/xerces-c") zu dem Installations Pfad von xerces gesetzt. <br />
 "make" in terminal eingeben
 ```
