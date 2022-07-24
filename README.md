@@ -21,6 +21,10 @@ cd ./build
 
 5. "cmake -DCMAKE_PREFIX_PATH=C:\UserData\z180338\tools\xerces-c -G "MinGW Makefiles" .." in cmd eingeben 
 ```
+cmake -DCMAKE_PREFIX_PATH="Path to xerces-c" -G "MinGW Makefiles" ..
+```
+Bsp:
+```
 cmake -DCMAKE_PREFIX_PATH=C:\UserData\z180338\tools\xerces-c -G "MinGW Makefiles" ..
 ```
 6. "cmake --build ." eingeben
